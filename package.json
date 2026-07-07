@@ -1,0 +1,22 @@
+{
+  "name": "sports-wholesale-monorepo",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "db:generate": "turbo run db:generate",
+    "db:push": "turbo run db:push",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "prettier": "^3.0.0",
+    "turbo": "latest"
+  },
+  "packageManager": "bun@1.0.0"
+}

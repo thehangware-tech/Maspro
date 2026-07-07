@@ -1,0 +1,31 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalEnv": [
+    "DATABASE_URL",
+    "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
+    "CLERK_SECRET_KEY",
+    "RAZORPAY_KEY_ID",
+    "RAZORPAY_KEY_SECRET",
+    "NIMBUSPOST_API_TOKEN",
+    "NIMBUSPOST_ORIGIN_PINCODE"
+  ],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "db:generate": {
+      "cache": false
+    },
+    "db:push": {
+      "cache": false
+    }
+  }
+}

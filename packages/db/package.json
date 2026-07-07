@@ -1,0 +1,16 @@
+{
+  "name": "@sports/db",
+  "version": "1.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./src/schema.ts"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.30.0",
+    "postgres": "^3.4.0"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.20.0"
+  }
+}
