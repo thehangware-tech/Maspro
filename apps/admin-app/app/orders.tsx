@@ -8,7 +8,7 @@ const orders = [
   { id: '#SH12543', status: 'Packed', customer: 'MS Dhoni', amount: '₹2,590', items: '2 Items', date: '7 May 2025 | 08:40 AM', icon: Briefcase, color: 'bg-yellow-500/20', iconColor: '#eab308', statusColor: 'text-orange-500', statusBg: 'bg-orange-500/10' },
   { id: '#SH12542', status: 'Shipped', customer: 'Rohit Das', amount: '₹6,490', items: '4 Items', date: '6 May 2025 | 07:50 PM', icon: Truck, color: 'bg-purple-500/20', iconColor: '#a855f7', statusColor: 'text-purple-500', statusBg: 'bg-purple-500/10' },
   { id: '#SH12541', status: 'Delivered', customer: 'Hardik Pandya', amount: '₹1,489', items: '1 Item', date: '6 May 2025 | 06:20 PM', icon: CheckCircle2, color: 'bg-teal-500/20', iconColor: '#14b8a6', statusColor: 'text-teal-500', statusBg: 'bg-teal-500/10' },
-  { id: '#SH12540', status: 'Cancelled', customer: 'Arjun Mehta', amount: '₹2,999', items: '2 Items', date: '6 May 2025 | 05:10 PM', icon: XCircle, color: 'bg-red-500/20', iconColor: '#ef4444', statusColor: 'text-red-500', statusBg: 'bg-red-500/10' },
+  { id: '#SH12540', status: 'Cancelled', customer: 'Arjun Mehta', amount: '₹2,999', items: '0 Items', date: '6 May 2025 | 05:10 PM', icon: XCircle, color: 'bg-red-500/20', iconColor: '#ef4444', statusColor: 'text-red-500', statusBg: 'bg-red-500/10' },
 ];
 
 export default function OrdersScreen() {

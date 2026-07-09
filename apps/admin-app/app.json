@@ -8,7 +8,8 @@
     "userInterfaceStyle": "dark",
     "scheme": "admin-app",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.adminapp"
     },
     "android": {
       "adaptiveIcon": {

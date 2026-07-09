@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text, ScrollView, Pressable, TextInput } from '../src/tw';
-import { Menu, Search, Filter, Home, ShoppingBag, Package, MoreHorizontal, Settings2 } from 'lucide-react-native';
+import { Image } from 'react-native';
+import { Menu, Search, Filter, Home, ShoppingBag, Package, MoreHorizontal, ScanLine, RefreshCw } from 'lucide-react-native';
 
 const lowStockProducts = [
-  { name: 'SS Master 1000 Cricket Bat', stock: 5 },
-  { name: 'Nike Air Zoom Pegasus 40', stock: 6 },
-  { name: 'Nivia Storm Football', stock: 7 },
-  { name: 'Yonex Astrox 99', stock: 8 },
-  { name: 'SG Club Helmet', stock: 9 },
+  { name: 'SS Master 1000 Cricket Bat', stock: 5, image: 'https://images.unsplash.com/photo-1593341646782-e0be42c30084?w=150&h=150&fit=crop&q=80' },
+  { name: 'Nike Air Zoom Pegasus 40', stock: 6, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=150&h=150&fit=crop&q=80' },
+  { name: 'Nivia Storm Football', stock: 7, image: 'https://images.unsplash.com/photo-1614632537190-23e4146777db?w=150&h=150&fit=crop&q=80' },
+  { name: 'Yonex Astrox 99', stock: 8, image: 'https://images.unsplash.com/photo-1622279457486-640c5eaeb1eb?w=150&h=150&fit=crop&q=80' },
+  { name: 'SG Club Helmet', stock: 9, image: 'https://images.unsplash.com/photo-1558634360-61b7fcf7c7c9?w=150&h=150&fit=crop&q=80' },
 ];
 
 export default function InventoryScreen() {
@@ -19,8 +20,9 @@ export default function InventoryScreen() {
           <Menu color="#ffffff" size={24} />
         </Pressable>
         <Text className="text-white text-lg font-semibold">Inventory</Text>
-        <Pressable>
-          <Settings2 color="#ffffff" size={24} />
+        <Pressable className="relative">
+          <ScanLine color="#ffffff" size={24} />
+          <View className="absolute top-0 right-0 bg-red-500 w-2.5 h-2.5 rounded-full border-2 border-[#050914]" />
         </Pressable>
       </View>
 
@@ -66,7 +68,11 @@ export default function InventoryScreen() {
 
         {lowStockProducts.map((product, index) => (
           <View key={index} className="flex-row items-center mb-4">
-            <View className="w-14 h-14 bg-[#161f33] rounded-xl mr-4 border border-[#1e2942]"></View>
+            <Image 
+              source={{ uri: product.image }} 
+              className="w-14 h-14 bg-[#161f33] rounded-xl mr-4 border border-[#1e2942]" 
+              resizeMode="cover" 
+            />
             <View className="flex-1">
               <Text className="text-white font-medium text-sm mb-1">{product.name}</Text>
               <Text className="text-[#94a3b8] text-xs">Stock: {product.stock}</Text>
@@ -79,9 +85,9 @@ export default function InventoryScreen() {
       </ScrollView>
 
       {/* Stock Adjustment Button */}
-      <View className="absolute bottom-[80px] w-full px-6">
-        <Pressable className="bg-[#FF8C00] h-14 rounded-xl flex-row items-center justify-center shadow-lg">
-          <Settings2 color="#ffffff" size={18} className="mr-2" />
+      <View className="absolute bottom-[90px] w-full px-6">
+        <Pressable className="bg-[#FF6B00] h-14 rounded-xl flex-row items-center justify-center shadow-lg">
+          <RefreshCw color="#ffffff" size={18} className="mr-2" />
           <Text className="text-white font-bold text-base">Stock Adjustment</Text>
         </Pressable>
       </View>
@@ -93,12 +99,12 @@ export default function InventoryScreen() {
           <Text className="text-[#64748b] text-[10px] mt-1 font-medium">Dashboard</Text>
         </Pressable>
         <Pressable className="items-center">
-          <ShoppingBag color="#FF8C00" size={24} />
-          <Text className="text-[#FF8C00] text-[10px] mt-1 font-medium">Orders</Text>
+          <ShoppingBag color="#64748b" size={24} />
+          <Text className="text-[#64748b] text-[10px] mt-1 font-medium">Orders</Text>
         </Pressable>
         <Pressable className="items-center">
-          <Package color="#64748b" size={24} />
-          <Text className="text-[#64748b] text-[10px] mt-1 font-medium">Products</Text>
+          <Package color="#FF8C00" size={24} />
+          <Text className="text-[#FF8C00] text-[10px] mt-1 font-medium">Products</Text>
         </Pressable>
         <Pressable className="items-center">
           <MoreHorizontal color="#64748b" size={24} />

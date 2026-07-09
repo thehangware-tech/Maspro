@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text, ScrollView, Pressable } from '../src/tw';
-import { ChevronLeft, Home, ShoppingBag, Package, MoreHorizontal, Plus, Tag } from 'lucide-react-native';
+import { ChevronLeft, Home, ShoppingBag, Package, MoreHorizontal, Plus, Command, Smartphone } from 'lucide-react-native';
 
 const coupons = [
   { code: 'WELCOME10', desc: 'Flat 10% OFF', status: 'Active', statusColor: 'text-green-500', statusBg: 'bg-green-500/10', minOrder: 'Min. Order: ₹999', dateLabel: 'Valid Till: 31 May 2025', usage: 'Used: 234', iconBg: 'bg-red-500/10', iconColor: '#ef4444' },
   { code: 'WHOLESALE5', desc: 'Flat 5% OFF', status: 'Active', statusColor: 'text-green-500', statusBg: 'bg-green-500/10', minOrder: 'Min. Order: ₹5,000', dateLabel: 'Valid Till: 15 Jun 2025', usage: 'Used: 98', iconBg: 'bg-red-500/10', iconColor: '#ef4444' },
   { code: 'SUMMER20', desc: '20% OFF up to ₹1000', status: 'Scheduled', statusColor: 'text-blue-500', statusBg: 'bg-blue-500/10', minOrder: 'Min. Order: ₹2,999', dateLabel: 'Starts: 20 May 2025', usage: '', iconBg: 'bg-blue-500/10', iconColor: '#3b82f6' },
-  { code: 'EXTRA15', desc: 'Flat 15% OFF', status: 'Expired', statusColor: 'text-[#94a3b8]', statusBg: 'bg-[#1e2942]', minOrder: 'Min. Order: ₹1,499', dateLabel: 'Expired on: 01 May 2025', usage: 'Used: 120', iconBg: 'bg-[#1e2942]', iconColor: '#94a3b8' },
+  { code: 'EXTRA15', desc: 'Flat 15% OFF', status: 'Expired', statusColor: 'text-[#94a3b8]', statusBg: 'bg-[#1e2942]', minOrder: 'Min. Order: ₹1,499', dateLabel: 'Expired on: 01 May 2025', usage: '120', iconBg: 'bg-[#1e2942]', iconColor: '#94a3b8' },
 ];
 
 export default function OffersScreen() {
@@ -38,7 +38,7 @@ export default function OffersScreen() {
           <View key={index} className="bg-[#0e1423] border border-[#1e2942] rounded-2xl p-4 mb-4">
             <View className="flex-row items-center mb-4">
               <View className={`w-12 h-12 rounded-xl items-center justify-center mr-4 ${coupon.iconBg}`}>
-                <Tag color={coupon.iconColor} size={24} />
+                <Command color={coupon.iconColor} size={24} />
               </View>
               <View className="flex-1">
                 <View className="flex-row justify-between items-center mb-1">
@@ -51,7 +51,10 @@ export default function OffersScreen() {
               </View>
             </View>
             <View className="flex-row justify-between items-center pt-2">
-              <Text className="text-[#64748b] text-[10px]">{coupon.minOrder}</Text>
+              <View className="flex-row items-center">
+                <Smartphone color="#FF8C00" size={10} />
+                <Text className="text-[#64748b] text-[10px] ml-1">{coupon.minOrder}</Text>
+              </View>
               <Text className="text-[#64748b] text-[10px]">{coupon.dateLabel}</Text>
               {coupon.usage ? (
                 <Text className="text-[#64748b] text-[10px]">{coupon.usage}</Text>

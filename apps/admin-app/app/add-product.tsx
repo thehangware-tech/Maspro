@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, Pressable, TextInput } from '../src/tw';
+import { View, Text, ScrollView, Pressable, TextInput, Image } from '../src/tw';
 import { ChevronLeft, ChevronDown, Plus } from 'lucide-react-native';
 
 export default function AddProductScreen() {
@@ -17,9 +17,9 @@ export default function AddProductScreen() {
         {/* Images Horizontal Scroll */}
         <View className="mb-6">
           <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row py-2">
-            <View className="w-20 h-24 bg-[#161f33] rounded-xl mr-3 border border-[#1e2942]"></View>
-            <View className="w-20 h-24 bg-[#161f33] rounded-xl mr-3 border border-[#1e2942]"></View>
-            <View className="w-20 h-24 bg-[#161f33] rounded-xl mr-3 border border-[#1e2942]"></View>
+            <Image source={{ uri: 'https://images.unsplash.com/photo-1593341646782-e0b495cff86d?auto=format&fit=crop&q=80&w=200&h=240' }} className="w-20 h-24 bg-[#161f33] rounded-xl mr-3 border border-[#1e2942]" />
+            <Image source={{ uri: 'https://images.unsplash.com/photo-1593341646879-11c7512a8742?auto=format&fit=crop&q=80&w=200&h=240' }} className="w-20 h-24 bg-[#161f33] rounded-xl mr-3 border border-[#1e2942]" />
+            <Image source={{ uri: 'https://images.unsplash.com/photo-1593341646698-46ba097d8c55?auto=format&fit=crop&q=80&w=200&h=240' }} className="w-20 h-24 bg-[#161f33] rounded-xl mr-3 border border-[#1e2942]" />
             
             <Pressable className="w-20 h-24 rounded-xl border border-dashed border-[#64748b] items-center justify-center bg-[#050914] mr-6">
               <Plus color="#ffffff" size={24} className="mb-1" />

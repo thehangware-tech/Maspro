@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, Pressable } from '../src/tw';
+import { View, Text, ScrollView, Pressable, Image } from '../src/tw';
 import { Menu, Bell, Calendar, ShoppingBag, DollarSign, Users, Package, ChevronDown, Home, MoreHorizontal } from 'lucide-react-native';
 import Svg, { Path, Circle } from 'react-native-svg';
 
@@ -97,30 +97,38 @@ export default function DashboardScreen() {
           <Text className="text-green-500 text-xs font-medium mb-6">↑ 18.4% <Text className="text-[#64748b]">vs last week</Text></Text>
           
           {/* Chart Placeholder */}
-          <View className="h-32 justify-end mb-2">
-            {/* Grid lines */}
-            <View className="border-t border-[#1e2942] w-full absolute bottom-0 h-[25%]" />
-            <View className="border-t border-[#1e2942] w-full absolute bottom-[25%] h-[25%]" />
-            <View className="border-t border-[#1e2942] w-full absolute bottom-[50%] h-[25%]" />
-            <View className="border-t border-[#1e2942] w-full absolute bottom-[75%] h-[25%]" />
-            <View className="border-t border-[#1e2942] w-full absolute bottom-[100%] h-0" />
-            
-            <Svg height="100%" width="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-              <Path d="M0,80 L10,60 L20,70 L30,75 L40,65 L50,55 L60,65 L70,75 L80,50 L90,60 L100,20 L100,100 L0,100 Z" fill="#FF8C00" fillOpacity="0.1" />
-              <Path d="M0,80 L10,60 L20,70 L30,75 L40,65 L50,55 L60,65 L70,75 L80,50 L90,60 L100,20" fill="none" stroke="#FF8C00" strokeWidth="2" />
-              <Circle cx="10" cy="60" r="2" fill="#FF8C00" />
-              <Circle cx="20" cy="70" r="2" fill="#FF8C00" />
-              <Circle cx="30" cy="75" r="2" fill="#FF8C00" />
-              <Circle cx="40" cy="65" r="2" fill="#FF8C00" />
-              <Circle cx="50" cy="55" r="2" fill="#FF8C00" />
-              <Circle cx="60" cy="65" r="2" fill="#FF8C00" />
-              <Circle cx="70" cy="75" r="2" fill="#FF8C00" />
-              <Circle cx="80" cy="50" r="2" fill="#FF8C00" />
-              <Circle cx="90" cy="60" r="2" fill="#FF8C00" />
-              <Circle cx="100" cy="20" r="2" fill="#FF8C00" />
-            </Svg>
+          <View className="flex-row h-32 mb-2">
+            <View className="justify-between items-end mr-2 py-1">
+              <Text className="text-[#64748b] text-[10px]">40K</Text>
+              <Text className="text-[#64748b] text-[10px]">30K</Text>
+              <Text className="text-[#64748b] text-[10px]">10K</Text>
+              <Text className="text-[#64748b] text-[10px]">0</Text>
+            </View>
+            <View className="flex-1 justify-end relative">
+              {/* Grid lines */}
+              <View className="border-t border-[#1e2942] w-full absolute bottom-0 h-[25%]" />
+              <View className="border-t border-[#1e2942] w-full absolute bottom-[25%] h-[25%]" />
+              <View className="border-t border-[#1e2942] w-full absolute bottom-[50%] h-[25%]" />
+              <View className="border-t border-[#1e2942] w-full absolute bottom-[75%] h-[25%]" />
+              <View className="border-t border-[#1e2942] w-full absolute bottom-[100%] h-0" />
+              
+              <Svg height="100%" width="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <Path d="M0,80 L10,60 L20,70 L30,75 L40,65 L50,55 L60,65 L70,75 L80,50 L90,60 L100,20 L100,100 L0,100 Z" fill="#FF8C00" fillOpacity="0.1" />
+                <Path d="M0,80 L10,60 L20,70 L30,75 L40,65 L50,55 L60,65 L70,75 L80,50 L90,60 L100,20" fill="none" stroke="#FF8C00" strokeWidth="2" />
+                <Circle cx="10" cy="60" r="2" fill="#FF8C00" />
+                <Circle cx="20" cy="70" r="2" fill="#FF8C00" />
+                <Circle cx="30" cy="75" r="2" fill="#FF8C00" />
+                <Circle cx="40" cy="65" r="2" fill="#FF8C00" />
+                <Circle cx="50" cy="55" r="2" fill="#FF8C00" />
+                <Circle cx="60" cy="65" r="2" fill="#FF8C00" />
+                <Circle cx="70" cy="75" r="2" fill="#FF8C00" />
+                <Circle cx="80" cy="50" r="2" fill="#FF8C00" />
+                <Circle cx="90" cy="60" r="2" fill="#FF8C00" />
+                <Circle cx="100" cy="20" r="2" fill="#FF8C00" />
+              </Svg>
+            </View>
           </View>
-          <View className="flex-row justify-between">
+          <View className="flex-row justify-between pl-8">
             <Text className="text-[#64748b] text-[10px]">01 May</Text>
             <Text className="text-[#64748b] text-[10px]">03 May</Text>
             <Text className="text-[#64748b] text-[10px]">05 May</Text>
@@ -135,7 +143,10 @@ export default function DashboardScreen() {
             <Text className="text-blue-500 text-xs font-medium">View All</Text>
           </View>
           <View className="flex-row items-center">
-            <View className="w-12 h-12 bg-gray-800 rounded-lg mr-4"></View>
+            <Image 
+              source={{ uri: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=100&q=80' }} 
+              className="w-12 h-12 rounded-lg mr-4" 
+            />
             <View className="flex-1">
               <Text className="text-white font-medium">Nike Air Zoom Pegasus 40</Text>
               <Text className="text-[#94a3b8] text-xs">289 Sold</Text>

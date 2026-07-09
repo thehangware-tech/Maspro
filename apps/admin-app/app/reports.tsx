@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView, Pressable } from '../src/tw';
-import { ChevronLeft, Filter, ChevronDown, Home, ShoppingBag, Package, MoreHorizontal } from 'lucide-react-native';
+import { ChevronLeft, Filter, ChevronDown, Home, ClipboardList, Package, List } from 'lucide-react-native';
 import Svg, { Rect, Line, Text as SvgText } from 'react-native-svg';
 
 export default function ReportsScreen() {
@@ -141,7 +141,7 @@ export default function ReportsScreen() {
           <Text className="text-[#64748b] text-[10px] mt-1 font-medium">Dashboard</Text>
         </Pressable>
         <Pressable className="items-center">
-          <ShoppingBag color="#64748b" size={24} />
+          <ClipboardList color="#64748b" size={24} />
           <Text className="text-[#64748b] text-[10px] mt-1 font-medium">Orders</Text>
         </Pressable>
         <Pressable className="items-center">
@@ -149,7 +149,7 @@ export default function ReportsScreen() {
           <Text className="text-[#64748b] text-[10px] mt-1 font-medium">Products</Text>
         </Pressable>
         <Pressable className="items-center">
-          <MoreHorizontal color="#FF8C00" size={24} />
+          <List color="#FF8C00" size={24} />
           <Text className="text-[#FF8C00] text-[10px] mt-1 font-medium">More</Text>
         </Pressable>
       </View>
