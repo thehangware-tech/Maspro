@@ -4,6 +4,18 @@ import { Image } from 'react-native';
 import { ShieldCheck, BarChart3, Clock, Phone } from 'lucide-react-native';
 import Svg, { Path } from 'react-native-svg';
 import { useSSO } from '@clerk/clerk-expo';
+import * as WebBrowser from "expo-web-browser";
+
+WebBrowser.maybeCompleteAuthSession();
+
+export const useWarmUpBrowser = () => {
+  React.useEffect(() => {
+    void WebBrowser.warmUpAsync();
+    return () => {
+      void WebBrowser.coolDownAsync();
+    };
+  }, []);
+};
 
 const GoogleLogo = () => (
   <Svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -32,6 +44,7 @@ const SportsLogo = () => (
 );
 
 export default function AuthScreen() {
+  useWarmUpBrowser();
   const { startSSOFlow } = useSSO();
 
   const handleOAuth = React.useCallback(async (strategy: "oauth_google" | "oauth_apple") => {

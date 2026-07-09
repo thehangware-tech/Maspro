@@ -21,7 +21,10 @@ for i in range(rows):
         
         box = (left, top, right, bottom)
         tile = img.crop(box)
-        
-        tile.save(os.path.join(output_dir, f"screen_{count}.png"))
-        print(f"Saved screen_{count}.png")
+        if count == 1:
+            tile.save(os.path.join(output_dir, "auth.png"))
+            print("Saved auth.png")
+        else:
+            tile.save(os.path.join(output_dir, f"screen_{count}.png"))
+            print(f"Saved screen_{count}.png")
         count += 1
