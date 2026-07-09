@@ -1,4 +1,4 @@
-import "../src/global.css";
+import "../global.css";
 import React from "react";
 import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo";
 import { Stack } from "expo-router";

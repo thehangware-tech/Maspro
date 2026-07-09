@@ -1,95 +1,128 @@
 import React from 'react';
-import { View, Text, ScrollView, Pressable } from '../src/tw';
-import { ChevronLeft, Home, ShoppingBag, Package, MoreHorizontal, Plus, Command, Smartphone } from 'lucide-react-native';
+import { View, ScrollView, StatusBar, TextInput } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ArrowLeft, Search, Plus, Calendar, Tag, Percent } from 'lucide-react-native';
+import { View as TwView, Text as TwText, Pressable as TwPressable } from '../src/tw';
+import { useRouter } from 'expo-router';
 
-const coupons = [
-  { code: 'WELCOME10', desc: 'Flat 10% OFF', status: 'Active', statusColor: 'text-green-500', statusBg: 'bg-green-500/10', minOrder: 'Min. Order: ₹999', dateLabel: 'Valid Till: 31 May 2025', usage: 'Used: 234', iconBg: 'bg-red-500/10', iconColor: '#ef4444' },
-  { code: 'WHOLESALE5', desc: 'Flat 5% OFF', status: 'Active', statusColor: 'text-green-500', statusBg: 'bg-green-500/10', minOrder: 'Min. Order: ₹5,000', dateLabel: 'Valid Till: 15 Jun 2025', usage: 'Used: 98', iconBg: 'bg-red-500/10', iconColor: '#ef4444' },
-  { code: 'SUMMER20', desc: '20% OFF up to ₹1000', status: 'Scheduled', statusColor: 'text-blue-500', statusBg: 'bg-blue-500/10', minOrder: 'Min. Order: ₹2,999', dateLabel: 'Starts: 20 May 2025', usage: '', iconBg: 'bg-blue-500/10', iconColor: '#3b82f6' },
-  { code: 'EXTRA15', desc: 'Flat 15% OFF', status: 'Expired', statusColor: 'text-[#94a3b8]', statusBg: 'bg-[#1e2942]', minOrder: 'Min. Order: ₹1,499', dateLabel: 'Expired on: 01 May 2025', usage: '120', iconBg: 'bg-[#1e2942]', iconColor: '#94a3b8' },
-];
+const CouponCard = ({ title, code, status, validTill, minOrder, maxDiscount, type = 'percentage', amount }: any) => (
+  <TwView className="bg-[#15171E] rounded-2xl p-4 mb-4 border border-[#22252D]">
+    <TwView className="flex-row items-center justify-between mb-4 border-b border-[#22252D] pb-4">
+      <TwView className="flex-row items-center flex-1">
+        <TwView className="w-12 h-12 bg-[#FF6B00] rounded-xl items-center justify-center mr-4">
+          {type === 'percentage' ? <Percent color="white" size={24} /> : <Tag color="white" size={24} />}
+        </TwView>
+        <TwView>
+          <TwText className="text-white font-bold text-base mb-1">{title}</TwText>
+          <TwView className="flex-row items-center">
+            <TwText className="text-gray-400 text-xs">Discount: </TwText>
+            <TwText className="text-white font-bold text-sm">{amount}</TwText>
+          </TwView>
+        </TwView>
+      </TwView>
+      <TwView className={`px-2 py-1 rounded-md ${status === 'Active' ? 'bg-green-900/30' : 'bg-red-900/30'}`}>
+        <TwText className={`text-xs font-bold ${status === 'Active' ? 'text-green-500' : 'text-red-500'}`}>{status}</TwText>
+      </TwView>
+    </TwView>
+    
+    <TwView className="flex-row justify-between items-center px-2 mb-3">
+      <TwView className="flex-row items-center">
+        <TwText className="text-gray-400 text-xs mr-2">Code:</TwText>
+        <TwView className="bg-[#22252D] px-2 py-1 rounded border border-[#333742] border-dashed">
+          <TwText className="text-[#FF6B00] font-bold text-sm tracking-widest">{code}</TwText>
+        </TwView>
+      </TwView>
+      <TwView className="flex-row items-center">
+        <Calendar color="#6B7280" size={14} />
+        <TwText className="text-gray-400 text-xs ml-1">Till: {validTill}</TwText>
+      </TwView>
+    </TwView>
+
+    <TwView className="bg-[#0A0D14] rounded-lg p-3 flex-row justify-between">
+      <TwView>
+        <TwText className="text-gray-500 text-[10px] uppercase mb-1">Min Order</TwText>
+        <TwText className="text-white font-medium text-sm">{minOrder}</TwText>
+      </TwView>
+      <TwView className="items-end">
+        <TwText className="text-gray-500 text-[10px] uppercase mb-1">Max Discount</TwText>
+        <TwText className="text-white font-medium text-sm">{maxDiscount}</TwText>
+      </TwView>
+    </TwView>
+  </TwView>
+);
 
 export default function OffersScreen() {
+  const router = useRouter();
+
   return (
-    <View className="flex-1 bg-[#050914]">
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#0A0D14' }}>
+      <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
+      
       {/* Header */}
-      <View className="flex-row items-center px-6 pt-16 pb-4">
-        <Pressable className="mr-4">
-          <ChevronLeft color="#ffffff" size={24} />
-        </Pressable>
-        <Text className="text-white text-lg font-semibold flex-1 text-center pr-8">Offers & Coupons</Text>
-      </View>
+      <TwView className="flex-row items-center justify-between px-6 py-4">
+        <TwPressable onPress={() => router.back()}>
+          <ArrowLeft color="white" size={24} />
+        </TwPressable>
+        <TwText className="text-white text-lg font-bold">Offers & Coupons</TwText>
+        <TwPressable>
+          <Plus color="white" size={24} />
+        </TwPressable>
+      </TwView>
 
-      {/* Segmented Control */}
-      <View className="px-6 mb-6">
-        <View className="flex-row bg-[#0e1423] rounded-xl p-1 border border-[#1e2942]">
-          <Pressable className="flex-1 bg-[#FF8C00] rounded-lg py-2.5 items-center">
-            <Text className="text-white font-semibold text-sm">Coupons</Text>
-          </Pressable>
-          <Pressable className="flex-1 rounded-lg py-2.5 items-center">
-            <Text className="text-[#94a3b8] font-semibold text-sm">Banners</Text>
-          </Pressable>
-        </View>
-      </View>
+      {/* Search Bar */}
+      <TwView className="px-6 py-2 pb-4 border-b border-[#22252D]">
+        <TwView className="flex-row items-center bg-[#15171E] rounded-xl w-full h-12 px-4 border border-[#22252D]">
+          <Search color="#6B7280" size={20} />
+          <TextInput 
+            placeholder="Search coupons..."
+            placeholderTextColor="#6B7280"
+            style={{ flex: 1, color: 'white', marginLeft: 8, fontSize: 14 }}
+          />
+        </TwView>
+      </TwView>
 
-      {/* Coupons List */}
-      <ScrollView className="flex-1 px-6 mb-24" showsVerticalScrollIndicator={false}>
-        {coupons.map((coupon, index) => (
-          <View key={index} className="bg-[#0e1423] border border-[#1e2942] rounded-2xl p-4 mb-4">
-            <View className="flex-row items-center mb-4">
-              <View className={`w-12 h-12 rounded-xl items-center justify-center mr-4 ${coupon.iconBg}`}>
-                <Command color={coupon.iconColor} size={24} />
-              </View>
-              <View className="flex-1">
-                <View className="flex-row justify-between items-center mb-1">
-                  <Text className="text-white font-bold text-base uppercase">{coupon.code}</Text>
-                  <View className={`px-2 py-1 rounded-md ${coupon.statusBg}`}>
-                    <Text className={`text-[10px] font-bold ${coupon.statusColor}`}>{coupon.status}</Text>
-                  </View>
-                </View>
-                <Text className="text-[#94a3b8] text-sm">{coupon.desc}</Text>
-              </View>
-            </View>
-            <View className="flex-row justify-between items-center pt-2">
-              <View className="flex-row items-center">
-                <Smartphone color="#FF8C00" size={10} />
-                <Text className="text-[#64748b] text-[10px] ml-1">{coupon.minOrder}</Text>
-              </View>
-              <Text className="text-[#64748b] text-[10px]">{coupon.dateLabel}</Text>
-              {coupon.usage ? (
-                <Text className="text-[#64748b] text-[10px]">{coupon.usage}</Text>
-              ) : (
-                <View style={{ width: 40 }} />
-              )}
-            </View>
-          </View>
-        ))}
+      <ScrollView contentContainerStyle={{ padding: 24 }} showsVerticalScrollIndicator={false}>
+        <CouponCard 
+          title="Summer Sale 2025" 
+          code="SUMMER20" 
+          status="Active" 
+          validTill="31 May 2025" 
+          minOrder="₹1,500" 
+          maxDiscount="₹500" 
+          type="percentage"
+          amount="20%"
+        />
+        <CouponCard 
+          title="Welcome Discount" 
+          code="WELCOME10" 
+          status="Active" 
+          validTill="31 Dec 2025" 
+          minOrder="₹500" 
+          maxDiscount="₹200" 
+          type="percentage"
+          amount="10%"
+        />
+        <CouponCard 
+          title="Flat ₹500 Off" 
+          code="FLAT500" 
+          status="Active" 
+          validTill="15 Jun 2025" 
+          minOrder="₹2,500" 
+          maxDiscount="₹500" 
+          type="flat"
+          amount="₹500"
+        />
+        <CouponCard 
+          title="Diwali Special" 
+          code="DIWALI30" 
+          status="Expired" 
+          validTill="15 Nov 2024" 
+          minOrder="₹2,000" 
+          maxDiscount="₹1,000" 
+          type="percentage"
+          amount="30%"
+        />
       </ScrollView>
-
-      {/* FAB */}
-      <Pressable className="absolute bottom-28 right-6 bg-[#FF8C00] w-14 h-14 rounded-full items-center justify-center shadow-lg">
-        <Plus color="#ffffff" size={28} />
-      </Pressable>
-
-      {/* Tab Bar Placeholder */}
-      <View className="absolute bottom-0 w-full bg-[#0e1423] border-t border-[#1e2942] flex-row justify-between items-center py-4 px-8 pb-8">
-        <Pressable className="items-center">
-          <Home color="#64748b" size={24} />
-          <Text className="text-[#64748b] text-[10px] mt-1 font-medium">Dashboard</Text>
-        </Pressable>
-        <Pressable className="items-center">
-          <ShoppingBag color="#64748b" size={24} />
-          <Text className="text-[#64748b] text-[10px] mt-1 font-medium">Orders</Text>
-        </Pressable>
-        <Pressable className="items-center">
-          <Package color="#64748b" size={24} />
-          <Text className="text-[#64748b] text-[10px] mt-1 font-medium">Products</Text>
-        </Pressable>
-        <Pressable className="items-center">
-          <MoreHorizontal color="#FF8C00" size={24} />
-          <Text className="text-[#FF8C00] text-[10px] mt-1 font-medium">More</Text>
-        </Pressable>
-      </View>
-    </View>
+    </SafeAreaView>
   );
 }

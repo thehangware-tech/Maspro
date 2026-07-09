@@ -1,134 +1,124 @@
 import React from 'react';
-import { View, Text, ScrollView, Pressable, TextInput } from '../src/tw';
-import { Image } from 'react-native';
-import { Menu, Search, Filter, Home, ClipboardList, Package, List, ChevronRight } from 'lucide-react-native';
+import { View, ScrollView, StatusBar, TextInput } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ArrowLeft, Search, Phone, Calendar, ShoppingBag, IndianRupee } from 'lucide-react-native';
+import { View as TwView, Text as TwText, Pressable as TwPressable } from '../src/tw';
+import { useRouter } from 'expo-router';
 
-const customers = [
-  { 
-    name: 'Sports World Pvt. Ltd.', 
-    type: 'Wholesale', 
-    credit: 'Credit: ₹45,000', 
-    orders: null,
-    image: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&h=100&fit=crop'
-  },
-  { 
-    name: 'Game On Sports', 
-    type: 'Wholesale', 
-    credit: 'Credit: ₹22,500', 
-    orders: null,
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=100&h=100&fit=crop'
-  },
-  { 
-    name: 'Rahul Sharma', 
-    type: 'Retail', 
-    credit: null, 
-    orders: '12',
-    image: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop'
-  },
-  { 
-    name: 'Vivek Kumar', 
-    type: 'Retail', 
-    credit: null, 
-    orders: '8',
-    image: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop'
-  },
-  { 
-    name: 'Arjun Mehta', 
-    type: 'Retail', 
-    credit: null, 
-    orders: '5',
-    image: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100&h=100&fit=crop'
-  },
-];
+const CustomerCard = ({ name, initials, bg, phone, joined, orders, spent }: any) => (
+  <TwView className="bg-[#15171E] rounded-2xl p-4 mb-4 border border-[#22252D]">
+    <TwView className="flex-row items-center mb-4 border-b border-[#22252D] pb-4">
+      <TwView className="w-12 h-12 rounded-full items-center justify-center mr-4" style={{ backgroundColor: bg }}>
+        <TwText className="text-white font-bold text-lg">{initials}</TwText>
+      </TwView>
+      <TwView className="flex-1">
+        <TwText className="text-white font-bold text-base mb-1">{name}</TwText>
+        <TwView className="flex-row items-center">
+          <Phone color="#6B7280" size={12} />
+          <TwText className="text-gray-400 text-xs ml-1 mr-3">{phone}</TwText>
+          <Calendar color="#6B7280" size={12} />
+          <TwText className="text-gray-400 text-xs ml-1">Joined: {joined}</TwText>
+        </TwView>
+      </TwView>
+    </TwView>
+    
+    <TwView className="flex-row justify-between px-2">
+      <TwView className="items-center">
+        <TwView className="flex-row items-center mb-1">
+          <ShoppingBag color="#FF6B00" size={14} />
+          <TwText className="text-gray-400 text-xs ml-1">Total Orders</TwText>
+        </TwView>
+        <TwText className="text-white font-bold">{orders}</TwText>
+      </TwView>
+      <TwView className="w-[1px] h-full bg-[#22252D]" />
+      <TwView className="items-center">
+        <TwView className="flex-row items-center mb-1">
+          <IndianRupee color="#10B981" size={14} />
+          <TwText className="text-gray-400 text-xs ml-1">Total Spent</TwText>
+        </TwView>
+        <TwText className="text-white font-bold">{spent}</TwText>
+      </TwView>
+    </TwView>
+  </TwView>
+);
 
 export default function CustomersScreen() {
+  const router = useRouter();
+
   return (
-    <View className="flex-1 bg-[#050914]">
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#0A0D14' }}>
+      <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
+      
       {/* Header */}
-      <View className="flex-row items-center justify-between px-6 pt-16 pb-4">
-        <Pressable>
-          <Menu color="#ffffff" size={24} />
-        </Pressable>
-        <Text className="text-white text-lg font-semibold">Customers</Text>
-        <View style={{ width: 24 }} />
-      </View>
+      <TwView className="flex-row items-center justify-between px-6 py-4">
+        <TwPressable onPress={() => router.back()}>
+          <ArrowLeft color="white" size={24} />
+        </TwPressable>
+        <TwText className="text-white text-lg font-bold">Customers</TwText>
+        <TwPressable>
+          <Search color="white" size={24} />
+        </TwPressable>
+      </TwView>
 
       {/* Search Bar */}
-      <View className="flex-row px-6 mb-4">
-        <View className="flex-1 bg-[#0e1423] border border-[#1e2942] rounded-xl flex-row items-center px-4 h-12 mr-3">
-          <Search color="#64748b" size={18} />
+      <TwView className="px-6 py-2 pb-4 border-b border-[#22252D]">
+        <TwView className="flex-row items-center bg-[#15171E] rounded-xl w-full h-12 px-4 border border-[#22252D]">
+          <Search color="#6B7280" size={20} />
           <TextInput 
-            className="flex-1 text-white ml-2 text-sm"
-            placeholder="Search customer..."
-            placeholderTextColor="#64748b"
+            placeholder="Search customers..."
+            placeholderTextColor="#6B7280"
+            style={{ flex: 1, color: 'white', marginLeft: 8, fontSize: 14 }}
           />
-        </View>
-        <Pressable className="bg-[#0e1423] border border-[#1e2942] w-12 h-12 rounded-xl items-center justify-center">
-          <Filter color="#94a3b8" size={20} />
-        </Pressable>
-      </View>
+        </TwView>
+      </TwView>
 
-      {/* Tabs */}
-      <View className="px-6 mb-6">
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row">
-          <View className="mr-6 border-b-2 border-[#FF8C00] pb-2">
-            <Text className="text-[#FF8C00] font-semibold text-sm">All (3456)</Text>
-          </View>
-          <View className="mr-6 pb-2">
-            <Text className="text-[#94a3b8] font-medium text-sm">Retail (2745)</Text>
-          </View>
-          <View className="mr-6 pb-2">
-            <Text className="text-[#94a3b8] font-medium text-sm">Wholesale (711)</Text>
-          </View>
-        </ScrollView>
-      </View>
-
-      {/* Customer List */}
-      <ScrollView className="flex-1 px-6 mb-24" showsVerticalScrollIndicator={false}>
-        {customers.map((customer, index) => (
-          <View key={index} className="bg-[#0e1423] border border-[#1e2942] rounded-2xl p-4 flex-row items-center mb-4">
-            <Image 
-              source={{ uri: customer.image }} 
-              className="w-12 h-12 rounded-full mr-4 bg-[#161f33] border border-[#1e2942]" 
-            />
-            <View className="flex-1">
-              <Text className="text-white font-medium text-sm mb-1">{customer.name}</Text>
-              <Text className="text-[#94a3b8] text-xs">{customer.type}</Text>
-            </View>
-            
-            <View className="items-end justify-between self-stretch py-0.5">
-              <ChevronRight color="#64748b" size={16} />
-              {customer.credit ? (
-                <View className="bg-[#102b1f] px-2 py-1 rounded">
-                  <Text className="text-[#34d399] text-[10px] font-medium">{customer.credit}</Text>
-                </View>
-              ) : (
-                <Text className="text-[#94a3b8] text-[10px]">Orders: {customer.orders}</Text>
-              )}
-            </View>
-          </View>
-        ))}
+      <ScrollView contentContainerStyle={{ padding: 24 }} showsVerticalScrollIndicator={false}>
+        <CustomerCard 
+          name="Rahul Sharma" 
+          initials="R" 
+          bg="#9A4D1A" 
+          phone="+91 9876543210" 
+          joined="5 May 2025" 
+          orders="12" 
+          spent="₹45,200" 
+        />
+        <CustomerCard 
+          name="Vivek Kumar" 
+          initials="V" 
+          bg="#1E3A8A" 
+          phone="+91 9876543211" 
+          joined="20 Apr 2025" 
+          orders="8" 
+          spent="₹28,500" 
+        />
+        <CustomerCard 
+          name="MS Dhoni" 
+          initials="M" 
+          bg="#927110" 
+          phone="+91 9876543212" 
+          joined="15 Mar 2025" 
+          orders="24" 
+          spent="₹1,12,400" 
+        />
+        <CustomerCard 
+          name="Rohit Das" 
+          initials="R" 
+          bg="#4C1D95" 
+          phone="+91 9876543213" 
+          joined="10 Feb 2025" 
+          orders="5" 
+          spent="₹14,900" 
+        />
+        <CustomerCard 
+          name="Arjun Mehta" 
+          initials="A" 
+          bg="#065F46" 
+          phone="+91 9876543214" 
+          joined="1 Jan 2025" 
+          orders="3" 
+          spent="₹6,200" 
+        />
       </ScrollView>
-
-      {/* Tab Bar Placeholder */}
-      <View className="absolute bottom-0 w-full bg-[#0e1423] border-t border-[#1e2942] flex-row justify-between items-center py-4 px-8 pb-8">
-        <Pressable className="items-center">
-          <Home color="#64748b" size={24} />
-          <Text className="text-[#64748b] text-[10px] mt-1 font-medium">Dashboard</Text>
-        </Pressable>
-        <Pressable className="items-center">
-          <ClipboardList color="#64748b" size={24} />
-          <Text className="text-[#64748b] text-[10px] mt-1 font-medium">Orders</Text>
-        </Pressable>
-        <Pressable className="items-center">
-          <Package color="#64748b" size={24} />
-          <Text className="text-[#64748b] text-[10px] mt-1 font-medium">Products</Text>
-        </Pressable>
-        <Pressable className="items-center">
-          <List color="#FF8C00" size={24} />
-          <Text className="text-[#FF8C00] text-[10px] mt-1 font-medium">More</Text>
-        </Pressable>
-      </View>
-    </View>
+    </SafeAreaView>
   );
 }
