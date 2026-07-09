@@ -3,7 +3,8 @@ import { View, Text, Pressable, ScrollView } from '../src/tw';
 import { Image } from 'react-native';
 import { ShieldCheck, BarChart3, Clock, Phone } from 'lucide-react-native';
 import Svg, { Path } from 'react-native-svg';
-import { useSSO } from '@clerk/clerk-expo';
+import { useSSO, useAuth } from '@clerk/clerk-expo';
+import { Redirect } from 'expo-router';
 import * as WebBrowser from "expo-web-browser";
 
 WebBrowser.maybeCompleteAuthSession();
@@ -46,6 +47,11 @@ const SportsLogo = () => (
 export default function AuthScreen() {
   useWarmUpBrowser();
   const { startSSOFlow } = useSSO();
+  const { isSignedIn } = useAuth();
+
+  if (isSignedIn) {
+    return <Redirect href="/dashboard" />;
+  }
 
   const handleOAuth = React.useCallback(async (strategy: "oauth_google" | "oauth_apple") => {
     try {
