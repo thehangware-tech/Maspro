@@ -18,5 +18,11 @@
     "prettier": "^3.0.0",
     "turbo": "latest"
   },
-  "packageManager": "bun@1.0.0"
+  "packageManager": "bun@1.0.0",
+  "resolutions": {
+    "lightningcss": "1.30.1"
+  },
+  "overrides": {
+    "lightningcss": "1.30.1"
+  }
 }

@@ -12,6 +12,6 @@
     "react": "latest",
     "react-native": "latest",
     "@sports/auth": "workspace:*",
-    "@sports/ui": "workspace:*"
+    "@sports/db": "workspace:*"
   }
 }
