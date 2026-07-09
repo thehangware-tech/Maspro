@@ -1,11 +1,10 @@
-import React from 'react';
-import { View, Image, StatusBar, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Image, StatusBar, ScrollView, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ShieldCheck, Clock, BarChart3, Phone } from 'lucide-react-native';
-import Svg, { Path, Circle } from 'react-native-svg';
 import { useRouter } from 'expo-router';
 import { View as TwView, Text as TwText, Pressable as TwPressable } from '../src/tw';
 import { LinearGradient } from 'expo-linear-gradient';
+import Svg, { Path, Circle } from 'react-native-svg';
 
 const MasproLogo = () => (
   <TwView className="items-center justify-center mt-10 mb-4 z-10">
@@ -34,14 +33,20 @@ const GoogleIcon = () => (
   </Svg>
 );
 
-const AppleIcon = () => (
-  <Svg width="24" height="24" viewBox="0 0 24 24" fill="#000000">
-    <Path d="M17.05 13.92c-.03-2.58 2.1-3.83 2.19-3.89-1.2-1.75-3.07-1.99-3.75-2.01-1.6-.16-3.12.94-3.94.94-.8 0-2.06-.92-3.41-.9-1.73.02-3.32 1-4.22 2.56-1.83 3.16-.47 7.82 1.3 10.37.87 1.25 1.89 2.65 3.25 2.6 1.32-.05 1.82-.85 3.42-.85 1.58 0 2.05.85 3.44.82 1.4-.02 2.27-1.25 3.13-2.5 1-1.47 1.41-2.9 1.44-2.98-.03-.01-2.77-1.06-2.8-4.16M14.97 6.94c.73-.89 1.22-2.13 1.09-3.37-1.07.04-2.36.71-3.11 1.61-.67.79-1.26 2.05-1.11 3.27 1.2.09 2.39-.62 3.13-1.51"/>
-  </Svg>
-);
-
-export default function WelcomeScreen() {
+export default function LoginScreen() {
   const router = useRouter();
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  const handleGetOTP = () => {
+    // In a real app, you would initiate the phone verification here
+    // For now, just navigate to the OTP screen
+    if (phoneNumber.length >= 10) {
+      router.push({
+        pathname: "/(auth)/otp",
+        params: { phone: `+91${phoneNumber}` }
+      });
+    }
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: '#0A0D14' }}>
@@ -66,7 +71,7 @@ export default function WelcomeScreen() {
             <MasproLogo />
           </View>
 
-          <TwView className="px-6 pb-8">
+          <TwView className="px-6 pb-12">
             <TwView className="items-center mb-8 mt-10">
               <TwText className="text-white text-3xl font-bold mb-2">Welcome Back! 👋</TwText>
               <TwText className="text-gray-400 text-base text-center">
@@ -74,23 +79,29 @@ export default function WelcomeScreen() {
               </TwText>
             </TwView>
 
-            {/* Features Bar */}
-            <TwView className="bg-[#15171E] rounded-2xl p-4 flex-row justify-between items-center mb-8 border border-[#22252D]">
-              <TwView className="flex-row items-center flex-1 justify-center">
-                <ShieldCheck color="#FF6B00" size={16} />
-                <TwText className="text-gray-300 text-xs ml-2">Secure Access</TwText>
-              </TwView>
-              <TwView className="w-[1px] h-6 bg-[#22252D]" />
-              <TwView className="flex-row items-center flex-1 justify-center">
-                <Clock color="#FF6B00" size={16} />
-                <TwText className="text-gray-300 text-xs ml-2">Real-time Data</TwText>
-              </TwView>
-              <TwView className="w-[1px] h-6 bg-[#22252D]" />
-              <TwView className="flex-row items-center flex-1 justify-center">
-                <BarChart3 color="#FF6B00" size={16} />
-                <TwText className="text-gray-300 text-xs ml-2">Manage Easily</TwText>
-              </TwView>
+            {/* Mobile Number Input */}
+            <TwView className="bg-[#15171E] rounded-2xl h-14 flex-row items-center px-4 border border-[#22252D] mb-4">
+              <TwText className="text-white font-medium text-base mr-3">+91</TwText>
+              <TwView className="w-[1px] h-6 bg-[#22252D] mr-3" />
+              <TextInput
+                style={{ flex: 1, color: 'white', fontSize: 16 }}
+                placeholder="Enter Mobile Number"
+                placeholderTextColor="#6B7280"
+                keyboardType="phone-pad"
+                value={phoneNumber}
+                onChangeText={setPhoneNumber}
+                maxLength={10}
+              />
             </TwView>
+
+            {/* Get OTP Button */}
+            <TwPressable 
+              className={`rounded-2xl h-14 items-center justify-center mb-8 ${phoneNumber.length >= 10 ? 'bg-[#FF6B00]' : 'bg-[#FF6B00]/50'}`}
+              onPress={handleGetOTP}
+              disabled={phoneNumber.length < 10}
+            >
+              <TwText className="text-white font-bold text-base">GET OTP</TwText>
+            </TwPressable>
 
             {/* Divider */}
             <TwView className="flex-row items-center justify-center mb-6">
@@ -99,47 +110,21 @@ export default function WelcomeScreen() {
               <TwView className="flex-1 h-[1px] bg-[#22252D]" />
             </TwView>
 
-            {/* Auth Buttons */}
-            <TwView className="space-y-4 gap-y-4">
-              <TwPressable 
-                className="bg-white rounded-2xl flex-row items-center justify-center h-14"
-                onPress={() => console.log('Google Auth')}
-              >
-                <TwView className="absolute left-6">
-                  <GoogleIcon />
-                </TwView>
-                <TwText className="text-black font-semibold text-base">Continue with Google</TwText>
-              </TwPressable>
+            {/* Google Auth Button */}
+            <TwPressable 
+              className="bg-white rounded-2xl flex-row items-center justify-center h-14 mb-4"
+              onPress={() => console.log('Google Auth')}
+            >
+              <TwView className="absolute left-6">
+                <GoogleIcon />
+              </TwView>
+              <TwText className="text-black font-semibold text-base">Continue with Google</TwText>
+            </TwPressable>
 
-              <TwPressable 
-                className="bg-white rounded-2xl flex-row items-center justify-center h-14"
-                onPress={() => console.log('Apple Auth')}
-              >
-                <TwView className="absolute left-6">
-                  <AppleIcon />
-                </TwView>
-                <TwText className="text-black font-semibold text-base">Continue with Apple</TwText>
-              </TwPressable>
-
-              <TwPressable 
-                className="bg-white rounded-2xl flex-row items-center justify-center h-14"
-                onPress={() => router.push('/(auth)/phone')}
-              >
-                <TwView className="absolute left-6">
-                  <Phone color="#FF6B00" size={24} />
-                </TwView>
-                <TwText className="text-black font-semibold text-base">Continue with Phone Number</TwText>
-              </TwPressable>
-            </TwView>
-
-            {/* Footer */}
-            <TwView className="flex-row items-center justify-center mt-10">
-              <ShieldCheck color="#FF6B00" size={16} />
-              <TwText className="text-gray-500 text-xs ml-2">Your data is 100% secure and encrypted</TwText>
-            </TwView>
           </TwView>
         </ScrollView>
       </SafeAreaView>
     </View>
   );
 }
+

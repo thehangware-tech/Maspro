@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, Pressable, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, Pressable, TextInput, KeyboardAvoidingView, Platform, Alert, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowLeft, Phone, ShieldCheck, ChevronDown } from 'lucide-react-native';
 import Svg, { Path, Circle } from 'react-native-svg';
-import { View as TwView, Text as TwText, Pressable as TwPressable, TextInput as TwTextInput } from '../src/tw';
+import { View as TwView, Text as TwText, Pressable as TwPressable, TextInput as TwTextInput } from '../../src/tw';
+import { useRouter } from 'expo-router';
+import { useSignIn, useSignUp } from '@clerk/clerk-expo';
 
 const MasproLogo = () => (
   <TwView className="items-center justify-center mt-4 mb-6">
@@ -21,11 +23,18 @@ const MasproLogo = () => (
     </TwView>
   </TwView>
 );
-import { useRouter } from 'expo-router';
 
 export default function AuthScreen() {
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const handleSendOTP = () => {
+    if (!phoneNumber) {
+      Alert.alert("Invalid Phone Number", "Please enter a valid phone number");
+      return;
+    }
+    router.push({ pathname: '/(auth)/otp', params: { phone: `+91 ${phoneNumber}` } });
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#0A0D14' }}>
@@ -75,8 +84,16 @@ export default function AuthScreen() {
         </TwView>
 
         {/* Send OTP Button */}
-        <TwPressable className="bg-[#FF6B00] h-14 rounded-2xl items-center justify-center mb-6">
-          <TwText className="text-white font-bold text-lg">Send OTP</TwText>
+        <TwPressable 
+          className="bg-[#FF6B00] h-14 rounded-2xl items-center justify-center mb-6"
+          onPress={handleSendOTP}
+          disabled={loading}
+        >
+          {loading ? (
+            <ActivityIndicator color="white" />
+          ) : (
+            <TwText className="text-white font-bold text-lg">Send OTP</TwText>
+          )}
         </TwPressable>
 
         {/* Info Box */}

@@ -1,8 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { View as TwView, Text as TwText, Pressable as TwPressable, TextInput as TwTextInput, SafeAreaView as TwSafeAreaView } from '../src/tw';
+import { View as TwView, Text as TwText, Pressable as TwPressable, TextInput as TwTextInput, SafeAreaView as TwSafeAreaView } from '../../src/tw';
 import { Svg, Path } from 'react-native-svg';
 import { StatusBar } from 'expo-status-bar';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useSignIn, useSignUp } from '@clerk/clerk-expo';
+import { ActivityIndicator, Alert } from 'react-native';
 
 // Arrow Left
 const ArrowLeft = () => (
@@ -13,8 +15,12 @@ const ArrowLeft = () => (
 
 export default function OTP() {
   const router = useRouter();
+  const { phone, isSignUp } = useLocalSearchParams();
   const [code, setCode] = useState(['', '', '', '', '', '']);
   const inputs = useRef<Array<any>>([]);
+  const { signIn, setActive: setSignInActive } = useSignIn();
+  const { signUp, setActive: setSignUpActive } = useSignUp();
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (text: string, index: number) => {
     const newCode = [...code];
@@ -30,6 +36,15 @@ export default function OTP() {
     if (e.nativeEvent.key === 'Backspace' && !code[index] && index > 0) {
       inputs.current[index - 1].focus();
     }
+  };
+
+  const handleVerify = () => {
+    const fullCode = code.join('');
+    if (fullCode.length < 0) {
+      Alert.alert('Incomplete OTP', 'Please enter the 6-digit OTP');
+      return;
+    }
+    router.replace('/(tabs)');
   };
 
   return (
@@ -50,7 +65,7 @@ export default function OTP() {
             Enter the 6-digit code sent to
           </TwText>
           <TwText className="text-white text-base font-bold mb-10">
-            +91 98765 43210
+            {phone || '+91 98765 43210'}
           </TwText>
 
           {/* OTP Input Squares */}
@@ -59,11 +74,11 @@ export default function OTP() {
               <TwView 
                 key={index}
                 className={`w-12 h-14 rounded-xl items-center justify-center bg-[#13161F] border ${
-                  index === 0 && digit !== '' ? 'border-[#FF6B00]' : 'border-transparent'
+                  digit !== '' ? 'border-[#FF6B00]' : 'border-transparent'
                 }`}
               >
                 <TwTextInput
-                  ref={(ref: any) => inputs.current[index] = ref}
+                  ref={(ref: any) => { if (ref) inputs.current[index] = ref as any; }}
                   className="text-white text-xl font-bold text-center w-full h-full"
                   keyboardType="number-pad"
                   maxLength={1}
@@ -85,9 +100,14 @@ export default function OTP() {
           {/* Action Button */}
           <TwPressable 
             className="w-full bg-[#FF6B00] h-14 rounded-xl items-center justify-center mb-8"
-            onPress={() => router.replace('/(tabs)')}
+            onPress={handleVerify}
+            disabled={loading}
           >
-            <TwText className="text-white font-bold text-base">Verify & Login</TwText>
+            {loading ? (
+              <ActivityIndicator color="white" />
+            ) : (
+              <TwText className="text-white font-bold text-base">Verify & Login</TwText>
+            )}
           </TwPressable>
         </TwView>
       </TwView>

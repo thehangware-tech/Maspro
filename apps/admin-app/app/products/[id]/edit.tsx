@@ -1,17 +1,18 @@
-import React from 'react';
-import { View, ScrollView, StatusBar, TextInput, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useState } from 'react';
+import { View, ScrollView, StatusBar, TextInput, Image, KeyboardAvoidingView, Platform, Switch } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ArrowLeft, Plus, ChevronDown } from 'lucide-react-native';
-import { View as TwView, Text as TwText, Pressable as TwPressable } from '../../src/tw';
+import { View as TwView, Text as TwText, Pressable as TwPressable } from '../../../src/tw';
 import { useRouter } from 'expo-router';
 
-const InputField = ({ label, placeholder, flex = 1, isDropdown = false, keyboardType = 'default' }: any) => (
+const InputField = ({ label, placeholder, value, flex = 1, isDropdown = false, keyboardType = 'default' }: any) => (
   <TwView className="mb-4" style={{ flex }}>
     <TwText className="text-gray-400 text-xs mb-2 font-medium">{label}</TwText>
     <TwView className="bg-[#15171E] rounded-xl border border-[#22252D] h-12 flex-row items-center px-4">
       <TextInput 
         placeholder={placeholder}
         placeholderTextColor="#6B7280"
+        value={value}
         style={{ flex: 1, color: 'white', fontSize: 14 }}
         keyboardType={keyboardType}
         editable={!isDropdown}
@@ -21,8 +22,9 @@ const InputField = ({ label, placeholder, flex = 1, isDropdown = false, keyboard
   </TwView>
 );
 
-export default function AddProductScreen() {
+export default function EditProductScreen() {
   const router = useRouter();
+  const [isActive, setIsActive] = useState(true);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#0A0D14' }}>
@@ -33,7 +35,7 @@ export default function AddProductScreen() {
         <TwPressable onPress={() => router.back()} className="mr-4">
           <ArrowLeft color="white" size={24} />
         </TwPressable>
-        <TwText className="text-white text-lg font-bold flex-1">Add Product</TwText>
+        <TwText className="text-white text-lg font-bold flex-1">Edit Product</TwText>
       </TwView>
 
       <KeyboardAvoidingView 
@@ -61,29 +63,40 @@ export default function AddProductScreen() {
           </TwView>
 
           {/* Form Fields */}
-          <InputField label="Product Name" placeholder="Enter product name" />
-          <InputField label="Category" placeholder="Select Category" isDropdown={true} />
+          <InputField label="Product Name" value="SS Master 1000 Cricket Bat" />
+          <InputField label="Category" value="Cricket" isDropdown={true} />
           
           <TwView className="flex-row space-x-4 gap-x-4">
-            <InputField label="Brand" placeholder="Select Brand" isDropdown={true} />
-            <InputField label="SKU" placeholder="Enter SKU" />
+            <InputField label="Brand" value="SS" isDropdown={true} />
+            <InputField label="SKU" value="SSM1000" />
           </TwView>
 
           <TwView className="flex-row space-x-4 gap-x-4">
-            <InputField label="Retail Price (₹)" placeholder="0.00" keyboardType="numeric" />
-            <InputField label="Wholesale Price (₹)" placeholder="0.00" keyboardType="numeric" />
+            <InputField label="Retail Price (₹)" value="2,999" keyboardType="numeric" />
+            <InputField label="Wholesale Price (₹)" value="2,100" keyboardType="numeric" />
           </TwView>
 
           <TwView className="flex-row space-x-4 gap-x-4">
-            <InputField label="Stock Quantity" placeholder="0" keyboardType="numeric" />
-            <InputField label="Min. Wholesale Qty" placeholder="0" keyboardType="numeric" />
+            <InputField label="Stock Quantity" value="25" keyboardType="numeric" />
+            <InputField label="Min. Wholesale Qty" value="5" keyboardType="numeric" />
+          </TwView>
+
+          {/* Product Status */}
+          <TwView className="flex-row items-center justify-between mt-4 mb-4">
+            <TwText className="text-gray-400 text-sm font-medium">Product Status</TwText>
+            <Switch 
+              value={isActive} 
+              onValueChange={setIsActive}
+              trackColor={{ false: '#22252D', true: '#FF6B00' }}
+              thumbColor={'#FFFFFF'}
+            />
           </TwView>
         </ScrollView>
 
         {/* Save Button */}
         <TwView className="absolute bottom-0 w-full px-6 py-4 bg-[#0A0D14] border-t border-[#22252D]">
           <TwPressable onPress={() => router.back()} className="bg-[#FF6B00] rounded-xl h-12 items-center justify-center w-full">
-            <TwText className="text-white font-bold text-base">Save Product</TwText>
+            <TwText className="text-white font-bold text-base">Update Product</TwText>
           </TwPressable>
         </TwView>
       </KeyboardAvoidingView>

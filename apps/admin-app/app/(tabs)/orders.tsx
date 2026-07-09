@@ -44,11 +44,11 @@ export default function OrdersScreen() {
       
       {/* Header */}
       <TwView className="flex-row items-center justify-between px-6 py-4">
-        <TwPressable>
+        <TwPressable onPress={() => router.push('/settings')}>
           <Menu color="white" size={24} />
         </TwPressable>
         <TwText className="text-white text-lg font-bold">Orders</TwText>
-        <TwPressable>
+        <TwPressable onPress={() => router.push('/notifications')}>
           <Bell color="white" size={24} />
           <TwView className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full items-center justify-center">
             <TwText className="text-white text-[10px] font-bold">0</TwText>

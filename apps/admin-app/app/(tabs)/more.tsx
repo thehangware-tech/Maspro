@@ -26,6 +26,9 @@ const MenuItem = ({ icon: Icon, title, route, color = "#6B7280" }: any) => {
 
 export default function MoreMenuScreen() {
   const router = useRouter();
+  const handleSignOut = () => {
+    router.replace('/');
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#0A0D14' }}>
@@ -63,11 +66,11 @@ export default function MoreMenuScreen() {
         <TwView className="mb-8">
           <TwText className="text-gray-500 font-bold text-xs uppercase tracking-widest mb-2">System</TwText>
           <TwView className="bg-[#15171E] rounded-2xl px-4 border border-[#22252D]">
-            <MenuItem icon={Settings} title="Settings" />
+            <MenuItem icon={Settings} title="Settings" route="/settings" />
             
             <TwPressable 
               className="flex-row items-center py-4"
-              onPress={() => router.replace('/')}
+              onPress={handleSignOut}
             >
               <TwView className="flex-row items-center">
                 <TwView className="w-10 h-10 rounded-xl bg-[#2a1313] items-center justify-center mr-4 border border-[#4a1c1c]">

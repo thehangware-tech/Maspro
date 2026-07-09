@@ -5,10 +5,25 @@ import { Menu, Bell, Calendar as CalendarIcon, ShoppingBag, Banknote, Users, Pac
 import Svg, { Path, Polyline, Circle, Defs, LinearGradient, Stop } from 'react-native-svg';
 import { View as TwView, Text as TwText, Pressable as TwPressable } from '../../src/tw';
 
+const HeaderLogo = () => (
+  <TwView className="flex-row items-center justify-center">
+    <TwView className="mr-2">
+      <Svg width="24" height="24" viewBox="0 0 40 40" fill="none">
+        <Path d="M8 30 L15 15 L20 25 L28 10 L35 30" stroke="#FF6B00" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+        <Circle cx="12" cy="10" r="3" fill="#FF6B00" />
+      </Svg>
+    </TwView>
+    <TwView>
+      <TwText className="text-white font-extrabold text-[16px] tracking-widest leading-none">MASPRO</TwText>
+      <TwText className="text-[#FF6B00] font-extrabold text-[8px] tracking-widest leading-none mt-0.5">SPORTS INDIA</TwText>
+    </TwView>
+  </TwView>
+);
+
 const { width } = Dimensions.get('window');
 
-const StatCard = ({ title, value, change, isPositive, icon: Icon, iconBg }: any) => (
-  <TwView className="bg-[#15171E] rounded-2xl p-4 flex-1 border border-[#22252D]">
+const StatCard = ({ title, value, change, isPositive, icon: Icon, iconBg, onPress }: any) => (
+  <TwPressable onPress={onPress} className="bg-[#15171E] rounded-2xl p-4 flex-1 border border-[#22252D]">
     <TwView className="flex-row items-center mb-3">
       <TwView className={`w-8 h-8 rounded-lg items-center justify-center mr-3`} style={{ backgroundColor: iconBg }}>
         <Icon color="white" size={16} />
@@ -22,21 +37,24 @@ const StatCard = ({ title, value, change, isPositive, icon: Icon, iconBg }: any)
       </TwText>
       <TwText className="text-gray-500 text-xs ml-1">vs yesterday</TwText>
     </TwView>
-  </TwView>
+  </TwPressable>
 );
 
+import { useRouter } from 'expo-router';
+
 export default function DashboardScreen() {
+  const router = useRouter();
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#0A0D14' }}>
       <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
       
       {/* Header */}
       <TwView className="flex-row items-center justify-between px-6 py-4">
-        <TwPressable>
+        <TwPressable onPress={() => router.push('/settings')}>
           <Menu color="white" size={24} />
         </TwPressable>
-        <TwText className="text-white text-lg font-bold">Dashboard</TwText>
-        <TwPressable>
+        <HeaderLogo />
+        <TwPressable onPress={() => router.push('/notifications')}>
           <Bell color="white" size={24} />
           <TwView className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full items-center justify-center">
             <TwText className="text-white text-[10px] font-bold">0</TwText>
@@ -65,7 +83,8 @@ export default function DashboardScreen() {
             change="12.5%" 
             isPositive={true} 
             icon={ShoppingBag} 
-            iconBg="#FF6B00" 
+            iconBg="#FF6B00"
+            onPress={() => router.push('/(tabs)/orders')} 
           />
           <StatCard 
             title="Revenue" 
@@ -74,6 +93,7 @@ export default function DashboardScreen() {
             isPositive={true} 
             icon={Banknote} 
             iconBg="#10B981" 
+            onPress={() => router.push('/reports')}
           />
         </TwView>
         <TwView className="flex-row justify-between space-x-4 mb-8 gap-x-4">
@@ -84,14 +104,16 @@ export default function DashboardScreen() {
             isPositive={true} 
             icon={Users} 
             iconBg="#3B82F6" 
+            onPress={() => router.push('/customers')}
           />
           <StatCard 
             title="Products" 
             value="982" 
             change="3.1%" 
-            isPositive={true} 
+            isPositive={false} 
             icon={Package} 
             iconBg="#8B5CF6" 
+            onPress={() => router.push('/(tabs)/products')}
           />
         </TwView>
 
@@ -113,14 +135,21 @@ export default function DashboardScreen() {
             </TwView>
           </TwView>
 
-          {/* Simple Chart */}
-          <TwView className="h-[150px] w-full">
-            <Svg width="100%" height="100%" viewBox="0 0 300 150">
-              {/* Grid Lines */}
-              <Path d="M0 20 L300 20" stroke="#22252D" strokeWidth="1" strokeDasharray="4 4" />
-              <Path d="M0 60 L300 60" stroke="#22252D" strokeWidth="1" strokeDasharray="4 4" />
-              <Path d="M0 100 L300 100" stroke="#22252D" strokeWidth="1" strokeDasharray="4 4" />
-              <Path d="M0 140 L300 140" stroke="#22252D" strokeWidth="1" strokeDasharray="4 4" />
+          <TwView className="flex-row">
+            <TwView className="justify-between py-2 mr-2">
+              <TwText className="text-gray-500 text-[10px]">40k</TwText>
+              <TwText className="text-gray-500 text-[10px]">30k</TwText>
+              <TwText className="text-gray-500 text-[10px]">20k</TwText>
+              <TwText className="text-gray-500 text-[10px]">10k</TwText>
+              <TwText className="text-gray-500 text-[10px]">0</TwText>
+            </TwView>
+            <TwView className="h-[150px] flex-1">
+              <Svg width="100%" height="100%" viewBox="0 0 300 150" preserveAspectRatio="none">
+                {/* Grid Lines */}
+                <Path d="M0 20 L300 20" stroke="#22252D" strokeWidth="1" strokeDasharray="4 4" />
+                <Path d="M0 60 L300 60" stroke="#22252D" strokeWidth="1" strokeDasharray="4 4" />
+                <Path d="M0 100 L300 100" stroke="#22252D" strokeWidth="1" strokeDasharray="4 4" />
+                <Path d="M0 140 L300 140" stroke="#22252D" strokeWidth="1" strokeDasharray="4 4" />
               
               {/* Chart Line */}
               <Polyline 
@@ -140,11 +169,12 @@ export default function DashboardScreen() {
               <Circle cx="280" cy="60" r="4" fill="#FF6B00" stroke="#0A0D14" strokeWidth="2" />
               <Circle cx="300" cy="20" r="4" fill="#FF6B00" stroke="#0A0D14" strokeWidth="2" />
             </Svg>
-            <TwView className="flex-row justify-between mt-2 px-2">
-              <TwText className="text-gray-500 text-[10px]">01 May</TwText>
-              <TwText className="text-gray-500 text-[10px]">03 May</TwText>
-              <TwText className="text-gray-500 text-[10px]">05 May</TwText>
-              <TwText className="text-gray-500 text-[10px]">07 May</TwText>
+              <TwView className="flex-row justify-between mt-2 pl-4 pr-1">
+                <TwText className="text-gray-500 text-[10px]">01 May</TwText>
+                <TwText className="text-gray-500 text-[10px]">03 May</TwText>
+                <TwText className="text-gray-500 text-[10px]">05 May</TwText>
+                <TwText className="text-gray-500 text-[10px]">07 May</TwText>
+              </TwView>
             </TwView>
           </TwView>
         </TwView>
@@ -153,7 +183,9 @@ export default function DashboardScreen() {
         <TwView className="mb-4">
           <TwView className="flex-row justify-between items-center mb-4">
             <TwText className="text-white text-lg font-bold">Top Selling Product</TwText>
-            <TwText className="text-[#FF6B00] text-xs font-medium">View All</TwText>
+            <TwPressable onPress={() => router.push('/(tabs)/products')}>
+              <TwText className="text-[#FF6B00] text-xs font-medium">View All</TwText>
+            </TwPressable>
           </TwView>
           
           <TwView className="bg-[#15171E] rounded-2xl p-4 flex-row items-center border border-[#22252D]">
@@ -166,7 +198,7 @@ export default function DashboardScreen() {
             </TwView>
             <TwView className="flex-1">
               <TwText className="text-white font-bold text-base mb-1">Nike Air Zoom Pegasus 40</TwText>
-              <TwText className="text-[#FF6B00] font-medium text-xs">289 Sold</TwText>
+              <TwText className="text-[#FF6B00] font-medium text-xs">261 Sold</TwText>
             </TwView>
           </TwView>
         </TwView>
