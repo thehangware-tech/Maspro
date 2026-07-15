@@ -1,99 +1,231 @@
-import React from 'react';
-import { View as TwView, Text as TwText, Pressable as TwPressable, TextInput as TwTextInput, SafeAreaView as TwSafeAreaView, ScrollView as TwScrollView } from '../../src/tw';
-import { Svg, Path, Circle, Line } from 'react-native-svg';
-import { StatusBar } from 'expo-status-bar';
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+  StatusBar,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { router } from "expo-router";
+import Svg, { Path, Circle } from "react-native-svg";
+import { useFilterStore } from "../../src/store/filterStore";
 
-// Icons
-const ArrowLeft = () => (
-  <Svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <Path d="M15 18l-6-6 6-6" />
+const BackIcon = () => (
+  <Svg width={22} height={22} viewBox="0 0 24 24" fill="none">
+    <Path
+      d="M15 18l-6-6 6-6"
+      stroke="#111827"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </Svg>
 );
-
-const CartIcon = () => (
-  <Svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <Circle cx="9" cy="21" r="1" />
-    <Circle cx="20" cy="21" r="1" />
-    <Path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+const ChevronRight = () => (
+  <Svg width={16} height={16} viewBox="0 0 24 24" fill="none">
+    <Path
+      d="M9 18l6-6-6-6"
+      stroke="#9CA3AF"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </Svg>
 );
-
 const SearchIcon = () => (
-  <Svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <Circle cx="11" cy="11" r="8" />
-    <Line x1="21" y1="21" x2="16.65" y2="16.65" />
+  <Svg width={16} height={16} viewBox="0 0 24 24" fill="none">
+    <Circle cx="11" cy="11" r="8" stroke="#9CA3AF" strokeWidth="2" />
+    <Path
+      d="M21 21l-4.35-4.35"
+      stroke="#9CA3AF"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
   </Svg>
 );
 
-const CATEGORIES = [
-  { name: 'Cricket', count: '120+', emoji: '🏏' },
-  { name: 'Football', count: '98+', emoji: '⚽' },
-  { name: 'Running', count: '75+', emoji: '🏃' },
-  { name: 'Fitness', count: '60+', emoji: '🏋️' },
-  { name: 'Badminton', count: '55+', emoji: '🏸' },
-  { name: 'Tennis', count: '40+', emoji: '🎾' },
-  { name: 'Basketball', count: '45+', emoji: '🏀' },
-  { name: 'Accessories', count: '100+', emoji: '🎒' },
+const CATS = [
+  {
+    id: "cricket",
+    name: "Cricket",
+    icon: "🏏",
+    count: 120,
+    sub: "Bats, Balls, Gloves, Pads, Helmets, Accessories",
+  },
+  {
+    id: "football",
+    name: "Football",
+    icon: "⚽",
+    count: 85,
+    sub: "Boots, Jerseys, Balls, Shin Guards",
+  },
+  {
+    id: "badminton",
+    name: "Badminton",
+    icon: "🏸",
+    count: 63,
+    sub: "Rackets, Shuttles, Shoes, Kits",
+  },
+  {
+    id: "basketball",
+    name: "Basketball",
+    icon: "🏀",
+    count: 47,
+    sub: "Balls, Shoes, Jerseys, Boards",
+  },
+  {
+    id: "volleyball",
+    name: "Volleyball",
+    icon: "🏐",
+    count: 38,
+    sub: "Balls, Nets, Knee Pads, Shoes",
+  },
+  {
+    id: "tennis",
+    name: "Tennis",
+    icon: "🎾",
+    count: 55,
+    sub: "Rackets, Balls, Strings, Bags",
+  },
+  {
+    id: "swimming",
+    name: "Swimming",
+    icon: "🏊",
+    count: 42,
+    sub: "Goggles, Swimwear, Caps, Fins",
+  },
+  {
+    id: "running",
+    name: "Running",
+    icon: "🏃",
+    count: 91,
+    sub: "Shoes, Tracks, Socks, Watches",
+  },
+  {
+    id: "fitness",
+    name: "Fitness",
+    icon: "🏋️",
+    count: 114,
+    sub: "Weights, Bands, Yoga, Supplements",
+  },
+  {
+    id: "sportswear",
+    name: "Sportswear",
+    icon: "👕",
+    count: 200,
+    sub: "Jerseys, Shorts, Jackets, Caps",
+  },
+  {
+    id: "accessories",
+    name: "Accessories",
+    icon: "🎒",
+    count: 76,
+    sub: "Bags, Bottles, Towels, Socks",
+  },
 ];
 
 export default function Categories() {
+  const setCategory = useFilterStore((s) => s.setCategory);
+
+  const handleCategoryPress = (catId: string, catName: string) => {
+    setCategory(catId);
+    router.push({ pathname: "/product-list", params: { name: catName } });
+  };
+
   return (
-    <TwSafeAreaView className="flex-1 bg-[#0B0D14]">
-      <StatusBar style="light" />
-      
+    <SafeAreaView style={styles.root} edges={["top"]}>
+      <StatusBar barStyle="dark-content" />
+
       {/* Header */}
-      <TwView className="flex-row justify-between items-center px-6 pt-4 pb-4">
-        <TwPressable className="w-10 h-10 justify-center">
-          <ArrowLeft />
-        </TwPressable>
-        
-        <TwText className="text-white font-bold text-lg">Categories</TwText>
-
-        <TwPressable className="relative w-10 h-10 justify-center items-end">
-          <CartIcon />
-          <TwView className="absolute top-1 -right-1 bg-[#FF6B00] w-3.5 h-3.5 rounded-full items-center justify-center border border-[#0B0D14]">
-            <TwText className="text-white text-[8px] font-bold">1</TwText>
-          </TwView>
-        </TwPressable>
-      </TwView>
-
-      {/* Search */}
-      <TwView className="px-6 mb-6">
-        <TwView className="flex-row items-center bg-[#13161F] h-12 rounded-xl px-4">
+      <View style={styles.header}>
+        <Pressable onPress={() => router.back()} style={styles.backBtn}>
+          <BackIcon />
+        </Pressable>
+        <Text style={styles.headerTitle}>Categories</Text>
+        <Pressable style={styles.searchBtn}>
           <SearchIcon />
-          <TwTextInput 
-            className="flex-1 text-white mx-3 h-full"
-            placeholder="Search categories"
-            placeholderTextColor="#9CA3AF"
-          />
-        </TwView>
-      </TwView>
+        </Pressable>
+      </View>
 
-      {/* Grid */}
-      <TwScrollView className="flex-1" contentContainerClassName="px-6 pb-6">
-        <TwView className="flex-row flex-wrap justify-between">
-          {CATEGORIES.map((cat, index) => (
-            <TwPressable 
-              key={index} 
-              className="w-[48%] aspect-[4/5] bg-[#13161F] rounded-2xl mb-4 overflow-hidden relative"
-            >
-              {/* Fake gradient glow in center */}
-              <TwView className="absolute inset-0 items-center justify-center opacity-30">
-                <TwView className="w-24 h-24 bg-white rounded-full blur-xl" />
-              </TwView>
-              
-              <TwView className="flex-1 items-center justify-center pb-6">
-                <TwText className="text-6xl drop-shadow-xl">{cat.emoji}</TwText>
-              </TwView>
-              
-              <TwView className="absolute bottom-0 left-0 right-0 p-4">
-                <TwText className="text-white font-bold text-base mb-1">{cat.name}</TwText>
-                <TwText className="text-gray-400 text-xs">{cat.count} Products</TwText>
-              </TwView>
-            </TwPressable>
-          ))}
-        </TwView>
-      </TwScrollView>
-    </TwSafeAreaView>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ padding: 16, gap: 10, paddingBottom: 24 }}
+      >
+        {CATS.map((cat) => (
+          <Pressable
+            key={cat.id}
+            style={styles.catRow}
+            onPress={() => handleCategoryPress(cat.id, cat.name)}
+          >
+            {/* Icon */}
+            <View style={styles.catIconWrap}>
+              <Text style={{ fontSize: 36 }}>{cat.icon}</Text>
+            </View>
+            {/* Info */}
+            <View style={{ flex: 1, paddingHorizontal: 14 }}>
+              <Text style={styles.catName}>{cat.name}</Text>
+              <Text style={styles.catSub} numberOfLines={1}>
+                {cat.sub}
+              </Text>
+              <Text style={styles.catCount}>{cat.count}+ Products</Text>
+            </View>
+            <ChevronRight />
+          </Pressable>
+        ))}
+      </ScrollView>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  root: { flex: 1, backgroundColor: "#F8FAFC" },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    borderBottomColor: "#F3F4F6",
+  },
+  backBtn: { padding: 4, marginRight: 8 },
+  headerTitle: { flex: 1, fontSize: 18, fontWeight: "700", color: "#111827" },
+  searchBtn: {
+    width: 36,
+    height: 36,
+    backgroundColor: "#F3F4F6",
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  catRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    padding: 14,
+    shadowColor: "#FFFFFF",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  catIconWrap: {
+    width: 64,
+    height: 64,
+    borderRadius: 18,
+    backgroundColor: "#E0F2FE",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  catName: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#111827",
+    marginBottom: 3,
+  },
+  catSub: { fontSize: 11, color: "#6B7280", marginBottom: 4 },
+  catCount: { fontSize: 12, fontWeight: "700", color: "#0EA5E9" },
+});

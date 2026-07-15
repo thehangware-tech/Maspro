@@ -57,14 +57,14 @@ The tools available depend on your Aspire CLI version. Check with `aspire --vers
 
 These tools require a running AppHost (`aspire run`).
 
-| Tool                         | Description                                                                          |
-| ---------------------------- | ------------------------------------------------------------------------------------ |
-| `list_resources`             | Lists all resources, including state, health status, source, endpoints, and commands                |
-| `list_console_logs`          | Lists console logs for a resource                                                                   |
-| `list_structured_logs`       | Lists structured logs, optionally filtered by resource name                                         |
-| `list_traces`                | Lists distributed traces. Traces can be filtered using an optional resource name parameter          |
-| `list_trace_structured_logs` | Lists structured logs for a specific trace                                                          |
-| `execute_resource_command`   | Executes a resource command (accepts resource name and command name)                                |
+| Tool                         | Description                                                                                |
+| ---------------------------- | ------------------------------------------------------------------------------------------ |
+| `list_resources`             | Lists all resources, including state, health status, source, endpoints, and commands       |
+| `list_console_logs`          | Lists console logs for a resource                                                          |
+| `list_structured_logs`       | Lists structured logs, optionally filtered by resource name                                |
+| `list_traces`                | Lists distributed traces. Traces can be filtered using an optional resource name parameter |
+| `list_trace_structured_logs` | Lists structured logs for a specific trace                                                 |
+| `execute_resource_command`   | Executes a resource command (accepts resource name and command name)                       |
 
 #### AppHost management tools
 

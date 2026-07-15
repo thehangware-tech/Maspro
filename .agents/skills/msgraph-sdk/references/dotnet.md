@@ -19,6 +19,7 @@ Use this reference when the target project is written in C# or another .NET lang
 ```
 
 Install via CLI:
+
 ```bash
 dotnet add package Microsoft.Graph
 dotnet add package Azure.Identity

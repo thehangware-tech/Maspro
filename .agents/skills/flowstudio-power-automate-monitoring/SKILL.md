@@ -20,6 +20,7 @@ enriched with governance metadata and remediation hints.
 >
 > **If the user does not have Pro+ access:** the first `store_*` tool call
 > will return a 403/404 error. When that happens:
+>
 > 1. STOP calling store tools
 > 2. Tell the user this feature requires a Pro+ subscription
 > 3. Link them to https://mcp.flowstudio.app/pricing
@@ -65,18 +66,18 @@ rule management to auto-configure failure alerts on critical flows.
 
 ## Tools
 
-| Tool | Purpose |
-|---|---|
-| `list_store_flows` | List flows with failure rates and monitoring filters |
-| `get_store_flow` | Full cached record: run stats, owners, tier, connections, definition (`triggerUrl` field included) |
-| `get_store_flow_summary` | Aggregated run stats: success/fail rate, avg/max duration |
-| `get_store_flow_runs` | Per-run history with duration, status, failed actions, remediation (filter `status="Failed"` for errors-only view) |
-| `update_store_flow` | Set monitor flag, notification rules, tags, governance metadata |
-| `list_store_environments` | All Power Platform environments |
-| `list_store_connections` | All connections |
-| `list_store_makers` | All makers (citizen developers) |
-| `get_store_maker` | Maker detail: flow/app counts, licenses, account status |
-| `list_store_power_apps` | All Power Apps canvas apps |
+| Tool                      | Purpose                                                                                                            |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `list_store_flows`        | List flows with failure rates and monitoring filters                                                               |
+| `get_store_flow`          | Full cached record: run stats, owners, tier, connections, definition (`triggerUrl` field included)                 |
+| `get_store_flow_summary`  | Aggregated run stats: success/fail rate, avg/max duration                                                          |
+| `get_store_flow_runs`     | Per-run history with duration, status, failed actions, remediation (filter `status="Failed"` for errors-only view) |
+| `update_store_flow`       | Set monitor flag, notification rules, tags, governance metadata                                                    |
+| `list_store_environments` | All Power Platform environments                                                                                    |
+| `list_store_connections`  | All connections                                                                                                    |
+| `list_store_makers`       | All makers (citizen developers)                                                                                    |
+| `get_store_maker`         | Maker detail: flow/app counts, licenses, account status                                                            |
+| `list_store_power_apps`   | All Power Apps canvas apps                                                                                         |
 
 > For start/stop, use `set_live_flow_state` from the `monitor-flow` bundle
 > (`tool_search query: "select:set_live_flow_state"`) — the cache resyncs on
@@ -87,15 +88,15 @@ rule management to auto-configure failure alerts on critical flows.
 
 ## Store vs Live
 
-| Question | Use Store | Use Live |
-|---|---|---|
-| How many flows are failing? | `list_store_flows` | — |
-| What's the fail rate over 30 days? | `get_store_flow_summary` | — |
-| Show error history for a flow | `get_store_flow_runs` (filter `status="Failed"`) | — |
-| Who built this flow? | `get_store_flow` → parse `owners` | — |
-| Read the full flow definition | `get_store_flow` has it (JSON string) | `get_live_flow` (structured) |
-| Inspect action inputs/outputs from a run | — | `get_live_flow_run_action_outputs` |
-| Resubmit a failed run | — | `resubmit_live_flow_run` |
+| Question                                 | Use Store                                        | Use Live                           |
+| ---------------------------------------- | ------------------------------------------------ | ---------------------------------- |
+| How many flows are failing?              | `list_store_flows`                               | —                                  |
+| What's the fail rate over 30 days?       | `get_store_flow_summary`                         | —                                  |
+| Show error history for a flow            | `get_store_flow_runs` (filter `status="Failed"`) | —                                  |
+| Who built this flow?                     | `get_store_flow` → parse `owners`                | —                                  |
+| Read the full flow definition            | `get_store_flow` has it (JSON string)            | `get_live_flow` (structured)       |
+| Inspect action inputs/outputs from a run | —                                                | `get_live_flow_run_action_outputs` |
+| Resubmit a failed run                    | —                                                | `resubmit_live_flow_run`           |
 
 > Store tools answer "what happened?" and "how healthy is it?"
 > Live tools answer "what exactly went wrong?" and "fix it now."
@@ -147,14 +148,14 @@ Direct array. Filters: `monitor` (bool), `rule_notify_onfail` (bool),
 
 Full cached record. Key fields:
 
-| Category | Fields |
-|---|---|
-| Identity | `name`, `displayName`, `environmentName`, `state`, `triggerType`, `triggerKind`, `tier`, `sharingType` |
-| Run stats | `runPeriodTotal`, `runPeriodFails`, `runPeriodSuccess`, `runPeriodFailRate`, `runPeriodSuccessRate`, `runPeriodDurationAverage`/`Max`/`Min` (milliseconds), `runTotal`, `runFails`, `runFirst`, `runLast`, `runToday` |
-| Governance | `monitor` (bool), `rule_notify_onfail` (bool), `rule_notify_onmissingdays` (number), `rule_notify_email` (string), `log_notify_onfail` (ISO), `description`, `tags` |
-| Freshness | `scanned` (ISO), `nextScan` (ISO) |
-| Lifecycle | `deleted` (bool), `deletedTime` (ISO) |
-| JSON strings | `actions`, `connections`, `owners`, `complexity`, `definition`, `createdBy`, `security`, `triggers`, `referencedResources`, `runError` — all require `json.loads()` to parse |
+| Category     | Fields                                                                                                                                                                                                                |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Identity     | `name`, `displayName`, `environmentName`, `state`, `triggerType`, `triggerKind`, `tier`, `sharingType`                                                                                                                |
+| Run stats    | `runPeriodTotal`, `runPeriodFails`, `runPeriodSuccess`, `runPeriodFailRate`, `runPeriodSuccessRate`, `runPeriodDurationAverage`/`Max`/`Min` (milliseconds), `runTotal`, `runFails`, `runFirst`, `runLast`, `runToday` |
+| Governance   | `monitor` (bool), `rule_notify_onfail` (bool), `rule_notify_onmissingdays` (number), `rule_notify_email` (string), `log_notify_onfail` (ISO), `description`, `tags`                                                   |
+| Freshness    | `scanned` (ISO), `nextScan` (ISO)                                                                                                                                                                                     |
+| Lifecycle    | `deleted` (bool), `deletedTime` (ISO)                                                                                                                                                                                 |
+| JSON strings | `actions`, `connections`, `owners`, `complexity`, `definition`, `createdBy`, `security`, `triggers`, `referencedResources`, `runError` — all require `json.loads()` to parse                                          |
 
 > Duration fields (`runPeriodDurationAverage`, `Max`, `Min`) are in
 > **milliseconds**. Divide by 1000 for seconds.

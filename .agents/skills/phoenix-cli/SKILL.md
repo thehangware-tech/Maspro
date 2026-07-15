@@ -60,10 +60,10 @@ Always use `--format raw --no-progress` when piping to `jq`.
 
 ## Quick Reference
 
-| Task | Files |
-| ---- | ----- |
-| Look at sampled traces, spans, or sessions and write specific notes about what went wrong (no taxonomy yet) | [references/open-coding](references/open-coding.md) |
-| Group those notes into a structured failure taxonomy and quantify what matters | [references/axial-coding](references/axial-coding.md) |
+| Task                                                                                                        | Files                                                 |
+| ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| Look at sampled traces, spans, or sessions and write specific notes about what went wrong (no taxonomy yet) | [references/open-coding](references/open-coding.md)   |
+| Group those notes into a structured failure taxonomy and quantify what matters                              | [references/axial-coding](references/axial-coding.md) |
 
 Both stages tag every artifact with one shared **coding annotation identifier** (descriptive shape, e.g. `coding-run:chatbot-context-loss-2026-05-06`) so the run is queryable, reversible, and viewable as a unit. Pass `--identifier <value>` explicitly on every `px` call — shell inheritance is unreliable across agent harnesses. Open coding writes notes via `px ... add-note` and records a small local JSONL sidecar at `.px/coding/<sanitized-identifier>.jsonl`; axial coding reads that sidecar as the deterministic handoff and records labels in `.px/coding/<sanitized-identifier>-axial.jsonl`. Pick the identifier once per run (see [references/open-coding.md](references/open-coding.md#coding-annotation-identifier-pick-this-first)), then share the Phoenix UI link from the wrap-up section. Revert is opt-in and runs three identifier-bound DELETEs only after explicit user confirmation.
 
@@ -76,10 +76,10 @@ Both stages tag every artifact with one shared **coding annotation identifier** 
 
 ## Reference Categories
 
-| Prefix | Description |
-| ------ | ----------- |
-| `references/open-coding` | Free-form notes against sampled traces, spans, or sessions — reach for it whenever the user wants to make sense of LLM traffic but has no failure categories yet. Includes a unit-of-analysis diagnostic so the workflow runs at the level the failure modes actually live at (trace for stateless single-shot calls, session for multi-turn agents, span for mechanical/in-isolation failures). |
-| `references/axial-coding` | Inductive grouping of notes into a MECE taxonomy with counts — reach for it whenever the user has observations and needs categories or eval targets |
+| Prefix                    | Description                                                                                                                                                                                                                                                                                                                                                                                      |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `references/open-coding`  | Free-form notes against sampled traces, spans, or sessions — reach for it whenever the user wants to make sense of LLM traffic but has no failure categories yet. Includes a unit-of-analysis diagnostic so the workflow runs at the level the failure modes actually live at (trace for stateless single-shot calls, session for multi-turn agents, span for mechanical/in-isolation failures). |
+| `references/axial-coding` | Inductive grouping of notes into a MECE taxonomy with counts — reach for it whenever the user has observations and needs categories or eval targets                                                                                                                                                                                                                                              |
 
 ## Auth
 

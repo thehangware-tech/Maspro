@@ -63,7 +63,7 @@ $content | Set-Content -Path $file -Encoding $encoding
 
 The cmdlet was renamed (dropped the trailing `s`). Rename all occurrences.
 
-> In Pester 5 this is *deprecated* and in Pester 6 it is *removed* — when you continue past v4,
+> In Pester 5 this is _deprecated_ and in Pester 6 it is _removed_ — when you continue past v4,
 > switch to `Should -InvokeVerifiable`. See [v5-to-v6.md](v5-to-v6.md).
 
 ---

@@ -60,13 +60,13 @@ Before changing code:
 
 ### What to identify
 
-| Item | Examples |
-|------|----------|
-| Language | Python, TypeScript/JavaScript, Java, Go |
-| Package manager | pip/poetry/uv, npm/pnpm/yarn, maven/gradle, go modules |
-| LLM providers | OpenAI, Anthropic, LiteLLM, Bedrock, etc. |
-| Frameworks | LangChain, LangGraph, LlamaIndex, Vercel AI SDK, Mastra, etc. |
-| Existing tracing | Any OTel or vendor setup |
+| Item              | Examples                                                                                 |
+| ----------------- | ---------------------------------------------------------------------------------------- |
+| Language          | Python, TypeScript/JavaScript, Java, Go                                                  |
+| Package manager   | pip/poetry/uv, npm/pnpm/yarn, maven/gradle, go modules                                   |
+| LLM providers     | OpenAI, Anthropic, LiteLLM, Bedrock, etc.                                                |
+| Frameworks        | LangChain, LangGraph, LlamaIndex, Vercel AI SDK, Mastra, etc.                            |
+| Existing tracing  | Any OTel or vendor setup                                                                 |
 | Tool/function use | LLM tool use, function calling, or custom tools the app executes (e.g. in an agent loop) |
 
 **Key rule:** When a framework is detected alongside an LLM provider, inspect the framework-specific tracing docs first and prefer the framework-native integration path when it already captures the model and tool spans you need. Add separate provider instrumentation only when the framework docs require it or when the framework-native integration leaves obvious gaps. If the app runs tools and the framework integration does not emit tool spans, add manual TOOL spans so each invocation appears with input/output (see **Enriching traces** below).
@@ -137,16 +137,16 @@ Proceed **only after the user confirms** the Phase 1 analysis.
 
 ### Why doesn't the auto-instrumentor do this?
 
-**Provider instrumentors (Anthropic, OpenAI, etc.) only wrap the LLM *client* — the code that sends HTTP requests and receives responses.** They see:
+**Provider instrumentors (Anthropic, OpenAI, etc.) only wrap the LLM _client_ — the code that sends HTTP requests and receives responses.** They see:
 
 - One span per API call: request (messages, system prompt, tools) and response (text, tool_use blocks, etc.).
 
-They **cannot** see what happens *inside your application* after the response:
+They **cannot** see what happens _inside your application_ after the response:
 
-- **Tool execution** — Your code parses the response, calls `run_tool("check_loan_eligibility", {...})`, and gets a result. That runs in your process; the instrumentor has no hook into your `run_tool()` or the actual tool output. The *next* API call (sending the tool result back) is just another `messages.create` span — the instrumentor doesn't know that the message content is a tool result or what the tool returned.
-- **Agent/chain boundary** — The idea of "one user turn → multiple LLM calls + tool calls" is an *application-level* concept. The instrumentor only sees separate API calls; it doesn't know they belong to the same logical "run_agent" run.
+- **Tool execution** — Your code parses the response, calls `run_tool("check_loan_eligibility", {...})`, and gets a result. That runs in your process; the instrumentor has no hook into your `run_tool()` or the actual tool output. The _next_ API call (sending the tool result back) is just another `messages.create` span — the instrumentor doesn't know that the message content is a tool result or what the tool returned.
+- **Agent/chain boundary** — The idea of "one user turn → multiple LLM calls + tool calls" is an _application-level_ concept. The instrumentor only sees separate API calls; it doesn't know they belong to the same logical "run_agent" run.
 
-So TOOL and CHAIN spans have to be added **manually** (or by a *framework* instrumentor like LangChain/LangGraph that knows about tools and chains). Once you add them, they appear in the same trace as the LLM spans because they use the same TracerProvider.
+So TOOL and CHAIN spans have to be added **manually** (or by a _framework_ instrumentor like LangChain/LangGraph that knows about tools and chains). Once you add them, they appear in the same trace as the LLM spans because they use the same TracerProvider.
 
 ---
 
@@ -159,25 +159,25 @@ To avoid sparse traces where tool inputs/outputs are missing:
 
 **OpenInference attributes (use these so Arize shows spans correctly):**
 
-| Attribute | Use |
-|-----------|-----|
+| Attribute                 | Use                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `openinference.span.kind` | Pick the right value: `"LLM"` for raw provider API calls (OpenAI, Anthropic, etc.); `"CHAIN"` for orchestration / agent-loop boundaries; `"TOOL"` for tool/function execution; `"RETRIEVER"` for vector-store / search lookups; `"EMBEDDING"` for embedding API calls; `"AGENT"` for an autonomous sub-agent run nested inside a larger chain; `"RERANKER"` for rerank API calls; `"GUARDRAIL"` for guardrail/policy checks; `"EVALUATOR"` for online eval calls. |
-| `input.value` | string (e.g. user message or JSON of tool args) |
-| `output.value` | string (e.g. final reply or JSON of tool result) |
+| `input.value`             | string (e.g. user message or JSON of tool args)                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `output.value`            | string (e.g. final reply or JSON of tool result)                                                                                                                                                                                                                                                                                                                                                                                                                  |
 
 **LLM-span attributes (set these in addition to the three above when the span is an actual LLM call):**
 
-| Attribute | Use |
-|-----------|-----|
-| `llm.model_name` | model identifier (e.g. `"gpt-4o-mini"`) |
-| `llm.provider` / `llm.system` | provider name (e.g. `"openai"`, `"anthropic"`) |
-| `llm.input_messages.{i}.message.role` | `"system"` / `"user"` / `"assistant"` / `"tool"` for the i-th input message |
-| `llm.input_messages.{i}.message.content` | text content of the i-th input message |
-| `llm.output_messages.{i}.message.role` | role of the i-th output message |
-| `llm.output_messages.{i}.message.content` | text content of the i-th output message |
-| `llm.token_count.prompt` | int — prompt/input tokens |
-| `llm.token_count.completion` | int — completion/output tokens |
-| `llm.token_count.total` | int — total tokens |
+| Attribute                                 | Use                                                                         |
+| ----------------------------------------- | --------------------------------------------------------------------------- |
+| `llm.model_name`                          | model identifier (e.g. `"gpt-4o-mini"`)                                     |
+| `llm.provider` / `llm.system`             | provider name (e.g. `"openai"`, `"anthropic"`)                              |
+| `llm.input_messages.{i}.message.role`     | `"system"` / `"user"` / `"assistant"` / `"tool"` for the i-th input message |
+| `llm.input_messages.{i}.message.content`  | text content of the i-th input message                                      |
+| `llm.output_messages.{i}.message.role`    | role of the i-th output message                                             |
+| `llm.output_messages.{i}.message.content` | text content of the i-th output message                                     |
+| `llm.token_count.prompt`                  | int — prompt/input tokens                                                   |
+| `llm.token_count.completion`              | int — completion/output tokens                                              |
+| `llm.token_count.total`                   | int — total tokens                                                          |
 
 In Python and TypeScript these names are exposed via `openinference-semantic-conventions` packages; in Go they must be hand-typed as the strings above.
 
@@ -290,19 +290,19 @@ For deeper instrumentation guidance inside the IDE, the user can enable:
   }
   ```
 
-Then the user can ask things like: *"Instrument this app using Arize AX"*, *"Can you use manual instrumentation so I have more control over my traces?"*, *"How can I redact sensitive information from my spans?"*
+Then the user can ask things like: _"Instrument this app using Arize AX"_, _"Can you use manual instrumentation so I have more control over my traces?"_, _"How can I redact sensitive information from my spans?"_
 
 See the full setup at [Agent-Assisted Tracing Setup](https://arize.com/docs/ax/alyx/tracing-assistant).
 
 ## Reference links
 
-| Resource | URL |
-|----------|-----|
-| Agent-Assisted Tracing Setup | https://arize.com/docs/ax/alyx/tracing-assistant |
-| Agent Setup Prompt (full routing + phases) | https://arize.com/docs/PROMPT.md |
-| Arize AX Docs | https://arize.com/docs/ax |
-| Full integration list | https://arize.com/docs/ax/integrations |
-| Doc index (llms.txt) | https://arize.com/docs/llms.txt |
+| Resource                                   | URL                                              |
+| ------------------------------------------ | ------------------------------------------------ |
+| Agent-Assisted Tracing Setup               | https://arize.com/docs/ax/alyx/tracing-assistant |
+| Agent Setup Prompt (full routing + phases) | https://arize.com/docs/PROMPT.md                 |
+| Arize AX Docs                              | https://arize.com/docs/ax                        |
+| Full integration list                      | https://arize.com/docs/ax/integrations           |
+| Doc index (llms.txt)                       | https://arize.com/docs/llms.txt                  |
 
 ## Save Credentials for Future Use
 

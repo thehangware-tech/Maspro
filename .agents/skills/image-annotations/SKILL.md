@@ -1,6 +1,6 @@
 ---
 name: image-annotations
-description: 'Annotate screenshots, diagrams, and images with callout rectangles, arrows, labels, and color-coded highlights using PIL. Includes rules for animated GIF annotations with timing and pacing.'
+description: "Annotate screenshots, diagrams, and images with callout rectangles, arrows, labels, and color-coded highlights using PIL. Includes rules for animated GIF annotations with timing and pacing."
 ---
 
 # Image Annotations
@@ -130,13 +130,13 @@ crop.save('verify.png')
 
 ### Debug mode colors
 
-| Color | Meaning |
-|-------|---------|
-| Cyan | Target element box (elem + padding) |
-| Gray | Exclusion zone (MIN_ARROW buffer) |
+| Color     | Meaning                                 |
+| --------- | --------------------------------------- |
+| Cyan      | Target element box (elem + padding)     |
+| Gray      | Exclusion zone (MIN_ARROW buffer)       |
 | Red→Green | Candidate heatmap (red=bad, green=good) |
-| Magenta | Chosen label position |
-| Orange | Final rendered annotation |
+| Magenta   | Chosen label position                   |
+| Orange    | Final rendered annotation               |
 
 ### Arrow styles
 

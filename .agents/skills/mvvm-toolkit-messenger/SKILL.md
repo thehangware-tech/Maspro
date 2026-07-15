@@ -1,6 +1,6 @@
 ---
 name: mvvm-toolkit-messenger
-description: 'CommunityToolkit.Mvvm Messenger pub/sub for decoupled communication between ViewModels (or any objects). Covers WeakReferenceMessenger vs StrongReferenceMessenger, IRecipient<TMessage>, RequestMessage<T> / AsyncRequestMessage<T> / CollectionRequestMessage<T>, ValueChangedMessage<T>, channels (tokens), and the ObservableRecipient activation lifecycle. Use across WPF, WinUI 3, .NET MAUI, Uno, and Avalonia.'
+description: "CommunityToolkit.Mvvm Messenger pub/sub for decoupled communication between ViewModels (or any objects). Covers WeakReferenceMessenger vs StrongReferenceMessenger, IRecipient<TMessage>, RequestMessage<T> / AsyncRequestMessage<T> / CollectionRequestMessage<T>, ValueChangedMessage<T>, channels (tokens), and the ObservableRecipient activation lifecycle. Use across WPF, WinUI 3, .NET MAUI, Uno, and Avalonia."
 ---
 
 # CommunityToolkit.Mvvm Messenger
@@ -32,11 +32,11 @@ skill. For DI wiring (registering an `IMessenger` instance), see
 
 ## Choose an implementation
 
-| Type | When |
-|------|------|
-| `WeakReferenceMessenger.Default` | **Default.** Recipients held weakly — eligible for GC even while registered. Internal trimming runs during full GCs; no manual `Cleanup()` needed. |
-| `StrongReferenceMessenger.Default` | Profiler shows the messenger is hot and allocation matters. Recipients are pinned until you `Unregister`. Forgetting unregistration leaks them. |
-| Custom `IMessenger` instance | Per-window/per-scope (e.g., one messenger per app window). Construct directly, inject via DI. |
+| Type                               | When                                                                                                                                               |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `WeakReferenceMessenger.Default`   | **Default.** Recipients held weakly — eligible for GC even while registered. Internal trimming runs during full GCs; no manual `Cleanup()` needed. |
+| `StrongReferenceMessenger.Default` | Profiler shows the messenger is hot and allocation matters. Recipients are pinned until you `Unregister`. Forgetting unregistration leaks them.    |
+| Custom `IMessenger` instance       | Per-window/per-scope (e.g., one messenger per app window). Construct directly, inject via DI.                                                      |
 
 `ObservableRecipient`'s parameterless constructor uses
 `WeakReferenceMessenger.Default`. Pass a different `IMessenger` to its
@@ -257,8 +257,8 @@ desktop apps (WinUI 3, WPF, MAUI desktop, Avalonia).
 
 ## References
 
-| Topic | File |
-|-------|------|
+| Topic                                                         | File                                                                   |
+| ------------------------------------------------------------- | ---------------------------------------------------------------------- |
 | Full deep dive (more channel/lifecycle examples, diagnostics) | [`references/messenger-patterns.md`](references/messenger-patterns.md) |
 
 External:

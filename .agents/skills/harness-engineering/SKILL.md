@@ -1,6 +1,6 @@
 ---
 name: harness-engineering
-description: 'Adopt repository-level harness engineering for coding agents. Use when a user wants to prevent repeated AI coding-agent mistakes by turning failures into durable instructions, drift checks, regression tests, failure memory, and adoption reports tailored to the target repository.'
+description: "Adopt repository-level harness engineering for coding agents. Use when a user wants to prevent repeated AI coding-agent mistakes by turning failures into durable instructions, drift checks, regression tests, failure memory, and adoption reports tailored to the target repository."
 ---
 
 # Harness Engineering
@@ -81,15 +81,15 @@ Follow this sequence:
 
 Pick only the surfaces that fit the target repository:
 
-| Need | Preferred artifact |
-| --- | --- |
-| Always-on agent behavior | `AGENTS.md` or `.github/copilot-instructions.md` |
-| File-scoped guidance | `.github/instructions/*.instructions.md` |
-| Recurring project checks | `scripts/check_*.py`, shell scripts, or package scripts |
-| CI enforcement | existing workflow files or a small new workflow |
-| Known failures | `docs/failures/*.md` |
-| Architecture or process decisions | `docs/decisions/*.md` |
-| Adoption evidence | `docs/harness/adoption-report.md` or similar |
+| Need                              | Preferred artifact                                      |
+| --------------------------------- | ------------------------------------------------------- |
+| Always-on agent behavior          | `AGENTS.md` or `.github/copilot-instructions.md`        |
+| File-scoped guidance              | `.github/instructions/*.instructions.md`                |
+| Recurring project checks          | `scripts/check_*.py`, shell scripts, or package scripts |
+| CI enforcement                    | existing workflow files or a small new workflow         |
+| Known failures                    | `docs/failures/*.md`                                    |
+| Architecture or process decisions | `docs/decisions/*.md`                                   |
+| Adoption evidence                 | `docs/harness/adoption-report.md` or similar            |
 
 If the repository already has an equivalent location, update it instead of
 creating a parallel system.

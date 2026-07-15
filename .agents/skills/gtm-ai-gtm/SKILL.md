@@ -14,6 +14,7 @@ Go-to-market strategy for AI products. These aren't generic AI principles — th
 ## When to Use
 
 **Triggers:**
+
 - "How do we position this AI product?"
 - "Buyers say they're worried about AI breaking production"
 - "Should we call it autonomous or copilot?"
@@ -21,9 +22,10 @@ Go-to-market strategy for AI products. These aren't generic AI principles — th
 - "Enterprise security passed but ops rejected us — why?"
 
 **Context:**
+
 - AI agent platforms (coding, support, ops)
 - LLM-based applications
-- Autonomous tools that *do* things (not just suggest)
+- Autonomous tools that _do_ things (not just suggest)
 - AI infrastructure
 - Anything where the AI makes decisions
 
@@ -37,11 +39,11 @@ Go-to-market strategy for AI products. These aren't generic AI principles — th
 
 Three months in, enterprise security reviews were passing fast. Good sign, right? Then the pattern emerged: security approved, but **operations rejected us**.
 
-The objection wasn't "will the AI break production?" — they *assumed* it would break production eventually. The real question was:
+The objection wasn't "will the AI break production?" — they _assumed_ it would break production eventually. The real question was:
 
 **"Who's responsible when the agent does something wrong?"**
 
-Not "do we trust the agent?" — "do we trust our *team* to handle this?"
+Not "do we trust the agent?" — "do we trust our _team_ to handle this?"
 
 **Why This Matters:**
 
@@ -60,13 +62,15 @@ If you can't answer all three, **they won't buy**. Doesn't matter how good your 
 **How This Changes Your Sales Process:**
 
 **Old approach:**
+
 - Demo the AI
 - Show accuracy metrics
 - Talk about ROI
 
 **New approach:**
+
 - Demo the AI
-- Show the *failure modes* explicitly
+- Show the _failure modes_ explicitly
 - Ask: "Who on your team would handle this scenario?"
 - Walk through their incident response process
 - Map AI failures to their existing runbooks
@@ -79,17 +83,19 @@ If they can't answer, they're not ready. Pause the deal and help them build the 
 
 **Common Mistake:**
 
-Treating this as a *product* objection ("we'll make the AI more accurate"). It's an *organizational* objection. More accuracy doesn't solve "who owns this at 2am?"
+Treating this as a _product_ objection ("we'll make the AI more accurate"). It's an _organizational_ objection. More accuracy doesn't solve "who owns this at 2am?"
 
 **Pattern I've Seen Work:**
 
 Companies that succeed with AI agents already have:
+
 - On-call rotations for production systems
 - Incident response playbooks
 - Blameless postmortem culture
 - Clear escalation paths
 
 Companies that struggle:
+
 - Manual deployment processes
 - Hero culture ("Steve fixes everything")
 - No formal incident response
@@ -97,7 +103,7 @@ Companies that struggle:
 
 **Decision Criteria:**
 
-Before demoing autonomous AI to enterprises, ask yourself: "If this breaks their production, who on *their* team owns the fix?" If you can't answer, they can't buy.
+Before demoing autonomous AI to enterprises, ask yourself: "If this breaks their production, who on _their_ team owns the fix?" If you can't answer, they can't buy.
 
 ---
 
@@ -112,6 +118,7 @@ Why? **Word choice shapes buyer psychology.**
 **The Three Framings:**
 
 **1. Copilot (Safest, Lowest Value)**
+
 - **What it means**: AI suggests, human decides every time
 - **Buyer psychology**: Feels safe, non-threatening
 - **GTM motion**: Developer adoption, bottoms-up
@@ -119,6 +126,7 @@ Why? **Word choice shapes buyer psychology.**
 - **Objection**: "Is this worth paying for?" (low perceived value)
 
 **2. Agent (Scariest, Highest Value)**
+
 - **What it means**: AI acts autonomously, human reviews periodically
 - **Buyer psychology**: Scary, implies replacing humans
 - **GTM motion**: Enterprise sales, top-down
@@ -126,6 +134,7 @@ Why? **Word choice shapes buyer psychology.**
 - **Objection**: "What if it breaks production?" (accountability fear)
 
 **3. Teammate (Sweet Spot)**
+
 - **What it means**: AI and human collaborate, split the work
 - **Buyer psychology**: Partnership, not replacement
 - **GTM motion**: Hybrid (dev adoption + manager approval)
@@ -135,11 +144,13 @@ Why? **Word choice shapes buyer psychology.**
 **The Positioning Shift:**
 
 **Before:** "Autonomous AI agent that handles complex workflows end-to-end"
+
 - Developers: "Cool, but scary"
 - Managers: "Will this replace our team?"
 - Deal progression: Slow
 
 **After:** "AI teammate that pairs with your engineers on complex tasks"
+
 - Developers: "This helps me"
 - Managers: "This makes my team more productive"
 - Deal progression: Three enterprise deals that had stalled 4+ months closed within 8 weeks of the shift
@@ -147,12 +158,14 @@ Why? **Word choice shapes buyer psychology.**
 **Specific Language Choices That Mattered:**
 
 ❌ **Don't say:**
+
 - "Autonomous" (scary)
 - "Replaces" (threatening)
 - "Fully automated" (no control)
 - "AI-first" (what does that even mean?)
 
 ✅ **Do say:**
+
 - "Teammate" (collaborative)
 - "Augments" or "Accelerates" (helping, not replacing)
 - "You stay in control" (reassuring)
@@ -187,18 +200,21 @@ Every AI company I've worked with faces this: Customer A uses 1,000 API calls/mo
 **The Three Models:**
 
 **1. Seat-Based ($X per user/month)**
+
 - **When it works**: AI augments human work predictably
 - **Example**: Code completion, writing assistant
 - **Problem**: Doesn't capture AI value scaling
 - **Real risk**: High-usage customers are your best customers, but they subsidize low-usage ones
 
 **2. Usage-Based ($X per API call / prediction / hour)**
+
 - **When it works**: AI does variable work, customers understand the unit
 - **Example**: Image generation, transcription, batch ML
 - **Problem**: Sticker shock for high-usage customers
-- **Real risk**: Customers optimize to use *less* of your product
+- **Real risk**: Customers optimize to use _less_ of your product
 
 **3. Outcome-Based ($X per outcome achieved)**
+
 - **When it works**: You can measure outcomes reliably
 - **Example**: "Pay per bug fixed" or "Pay per support ticket resolved"
 - **Problem**: Hard to measure, easy to game
@@ -209,6 +225,7 @@ Every AI company I've worked with faces this: Customer A uses 1,000 API calls/mo
 Base fee (covers fixed costs) + variable fee (scales with value).
 
 **Example structure:**
+
 - Base: $X/month per team (access to platform)
 - Variable: $Y per successful action/outcome
 - Why this works:
@@ -231,7 +248,7 @@ Your variable cost should be **20-30% of customer's alternative cost**. High eno
 
 **Common Mistake:**
 
-Copying OpenAI's pricing ($0.01 per 1K tokens) because "that's what everyone does." Your cost structure isn't OpenAI's cost structure. Your value isn't OpenAI's value. Price for *your* business.
+Copying OpenAI's pricing ($0.01 per 1K tokens) because "that's what everyone does." Your cost structure isn't OpenAI's cost structure. Your value isn't OpenAI's value. Price for _your_ business.
 
 ---
 
@@ -244,16 +261,18 @@ You can't sell AI by saying "trust us, it works." You build trust in stages.
 **First: Transparency (Before First Demo)**
 
 Send these three docs before they ask:
+
 - Model card (what model, trained on what, accuracy on what benchmarks)
 - Security whitepaper (where data goes, how it's processed)
 - Explainability doc (how to interpret AI decisions)
 
 **Why this works:**
-Buyers expect to do diligence. If you send docs *before they ask*, you look confident and credible.
+Buyers expect to do diligence. If you send docs _before they ask_, you look confident and credible.
 
 **Second: Control (In the Demo)**
 
 Show them the safety mechanisms:
+
 - How users approve/reject AI suggestions
 - Kill switches and rollback mechanisms
 - Confidence scores and when AI says "I'm not sure"
@@ -264,6 +283,7 @@ Fear of "runaway AI" is real. Showing control mechanisms proves you thought abou
 **Third: Performance (Week 4-8)**
 
 Prove it works:
+
 - Benchmarks vs baseline (human or previous tool)
 - Case study from similar company
 - Live demo on their data (if possible)
@@ -274,6 +294,7 @@ Proof beats promises. One customer saying "we saved X hours/week" is worth 100 m
 **Fourth: Scale (When They're Serious)**
 
 Show enterprise readiness:
+
 - Enterprise deployment examples
 - Performance at scale (latency, throughput, error rates)
 - Compliance docs (SOC 2, GDPR, etc.)
@@ -305,11 +326,13 @@ Show the AI making a mistake and recovering. Seriously.
 
 **1. The Problem (30 seconds)**
 "Your engineers spend hours on [specific task]. Here's what that looks like."
+
 - Show: Current manual workflow
 - Quantify: Time × Engineers × Weeks = Total cost
 
 **2. The AI Attempt (60 seconds)**
 "Here's the AI handling the same task."
+
 - Show: AI analyzing, taking action
 - **Key move**: Have AI encounter an error or uncertainty
 - Show: AI re-analyzing, recovering, or asking for help
@@ -317,12 +340,14 @@ Show the AI making a mistake and recovering. Seriously.
 
 **3. The Human Review (30 seconds)**
 "Here's where the engineer reviews and approves."
+
 - Show: Engineer examining AI's work
 - **Key move**: Show the engineer overriding or adjusting something
 - **Narrate**: "Human stays in control. AI handles repetitive work, human handles judgment calls."
 
 **4. The Outcome (30 seconds)**
 "[X hours] → [Y minutes]. Engineer still owns the outcome, AI accelerates execution."
+
 - Quantify: Time reduction, cost savings, capacity freed
 
 **Why This Works:**
@@ -403,12 +428,14 @@ This is the positioning trap: **competing on features against better-funded comp
 4. Find the position competitors can't easily copy
 
 **Structural advantages that work for AI positioning:**
+
 - Unique data or workflow ownership (you control something competitors can't replicate)
 - Deployment flexibility (on-prem, private cloud, customer-controlled infrastructure)
 - Pricing model innovation (outcome-based, usage-based when competitors are seat-based)
 - Community or ecosystem (network effects that compound over time)
 
 Feature advantages that don't last:
+
 - "Better accuracy" (competitors catch up in one sprint)
 - "Faster inference" (infrastructure commoditizes)
 - "More integrations" (easy to copy)
@@ -432,6 +459,7 @@ The highest-intent enterprise buyers for AI agents are people who've already ado
 **How to Identify Ceiling Moments:**
 
 The prospect has:
+
 - Used a copilot/assistant tool for 6+ months
 - Hit its limitations (can't handle complex tasks, doesn't work with their stack, not autonomous enough)
 - Low switching costs (the mental model transfers)
@@ -449,6 +477,7 @@ The prospect has:
 **Why This Converts Better:**
 
 Ceiling-moment conversations convert 3-5x vs cold outreach because:
+
 - Prospect already understands the problem
 - They've already invested in the category
 - They have internal budget allocated
@@ -507,52 +536,64 @@ Do they have incident response processes for tool failures?
 ## Common Mistakes
 
 **1. Using "autonomous" because it sounds impressive**
-   - I've watched this slow deals. "Autonomous" scares enterprises. "Teammate" progresses faster.
+
+- I've watched this slow deals. "Autonomous" scares enterprises. "Teammate" progresses faster.
 
 **2. Hiding AI failure modes**
-   - Buyers know real-world data is messy. If you don't show failures, they assume you're hiding them.
+
+- Buyers know real-world data is messy. If you don't show failures, they assume you're hiding them.
 
 **3. Treating "will it break production?" as the objection**
-   - Real objection: "who's responsible when it does?" Organizational readiness, not accuracy.
+
+- Real objection: "who's responsible when it does?" Organizational readiness, not accuracy.
 
 **4. Pricing usage-based AI like OpenAI**
-   - Your cost structure isn't theirs. Price for 20-30% of customer's alternative cost.
+
+- Your cost structure isn't theirs. Price for 20-30% of customer's alternative cost.
 
 **5. Skipping transparency docs before demo**
-   - Order matters. Transparency → Control → Performance → Scale. Don't skip steps.
+
+- Order matters. Transparency → Control → Performance → Scale. Don't skip steps.
 
 **6. Demoing perfect AI**
-   - Show mistakes + recovery. Builds more trust than fake perfection.
+
+- Show mistakes + recovery. Builds more trust than fake perfection.
 
 **7. Selling to buyers who demand 100% accuracy**
-   - They're not ready. Filter for mature buyers with incident response processes.
+
+- They're not ready. Filter for mature buyers with incident response processes.
 
 ---
 
 ## Quick Reference
 
 **Enterprise objection checklist:**
+
 - [ ] "Who gets paged when AI breaks production?" → Map to their on-call rotation
 - [ ] "Who debugs AI failures?" → Map to their incident response
 - [ ] "Who owns customer communication?" → Map to their escalation path
 
 **Positioning word choices:**
+
 - ✅ Teammate, augments, accelerates, you stay in control
 - ❌ Autonomous, replaces, fully automated, AI-first
 
 **Demo structure:**
+
 1. Problem with quantified cost (30s)
 2. AI attempt including failure/uncertainty (60s)
 3. Human review and override (30s)
 4. Outcome with ROI (30s)
 
 **Trust ladder:**
+
 1. Transparency (model card, security, explainability)
 2. Control (approval workflows, kill switches, confidence scores)
 3. Performance (benchmarks, case studies, live demo)
 4. Scale (enterprise deployments, compliance, SLAs)
 
 **Pricing hybrid formula:**
+
 - Base: $X/month (covers fixed costs)
 - Variable: $Y per unit (20-30% of customer's alternative cost)
 
@@ -566,4 +607,4 @@ Do they have incident response processes for tool failures?
 
 ---
 
-*Based on enterprise AI agent GTM across developer tools and infrastructure. Patterns drawn from working enterprise deal cycles selling autonomous AI products — some carried directly, others supported alongside sales leadership — including the positioning trap diagnosis that shifted from feature competition to structural differentiation, the ceiling-moment qualification that improved outbound conversion significantly, and frameworks tested across security, operations, and engineering buyer personas. Not theory — lessons from deals where "autonomous" killed conversations and "teammate" converted.*
+_Based on enterprise AI agent GTM across developer tools and infrastructure. Patterns drawn from working enterprise deal cycles selling autonomous AI products — some carried directly, others supported alongside sales leadership — including the positioning trap diagnosis that shifted from feature competition to structural differentiation, the ceiling-moment qualification that improved outbound conversion significantly, and frameworks tested across security, operations, and engineering buyer personas. Not theory — lessons from deals where "autonomous" killed conversations and "teammate" converted._

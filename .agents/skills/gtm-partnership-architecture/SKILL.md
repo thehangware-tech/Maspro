@@ -14,6 +14,7 @@ Build and scale partner ecosystems that drive revenue and platform adoption. The
 ## When to Use
 
 **Triggers:**
+
 - "How do I structure a partner program?"
 - "Should we build this or partner for it?"
 - "Partner-led vs direct sales motion"
@@ -23,6 +24,7 @@ Build and scale partner ecosystems that drive revenue and platform adoption. The
 - "When does a partnership actually matter?"
 
 **Context:**
+
 - Building partnership program from scratch (0→1)
 - Scaling existing program (1→100)
 - Evaluating build vs partner decisions
@@ -40,6 +42,7 @@ Build and scale partner ecosystems that drive revenue and platform adoption. The
 Most "partnerships" are co-marketing theater. Joint webinars, logo swaps, press releases. No economic commitment. No real skin in the game.
 
 Real partnerships look different:
+
 - Economic commitment (spend, revenue share, co-investment)
 - Product roadmap alignment (features built for the partnership)
 - Executive sponsorship (leadership engaged quarterly)
@@ -58,18 +61,21 @@ The best partnerships I've seen involved uncomfortable commitments on both sides
 Every successful partnership creates clear value for three parties:
 
 **Your Company:**
+
 - Distribution (access to partner's customers)
 - Credibility (association with known brand)
 - Revenue (direct or influenced)
 - Product leverage (capability you don't build)
 
 **The Partner:**
+
 - Revenue or margin improvement
 - Customer retention/stickiness
 - Competitive differentiation
 - Reduced support burden
 
 **Shared Customers:**
+
 - Workflow improvement
 - Reduced integration pain
 - Single vendor relationship
@@ -115,10 +121,12 @@ Running ecosystem at a platform company during hypergrowth. Leadership debate: O
 **The Pattern:**
 
 **Curated ecosystem (Gatekeeper Model):**
+
 - Pros: High quality, controlled brand
 - Cons: Slow growth, partner friction, you become the bottleneck
 
 **Open ecosystem (Discovery Model):**
+
 - Pros: Network effects, rapid growth, self-service
 - Cons: Quality variance, moderation overhead
 
@@ -155,26 +163,31 @@ Early in a cloud partnership, looking for channel leverage. Targeting managed se
 **Framework: Partnership Leverage Types**
 
 **1. Requirement leverage** (Strongest)
+
 - Partner needs you for certification/compliance/partnership status
 - Example: Cloud provider certification requiring your category of product
 - How to find: Read partner program requirements, marketplace rules
 
 **2. Economic leverage** (Strong)
+
 - Helps partner make or save money directly
 - Example: Reduce partner's support costs by 30%
 - How to measure: Calculate partner's ROI in their P&L terms
 
 **3. Competitive leverage** (Moderate)
+
 - Gives partner differentiation vs competitors
 - Example: Exclusive integration for 6 months
 - How to validate: Ask "would competitors want this?"
 
 **4. Customer leverage** (Moderate)
+
 - Partner's customers demand the integration
 - Example: 50+ support tickets requesting integration
 - How to measure: Partner support ticket volume
 
 **5. Co-marketing leverage** (Weak)
+
 - Joint content, events, logo swaps
 - Example: Co-branded webinar
 - Reality: Nice to have, rarely closes deals
@@ -206,6 +219,7 @@ Pitching partnerships based on your benefit, not theirs. "We want access to your
 Structure partner programs into clear tiers based on commitment and capability:
 
 **Tier 1: Integration Partner (Self-Serve)**
+
 - Partner builds with your public API/docs
 - You provide: documentation, Slack channel, office hours
 - Partner drives their own promotion
@@ -213,6 +227,7 @@ Structure partner programs into clear tiers based on commitment and capability:
 - Best for: Ambitious partners with engineering resources
 
 **Tier 2: Partnership Partner (Joint Development)**
+
 - Co-developed integration
 - You provide: dedicated channel, regular syncs, product input
 - Platform provides co-marketing support
@@ -220,6 +235,7 @@ Structure partner programs into clear tiers based on commitment and capability:
 - Best for: Strategic fit partners, accelerating integration quality
 
 **Tier 3: Strategic Partner (Co-Development)**
+
 - Deep product roadmap integration
 - You provide: dedicated partner manager, executive relationship
 - Customized co-marketing, revenue objectives
@@ -227,6 +243,7 @@ Structure partner programs into clear tiers based on commitment and capability:
 - Best for: Marquee partnerships that shift positioning
 
 **Decision Criteria:**
+
 - Tier based on strategic fit AND partner capability
 - Don't over-tier (creates expectations you can't meet)
 - Create clear graduation path between tiers
@@ -242,12 +259,14 @@ Treating all partners equally. Tier 1 partners want self-serve, Tier 3 want whit
 De-risk partnerships with phased validation before full commitment.
 
 **Crawl (4-8 weeks):**
+
 - 1-2 pilot customers using both solutions
 - Manual or lightweight integration (not production-grade)
 - Measure specific outcomes: time savings, adoption, revenue impact
 - Go/no-go: 20%+ improvement on stated metric
 
 **Walk (8-12 weeks):**
+
 - 5-10 additional customers
 - Build formal integration
 - Co-marketing: joint announcements, webinars
@@ -255,6 +274,7 @@ De-risk partnerships with phased validation before full commitment.
 - Go/no-go: 70%+ adoption rate of invited customers
 
 **Run (6-12 months ongoing):**
+
 - Full-scale deployment
 - Joint enterprise sales, integrated customer success
 - APIs/native integrations, marketplace listing
@@ -265,6 +285,7 @@ De-risk partnerships with phased validation before full commitment.
 Most partnerships fail in Crawl phase. That's good — you learn fast with minimal investment.
 
 **Common Mistakes:**
+
 - Skipping Crawl phase (jumping straight to full commitment)
 - Running phases in parallel (creates confusion, can't isolate signal)
 - Continuing partnerships not delivering value (sunk cost fallacy)
@@ -273,16 +294,19 @@ Most partnerships fail in Crawl phase. That's good — you learn fast with minim
 **Go/No-Go Criteria:**
 
 **After Crawl:**
+
 - Did pilot customers see 20%+ improvement?
 - Would they recommend to peers?
 - Can we scale this integration?
 
 **After Walk:**
+
 - Did 70%+ of invited customers adopt?
 - Is partner actively promoting?
 - Is support burden manageable?
 
 **Enter Run Only If:**
+
 - Both Crawl and Walk passed criteria
 - Both sides committed to next phase
 - ROI model validates at scale
@@ -296,26 +320,31 @@ If you can't articulate what each party gets, the partnership will fail.
 **Partnership Charter (Required Before Launch):**
 
 **Mutual Goals:**
+
 - What does success look like for us?
 - What does success look like for partner?
 - What does success look like for customers?
 
 **Value Exchange:**
+
 - What we give (engineering time, co-marketing, revenue share)
 - What partner gives (distribution, credibility, co-investment)
 - Is this balanced? (Would both sides still do this if other walked?)
 
 **Timeline:**
+
 - Crawl phase (dates, deliverables, metrics)
 - Walk phase (dates, deliverables, metrics)
 - Run phase (ongoing cadence, QBRs)
 
 **Measurement:**
+
 - Specific metrics for success (revenue, customers, retention)
 - How we'll track (dashboard, reports, reviews)
 - Review cadence (monthly? quarterly?)
 
 **Governance:**
+
 - Who owns decisions on each side?
 - Escalation path for disputes
 - Exit criteria (what triggers ending partnership?)
@@ -333,6 +362,7 @@ Verbal agreements without documentation. When things get hard (and they will), y
 ### 7. Co-Marketing Execution Checklist
 
 **Pre-Launch (4-6 weeks before):**
+
 - [ ] Joint value prop finalized (reviewed by both marketing teams)
 - [ ] Customer case study identified (ideally 2-3 options)
 - [ ] Technical integration validated (no launch-day bugs)
@@ -341,6 +371,7 @@ Verbal agreements without documentation. When things get hard (and they will), y
 - [ ] Marketplace listings prepared (if applicable)
 
 **Launch Week:**
+
 - [ ] Press release (coordinated timing)
 - [ ] Blog posts (both companies)
 - [ ] Joint webinar scheduled (within 2 weeks of launch)
@@ -349,6 +380,7 @@ Verbal agreements without documentation. When things get hard (and they will), y
 - [ ] Customer comms sent (email to relevant segments)
 
 **Post-Launch (Weeks 2-8):**
+
 - [ ] Customer adoption tracked (weekly dashboard)
 - [ ] Support issues triaged (joint Slack channel)
 - [ ] Case study published (quantified results)
@@ -433,6 +465,7 @@ Did Crawl phase meet success criteria?
 ## Quick Reference
 
 **Before starting any partnership:**
+
 - [ ] Three-sided value prop articulated
 - [ ] Partner tier identified
 - [ ] Crawl phase scope defined
@@ -440,12 +473,14 @@ Did Crawl phase meet success criteria?
 - [ ] Partnership charter drafted
 
 **Before launching any partnership:**
+
 - [ ] Customer ready criteria met
 - [ ] Co-marketing checklist complete
 - [ ] Sales team briefed
 - [ ] Health management cadence scheduled
 
 **Partnership leverage hierarchy:**
+
 1. Requirement (they need you for cert/compliance)
 2. Economic (saves/makes them money)
 3. Competitive (differentiates them)
@@ -453,6 +488,7 @@ Did Crawl phase meet success criteria?
 5. Co-marketing (nice to have, rarely decisive)
 
 **Go/no-go criteria:**
+
 - Crawl: 20%+ customer outcome improvement
 - Walk: 70%+ adoption rate
 - Run: Both phases passed + ROI validated
@@ -467,4 +503,4 @@ Did Crawl phase meet success criteria?
 
 ---
 
-*Based on partnerships work across multiple platform companies during hypergrowth, including running a developer marketplace ecosystem (open vs curated decision) and leveraging cloud provider certification requirements for channel growth. Not theory — patterns from partnerships that actually drove revenue and platform adoption.*
+_Based on partnerships work across multiple platform companies during hypergrowth, including running a developer marketplace ecosystem (open vs curated decision) and leveraging cloud provider certification requirements for channel growth. Not theory — patterns from partnerships that actually drove revenue and platform adoption._

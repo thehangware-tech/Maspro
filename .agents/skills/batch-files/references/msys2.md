@@ -22,13 +22,13 @@ MSYS2 provides multiple environments targeting different use cases:
 - [MSVCRT vs UCRT](https://www.msys2.org/docs/environments/#msvcrt-vs-ucrt)
 - [Changelog](https://www.msys2.org/docs/environments/#changelog)
 
-| Environment | Prefix | Toolchain | C Runtime |
-|-------------|--------|-----------|-----------|
-| MSYS | `/usr` | GCC | cygwin |
-| MINGW64 | `/mingw64` | GCC | MSVCRT |
-| UCRT64 | `/ucrt64` | GCC | UCRT |
-| CLANG64 | `/clang64` | LLVM | UCRT |
-| CLANGARM64 | `/clangarm64` | LLVM | UCRT |
+| Environment | Prefix        | Toolchain | C Runtime |
+| ----------- | ------------- | --------- | --------- |
+| MSYS        | `/usr`        | GCC       | cygwin    |
+| MINGW64     | `/mingw64`    | GCC       | MSVCRT    |
+| UCRT64      | `/ucrt64`     | GCC       | UCRT      |
+| CLANG64     | `/clang64`    | LLVM      | UCRT      |
+| CLANGARM64  | `/clangarm64` | LLVM      | UCRT      |
 
 ## Configuration
 

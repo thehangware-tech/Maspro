@@ -4,12 +4,12 @@ On Windows the `az` command resolves to `az.cmd`, a batch wrapper invoked by `cm
 
 ## Detect the shell first
 
-| Environment | Signal | Action |
-|---|---|---|
-| PowerShell on Windows | `$IsWindows -eq $true` and `$PSVersionTable.PSVersion` is set | Use `azps.ps1` (see below) |
-| PowerShell on macOS / Linux | `$IsWindows -eq $false` | Plain `az` is fine, no cmd.exe wrapper |
-| bash / zsh / sh | `$BASH_VERSION` or `$ZSH_VERSION` set, or `uname` works | Plain `az` is fine, no cmd.exe wrapper |
-| Windows `cmd.exe` | `%ComSpec%` ends in `cmd.exe`, no `$PSVersionTable` | Use `azps.ps1` if PowerShell is installed, otherwise see `az devops invoke` fallback below |
+| Environment                 | Signal                                                        | Action                                                                                     |
+| --------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| PowerShell on Windows       | `$IsWindows -eq $true` and `$PSVersionTable.PSVersion` is set | Use `azps.ps1` (see below)                                                                 |
+| PowerShell on macOS / Linux | `$IsWindows -eq $false`                                       | Plain `az` is fine, no cmd.exe wrapper                                                     |
+| bash / zsh / sh             | `$BASH_VERSION` or `$ZSH_VERSION` set, or `uname` works       | Plain `az` is fine, no cmd.exe wrapper                                                     |
+| Windows `cmd.exe`           | `%ComSpec%` ends in `cmd.exe`, no `$PSVersionTable`           | Use `azps.ps1` if PowerShell is installed, otherwise see `az devops invoke` fallback below |
 
 ## Option 1: `azps.ps1` (PowerShell on Windows)
 

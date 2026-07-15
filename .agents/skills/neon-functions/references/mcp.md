@@ -52,8 +52,15 @@ mcpServer.registerTool(
     inputSchema: { id: z.number().int().positive() },
   },
   async ({ id }) => {
-    const [row] = await db.delete(contacts).where(eq(contacts.id, id)).returning();
-    return { content: [{ type: "text", text: JSON.stringify(row ?? { error: "not found" }) }] };
+    const [row] = await db
+      .delete(contacts)
+      .where(eq(contacts.id, id))
+      .returning();
+    return {
+      content: [
+        { type: "text", text: JSON.stringify(row ?? { error: "not found" }) },
+      ],
+    };
   },
 );
 
@@ -124,7 +131,8 @@ Either way it's one check at the top of the `/mcp` route — reject anything tha
 ```typescript
 app.all("/mcp", async (c) => {
   const auth = c.req.header("authorization");
-  if (!(await isValidApiKey(auth))) return c.json({ error: "unauthorized" }, 401); // your check
+  if (!(await isValidApiKey(auth)))
+    return c.json({ error: "unauthorized" }, 401); // your check
   if (!mcpServer.isConnected()) await mcpServer.connect(transport);
   return transport.handleRequest(c);
 });

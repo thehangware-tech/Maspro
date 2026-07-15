@@ -22,6 +22,7 @@ Retrieval is a 7-step process:
 ## Step 1: Parse the Query
 
 Read the query string and identify:
+
 - **Key noun phrases**: potential entity names (e.g., "system crash", "memory leak")
 - **Keywords**: individual meaningful words (e.g., "crash", "leak", "memory")
 - Normalize all terms to **lowercase**
@@ -48,6 +49,7 @@ content = wiki_store.read_page_by_slug(result["slug"])
 ```
 
 **If the wiki has a sufficient answer:**
+
 - Synthesize from wiki pages.
 - Cite the source pages (e.g., "According to [[memory-leak]] and [[system-crash]]...").
 - File the answer as a new wiki topic page if it's valuable and not already captured:
@@ -67,6 +69,7 @@ Call `index_store.search(query)` with the original query string.
 This returns node IDs matching entity names or keywords.
 
 If no seed nodes are found:
+
 - Try searching with individual keywords from Step 1.
 - If still no results, return an empty subgraph: "No relevant entities found."
 
@@ -77,10 +80,12 @@ If no seed nodes are found:
 Call `retrieval_engine.retrieve(seed_node_ids, depth=2)`.
 
 BFS from seed nodes:
+
 - **Depth 1**: direct neighbors
 - **Depth 2**: neighbors of neighbors
 
 Rules:
+
 - Only traverse edges with confidence ≥ MIN_CONFIDENCE (from config.py)
 - Do NOT traverse beyond depth 2
 - Collect all visited node IDs
@@ -132,6 +137,7 @@ result = skill.query_with_evidence(query)
 ## Step 7: Return Structured Context
 
 Return the result with:
+
 - **Subgraph**: nodes + edges (the graph answer)
 - **Supporting documents**: source chunks that prove each relation
 - **Evidence chain**: human-readable path summary

@@ -1,6 +1,6 @@
 ---
 name: adobe-illustrator-scripting
-description: 'Write, debug, and optimize Adobe Illustrator automation scripts using ExtendScript (JavaScript/JSX). Use when creating or modifying scripts that manipulate documents, layers, paths, text frames, colors, symbols, artboards, or any Illustrator DOM objects. Covers the complete JavaScript object model, coordinate system, measurement units, export workflows, and scripting best practices.'
+description: "Write, debug, and optimize Adobe Illustrator automation scripts using ExtendScript (JavaScript/JSX). Use when creating or modifying scripts that manipulate documents, layers, paths, text frames, colors, symbols, artboards, or any Illustrator DOM objects. Covers the complete JavaScript object model, coordinate system, measurement units, export workflows, and scripting best practices."
 ---
 
 # Adobe Illustrator Scripting
@@ -11,6 +11,7 @@ Expert guidance for automating Adobe Illustrator through ExtendScript (JavaScrip
 
 - [`references/object-model-quick-reference.md`](references/object-model-quick-reference.md): Use this as a quick lookup for the Illustrator scripting object model, common document and page item types, and related DOM concepts while writing or debugging scripts.
 - `scripts/`: Contains example Illustrator automation scripts you can use as starting points or implementation patterns for common tasks such as document manipulation, exports, batch processing, and DOM usage. Review and adapt these examples when you need working JSX patterns or want to compare behavior while debugging.
+
 ## When to Use This Skill
 
 - Writing new Illustrator automation scripts (`.jsx` or `.js` files)
@@ -33,11 +34,11 @@ Expert guidance for automating Adobe Illustrator through ExtendScript (JavaScrip
 
 ### Language and File Extensions
 
-| Language | Extension | Platform |
-|---|---|---|
+| Language                | Extension     | Platform       |
+| ----------------------- | ------------- | -------------- |
 | ExtendScript/JavaScript | `.jsx`, `.js` | Windows, macOS |
-| AppleScript | `.scpt` | macOS only |
-| VBScript | `.vbs` | Windows only |
+| AppleScript             | `.scpt`       | macOS only     |
+| VBScript                | `.vbs`        | Windows only   |
 
 **This skill focuses on ExtendScript/JavaScript** as the cross-platform, most widely used option.
 
@@ -104,12 +105,12 @@ Application (app)
 
 All scripting API values use **points** (72 points = 1 inch). Convert other units:
 
-| Unit | Conversion |
-|---|---|
-| Inches | multiply by 72 |
-| Centimeters | multiply by 28.346 |
+| Unit        | Conversion           |
+| ----------- | -------------------- |
+| Inches      | multiply by 72       |
+| Centimeters | multiply by 28.346   |
 | Millimeters | multiply by 2.834645 |
-| Picas | multiply by 12 |
+| Picas       | multiply by 12       |
 
 Kerning, tracking, and `aki` properties use **em units** (thousandths of an em, proportional to font size).
 
@@ -138,7 +139,7 @@ var doc = app.documents.add();
 
 // Create with a preset
 var preset = new DocumentPreset();
-preset.width = 612;  // 8.5 inches
+preset.width = 612; // 8.5 inches
 preset.height = 792; // 11 inches
 preset.colorMode = DocumentColorSpace.CMYK;
 var doc = app.documents.addDocument("Print", preset);
@@ -206,7 +207,11 @@ var star = layer.pathItems.star(300, 300, 50, 25, 5);
 ```javascript
 var doc = app.activeDocument;
 var path = doc.pathItems.add();
-path.setEntirePath([[100, 100], [200, 200], [300, 100]]);
+path.setEntirePath([
+  [100, 100],
+  [200, 200],
+  [300, 100],
+]);
 path.closed = false;
 path.stroked = true;
 path.strokeWidth = 2;
@@ -334,7 +339,11 @@ areaText.contents = "Text inside a rectangle shape.";
 
 // Path text (text along a path)
 var curvePath = doc.pathItems.add();
-curvePath.setEntirePath([[50, 300], [150, 400], [250, 300]]);
+curvePath.setEntirePath([
+  [50, 300],
+  [150, 400],
+  [250, 300],
+]);
 var pathText = doc.textFrames.pathText(curvePath);
 pathText.contents = "Text on a path";
 ```
@@ -347,10 +356,10 @@ var textRange = tf.textRange;
 
 // Character attributes
 var charAttr = textRange.characterAttributes;
-charAttr.size = 24;           // Font size in points
+charAttr.size = 24; // Font size in points
 charAttr.textFont = app.textFonts.getByName("ArialMT");
 charAttr.fillColor = red;
-charAttr.tracking = 50;       // Em units
+charAttr.tracking = 50; // Em units
 charAttr.horizontalScale = 100;
 charAttr.verticalScale = 100;
 charAttr.baselineShift = 0;
@@ -426,13 +435,13 @@ var sel = app.activeDocument.selection;
 
 // Iterate selected items
 for (var i = 0; i < sel.length; i++) {
-    var item = sel[i];
-    // Check type using typename
-    if (item.typename === "PathItem") {
-        item.fillColor = red;
-    } else if (item.typename === "TextFrame") {
-        item.contents = "Modified";
-    }
+  var item = sel[i];
+  // Check type using typename
+  if (item.typename === "PathItem") {
+    item.fillColor = red;
+  } else if (item.typename === "TextFrame") {
+    item.contents = "Modified";
+  }
 }
 
 // Select an item programmatically
@@ -567,8 +576,8 @@ item.rotate(30, undefined, undefined, true);
 Illustrator scripts are routinely launched from outside the application —
 shell scripts, schedulers, build pipelines, ExtendScript Toolkit, or
 `BridgeTalk` messages from other Creative Cloud apps. The execution
-environment under those launchers differs from the in-application *File >
-Scripts* path in several ways that frequently break otherwise-correct code.
+environment under those launchers differs from the in-application _File >
+Scripts_ path in several ways that frequently break otherwise-correct code.
 
 ### `arguments[]` Is Unreliable Under External Launchers
 
@@ -580,10 +589,10 @@ demonstrated below:
 
 ```javascript
 // At top of script
-var passed = (typeof arguments !== "undefined") ? arguments : [];
+var passed = typeof arguments !== "undefined" ? arguments : [];
 for (var i = 0; i < passed.length; i++) {
-    $.writeln("arg[" + i + "] = " + passed[i]);
-    // Often prints: arg[0] = [object BridgeTalk]
+  $.writeln("arg[" + i + "] = " + passed[i]);
+  // Often prints: arg[0] = [object BridgeTalk]
 }
 ```
 
@@ -601,19 +610,19 @@ regardless of launcher quirks and is easy to inspect after a failed run.
 var SIDECAR_PATH = "C:/Users/userName/job.args.txt";
 
 function readSidecar(path) {
-    var f = new File(path);
-    if (!f.exists || !f.open("r")) return null;
-    var lines = [];
-    while (!f.eof) {
-        var ln = f.readln();
-        if (ln && !/^\s*$/.test(ln)) lines.push(ln);
-    }
-    f.close();
-    return {
-        input:  lines[0],
-        output: lines[1],
-        mode:   lines[2]
-    };
+  var f = new File(path);
+  if (!f.exists || !f.open("r")) return null;
+  var lines = [];
+  while (!f.eof) {
+    var ln = f.readln();
+    if (ln && !/^\s*$/.test(ln)) lines.push(ln);
+  }
+  f.close();
+  return {
+    input: lines[0],
+    output: lines[1],
+    mode: lines[2],
+  };
 }
 ```
 
@@ -661,14 +670,16 @@ folder on demand so the first call cannot fail for a missing directory.
 var LOG_PATH = "C:/Users/userName/logs/job.log";
 
 function log(msg) {
+  try {
+    var f = new File(LOG_PATH);
     try {
-        var f = new File(LOG_PATH);
-        try { if (!f.parent.exists) f.parent.create(); } catch (eDir) {}
-        if (f.open("a")) {
-            f.writeln("[" + new Date() + "] " + msg);
-            f.close();
-        }
-    } catch (e) {}
+      if (!f.parent.exists) f.parent.create();
+    } catch (eDir) {}
+    if (f.open("a")) {
+      f.writeln("[" + new Date() + "] " + msg);
+      f.close();
+    }
+  } catch (e) {}
 }
 ```
 
@@ -680,9 +691,9 @@ silent failures into a single inspectable line.
 
 ```javascript
 try {
-    main();
+  main();
 } catch (err) {
-    log("FATAL: " + err + (err && err.line ? " line=" + err.line : ""));
+  log("FATAL: " + err + (err && err.line ? " line=" + err.line : ""));
 }
 ```
 
@@ -714,21 +725,21 @@ doc.saveAs(new File(doc.fullName.fsName), opts);
 
 ```javascript
 function processAllItems(doc) {
-    for (var i = 0; i < doc.pageItems.length; i++) {
-        var item = doc.pageItems[i];
-        // Process based on type
-        switch (item.typename) {
-            case "PathItem":
-                // handle path
-                break;
-            case "TextFrame":
-                // handle text
-                break;
-            case "GroupItem":
-                // handle group (may contain nested items)
-                break;
-        }
+  for (var i = 0; i < doc.pageItems.length; i++) {
+    var item = doc.pageItems[i];
+    // Process based on type
+    switch (item.typename) {
+      case "PathItem":
+        // handle path
+        break;
+      case "TextFrame":
+        // handle text
+        break;
+      case "GroupItem":
+        // handle group (may contain nested items)
+        break;
     }
+  }
 }
 ```
 
@@ -741,23 +752,29 @@ modifications.
 
 ```javascript
 function unlockAll(doc) {
-    function visitLayers(layers) {
-        for (var i = 0; i < layers.length; i++) {
-            var lyr = layers[i];
-            try { lyr.locked = false; lyr.visible = true; } catch (e) {}
-            visitItems(lyr);
-            if (lyr.layers && lyr.layers.length) visitLayers(lyr.layers);
-        }
+  function visitLayers(layers) {
+    for (var i = 0; i < layers.length; i++) {
+      var lyr = layers[i];
+      try {
+        lyr.locked = false;
+        lyr.visible = true;
+      } catch (e) {}
+      visitItems(lyr);
+      if (lyr.layers && lyr.layers.length) visitLayers(lyr.layers);
     }
-    function visitItems(container) {
-        var items = container.pageItems;
-        for (var j = 0; j < items.length; j++) {
-            var it = items[j];
-            try { it.locked = false; it.hidden = false; } catch (e) {}
-            if (it.typename === "GroupItem") visitItems(it);
-        }
+  }
+  function visitItems(container) {
+    var items = container.pageItems;
+    for (var j = 0; j < items.length; j++) {
+      var it = items[j];
+      try {
+        it.locked = false;
+        it.hidden = false;
+      } catch (e) {}
+      if (it.typename === "GroupItem") visitItems(it);
     }
-    visitLayers(doc.layers);
+  }
+  visitLayers(doc.layers);
 }
 ```
 
@@ -771,24 +788,27 @@ then remove the original.
 
 ```javascript
 function relinkOrRebuild(item, newFile) {
-    var bounds = item.geometricBounds.slice();
-    var parent = item.parent;
-    var name   = item.name;
+  var bounds = item.geometricBounds.slice();
+  var parent = item.parent;
+  var name = item.name;
 
-    if (item.typename === "PlacedItem") {
-        item.file = newFile;
-        item.geometricBounds = bounds;
-        return item;
-    }
+  if (item.typename === "PlacedItem") {
+    item.file = newFile;
+    item.geometricBounds = bounds;
+    return item;
+  }
 
-    // RasterItem path: rebuild as a linked PlacedItem in the same parent.
-    var fresh = parent.placedItems.add();
-    fresh.file = newFile;
-    fresh.geometricBounds = bounds;
-    if (name) try { fresh.name = name; } catch (e) {}
-    fresh.move(item, ElementPlacement.PLACEBEFORE);
-    item.remove();
-    return fresh;
+  // RasterItem path: rebuild as a linked PlacedItem in the same parent.
+  var fresh = parent.placedItems.add();
+  fresh.file = newFile;
+  fresh.geometricBounds = bounds;
+  if (name)
+    try {
+      fresh.name = name;
+    } catch (e) {}
+  fresh.move(item, ElementPlacement.PLACEBEFORE);
+  item.remove();
+  return fresh;
 }
 ```
 
@@ -802,25 +822,25 @@ into the working document.
 
 ```javascript
 function placeSVG(targetDoc, svgFile, targetLayer) {
-    var donor = app.open(svgFile);
-    app.executeMenuCommand("selectall");
-    app.executeMenuCommand("copy");
-    donor.close(SaveOptions.DONOTSAVECHANGES);
+  var donor = app.open(svgFile);
+  app.executeMenuCommand("selectall");
+  app.executeMenuCommand("copy");
+  donor.close(SaveOptions.DONOTSAVECHANGES);
 
-    app.activeDocument = targetDoc;
-    targetDoc.activeLayer = targetLayer;
-    app.executeMenuCommand("pasteFront");
+  app.activeDocument = targetDoc;
+  targetDoc.activeLayer = targetLayer;
+  app.executeMenuCommand("pasteFront");
 
-    var sel = targetDoc.selection;
-    if (!sel || sel.length === 0) return null;
-    if (sel.length === 1) return sel[0];
+  var sel = targetDoc.selection;
+  if (!sel || sel.length === 0) return null;
+  if (sel.length === 1) return sel[0];
 
-    // Multiple pasted items: group them so callers get a single handle.
-    var group = targetLayer.groupItems.add();
-    for (var i = sel.length - 1; i >= 0; i--) {
-        sel[i].move(group, ElementPlacement.PLACEATBEGINNING);
-    }
-    return group;
+  // Multiple pasted items: group them so callers get a single handle.
+  var group = targetLayer.groupItems.add();
+  for (var i = sel.length - 1; i >= 0; i--) {
+    sel[i].move(group, ElementPlacement.PLACEATBEGINNING);
+  }
+  return group;
 }
 ```
 
@@ -833,19 +853,19 @@ against.
 
 ```javascript
 function findClipPath(group) {
-    var items = group.pageItems;
-    for (var i = 0; i < items.length; i++) {
-        var it = items[i];
-        try {
-            if (it.typename === "PathItem" && it.clipping) return it;
-            if (it.typename === "CompoundPathItem") {
-                for (var j = 0; j < it.pathItems.length; j++) {
-                    if (it.pathItems[j].clipping) return it;
-                }
-            }
-        } catch (e) {}
-    }
-    return null;
+  var items = group.pageItems;
+  for (var i = 0; i < items.length; i++) {
+    var it = items[i];
+    try {
+      if (it.typename === "PathItem" && it.clipping) return it;
+      if (it.typename === "CompoundPathItem") {
+        for (var j = 0; j < it.pathItems.length; j++) {
+          if (it.pathItems[j].clipping) return it;
+        }
+      }
+    } catch (e) {}
+  }
+  return null;
 }
 ```
 
@@ -858,42 +878,40 @@ past the clip edge.
 
 ```javascript
 function fitItemToRect(item, rect, mode, bleed) {
-    // rect = [L, T, R, B] (Illustrator: T > B)
-    var rw = rect[2] - rect[0];
-    var rh = rect[1] - rect[3];
-    var ib = item.geometricBounds;
-    var iw = ib[2] - ib[0];
-    var ih = ib[1] - ib[3];
-    if (iw <= 0 || ih <= 0) return;
+  // rect = [L, T, R, B] (Illustrator: T > B)
+  var rw = rect[2] - rect[0];
+  var rh = rect[1] - rect[3];
+  var ib = item.geometricBounds;
+  var iw = ib[2] - ib[0];
+  var ih = ib[1] - ib[3];
+  if (iw <= 0 || ih <= 0) return;
 
-    var sx = rw / iw;
-    var sy = rh / ih;
-    var s  = (mode === "cover" ? Math.max(sx, sy) : Math.min(sx, sy))
-           * (bleed || 1);
-    item.resize(s * 100, s * 100);
+  var sx = rw / iw;
+  var sy = rh / ih;
+  var s =
+    (mode === "cover" ? Math.max(sx, sy) : Math.min(sx, sy)) * (bleed || 1);
+  item.resize(s * 100, s * 100);
 
-    var cx = (rect[0] + rect[2]) / 2;
-    var cy = (rect[1] + rect[3]) / 2;
-    var b  = item.geometricBounds;
-    var w  = b[2] - b[0];
-    var h  = b[1] - b[3];
-    item.position = [cx - w / 2, cy + h / 2];
+  var cx = (rect[0] + rect[2]) / 2;
+  var cy = (rect[1] + rect[3]) / 2;
+  var b = item.geometricBounds;
+  var w = b[2] - b[0];
+  var h = b[1] - b[3];
+  item.position = [cx - w / 2, cy + h / 2];
 }
 ```
-
-
 
 ### Batch Process Files in a Folder
 
 ```javascript
 var folder = Folder.selectDialog("Select folder of .ai files");
 if (folder) {
-    var files = folder.getFiles("*.ai");
-    for (var i = 0; i < files.length; i++) {
-        var doc = app.open(files[i]);
-        // Process each document...
-        doc.close(SaveOptions.DONOTSAVECHANGES);
-    }
+  var files = folder.getFiles("*.ai");
+  for (var i = 0; i < files.length; i++) {
+    var doc = app.open(files[i]);
+    // Process each document...
+    doc.close(SaveOptions.DONOTSAVECHANGES);
+  }
 }
 ```
 
@@ -901,11 +919,11 @@ if (folder) {
 
 ```javascript
 try {
-    var doc = app.activeDocument;
-    var layer = doc.layers.getByName("NonExistentLayer");
+  var doc = app.activeDocument;
+  var layer = doc.layers.getByName("NonExistentLayer");
 } catch (e) {
-    alert("Error: " + e.message);
-    // e.message, e.line, e.fileName available
+  alert("Error: " + e.message);
+  // e.message, e.line, e.fileName available
 }
 ```
 
@@ -931,23 +949,23 @@ try {
 
 Common enumeration constants used across the API:
 
-| Category | Constants |
-|---|---|
-| **Color Space** | `DocumentColorSpace.RGB`, `DocumentColorSpace.CMYK` |
-| **Justification** | `Justification.LEFT`, `Justification.CENTER`, `Justification.RIGHT`, `Justification.FULLJUSTIFY` |
-| **Point Type** | `PointType.SMOOTH`, `PointType.CORNER` |
-| **Stroke Cap** | `StrokeCap.BUTTENDCAP`, `StrokeCap.ROUNDENDCAP`, `StrokeCap.PROJECTINGENDCAP` |
-| **Stroke Join** | `StrokeJoin.MITERENDJOIN`, `StrokeJoin.ROUNDENDJOIN`, `StrokeJoin.BEVELENDJOIN` |
-| **Blend Mode** | `BlendModes.NORMAL`, `BlendModes.MULTIPLY`, `BlendModes.SCREEN`, `BlendModes.OVERLAY` |
-| **Save Options** | `SaveOptions.SAVECHANGES`, `SaveOptions.DONOTSAVECHANGES`, `SaveOptions.PROMPTTOSAVECHANGES` |
-| **Export Type** | `ExportType.PNG24`, `ExportType.PNG8`, `ExportType.JPEG`, `ExportType.SVG`, `ExportType.TIFF`, `ExportType.PHOTOSHOP`, `ExportType.AUTOCAD`, `ExportType.FLASH` |
-| **Element Placement** | `ElementPlacement.PLACEATBEGINNING`, `ElementPlacement.PLACEATEND`, `ElementPlacement.PLACEBEFORE`, `ElementPlacement.PLACEAFTER`, `ElementPlacement.INSIDE` |
-| **Z-Order** | `ZOrderMethod.BRINGTOFRONT`, `ZOrderMethod.SENDTOBACK`, `ZOrderMethod.BRINGFORWARD`, `ZOrderMethod.SENDBACKWARD` |
-| **Gradient Type** | `GradientType.LINEAR`, `GradientType.RADIAL` |
-| **Text Frame Kind** | `TextType.POINTTEXT`, `TextType.AREATEXT`, `TextType.PATHTEXT` |
-| **Variable Kind** | `VariableKind.TEXTUAL`, `VariableKind.IMAGE`, `VariableKind.VISIBILITY`, `VariableKind.GRAPH` |
-| **User Interaction** | `UserInteractionLevel.DISPLAYALERTS`, `UserInteractionLevel.DONTDISPLAYALERTS` |
-| **Compatibility** | `Compatibility.ILLUSTRATOR10` through `Compatibility.ILLUSTRATOR24` |
+| Category              | Constants                                                                                                                                                       |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Color Space**       | `DocumentColorSpace.RGB`, `DocumentColorSpace.CMYK`                                                                                                             |
+| **Justification**     | `Justification.LEFT`, `Justification.CENTER`, `Justification.RIGHT`, `Justification.FULLJUSTIFY`                                                                |
+| **Point Type**        | `PointType.SMOOTH`, `PointType.CORNER`                                                                                                                          |
+| **Stroke Cap**        | `StrokeCap.BUTTENDCAP`, `StrokeCap.ROUNDENDCAP`, `StrokeCap.PROJECTINGENDCAP`                                                                                   |
+| **Stroke Join**       | `StrokeJoin.MITERENDJOIN`, `StrokeJoin.ROUNDENDJOIN`, `StrokeJoin.BEVELENDJOIN`                                                                                 |
+| **Blend Mode**        | `BlendModes.NORMAL`, `BlendModes.MULTIPLY`, `BlendModes.SCREEN`, `BlendModes.OVERLAY`                                                                           |
+| **Save Options**      | `SaveOptions.SAVECHANGES`, `SaveOptions.DONOTSAVECHANGES`, `SaveOptions.PROMPTTOSAVECHANGES`                                                                    |
+| **Export Type**       | `ExportType.PNG24`, `ExportType.PNG8`, `ExportType.JPEG`, `ExportType.SVG`, `ExportType.TIFF`, `ExportType.PHOTOSHOP`, `ExportType.AUTOCAD`, `ExportType.FLASH` |
+| **Element Placement** | `ElementPlacement.PLACEATBEGINNING`, `ElementPlacement.PLACEATEND`, `ElementPlacement.PLACEBEFORE`, `ElementPlacement.PLACEAFTER`, `ElementPlacement.INSIDE`    |
+| **Z-Order**           | `ZOrderMethod.BRINGTOFRONT`, `ZOrderMethod.SENDTOBACK`, `ZOrderMethod.BRINGFORWARD`, `ZOrderMethod.SENDBACKWARD`                                                |
+| **Gradient Type**     | `GradientType.LINEAR`, `GradientType.RADIAL`                                                                                                                    |
+| **Text Frame Kind**   | `TextType.POINTTEXT`, `TextType.AREATEXT`, `TextType.PATHTEXT`                                                                                                  |
+| **Variable Kind**     | `VariableKind.TEXTUAL`, `VariableKind.IMAGE`, `VariableKind.VISIBILITY`, `VariableKind.GRAPH`                                                                   |
+| **User Interaction**  | `UserInteractionLevel.DISPLAYALERTS`, `UserInteractionLevel.DONTDISPLAYALERTS`                                                                                  |
+| **Compatibility**     | `Compatibility.ILLUSTRATOR10` through `Compatibility.ILLUSTRATOR24`                                                                                             |
 
 ## JavaScript Object Reference (Complete API Object List)
 

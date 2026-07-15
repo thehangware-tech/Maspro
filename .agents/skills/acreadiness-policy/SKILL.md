@@ -1,6 +1,6 @@
 ---
 name: acreadiness-policy
-description: 'Help the user pick, write, or apply an AgentRC policy. Policies customise readiness scoring by disabling irrelevant checks, overriding impact/level, setting pass-rate thresholds, or chaining org baselines with team overrides. Use when the user asks about strict mode, AI-only scoring, custom weights, CI gating, or wants org-wide standardisation.'
+description: "Help the user pick, write, or apply an AgentRC policy. Policies customise readiness scoring by disabling irrelevant checks, overriding impact/level, setting pass-rate thresholds, or chaining org baselines with team overrides. Use when the user asks about strict mode, AI-only scoring, custom weights, CI gating, or wants org-wide standardisation."
 argument-hint: "[show | new <name> | apply <path-or-pkg>] — e.g. /acreadiness-policy show, /acreadiness-policy new strict-frontend"
 ---
 
@@ -14,11 +14,11 @@ A policy is a small JSON file with three optional sections — `criteria`, `extr
 
 AgentRC ships with three example policies in `examples/policies/`:
 
-| Policy | What it does |
-|---|---|
-| `strict.json` | 100% pass rate, raises impact on key criteria |
-| `ai-only.json` | Disables all repo-health checks, focuses on AI tooling |
-| `repo-health-only.json` | Disables AI checks, focuses on traditional quality |
+| Policy                  | What it does                                           |
+| ----------------------- | ------------------------------------------------------ |
+| `strict.json`           | 100% pass rate, raises impact on key criteria          |
+| `ai-only.json`          | Disables all repo-health checks, focuses on AI tooling |
+| `repo-health-only.json` | Disables AI checks, focuses on traditional quality     |
 
 Recommend these as starting points before writing a custom policy.
 
@@ -28,40 +28,43 @@ Recommend these as starting points before writing a custom policy.
 {
   "name": "my-policy",
   "criteria": {
-    "disable":  ["env-example", "observability", "dependabot"],
+    "disable": ["env-example", "observability", "dependabot"],
     "override": {
-      "readme":      { "impact": "high", "level": 2 },
-      "lint-config": { "title": "Linter required" }
-    }
+      "readme": { "impact": "high", "level": 2 },
+      "lint-config": { "title": "Linter required" },
+    },
   },
   "extras": {
-    "disable": ["pre-commit"]
+    "disable": ["pre-commit"],
   },
   "thresholds": {
-    "passRate": 0.9
-  }
+    "passRate": 0.9,
+  },
 }
 ```
 
 ### Impact weights
 
-| Impact | Weight |
-|---|---|
-| critical | 5 |
-| high | 4 |
-| medium | 3 |
-| low | 2 |
-| info | 0 |
+| Impact   | Weight |
+| -------- | ------ |
+| critical | 5      |
+| high     | 4      |
+| medium   | 3      |
+| low      | 2      |
+| info     | 0      |
 
 `Score = 1 − (deductions / max possible weight)`. Grades: **A** ≥ 0.9, **B** ≥ 0.8, **C** ≥ 0.7, **D** ≥ 0.6, **F** < 0.6.
 
 ## Sub-commands
 
 ### `show`
+
 List policies currently in effect (from `agentrc.config.json` `policies` array, or none).
 
 ### `new <name>`
+
 Scaffold `policies/<name>.json` with sensible defaults. Walk the user through:
+
 1. **What to disable** — irrelevant pillars or extras for their stack (e.g. disable `observability` for a static site).
 2. **What to raise** — override `impact` to `high` or `critical` for must-haves (e.g. `readme`, `codeowners`).
 3. **Pass-rate threshold** — typical org baselines: `0.7` (lenient), `0.85` (standard), `1.0` (strict).
@@ -71,7 +74,9 @@ Scaffold `policies/<name>.json` with sensible defaults. Walk the user through:
    ```
 
 ### `apply <path-or-pkg>`
+
 Run `agentrc readiness --json --policy <source>` and re-render the report by handing off to the `assess` skill / `ai-readiness-reporter` agent. Supports chaining:
+
 ```bash
 npx -y github:microsoft/agentrc readiness --json --policy ./org-baseline.json,./team-frontend.json
 ```

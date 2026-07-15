@@ -14,13 +14,13 @@ existing practice — never invent build commands.
 
 ## Time-boxing & extension protocol
 
-| Concept | Rule |
-|---------|------|
-| Default budget | 5 minutes per sub-agent invocation |
-| Sub-agent must return | `status` ∈ {`complete`, `partial`, `blocked`} + `next_action` + `needs_extension_minutes` (0 if none). Always summarize progress before the budget expires — never silently overrun. |
-| Extension | parent only extends when `status: partial` AND `next_action` is concrete; sends `write_agent "continue for N min"` with `N = min(needs_extension_minutes, 10)` |
-| Extension cap (default) | 2 extensions per step; step 6 (build/test) up to 2× for slow suites. Step 2 (wait) is a single bounded sub-agent — see [02-wait.md](02-wait.md) — not extension-driven. |
-| Parent never blocks | step 1 (request), step 7 (commit + push), step 8 reply/resolve mutations, and the `task_complete` decision stay in the parent |
+| Concept                 | Rule                                                                                                                                                                                 |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Default budget          | 5 minutes per sub-agent invocation                                                                                                                                                   |
+| Sub-agent must return   | `status` ∈ {`complete`, `partial`, `blocked`} + `next_action` + `needs_extension_minutes` (0 if none). Always summarize progress before the budget expires — never silently overrun. |
+| Extension               | parent only extends when `status: partial` AND `next_action` is concrete; sends `write_agent "continue for N min"` with `N = min(needs_extension_minutes, 10)`                       |
+| Extension cap (default) | 2 extensions per step; step 6 (build/test) up to 2× for slow suites. Step 2 (wait) is a single bounded sub-agent — see [02-wait.md](02-wait.md) — not extension-driven.              |
+| Parent never blocks     | step 1 (request), step 7 (commit + push), step 8 reply/resolve mutations, and the `task_complete` decision stay in the parent                                                        |
 
 When the cap is reached and the work is still `partial`, the parent
 narrows the input (batch smaller in step 4 / split fix scope in step 5)
@@ -35,18 +35,18 @@ build → commit + push → reply + resolve (citing pushed SHA) →
 convergence check**. Reply/resolve runs AFTER push so replies can cite
 the pushed commit SHA.
 
-| Step | Owner | Contract |
-|------|-------|----------|
-| 1 — Request review | parent | [01-request-review.md](01-request-review.md) |
-| 2 — Wait for review | sub-agent (`general-purpose`, 20 min) | [02-wait.md](02-wait.md) |
-| 3 — List + categorize open threads | sub-agent (`explore`, 5 min) | [03-list-threads.md](03-list-threads.md) |
-| 4 — Triage | sub-agent (`general-purpose`, 5 min/≤5 threads) | [04-triage.md](04-triage.md) |
-| 5 — Apply fixes | sub-agents (`general-purpose`, parallel max 5, 5 min each) | [05-fix.md](05-fix.md) |
-| 6 — Build + test per repo conventions | sub-agent (`task` + `explore`, 10 min) | [06-build-test.md](06-build-test.md) |
-| 7 — Commit + push | parent | [07-commit-push.md](07-commit-push.md) |
-| 8 — Reply (always) + resolve (conditional) | sub-agent drafts → parent posts | [08-reply-resolve.md](08-reply-resolve.md) |
-| 9 — Convergence verify | sub-agent (`explore`, 3 min) | [09-convergence.md](09-convergence.md) |
-| 10 — Cleanup outdated (post-convergence, once) | parent | [10-cleanup.md](10-cleanup.md) |
+| Step                                           | Owner                                                      | Contract                                     |
+| ---------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------- |
+| 1 — Request review                             | parent                                                     | [01-request-review.md](01-request-review.md) |
+| 2 — Wait for review                            | sub-agent (`general-purpose`, 20 min)                      | [02-wait.md](02-wait.md)                     |
+| 3 — List + categorize open threads             | sub-agent (`explore`, 5 min)                               | [03-list-threads.md](03-list-threads.md)     |
+| 4 — Triage                                     | sub-agent (`general-purpose`, 5 min/≤5 threads)            | [04-triage.md](04-triage.md)                 |
+| 5 — Apply fixes                                | sub-agents (`general-purpose`, parallel max 5, 5 min each) | [05-fix.md](05-fix.md)                       |
+| 6 — Build + test per repo conventions          | sub-agent (`task` + `explore`, 10 min)                     | [06-build-test.md](06-build-test.md)         |
+| 7 — Commit + push                              | parent                                                     | [07-commit-push.md](07-commit-push.md)       |
+| 8 — Reply (always) + resolve (conditional)     | sub-agent drafts → parent posts                            | [08-reply-resolve.md](08-reply-resolve.md)   |
+| 9 — Convergence verify                         | sub-agent (`explore`, 3 min)                               | [09-convergence.md](09-convergence.md)       |
+| 10 — Cleanup outdated (post-convergence, once) | parent                                                     | [10-cleanup.md](10-cleanup.md)               |
 
 ## Single-iteration fallback
 
@@ -102,5 +102,5 @@ not assertion:
   cached triage / drafts if HEAD or the open-threads set changed.
 - **Local-build patches.** For projects with uncommitted local-build
   patches held out of the PR: `git stash push -m "local-build" --
-  <paths>` before committing, `git stash pop` after. Note `-m` must
+<paths>` before committing, `git stash pop` after. Note `-m` must
   come BEFORE `--` (see [api-quirks.md](api-quirks.md)).

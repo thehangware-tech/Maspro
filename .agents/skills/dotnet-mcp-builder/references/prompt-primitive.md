@@ -4,7 +4,7 @@ Prompts are reusable, parameterised message templates that the user (not the LLM
 
 ## Anatomy of a prompt
 
-```csharp
+````csharp
 using System.ComponentModel;
 using Microsoft.Extensions.AI;
 using ModelContextProtocol.Server;
@@ -23,7 +23,7 @@ public class CodePrompts
                 "I'll review the code for correctness, style, and potential improvements.")
         ];
 }
-```
+````
 
 Register it:
 
@@ -35,12 +35,12 @@ Register it:
 
 ## Return types
 
-| Return type | Result |
-|---|---|
-| `ChatMessage` | Single message. |
-| `IEnumerable<ChatMessage>` | Conversation seed. |
+| Return type                                    | Result                                                                                                                    |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `ChatMessage`                                  | Single message.                                                                                                           |
+| `IEnumerable<ChatMessage>`                     | Conversation seed.                                                                                                        |
 | `PromptMessage` / `IEnumerable<PromptMessage>` | Lower-level — use when you need full control over content blocks (embedded resources, multiple typed blocks per message). |
-| `GetPromptResult` | Full control — set `Messages` and `Description`. |
+| `GetPromptResult`                              | Full control — set `Messages` and `Description`.                                                                          |
 
 `ChatMessage`/`ChatRole` come from `Microsoft.Extensions.AI`. They're the high-level shape and what you should use 90% of the time. Drop down to `PromptMessage`/`ContentBlock` only when you need embedded resources or fine-grained content typing.
 
@@ -144,7 +144,7 @@ await server.SendNotificationAsync(
 
 ## When to use prompts vs. tools
 
-- **Prompt:** the *user* triggers it from a menu, supplying any required arguments. The output is messages, not data. Good for "/summarize", "/code-review", "/draft-email".
-- **Tool:** the *LLM* triggers it (often without explicit user action) to fetch or change data. Good for "get_weather", "create_issue".
+- **Prompt:** the _user_ triggers it from a menu, supplying any required arguments. The output is messages, not data. Good for "/summarize", "/code-review", "/draft-email".
+- **Tool:** the _LLM_ triggers it (often without explicit user action) to fetch or change data. Good for "get_weather", "create_issue".
 
 If both apply (the user wants a slash command that triggers the same logic the LLM could call), expose both — the same DTO/service can back both.

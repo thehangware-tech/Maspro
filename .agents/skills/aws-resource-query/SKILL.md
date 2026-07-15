@@ -1,6 +1,6 @@
 ---
 name: aws-resource-query
-description: 'Query AWS resources using natural language. Covers EC2, S3, RDS, Lambda, ECS, EKS, Secrets Manager, IAM, VPC, networking, messaging, and more. Strictly read-only — no writes, deletes, or mutations.'
+description: "Query AWS resources using natural language. Covers EC2, S3, RDS, Lambda, ECS, EKS, Secrets Manager, IAM, VPC, networking, messaging, and more. Strictly read-only — no writes, deletes, or mutations."
 ---
 
 # AWS Resource Query
@@ -10,6 +10,7 @@ Answer natural language questions about AWS resources by translating intent into
 ## Safety Contract
 
 **STRICTLY READ-ONLY.** This skill exclusively uses:
+
 - `aws <service> describe-*`
 - `aws <service> list-*`
 - `aws <service> get-*`
@@ -23,21 +24,26 @@ Answer natural language questions about AWS resources by translating intent into
 `create-*`, `run-*`, `start-*`, `stop-*`, `reboot-*`, `delete-*`, `terminate-*`, `put-*`, `update-*`, `modify-*`, `attach-*`, `detach-*`, `send-*`, `publish-*`, `invoke-*`, `execute-*`
 
 If the user's query implies a write action, respond:
+
 > "This skill is read-only. I can show you the current state of [resource], but I cannot [create/modify/delete] it. Would you like to see what currently exists?"
 
 ## Workflow
 
 ### Step 1: Parse Intent
+
 Identify: target service(s), scope (all / filtered / specific), detail level, and region.
 
 ### Step 2: Confirm Account & Region
+
 ```bash
 aws sts get-caller-identity --query '{Account:Account,UserId:UserId}'
 aws configure get region
 ```
+
 Append `--region <region>` to all commands when the user specifies one.
 
 ### Step 3: Execute & Format
+
 Run the matched read-only command(s) below and format results as a readable table. For large result sets show a count first and offer to filter further.
 
 ---
@@ -47,6 +53,7 @@ Run the matched read-only command(s) below and format results as a readable tabl
 ### COMPUTE
 
 #### EC2 Instances
+
 ```bash
 # "list EC2 instances" / "show my VMs" / "what instances are running"
 aws ec2 describe-instances \
@@ -88,6 +95,7 @@ aws ec2 describe-spot-instance-requests \
 ```
 
 #### Lambda Functions
+
 ```bash
 # "list Lambda functions" / "show serverless functions"
 aws lambda list-functions \
@@ -109,6 +117,7 @@ aws lambda get-function-concurrency --function-name <name>
 ```
 
 #### ECS
+
 ```bash
 # "ECS clusters"
 aws ecs list-clusters --query 'clusterArns' --output table
@@ -128,6 +137,7 @@ aws ecs list-task-definitions --query 'taskDefinitionArns' --output table
 ```
 
 #### EKS
+
 ```bash
 # "EKS clusters" / "Kubernetes clusters"
 aws eks list-clusters --query 'clusters' --output table
@@ -144,6 +154,7 @@ aws eks list-addons --cluster-name <name> --query 'addons' --output table
 ```
 
 #### Other Compute
+
 ```bash
 # "Beanstalk environments"
 aws elasticbeanstalk describe-environments \
@@ -163,6 +174,7 @@ aws batch describe-compute-environments \
 ### STORAGE
 
 #### S3
+
 ```bash
 # "list S3 buckets" / "show my buckets"
 aws s3api list-buckets --query 'Buckets[].[Name,CreationDate]' --output table
@@ -188,6 +200,7 @@ aws s3api list-objects-v2 --bucket <bucket> --prefix <prefix> \
 ```
 
 #### EBS & EFS
+
 ```bash
 # "EBS volumes" / "list volumes"
 aws ec2 describe-volumes \
@@ -211,6 +224,7 @@ aws efs describe-file-systems \
 ### DATABASES
 
 #### RDS
+
 ```bash
 # "list RDS instances" / "show databases" / "what databases do I have"
 aws rds describe-db-instances \
@@ -235,6 +249,7 @@ aws rds describe-db-subnet-groups \
 ```
 
 #### DynamoDB
+
 ```bash
 # "DynamoDB tables" / "list NoSQL tables"
 aws dynamodb list-tables --query 'TableNames' --output table
@@ -253,6 +268,7 @@ aws dynamodb list-global-tables \
 ```
 
 #### ElastiCache & Redshift
+
 ```bash
 # "ElastiCache clusters" / "Redis clusters"
 aws elasticache describe-cache-clusters \
@@ -280,6 +296,7 @@ aws neptune describe-db-clusters \
 ### NETWORKING
 
 #### VPC & Subnets
+
 ```bash
 # "list VPCs" / "show my VPCs"
 aws ec2 describe-vpcs \
@@ -331,6 +348,7 @@ aws ec2 describe-transit-gateways \
 ```
 
 #### Load Balancers & DNS
+
 ```bash
 # "load balancers" / "ALBs" / "NLBs"
 aws elbv2 describe-load-balancers \
@@ -370,6 +388,7 @@ aws directconnect describe-connections \
 ### SECURITY & IDENTITY
 
 #### IAM
+
 ```bash
 # "IAM users" / "list users"
 aws iam list-users \
@@ -403,6 +422,7 @@ aws iam get-account-summary
 ```
 
 #### Secrets Manager
+
 ```bash
 # "list secrets" / "Secrets Manager secrets" / "show secrets"
 aws secretsmanager list-secrets \
@@ -420,6 +440,7 @@ aws secretsmanager list-secrets \
 > ⚠️ **Note**: Secret **values** are never retrieved (`get-secret-value` is excluded). Only metadata is shown.
 
 #### SSM Parameter Store
+
 ```bash
 # "SSM parameters" / "Parameter Store"
 aws ssm describe-parameters \
@@ -434,6 +455,7 @@ aws ssm describe-parameters \
 > ⚠️ **Note**: Parameter **values** are never retrieved (`get-parameter` is excluded). Only metadata is shown.
 
 #### KMS & Certificates
+
 ```bash
 # "KMS keys" / "encryption keys"
 aws kms list-keys --query 'Keys[].[KeyId,KeyArn]' --output table
@@ -456,6 +478,7 @@ aws acm describe-certificate --certificate-arn <arn> \
 ```
 
 #### GuardDuty, Security Hub & Config
+
 ```bash
 # "GuardDuty detectors"
 aws guardduty list-detectors --query 'DetectorIds' --output table
@@ -623,9 +646,9 @@ aws configservice list-discovered-resources --resource-type <type> \
 
 ## Error Handling
 
-| Error | Response |
-|---|---|
-| `AccessDenied` | "You don't have permission to list [resource]. Required: `<service>:<Action>`." |
-| `NoCredentialProviders` | "Run `aws configure` or set `AWS_PROFILE`." |
-| Empty result | "No [resources] found in [region]. Check another region?" |
-| Invalid identifier | "Could not find '[name]'. Check the name or provide the resource ID." |
+| Error                   | Response                                                                        |
+| ----------------------- | ------------------------------------------------------------------------------- |
+| `AccessDenied`          | "You don't have permission to list [resource]. Required: `<service>:<Action>`." |
+| `NoCredentialProviders` | "Run `aws configure` or set `AWS_PROFILE`."                                     |
+| Empty result            | "No [resources] found in [region]. Check another region?"                       |
+| Invalid identifier      | "Could not find '[name]'. Check the name or provide the resource ID."           |

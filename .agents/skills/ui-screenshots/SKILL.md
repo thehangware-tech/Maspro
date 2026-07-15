@@ -1,6 +1,6 @@
 ---
 name: ui-screenshots
-description: 'Capture screenshots of web apps during development using Playwright and PIL. Supports full-page captures, interactive states, and an iterate-on-crop workflow that avoids slow re-screenshots.'
+description: "Capture screenshots of web apps during development using Playwright and PIL. Supports full-page captures, interactive states, and an iterate-on-crop workflow that avoids slow re-screenshots."
 ---
 
 # UI Screenshots
@@ -165,20 +165,20 @@ capture_window('Visual Studio Code', 'vscode-capture.png')
 **Node.js Playwright only** — Python Playwright has no `electron` API. Captures via CDP (Chrome DevTools Protocol), not from the screen — works even while minimized.
 
 ```javascript
-const { _electron: electron } = require('playwright');
+const { _electron: electron } = require("playwright");
 const app = await electron.launch({
-    executablePath: 'C:\\Program Files\\Microsoft VS Code\\Code.exe',
-    args: ['--new-window', '--disable-extensions', '--user-data-dir=' + tmpDir]
+  executablePath: "C:\\Program Files\\Microsoft VS Code\\Code.exe",
+  args: ["--new-window", "--disable-extensions", "--user-data-dir=" + tmpDir],
 });
 const window = await app.firstWindow();
-await window.waitForLoadState('domcontentloaded');
+await window.waitForLoadState("domcontentloaded");
 
 // Minimize immediately — captures still work via CDP
 await app.evaluate(({ BrowserWindow }) => {
-    BrowserWindow.getAllWindows()[0].minimize();
+  BrowserWindow.getAllWindows()[0].minimize();
 });
 
-await window.screenshot({ path: 'capture.png' }); // works while minimized!
+await window.screenshot({ path: "capture.png" }); // works while minimized!
 await app.close();
 ```
 
@@ -186,13 +186,13 @@ await app.close();
 
 ### Decision tree
 
-| Scenario | Tool | Notes |
-|---|---|---|
-| Web app (localhost) | Playwright | Proven, full DOM access |
-| Electron app (VS Code) | Playwright Electron (Node.js) | Works minimized via CDP |
-| Desktop app, visible window | mss + ctypes (find by title) | ~33ms per capture |
-| Desktop app, behind windows | Windows Graphics Capture API | Complex setup, Win10 1903+ |
-| Quick full-screen | mss | ~68ms |
+| Scenario                    | Tool                          | Notes                      |
+| --------------------------- | ----------------------------- | -------------------------- |
+| Web app (localhost)         | Playwright                    | Proven, full DOM access    |
+| Electron app (VS Code)      | Playwright Electron (Node.js) | Works minimized via CDP    |
+| Desktop app, visible window | mss + ctypes (find by title)  | ~33ms per capture          |
+| Desktop app, behind windows | Windows Graphics Capture API  | Complex setup, Win10 1903+ |
+| Quick full-screen           | mss                           | ~68ms                      |
 
 ## Limitations
 

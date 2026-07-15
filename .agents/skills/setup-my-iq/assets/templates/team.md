@@ -4,8 +4,8 @@
 
 **Manager:** <!-- manager name -->
 
-| Name | Email | Notes |
-|------|-------|-------|
+| Name          | Email          | Notes                                        |
+| ------------- | -------------- | -------------------------------------------- |
 | <!-- name --> | <!-- email --> | <!-- role, focus area, interaction notes --> |
 
 ---
@@ -16,8 +16,8 @@
 
 <!-- Brief description of your relationship with this team and what you need from / provide to them. -->
 
-| Name | Email | Notes |
-|------|-------|-------|
+| Name          | Email          | Notes                     |
+| ------------- | -------------- | ------------------------- |
 | <!-- name --> | <!-- email --> | <!-- role, focus area --> |
 
 ---
@@ -28,8 +28,8 @@
 
 <!-- Brief description of your relationship with this team. -->
 
-| Name | Email | Notes |
-|------|-------|-------|
+| Name          | Email          | Notes                     |
+| ------------- | -------------- | ------------------------- |
 | <!-- name --> | <!-- email --> | <!-- role, focus area --> |
 
 ---

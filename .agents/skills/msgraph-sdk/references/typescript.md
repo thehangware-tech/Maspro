@@ -46,7 +46,7 @@ import { ClientSecretCredential } from "@azure/identity";
 const credential = new ClientSecretCredential(
   process.env.AZURE_TENANT_ID!,
   process.env.AZURE_CLIENT_ID!,
-  process.env.AZURE_CLIENT_SECRET!
+  process.env.AZURE_CLIENT_SECRET!,
 );
 
 const authProvider = new TokenCredentialAuthenticationProvider(credential, {
@@ -83,7 +83,10 @@ For OBO, create a new client per request (credential is user-scoped, not singlet
 Use `InteractiveBrowserCredential` when a browser is available. Use `DeviceCodeCredential` for headless environments (SSH, CI-adjacent, WSL):
 
 ```typescript
-import { InteractiveBrowserCredential, DeviceCodeCredential } from "@azure/identity";
+import {
+  InteractiveBrowserCredential,
+  DeviceCodeCredential,
+} from "@azure/identity";
 
 // Opens a browser tab — requires redirect URI http://localhost in app registration
 const credential = new InteractiveBrowserCredential({
@@ -142,7 +145,7 @@ const pageIterator = new PageIterator(
   (message: Message) => {
     allMessages.push(message);
     return true; // return false to stop early
-  }
+  },
 );
 
 await pageIterator.iterate();

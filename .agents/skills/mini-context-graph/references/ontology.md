@@ -16,6 +16,7 @@ However, the ontology must remain **compact, consistent, and reusable**.
 ### Normalization
 
 When assigning an entity type, apply these transformations:
+
 1. Convert to **lowercase**
 2. Strip leading/trailing whitespace
 3. Replace underscores and hyphens with spaces
@@ -23,22 +24,23 @@ When assigning an entity type, apply these transformations:
 
 ### Synonym Mapping (Entity Types)
 
-| Variant | Canonical Type |
-|---------|---------------|
-| component, module, class, function | component |
-| bug, defect, fault, error, failure | issue |
-| server, host, machine, node | infrastructure |
-| user, person, operator, admin, actor | actor |
-| app, application, service, program, software | software |
-| database, datastore, db, storage | storage |
-| api, endpoint, interface, connection | interface |
-| event, incident, occurrence, trigger | event |
-| concept, idea, principle, theory | concept |
-| process, thread, task, job, workflow | process |
+| Variant                                      | Canonical Type |
+| -------------------------------------------- | -------------- |
+| component, module, class, function           | component      |
+| bug, defect, fault, error, failure           | issue          |
+| server, host, machine, node                  | infrastructure |
+| user, person, operator, admin, actor         | actor          |
+| app, application, service, program, software | software       |
+| database, datastore, db, storage             | storage        |
+| api, endpoint, interface, connection         | interface      |
+| event, incident, occurrence, trigger         | event          |
+| concept, idea, principle, theory             | concept        |
+| process, thread, task, job, workflow         | process        |
 
 ### Adding New Types
 
 If an entity does not match any existing type:
+
 - Create a **new type** if it is genuinely distinct
 - Keep the label short (1–3 words, lowercase)
 - Consider whether an existing type is close enough before creating a new one
@@ -55,6 +57,7 @@ If an entity does not match any existing type:
 ### Normalization
 
 When assigning a relation type:
+
 1. Convert to **lowercase**
 2. Strip whitespace
 3. Use verb phrases in **present tense** (e.g., "causes", "contains", "uses")
@@ -62,18 +65,18 @@ When assigning a relation type:
 
 ### Synonym Mapping (Relation Types)
 
-| Variant | Canonical Relation |
-|---------|-------------------|
-| triggers, leads to, results in, produces | causes |
-| is part of, belongs to, lives in, sits in | contains |
-| depends on, requires, needs | depends on |
-| uses, calls, invokes, consumes | uses |
-| affects, impacts, influences | affects |
-| creates, instantiates, spawns | creates |
-| connects to, links to, references | connects to |
-| inherits from, extends, subclasses | extends |
-| reads from, queries, fetches | reads from |
-| writes to, stores in, persists to | writes to |
+| Variant                                   | Canonical Relation |
+| ----------------------------------------- | ------------------ |
+| triggers, leads to, results in, produces  | causes             |
+| is part of, belongs to, lives in, sits in | contains           |
+| depends on, requires, needs               | depends on         |
+| uses, calls, invokes, consumes            | uses               |
+| affects, impacts, influences              | affects            |
+| creates, instantiates, spawns             | creates            |
+| connects to, links to, references         | connects to        |
+| inherits from, extends, subclasses        | extends            |
+| reads from, queries, fetches              | reads from         |
+| writes to, stores in, persists to         | writes to          |
 
 ### Adding New Relations
 

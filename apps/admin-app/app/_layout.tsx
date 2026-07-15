@@ -29,7 +29,7 @@ const tokenCache = {
   },
 };
 
-import * as SplashScreen from 'expo-splash-screen';
+import * as SplashScreen from "expo-splash-screen";
 
 // Prevent splash screen from auto hiding
 SplashScreen.preventAutoHideAsync().catch(() => {});
@@ -41,7 +41,7 @@ export default function RootLayout() {
 
   if (!publishableKey) {
     throw new Error(
-      "Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env"
+      "Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env",
     );
   }
 

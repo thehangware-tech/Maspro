@@ -8,23 +8,23 @@ Prioritized controls to reduce data breach blast radius. Controls are organized 
 
 ## Control Priority Matrix
 
-| Priority | Control | Blast Radius Reduction | Effort | Category |
-|----------|---------|----------------------|--------|---------|
-| P0 | Fix IDOR/BOLA — add ownership checks | 90% for affected vector | Low | Authorization |
-| P0 | Remove sensitive fields from API responses | 85% for affected fields | Low | Data Minimization |
-| P0 | Revoke publicly accessible storage (S3/Blob) | 100% for affected store | Low | Access Control |
-| P0 | Remove plaintext credentials from code/logs | 100% for affected secret | Low | Secrets |
-| P1 | Add field-level encryption for T1 data | 80% for encrypted fields | Medium | Encryption |
-| P1 | Mask/tokenize PCI card data | 95% for card exposure | Medium | Tokenization |
-| P1 | Remove PII from log statements | 70% for log exposure | Medium | Logging |
-| P1 | Add authentication to unauthenticated endpoints | 95% for exposed endpoints | Low | Authentication |
-| P2 | Implement data access audit logging | -50% detection time | Medium | Monitoring |
-| P2 | Enable database activity monitoring | -60% detection time | Medium | Monitoring |
-| P2 | Add rate limiting to sensitive endpoints | 60% reduction in data harvesting | Low | Rate Limiting |
-| P2 | Column-level encryption for T2 sensitive data | 70% for encrypted columns | Medium | Encryption |
-| P3 | Implement data retention + auto-deletion | 40% reduction in stale data exposure | High | Data Lifecycle |
-| P3 | Separate analytics store from production PII | 60% for analytics breach | High | Architecture |
-| P3 | Pseudonymize behavioral tracking data | 70% for behavioral data | Medium | Pseudonymization |
+| Priority | Control                                         | Blast Radius Reduction               | Effort | Category          |
+| -------- | ----------------------------------------------- | ------------------------------------ | ------ | ----------------- |
+| P0       | Fix IDOR/BOLA — add ownership checks            | 90% for affected vector              | Low    | Authorization     |
+| P0       | Remove sensitive fields from API responses      | 85% for affected fields              | Low    | Data Minimization |
+| P0       | Revoke publicly accessible storage (S3/Blob)    | 100% for affected store              | Low    | Access Control    |
+| P0       | Remove plaintext credentials from code/logs     | 100% for affected secret             | Low    | Secrets           |
+| P1       | Add field-level encryption for T1 data          | 80% for encrypted fields             | Medium | Encryption        |
+| P1       | Mask/tokenize PCI card data                     | 95% for card exposure                | Medium | Tokenization      |
+| P1       | Remove PII from log statements                  | 70% for log exposure                 | Medium | Logging           |
+| P1       | Add authentication to unauthenticated endpoints | 95% for exposed endpoints            | Low    | Authentication    |
+| P2       | Implement data access audit logging             | -50% detection time                  | Medium | Monitoring        |
+| P2       | Enable database activity monitoring             | -60% detection time                  | Medium | Monitoring        |
+| P2       | Add rate limiting to sensitive endpoints        | 60% reduction in data harvesting     | Low    | Rate Limiting     |
+| P2       | Column-level encryption for T2 sensitive data   | 70% for encrypted columns            | Medium | Encryption        |
+| P3       | Implement data retention + auto-deletion        | 40% reduction in stale data exposure | High   | Data Lifecycle    |
+| P3       | Separate analytics store from production PII    | 60% for analytics breach             | High   | Architecture      |
+| P3       | Pseudonymize behavioral tracking data           | 70% for behavioral data              | Medium | Pseudonymization  |
 
 ---
 
@@ -35,6 +35,7 @@ Prioritized controls to reduce data breach blast radius. Controls are organized 
 **What it fixes:** Broken Object Level Authorization — users can access other users' data by changing an ID.
 
 **Detection pattern in code:**
+
 ```python
 # VULNERABLE — no ownership check
 @app.get("/api/orders/{order_id}")
@@ -55,15 +56,15 @@ def get_order(order_id: int, current_user: User = Depends(get_current_user)):
 
 ```typescript
 // VULNERABLE
-app.get('/api/users/:id/profile', authenticate, async (req, res) => {
+app.get("/api/users/:id/profile", authenticate, async (req, res) => {
   const user = await User.findById(req.params.id);
   res.json(user);
 });
 
 // SECURE
-app.get('/api/users/:id/profile', authenticate, async (req, res) => {
+app.get("/api/users/:id/profile", authenticate, async (req, res) => {
   if (req.params.id !== req.user.id && !req.user.isAdmin) {
-    return res.status(403).json({ error: 'Forbidden' });
+    return res.status(403).json({ error: "Forbidden" });
   }
   const user = await User.findById(req.params.id);
   res.json(user);
@@ -100,13 +101,14 @@ public async Task<IActionResult> GetOrder(int orderId)
 **What it fixes:** Over-fetching — APIs return more data than the client needs.
 
 **Pattern:**
+
 ```typescript
 // VULNERABLE — returns all fields including passwordHash, ssn
 const user = await User.findById(id);
 res.json(user);
 
 // SECURE — explicit projection
-const user = await User.findById(id).select('id name email createdAt');
+const user = await User.findById(id).select("id name email createdAt");
 res.json(user);
 ```
 
@@ -138,6 +140,7 @@ public class UserResponse {
 ### 3. Remove Plaintext Credentials from Code
 
 **Detection patterns:**
+
 ```
 # Patterns to search for in all files:
 password\s*=\s*["'][^"']+["']
@@ -148,6 +151,7 @@ connectionString\s*=\s*["'][^"']+["']
 ```
 
 **Fix pattern:**
+
 ```python
 # VULNERABLE
 DATABASE_URL = "postgresql://user:p@ssw0rd@prod-db.example.com/mydb"
@@ -167,6 +171,7 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 Encrypt sensitive fields **before** storing them. The encryption key lives in a KMS, not in the database.
 
 **Python / SQLAlchemy + Azure Key Vault:**
+
 ```python
 from azure.keyvault.secrets import SecretClient
 from cryptography.fernet import Fernet
@@ -183,21 +188,25 @@ def decrypt_field(encrypted_value: str, key: bytes) -> str:
 ```
 
 **Node.js / Prisma + AWS KMS:**
+
 ```typescript
 import { KMSClient, EncryptCommand, DecryptCommand } from "@aws-sdk/client-kms";
 
 const kms = new KMSClient({ region: "us-east-1" });
 
 async function encryptField(plaintext: string): Promise<string> {
-  const { CiphertextBlob } = await kms.send(new EncryptCommand({
-    KeyId: process.env.KMS_KEY_ARN,
-    Plaintext: Buffer.from(plaintext),
-  }));
-  return Buffer.from(CiphertextBlob!).toString('base64');
+  const { CiphertextBlob } = await kms.send(
+    new EncryptCommand({
+      KeyId: process.env.KMS_KEY_ARN,
+      Plaintext: Buffer.from(plaintext),
+    }),
+  );
+  return Buffer.from(CiphertextBlob!).toString("base64");
 }
 ```
 
 **C# / EF Core + Azure Key Vault:**
+
 ```csharp
 // Use Always Encrypted for SQL Server / Azure SQL
 // Or manually encrypt with Azure Key Vault
@@ -211,6 +220,7 @@ public string EncryptedSsn { get; set; } // store Base64 ciphertext
 ```
 
 **Fields that MUST be field-encrypted (Tier 1):**
+
 - SSN / national ID numbers
 - Passport numbers
 - Full payment card numbers (better: use tokenization, see below)
@@ -224,23 +234,25 @@ public string EncryptedSsn { get; set; } // store Base64 ciphertext
 **Never store full card numbers.** Use a PCI-compliant vault instead.
 
 **Recommended providers:**
+
 - Stripe (tokenizes via Elements/PaymentIntents — you never touch card numbers)
 - Braintree / PayPal
 - Adyen
 - Square
 
 **Pattern:**
+
 ```typescript
 // CORRECT — use Stripe's tokenization
 const paymentMethod = await stripe.paymentMethods.create({
-  type: 'card',
+  type: "card",
   card: { token: cardToken }, // token from client-side Stripe.js
 });
 // Store: paymentMethod.id (token) — never the card number
 
 // WRONG — never do this
 const cardNumber = req.body.cardNumber; // Tier 2 PCI-DSS violation
-await db.save({ userId, cardNumber });   // DO NOT store raw card data
+await db.save({ userId, cardNumber }); // DO NOT store raw card data
 ```
 
 ---
@@ -248,6 +260,7 @@ await db.save({ userId, cardNumber });   // DO NOT store raw card data
 ### 6. Remove PII from Log Statements
 
 **Pattern to search for and fix:**
+
 ```python
 # VULNERABLE
 logger.info(f"User {user.email} logged in")
@@ -263,10 +276,11 @@ logger.debug(f"Payment processed", extra={"user_id": user.id, "payment_id": paym
 console.log(`Processing order for ${user.email} at ${user.address}`);
 
 // SECURE
-logger.info('Processing order', { userId: user.id, orderId: order.id });
+logger.info("Processing order", { userId: user.id, orderId: order.id });
 ```
 
 **Structured logging fields that are SAFE to log:**
+
 - Internal user ID (UUID/opaque)
 - Session ID (if short-lived and not externally shared)
 - Transaction/correlation IDs
@@ -276,6 +290,7 @@ logger.info('Processing order', { userId: user.id, orderId: order.id });
 - Duration/latency
 
 **Structured logging fields that are UNSAFE:**
+
 - Email addresses
 - IP addresses (must be masked — last octet)
 - Full names
@@ -291,6 +306,7 @@ logger.info('Processing order', { userId: user.id, orderId: order.id });
 Every read/write of Tier 1 and Tier 2 data must be logged to an immutable audit log.
 
 **What to log:**
+
 ```
 {
   timestamp: ISO8601,
@@ -318,23 +334,23 @@ Prevents automated bulk data harvesting even if an auth vulnerability exists.
 
 ```typescript
 // Express + express-rate-limit
-import rateLimit from 'express-rate-limit';
+import rateLimit from "express-rate-limit";
 
 // Aggressive limit for data export endpoint
 const exportLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
   max: 5, // max 5 exports per hour per IP
-  message: 'Too many export requests'
+  message: "Too many export requests",
 });
 
 // Standard limit for data lookup
 const lookupLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100
+  max: 100,
 });
 
-app.get('/api/export', exportLimiter, authMiddleware, exportController);
-app.get('/api/users/:id', lookupLimiter, authMiddleware, userController);
+app.get("/api/export", exportLimiter, authMiddleware, exportController);
+app.get("/api/users/:id", lookupLimiter, authMiddleware, userController);
 ```
 
 ---
@@ -351,16 +367,17 @@ ALTER TABLE users ADD COLUMN retention_expires_at TIMESTAMP;
 ALTER TABLE health_records ADD COLUMN retention_expires_at TIMESTAMP;
 
 -- Set retention at insert time
-INSERT INTO users (email, retention_expires_at) 
+INSERT INTO users (email, retention_expires_at)
 VALUES ($1, NOW() + INTERVAL '7 years');
 
 -- Scheduled job to hard-delete expired records (or anonymize)
-DELETE FROM users 
-WHERE retention_expires_at < NOW() 
+DELETE FROM users
+WHERE retention_expires_at < NOW()
 AND deletion_notified_at IS NOT NULL; -- ensure user was notified
 ```
 
 **Python scheduled cleanup:**
+
 ```python
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
@@ -370,7 +387,7 @@ async def purge_expired_records():
     )
     # Anonymize users (don't delete if financial records must be retained)
     await db.execute("""
-        UPDATE users SET 
+        UPDATE users SET
             email = CONCAT('deleted_', id, '@redacted.invalid'),
             phone = NULL,
             address = NULL,
@@ -397,12 +414,12 @@ PSEUDONYM_SALT = os.environ.get("PSEUDONYM_SALT")  # stored in Key Vault
 
 def pseudonymize_user_id(real_user_id: str) -> str:
     """
-    One-way: analyst can track behavior across sessions 
+    One-way: analyst can track behavior across sessions
     but cannot identify the real user without the salt.
     """
     return hmac.new(
-        PSEUDONYM_SALT.encode(), 
-        real_user_id.encode(), 
+        PSEUDONYM_SALT.encode(),
+        real_user_id.encode(),
         hashlib.sha256
     ).hexdigest()
 
@@ -436,14 +453,14 @@ analytics.track({
 
 When reporting the hardening roadmap, use these estimates:
 
-| Control Applied | Blast Radius Reduction | Justification |
-|----------------|----------------------|---------------|
-| Fix all IDOR vulnerabilities | 80–90% | Most breach scenarios exploit authorization flaws |
-| Field encryption for T1 data | 75–85% | Encrypted data is useless without KMS key |
-| Remove PII from logs | 40–60% | Log access is often less controlled than DB access |
-| Tokenize payment data | 95% for card data | Standard PCI-DSS compliance eliminates card data scope |
-| Rate limit data endpoints | 30–50% | Limits scale of automated harvesting attacks |
-| Data retention enforcement | 20–40% | Reduces "data lake" effect — less data to steal |
-| Audit logging + anomaly detection | 0% prevention, but -60% detection time | Breaches are caught faster |
-| Pseudonymization of analytics | 60–70% for analytics data | Analytics data decoupled from identity |
-| Architecture: separate analytics from PII | 50–70% | Breach of analytics store has no PII value |
+| Control Applied                           | Blast Radius Reduction                 | Justification                                          |
+| ----------------------------------------- | -------------------------------------- | ------------------------------------------------------ |
+| Fix all IDOR vulnerabilities              | 80–90%                                 | Most breach scenarios exploit authorization flaws      |
+| Field encryption for T1 data              | 75–85%                                 | Encrypted data is useless without KMS key              |
+| Remove PII from logs                      | 40–60%                                 | Log access is often less controlled than DB access     |
+| Tokenize payment data                     | 95% for card data                      | Standard PCI-DSS compliance eliminates card data scope |
+| Rate limit data endpoints                 | 30–50%                                 | Limits scale of automated harvesting attacks           |
+| Data retention enforcement                | 20–40%                                 | Reduces "data lake" effect — less data to steal        |
+| Audit logging + anomaly detection         | 0% prevention, but -60% detection time | Breaches are caught faster                             |
+| Pseudonymization of analytics             | 60–70% for analytics data              | Analytics data decoupled from identity                 |
+| Architecture: separate analytics from PII | 50–70%                                 | Breach of analytics store has no PII value             |

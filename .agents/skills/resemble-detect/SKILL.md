@@ -2,7 +2,7 @@
 name: resemble-detect
 description: Deepfake detection and media safety — detect AI-generated audio, images, video, and text, trace synthesis sources, apply watermarks, verify speaker identity, and analyze media intelligence using Resemble AI
 license: Apache-2.0
-compatibility: 'Requires a Resemble AI API key (https://app.resemble.ai) set as RESEMBLE_API_KEY. All media must be accessible via public HTTPS URLs — local file paths are not supported except for text detection.'
+compatibility: "Requires a Resemble AI API key (https://app.resemble.ai) set as RESEMBLE_API_KEY. All media must be accessible via public HTTPS URLs — local file paths are not supported except for text detection."
 ---
 
 # Resemble Detect — Deepfake Detection & Media Safety
@@ -34,17 +34,17 @@ Use this skill whenever the user's request involves any of these:
 
 ## Capability Decision Tree
 
-| User wants to...                                      | Use this                  | API endpoint                          |
-|-------------------------------------------------------|---------------------------|---------------------------------------|
-| Check if media is AI-generated / deepfake             | **Deepfake Detection**    | `POST /detect`                        |
-| Know *which AI platform* made fake audio              | **Audio Source Tracing**  | `POST /detect` with flag              |
-| Get speaker info, emotion, transcription from media   | **Intelligence**          | `POST /intelligence`                  |
-| Ask questions about a completed detection             | **Detect Intelligence**   | `POST /detects/{uuid}/intelligence`   |
-| Apply an invisible watermark to media                 | **Watermark Apply**       | `POST /watermark/apply`               |
-| Check if media contains a watermark                   | **Watermark Detect**      | `POST /watermark/detect`              |
-| Verify a speaker's identity against known profiles    | **Identity Search**       | `POST /identity/search`               |
-| Check if text is AI-generated                         | **Text Detection**        | `POST /text_detect`                   |
-| Create a voice identity profile for future matching   | **Identity Create**       | `POST /identity`                      |
+| User wants to...                                    | Use this                 | API endpoint                        |
+| --------------------------------------------------- | ------------------------ | ----------------------------------- |
+| Check if media is AI-generated / deepfake           | **Deepfake Detection**   | `POST /detect`                      |
+| Know _which AI platform_ made fake audio            | **Audio Source Tracing** | `POST /detect` with flag            |
+| Get speaker info, emotion, transcription from media | **Intelligence**         | `POST /intelligence`                |
+| Ask questions about a completed detection           | **Detect Intelligence**  | `POST /detects/{uuid}/intelligence` |
+| Apply an invisible watermark to media               | **Watermark Apply**      | `POST /watermark/apply`             |
+| Check if media contains a watermark                 | **Watermark Detect**     | `POST /watermark/detect`            |
+| Verify a speaker's identity against known profiles  | **Identity Search**      | `POST /identity/search`             |
+| Check if text is AI-generated                       | **Text Detection**       | `POST /text_detect`                 |
+| Create a voice identity profile for future matching | **Identity Create**      | `POST /identity`                    |
 
 When multiple capabilities apply (e.g., user wants deepfake detection AND intelligence), combine them in a single `POST /detect` call using the `intelligence: true` flag rather than making separate requests.
 
@@ -61,14 +61,14 @@ If the user provides a local file path instead of a URL, inform them the file mu
 
 When the Resemble MCP server is connected, use these tools instead of raw API calls:
 
-| Tool                      | Purpose                                           |
-|---------------------------|---------------------------------------------------|
-| `resemble_docs_lookup`    | Get comprehensive docs for any detect sub-topic   |
-| `resemble_search`         | Search across all documentation                   |
-| `resemble_api_endpoint`   | Get exact OpenAPI spec for any endpoint           |
-| `resemble_api_search`     | Find endpoints by keyword                         |
-| `resemble_get_page`       | Read specific documentation pages                 |
-| `resemble_list_topics`    | List all available topics                         |
+| Tool                    | Purpose                                         |
+| ----------------------- | ----------------------------------------------- |
+| `resemble_docs_lookup`  | Get comprehensive docs for any detect sub-topic |
+| `resemble_search`       | Search across all documentation                 |
+| `resemble_api_endpoint` | Get exact OpenAPI spec for any endpoint         |
+| `resemble_api_search`   | Find endpoints by keyword                       |
+| `resemble_get_page`     | Read specific documentation pages               |
+| `resemble_list_topics`  | List all available topics                       |
 
 **Tool usage pattern**: Use `resemble_docs_lookup` with topic `"detect"` to get the full picture, then `resemble_api_endpoint` for exact request/response schemas before making API calls.
 
@@ -83,6 +83,7 @@ Detailed request/response schemas for every endpoint are in **[references/api-re
 The core capability. Submit audio, image, or video for AI-generated content analysis via `POST /detect`.
 
 **Key flags to consider:**
+
 - `visualize: true` — generate heatmap/visualization artifacts
 - `intelligence: true` — run multimodal intelligence alongside detection (saves a round-trip)
 - `audio_source_tracing: true` — identify which AI platform synthesized fake audio (only fires on `"fake"` audio)
@@ -103,12 +104,12 @@ See [references/api-reference.md](references/api-reference.md#reading-results-by
 
 ### Interpreting Scores
 
-| Score Range | Interpretation                                      |
-|-------------|-----------------------------------------------------|
-| 0.0 – 0.3  | Strong indication of authentic/real media            |
-| 0.3 – 0.5  | Inconclusive — recommend additional analysis         |
-| 0.5 – 0.7  | Likely synthetic — flag for review                   |
-| 0.7 – 1.0  | High confidence synthetic/AI-generated               |
+| Score Range | Interpretation                               |
+| ----------- | -------------------------------------------- |
+| 0.0 – 0.3   | Strong indication of authentic/real media    |
+| 0.3 – 0.5   | Inconclusive — recommend additional analysis |
+| 0.5 – 0.7   | Likely synthetic — flag for review           |
+| 0.7 – 1.0   | High confidence synthetic/AI-generated       |
 
 **Always present scores with context.** Say "The detection returned a score of 0.87, indicating high confidence that this audio is AI-generated" — never just "it's fake."
 
@@ -119,6 +120,7 @@ See [references/api-reference.md](references/api-reference.md#reading-results-by
 Rich structured insights about media: speaker info, emotion, transcription, translation, misinformation, abnormalities.
 
 Two ways to run Intelligence:
+
 1. **Combined with detection** — add `intelligence: true` to `POST /detect` (preferred; one call)
 2. **Standalone** — `POST /intelligence` with a URL (when you only need analysis, not a deepfake verdict)
 
@@ -131,6 +133,7 @@ Two ways to run Intelligence:
 After a detection completes, ask natural-language questions via `POST /detects/{detect_uuid}/intelligence` with `{ "query": "..." }`. Returns a question UUID — poll `GET /detects/{detect_uuid}/intelligence/{question_uuid}` until `completed`.
 
 **Good questions to suggest:**
+
 - "Summarize the detection results in plain language"
 - "What specific indicators suggest this is AI-generated?"
 - "How do the audio and video detection results differ?"
@@ -190,6 +193,7 @@ Detect whether text content is AI-generated or human-written via `POST /text_det
 > **Beta feature** — requires the `detect_beta_user` role or a billing plan that includes the `dfd_text` product.
 
 **Key parameters:**
+
 - `text` (required, max 100,000 chars)
 - `threshold` (default 0.5)
 - `privacy_mode: true` — text content not stored after analysis
@@ -265,14 +269,14 @@ When presenting results to users:
 
 ## Error Handling
 
-| Error     | Cause                                      | Resolution                                      |
-|-----------|--------------------------------------------|-------------------------------------------------|
-| 400       | Invalid request body or missing `url`      | Check required parameters                       |
-| 401       | Invalid or missing API key                 | Verify `RESEMBLE_API_KEY`                       |
-| 404       | Detection UUID not found                   | Verify the UUID from the creation response     |
-| 422       | Detection not completed (for Intelligence) | Wait for detection to reach `completed` status |
-| 429       | Rate limited                               | Back off and retry with exponential delay       |
-| 500       | Server error                               | Retry once, then report to user                  |
+| Error | Cause                                      | Resolution                                     |
+| ----- | ------------------------------------------ | ---------------------------------------------- |
+| 400   | Invalid request body or missing `url`      | Check required parameters                      |
+| 401   | Invalid or missing API key                 | Verify `RESEMBLE_API_KEY`                      |
+| 404   | Detection UUID not found                   | Verify the UUID from the creation response     |
+| 422   | Detection not completed (for Intelligence) | Wait for detection to reach `completed` status |
+| 429   | Rate limited                               | Back off and retry with exponential delay      |
+| 500   | Server error                               | Retry once, then report to user                |
 
 ## Privacy & Compliance Notes
 

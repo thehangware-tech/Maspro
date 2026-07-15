@@ -1,6 +1,6 @@
 ---
 name: pr-screenshots
-description: 'Embed before/after screenshots and annotated images in pull request descriptions. Covers PR description patterns, image upload for Azure DevOps and GitHub, and sizing best practices.'
+description: "Embed before/after screenshots and annotated images in pull request descriptions. Covers PR description patterns, image upload for Azure DevOps and GitHub, and sizing best practices."
 ---
 
 # PR Screenshots
@@ -63,7 +63,7 @@ For PRs with several visual changes, use separate before/after pairs with headin
 - **Take screenshots at native 1x resolution** — don't resize with PIL (creates artifacts)
 - **Control display size in HTML** when images are too large:
   ```html
-  <img src="url" width="600" alt="description">
+  <img src="url" width="600" alt="description" />
   ```
 - **Before/after pairs must use the same viewport width and crop** — otherwise the comparison is meaningless
 

@@ -4,13 +4,14 @@
 
 All packages live under the [`ModelContextProtocol` NuGet profile](https://www.nuget.org/profiles/ModelContextProtocol). The official C# SDK repo is [`modelcontextprotocol/csharp-sdk`](https://github.com/modelcontextprotocol/csharp-sdk), maintained jointly by the MCP project and Microsoft.
 
-| Package | When to use it | Brings in |
-|---|---|---|
-| **`ModelContextProtocol`** | Default for STDIO servers and most projects | `Core` + `Microsoft.Extensions.Hosting` integration, attribute discovery (`AddMcpServer`, `WithToolsFromAssembly`, etc.) |
-| **`ModelContextProtocol.AspNetCore`** | HTTP (Streamable) servers hosted in ASP.NET Core | The above + `WithHttpTransport` and `MapMcp` |
-| **`ModelContextProtocol.Core`** | Pure clients, custom hosts, low-level scenarios where you don't want the `Microsoft.Extensions.*` dependencies | Just the protocol + transports + low-level `McpServer.Create` / `McpClient.CreateAsync` |
+| Package                               | When to use it                                                                                                 | Brings in                                                                                                                |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| **`ModelContextProtocol`**            | Default for STDIO servers and most projects                                                                    | `Core` + `Microsoft.Extensions.Hosting` integration, attribute discovery (`AddMcpServer`, `WithToolsFromAssembly`, etc.) |
+| **`ModelContextProtocol.AspNetCore`** | HTTP (Streamable) servers hosted in ASP.NET Core                                                               | The above + `WithHttpTransport` and `MapMcp`                                                                             |
+| **`ModelContextProtocol.Core`**       | Pure clients, custom hosts, low-level scenarios where you don't want the `Microsoft.Extensions.*` dependencies | Just the protocol + transports + low-level `McpServer.Create` / `McpClient.CreateAsync`                                  |
 
 **Rule of thumb:**
+
 - New STDIO server → `ModelContextProtocol` + `Microsoft.Extensions.Hosting`.
 - New HTTP server → `ModelContextProtocol.AspNetCore` only (it transitively pulls in everything you need).
 - Pure client app → `ModelContextProtocol.Core` (or `ModelContextProtocol` if you also want hosting/DI for the client).
@@ -28,6 +29,7 @@ dotnet search ModelContextProtocol --prerelease
 ## Target frameworks
 
 The SDK targets **`.NET 8.0`** and **`netstandard2.0`**. That means it runs on:
+
 - .NET 8 (LTS)
 - .NET 9
 - .NET 10 (current LTS — recommended for new projects)
@@ -66,11 +68,11 @@ dotnet add package ModelContextProtocol.Core
 
 ## Optional but commonly useful
 
-| Package | Why |
-|---|---|
-| `Microsoft.Extensions.AI` | Provides `IChatClient`, `ChatMessage`, `ChatRole`, `ChatOptions` — the abstractions used by `AsSamplingChatClient()` and by prompt return types. |
-| `Microsoft.Extensions.AI.Abstractions` | Pulled in transitively but worth knowing about for types like `DataContent`, `TextContent`. |
-| `OpenTelemetry.Extensions.Hosting` | The SDK emits OTel traces and metrics for tool calls — wire them up if the user has an observability story. |
+| Package                                | Why                                                                                                                                              |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Microsoft.Extensions.AI`              | Provides `IChatClient`, `ChatMessage`, `ChatRole`, `ChatOptions` — the abstractions used by `AsSamplingChatClient()` and by prompt return types. |
+| `Microsoft.Extensions.AI.Abstractions` | Pulled in transitively but worth knowing about for types like `DataContent`, `TextContent`.                                                      |
+| `OpenTelemetry.Extensions.Hosting`     | The SDK emits OTel traces and metrics for tool calls — wire them up if the user has an observability story.                                      |
 
 ## What about `dnx`?
 

@@ -30,7 +30,7 @@ const { datasetId } = await createDataset({
   name: "qa-test-v1",
   examples: [
     {
-      id: "q-001",                        // stable ID — server updates this row, not inserts
+      id: "q-001", // stable ID — server updates this row, not inserts
       input: { question: "What is 2+2?" },
       output: { answer: "4" },
       metadata: { category: "math" },
@@ -43,12 +43,12 @@ const { datasetId } = await createDataset({
 
 ```typescript
 interface Example {
-  input: Record<string, unknown>;    // Task input
-  output?: Record<string, unknown> | null;  // Expected output
+  input: Record<string, unknown>; // Task input
+  output?: Record<string, unknown> | null; // Expected output
   metadata?: Record<string, unknown> | null; // Additional context
   splits?: string | string[] | null; // Split assignment ("train", ["train", "easy"], etc.)
-  spanId?: string | null;            // OTEL span ID to link back to source trace
-  id?: string | null;                // Stable user-provided ID; server updates matching row
+  spanId?: string | null; // OTEL span ID to link back to source trace
+  id?: string | null; // Stable user-provided ID; server updates matching row
 }
 ```
 

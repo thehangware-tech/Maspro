@@ -63,6 +63,7 @@ public async Task<IEnumerable<Commit>> GetCommits(
 ```
 
 The SDK recognises and special-cases these parameter types — they don't appear in the tool schema:
+
 - `IMcpServer` / `McpServer` — the current server (used for `ElicitAsync`, `SampleAsync`, `RequestRootsAsync`, sending notifications).
 - `CancellationToken` — propagated from the JSON-RPC request.
 - `RequestContext<CallToolRequestParams>` — full request context if you need it.
@@ -75,15 +76,15 @@ Everything else is treated as a JSON-RPC argument and goes into the schema.
 
 The SDK serialises whatever you return into the appropriate content blocks. Practical guidance:
 
-| Return type | What the LLM sees |
-|---|---|
-| `string` | Single text content block. |
-| `int`, `bool`, `double`, etc. | Stringified into a text content block. |
-| Any DTO (record/class) | Serialized to JSON in a text content block, plus structured content for clients that support it. |
-| `IEnumerable<T>` of DTOs | JSON array. |
-| `ContentBlock` / `ImageContentBlock` / `AudioContentBlock` / `EmbeddedResourceBlock` | That single block, untouched. |
-| `IEnumerable<ContentBlock>` | Multiple blocks in order. |
-| `CallToolResult` | Full control — set `Content`, `StructuredContent`, `IsError`. |
+| Return type                                                                          | What the LLM sees                                                                                |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `string`                                                                             | Single text content block.                                                                       |
+| `int`, `bool`, `double`, etc.                                                        | Stringified into a text content block.                                                           |
+| Any DTO (record/class)                                                               | Serialized to JSON in a text content block, plus structured content for clients that support it. |
+| `IEnumerable<T>` of DTOs                                                             | JSON array.                                                                                      |
+| `ContentBlock` / `ImageContentBlock` / `AudioContentBlock` / `EmbeddedResourceBlock` | That single block, untouched.                                                                    |
+| `IEnumerable<ContentBlock>`                                                          | Multiple blocks in order.                                                                        |
+| `CallToolResult`                                                                     | Full control — set `Content`, `StructuredContent`, `IsError`.                                    |
 
 ### Returning structured data the LLM can act on
 
@@ -138,7 +139,7 @@ public static IEnumerable<ContentBlock> RenderAnnotatedChart(string title)
 
 ### Returning an embedded resource
 
-Useful when the tool result *is* a document the user might want to reuse:
+Useful when the tool result _is_ a document the user might want to reuse:
 
 ```csharp
 [McpServerTool, Description("Looks up a contract.")]
@@ -202,7 +203,7 @@ public static string Process(string input)
 }
 ```
 
-**Heuristic:** if the LLM should *try again* with different arguments, throw a regular exception so it gets a tool error. If the call is malformed in a way the LLM can't fix, throw `McpProtocolException`.
+**Heuristic:** if the LLM should _try again_ with different arguments, throw a regular exception so it gets a tool error. If the call is malformed in a way the LLM can't fix, throw `McpProtocolException`.
 
 ## Notifying clients of tool list changes
 

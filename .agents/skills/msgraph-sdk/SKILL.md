@@ -1,6 +1,6 @@
 ---
 name: msgraph-sdk
-description: 'Integrate Microsoft Graph SDK into any project — .NET, TypeScript/JavaScript, or Python. Covers auth patterns (client credentials, OBO, managed identity), SDK setup, calling Graph APIs, batching, delta queries, change notifications, throttling, and permission scopes. Use when accessing Microsoft 365 data (users, mail, calendar, Teams, files, SharePoint) from any application type.'
+description: "Integrate Microsoft Graph SDK into any project — .NET, TypeScript/JavaScript, or Python. Covers auth patterns (client credentials, OBO, managed identity), SDK setup, calling Graph APIs, batching, delta queries, change notifications, throttling, and permission scopes. Use when accessing Microsoft 365 data (users, mail, calendar, Teams, files, SharePoint) from any application type."
 ---
 
 # Microsoft Graph SDK
@@ -27,13 +27,13 @@ Always ground implementation in the current Microsoft Graph SDK documentation an
 
 Selecting the wrong auth flow is the most common Graph integration mistake. Apply this decision tree before writing any auth code:
 
-| Scenario | Flow to use |
-|---|---|
-| Background service / daemon with no user | **Client credentials** (app-only) |
-| Agent or API acting on behalf of a signed-in user | **On-Behalf-Of (OBO)** |
+| Scenario                                           | Flow to use                                   |
+| -------------------------------------------------- | --------------------------------------------- |
+| Background service / daemon with no user           | **Client credentials** (app-only)             |
+| Agent or API acting on behalf of a signed-in user  | **On-Behalf-Of (OBO)**                        |
 | App running in Azure (Function, Container App, VM) | **Managed Identity** (preferred over secrets) |
-| CLI tool or local dev script | **Device code** or **interactive browser** |
-| Single-page app (browser only) | **Authorization code + PKCE** |
+| CLI tool or local dev script                       | **Device code** or **interactive browser**    |
+| Single-page app (browser only)                     | **Authorization code + PKCE**                 |
 
 - Never use client credentials when a user context is required — Graph enforces this at the permission level (application vs. delegated).
 - Prefer `DefaultAzureCredential` in Azure-hosted apps; it tries managed identity first and falls back gracefully for local dev.
@@ -58,6 +58,7 @@ Pass a credential from the Azure Identity library — never build raw HTTP clien
 ### Pagination
 
 Graph paginates collections. Never assume all items arrive in one response:
+
 - Check for an `@odata.nextLink` on the response.
 - Use the SDK's `PageIterator` helper (available in all three SDKs) to walk pages automatically.
 - Set `$top` to control page size (max varies by resource, typically 999).
@@ -67,6 +68,7 @@ Graph paginates collections. Never assume all items arrive in one response:
 ### Batch requests
 
 Combine up to 20 independent Graph calls into a single HTTP request using the `$batch` endpoint. Use batching when:
+
 - Initializing data for a dashboard or agent that needs multiple resources upfront.
 - Reducing latency in high-call-count operations.
 
@@ -75,6 +77,7 @@ Batch responses arrive out of order — match them by the `id` field you assigne
 ### Delta queries
 
 Use delta queries to sync changes incrementally instead of polling full collections:
+
 - First call: `GET /users/delta` returns all items + a `@odata.deltaLink`.
 - Subsequent calls: use the `deltaLink` to receive only what changed since the last sync.
 - Supported on: users, groups, messages, calendar events, Teams channels, and more.
@@ -83,6 +86,7 @@ Use delta queries to sync changes incrementally instead of polling full collecti
 ### Change notifications (webhooks)
 
 Subscribe to resource changes with `POST /subscriptions`:
+
 - Graph delivers change events to your HTTPS notification URL.
 - Subscriptions expire — renew them before `expirationDateTime` (max varies by resource; typically 1–3 days for mail/calendar, up to 4230 minutes for users/groups).
 - Validate the subscription handshake: Graph sends a `validationToken` query parameter on creation — echo it back as plain text with HTTP 200.
@@ -92,6 +96,7 @@ Subscribe to resource changes with `POST /subscriptions`:
 ### Throttling
 
 Graph throttles aggressively. Always handle HTTP 429:
+
 - Read the `Retry-After` header — it specifies exact seconds to wait, not a fixed backoff.
 - The SDK's built-in retry middleware handles 429 automatically when configured; enable it explicitly.
 - Avoid fan-out patterns that hit Graph with hundreds of parallel requests; use batching or queuing instead.
@@ -108,19 +113,19 @@ Get permissions right before writing auth code — wrong scopes result in 403 er
 
 ## Common Graph resources — quick reference
 
-| Goal | Resource path |
-|---|---|
-| Get signed-in user's profile | `GET /me` |
-| List user's mailbox messages | `GET /me/messages` |
-| Send an email | `POST /me/sendMail` |
-| List calendar events | `GET /me/events` |
-| Get user's OneDrive root | `GET /me/drive/root/children` |
-| List Teams the user is in | `GET /me/joinedTeams` |
-| Post a Teams channel message | `POST /teams/{id}/channels/{id}/messages` |
-| List SharePoint site lists | `GET /sites/{siteId}/lists` |
-| Search across M365 | `POST /search/query` |
-| List all users in tenant (app-only) | `GET /users` |
-| Get group members | `GET /groups/{id}/members` |
+| Goal                                | Resource path                             |
+| ----------------------------------- | ----------------------------------------- |
+| Get signed-in user's profile        | `GET /me`                                 |
+| List user's mailbox messages        | `GET /me/messages`                        |
+| Send an email                       | `POST /me/sendMail`                       |
+| List calendar events                | `GET /me/events`                          |
+| Get user's OneDrive root            | `GET /me/drive/root/children`             |
+| List Teams the user is in           | `GET /me/joinedTeams`                     |
+| Post a Teams channel message        | `POST /teams/{id}/channels/{id}/messages` |
+| List SharePoint site lists          | `GET /sites/{siteId}/lists`               |
+| Search across M365                  | `POST /search/query`                      |
+| List all users in tenant (app-only) | `GET /users`                              |
+| Get group members                   | `GET /groups/{id}/members`                |
 
 In similar fashion, use the SDK's fluent API to navigate to these resources in code.
 

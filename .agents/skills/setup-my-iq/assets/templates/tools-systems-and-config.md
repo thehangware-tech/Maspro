@@ -11,27 +11,27 @@
 
 ## <!-- Notes/Vault System -->
 
-| Setting | Value |
-|---------|-------|
-| Vault/notes path | <!-- full path --> |
-| Action items | <!-- path to action items file --> |
+| Setting          | Value                              |
+| ---------------- | ---------------------------------- |
+| Vault/notes path | <!-- full path -->                 |
+| Action items     | <!-- path to action items file --> |
 
 ### Meeting Notes
 
-| Setting | Value |
-|---------|-------|
-| Meetings folder | <!-- full path --> |
-| Format | <!-- e.g., Obsidian-compatible markdown --> |
+| Setting           | Value                                               |
+| ----------------- | --------------------------------------------------- |
+| Meetings folder   | <!-- full path -->                                  |
+| Format            | <!-- e.g., Obsidian-compatible markdown -->         |
 | File organization | <!-- e.g., {folder}/YYYY-MM/YYYY-MM-DD-Title.md --> |
 
 ### Meeting Tags
 
 Tags are applied to meeting notes based on title pattern matching. Meeting type tags identify the format. Team tags identify which project/team a meeting belongs to.
 
-| Tag | Type | Patterns |
-|-----|------|----------|
+| Tag               | Type         | Patterns                          |
+| ----------------- | ------------ | --------------------------------- |
 | <!-- tag name --> | Meeting type | <!-- comma-separated patterns --> |
-| <!-- tag name --> | Team | <!-- comma-separated patterns --> |
+| <!-- tag name --> | Team         | <!-- comma-separated patterns --> |
 
 ---
 
@@ -41,28 +41,28 @@ Tags are applied to meeting notes based on title pattern matching. Meeting type 
 
 <!-- If this workstream does not use ADO, delete this section or leave it empty. -->
 
-| Setting | Value |
-|---------|-------|
-| Organization | <!-- org name --> |
-| Project | <!-- project name --> |
-| Team | <!-- team name --> |
-| Area Path | <!-- area path --> |
+| Setting      | Value                 |
+| ------------ | --------------------- |
+| Organization | <!-- org name -->     |
+| Project      | <!-- project name --> |
+| Team         | <!-- team name -->    |
+| Area Path    | <!-- area path -->    |
 
 ### Scorecard Exclusions
 
-| Setting | Value |
-|---------|-------|
+| Setting                | Value                                     |
+| ---------------------- | ----------------------------------------- |
 | Exclude title patterns | <!-- patterns to exclude from reports --> |
 
 ### Reporting
 
-| Setting | Value |
-|---------|-------|
-| Sprint update output | <!-- path --> |
-| Weekly update output | <!-- path --> |
-| Weekly update prefix | <!-- e.g., weekly-update --> |
-| Roadmap file | <!-- path, or leave empty to skip --> |
-| Context file patterns | `*.md` |
+| Setting               | Value                                 |
+| --------------------- | ------------------------------------- |
+| Sprint update output  | <!-- path -->                         |
+| Weekly update output  | <!-- path -->                         |
+| Weekly update prefix  | <!-- e.g., weekly-update -->          |
+| Roadmap file          | <!-- path, or leave empty to skip --> |
+| Context file patterns | `*.md`                                |
 
 ### Strategic Pillars
 
@@ -70,8 +70,8 @@ Tags are applied to meeting notes based on title pattern matching. Meeting type 
      Define them even if the workstream does not use ADO. The ADO Epics column
      is optional; leave it empty for non-ADO workstreams. -->
 
-| Pillar | ADO Epics | Definition |
-|--------|-----------|------------|
+| Pillar               | ADO Epics                     | Definition                |
+| -------------------- | ----------------------------- | ------------------------- |
 | <!-- pillar name --> | <!-- epic names, or empty --> | <!-- brief definition --> |
 
 ---
@@ -82,25 +82,25 @@ Tags are applied to meeting notes based on title pattern matching. Meeting type 
 
 <!-- If this workstream does not use ADO, delete this section or leave it empty. -->
 
-| Setting | Value |
-|---------|-------|
+| Setting      | Value             |
+| ------------ | ----------------- |
 | Organization | <!-- org name --> |
-| Project | <!-- TODO --> |
-| Team | <!-- TODO --> |
-| Area Path | <!-- TODO --> |
+| Project      | <!-- TODO -->     |
+| Team         | <!-- TODO -->     |
+| Area Path    | <!-- TODO -->     |
 
 ### Reporting
 
-| Setting | Value |
-|---------|-------|
-| Weekly update output | <!-- path --> |
+| Setting              | Value                        |
+| -------------------- | ---------------------------- |
+| Weekly update output | <!-- path -->                |
 | Weekly update prefix | <!-- e.g., weekly-update --> |
 
 ### Strategic Pillars
 
-| Pillar | ADO Epics | Definition |
-|--------|-----------|------------|
-| <!-- pillar name --> | | <!-- brief definition --> |
+| Pillar               | ADO Epics | Definition                |
+| -------------------- | --------- | ------------------------- |
+| <!-- pillar name --> |           | <!-- brief definition --> |
 
 ---
 

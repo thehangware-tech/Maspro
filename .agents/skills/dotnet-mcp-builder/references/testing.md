@@ -86,7 +86,7 @@ public class WeatherToolsTests
 }
 ```
 
-This style lets you assert on the *exposed* behaviour (what a real client sees), not internal details.
+This style lets you assert on the _exposed_ behaviour (what a real client sees), not internal details.
 
 ## Testing tools that use sampling/elicitation/roots
 
@@ -163,4 +163,4 @@ Nothing MCP-specific. The in-memory transport tests run anywhere `dotnet test` r
 - **"Tool isn't showing up":** call `client.ListToolsAsync()` in a quick test and dump the names. If your tool isn't there, the registration is wrong.
 - **"LLM keeps misusing the tool":** open Inspector and look at the schema/description as the LLM sees it. Most "the model is dumb" issues are actually missing `[Description]`.
 - **"Sampling/elicitation throws 'method not supported'":** the client doesn't advertise the capability. Either you're testing against a host that doesn't support it (Inspector supports both), or your in-memory client is missing the handler.
-- **"HTTP returns 404 for /":** check `app.MapMcp()` is called *and* you're hitting the right path. `MapMcp("/mcp")` means the URL is `http://host/mcp`, not `http://host/`.
+- **"HTTP returns 404 for /":** check `app.MapMcp()` is called _and_ you're hitting the right path. `MapMcp("/mcp")` means the URL is `http://host/mcp`, not `http://host/`.

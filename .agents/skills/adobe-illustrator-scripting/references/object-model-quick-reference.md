@@ -34,33 +34,33 @@ Application (app)
 
 ## Artwork Item Types (pageItems members)
 
-| Type | typename | Collection | Notes |
-|---|---|---|---|
-| Path | `PathItem` | `pathItems` | Lines, shapes, freeform paths |
-| Compound path | `CompoundPathItem` | `compoundPathItems` | Multiple paths combined |
-| Group | `GroupItem` | `groupItems` | Contains nested pageItems |
-| Text frame | `TextFrame` | `textFrames` | Point, area, or path text |
-| Placed image | `PlacedItem` | `placedItems` | Linked external files |
-| Raster image | `RasterItem` | `rasterItems` | Embedded bitmaps |
-| Mesh | `MeshItem` | `meshItems` | Gradient mesh objects |
-| Graph | `GraphItem` | `graphItems` | Chart/graph objects |
-| Plugin item | `PluginItem` | `pluginItems` | Plugin-generated art |
-| Symbol instance | `SymbolItem` | `symbolItems` | Instance of a Symbol |
-| Non-native | `NonNativeItem` | `nonNativeItems` | Foreign objects |
-| Legacy text | `LegacyTextItem` | `legacyTextItems` | Pre-CS text objects |
+| Type            | typename           | Collection          | Notes                         |
+| --------------- | ------------------ | ------------------- | ----------------------------- |
+| Path            | `PathItem`         | `pathItems`         | Lines, shapes, freeform paths |
+| Compound path   | `CompoundPathItem` | `compoundPathItems` | Multiple paths combined       |
+| Group           | `GroupItem`        | `groupItems`        | Contains nested pageItems     |
+| Text frame      | `TextFrame`        | `textFrames`        | Point, area, or path text     |
+| Placed image    | `PlacedItem`       | `placedItems`       | Linked external files         |
+| Raster image    | `RasterItem`       | `rasterItems`       | Embedded bitmaps              |
+| Mesh            | `MeshItem`         | `meshItems`         | Gradient mesh objects         |
+| Graph           | `GraphItem`        | `graphItems`        | Chart/graph objects           |
+| Plugin item     | `PluginItem`       | `pluginItems`       | Plugin-generated art          |
+| Symbol instance | `SymbolItem`       | `symbolItems`       | Instance of a Symbol          |
+| Non-native      | `NonNativeItem`    | `nonNativeItems`    | Foreign objects               |
+| Legacy text     | `LegacyTextItem`   | `legacyTextItems`   | Pre-CS text objects           |
 
 ## Color Object Types
 
-| Object | Color Space | Value Range | Notes |
-|---|---|---|---|
-| `RGBColor` | RGB | 0-255 per channel | `.red`, `.green`, `.blue` |
-| `CMYKColor` | CMYK | 0-100 per channel | `.cyan`, `.magenta`, `.yellow`, `.black` |
-| `GrayColor` | Grayscale | 0-100 | `.gray` (0=black, 100=white) |
-| `LabColor` | Lab | L: 0-100, a/b: -128 to 127 | `.l`, `.a`, `.b` |
-| `SpotColor` | Spot | tint 0-100 | `.spot`, `.tint` |
-| `PatternColor` | Pattern | - | `.pattern`, `.matrix` |
-| `GradientColor` | Gradient | - | `.gradient`, `.origin`, `.angle` |
-| `NoColor` | None | - | Transparent/no fill |
+| Object          | Color Space | Value Range                | Notes                                    |
+| --------------- | ----------- | -------------------------- | ---------------------------------------- |
+| `RGBColor`      | RGB         | 0-255 per channel          | `.red`, `.green`, `.blue`                |
+| `CMYKColor`     | CMYK        | 0-100 per channel          | `.cyan`, `.magenta`, `.yellow`, `.black` |
+| `GrayColor`     | Grayscale   | 0-100                      | `.gray` (0=black, 100=white)             |
+| `LabColor`      | Lab         | L: 0-100, a/b: -128 to 127 | `.l`, `.a`, `.b`                         |
+| `SpotColor`     | Spot        | tint 0-100                 | `.spot`, `.tint`                         |
+| `PatternColor`  | Pattern     | -                          | `.pattern`, `.matrix`                    |
+| `GradientColor` | Gradient    | -                          | `.gradient`, `.origin`, `.angle`         |
+| `NoColor`       | None        | -                          | Transparent/no fill                      |
 
 ## Common Scripting Constants
 
@@ -121,10 +121,10 @@ Application (app)
 
 ## Unit Conversions
 
-| From | To Points | Formula |
-|---|---|---|
-| Inches | Points | `inches * 72` |
-| Centimeters | Points | `cm * 28.346` |
-| Millimeters | Points | `mm * 2.834645` |
-| Picas | Points | `picas * 12` |
-| Em units | Points | `(emUnits * fontSize) / 1000` |
+| From        | To Points | Formula                       |
+| ----------- | --------- | ----------------------------- |
+| Inches      | Points    | `inches * 72`                 |
+| Centimeters | Points    | `cm * 28.346`                 |
+| Millimeters | Points    | `mm * 2.834645`               |
+| Picas       | Points    | `picas * 12`                  |
+| Em units    | Points    | `(emUnits * fontSize) / 1000` |

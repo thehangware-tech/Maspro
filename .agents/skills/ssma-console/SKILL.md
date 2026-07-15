@@ -8,6 +8,7 @@ description: "Use when: SSMA console operations — create project, generate ass
 Generate XML configs and invoke `SSMAforOracleConsole.exe` directly — no external scripts or wrappers.
 
 **Operations** (run in order for "full migration"):
+
 1. **create-project** — connect source & target, map schema
 2. **generate-report** — assessment report
 3. **migrate-schema** — convert & deploy schema
@@ -17,7 +18,7 @@ Generate XML configs and invoke `SSMAforOracleConsole.exe` directly — no exter
 
 Ask for missing parameters. Defaults in parentheses.
 
-**Oracle**: Host (`localhost`), Port (`1521`), Instance *(required, service name)*, User, Password, Schema
+**Oracle**: Host (`localhost`), Port (`1521`), Instance _(required, service name)_, User, Password, Schema
 **SQL Server**: Server, Database, User, Password, Encrypt (`true`), Trust Server Certificate (`true`), Target Schema (`dbo`)
 **Project**: Name (`ssma-migration`), Folder (`.`), Type (`sql-server-2022` — also `2016`/`2017`/`2019`/`2025`/`sql-azure`), SSMA Path (`C:\Program Files\Microsoft SQL Server Migration Assistant for Oracle\bin\SSMAforOracleConsole.exe`)
 
@@ -115,12 +116,12 @@ All scripts start with this **preamble** in `<script-commands>`:
 
 **Per-operation commands** (after preamble, before `<save-project />`):
 
-| Operation | File | Commands after preamble |
-|-----------|------|------------------------|
-| create-project | `ssma-create-project.xml` | `connect-target-database` → `map-schema source-schema="$OracleSchemaName$" sql-server-schema="$SQLServerDb$.{TARGET_SCHEMA}"` |
-| generate-report | `ssma-assessment.xml` | `generate-assessment-report object-name="$OracleSchemaName$" object-type="Schemas" write-summary-report-to="$SummaryReportFile$" verbose="true" report-errors="true"` |
-| migrate-schema | `ssma-schema.xml` | `connect-target-database` → `map-schema` → `convert-schema` (to `$ConversionReportFile$`) → `synchronize-target object-name="$SQLServerDb$.{TARGET_SCHEMA}"` |
-| migrate-data | `ssma-data.xml` | Same as migrate-schema + `refresh-from-database` → `migrate-data object-name="$OracleSchemaName$.Tables" object-type="category"` (to `$DataMigrationReportFile$`) → `close-project` |
+| Operation       | File                      | Commands after preamble                                                                                                                                                             |
+| --------------- | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| create-project  | `ssma-create-project.xml` | `connect-target-database` → `map-schema source-schema="$OracleSchemaName$" sql-server-schema="$SQLServerDb$.{TARGET_SCHEMA}"`                                                       |
+| generate-report | `ssma-assessment.xml`     | `generate-assessment-report object-name="$OracleSchemaName$" object-type="Schemas" write-summary-report-to="$SummaryReportFile$" verbose="true" report-errors="true"`               |
+| migrate-schema  | `ssma-schema.xml`         | `connect-target-database` → `map-schema` → `convert-schema` (to `$ConversionReportFile$`) → `synchronize-target object-name="$SQLServerDb$.{TARGET_SCHEMA}"`                        |
+| migrate-data    | `ssma-data.xml`           | Same as migrate-schema + `refresh-from-database` → `migrate-data object-name="$OracleSchemaName$.Tables" object-type="category"` (to `$DataMigrationReportFile$`) → `close-project` |
 
 ## Execute
 
@@ -144,9 +145,9 @@ Check exit code (`0` = success), read logs and reports (`Reports\Assessment\`, `
 
 ## Known Pitfalls
 
-| Symptom | Fix |
-|---------|-----|
-| `ORA-12505: SID not registered` | Use `tns-name-mode`, not `standard-mode` |
-| `Source namespace was not found` | Add `<object-to-collect>` to `connect-source-database` |
+| Symptom                                 | Fix                                                          |
+| --------------------------------------- | ------------------------------------------------------------ |
+| `ORA-12505: SID not registered`         | Use `tns-name-mode`, not `standard-mode`                     |
+| `Source namespace was not found`        | Add `<object-to-collect>` to `connect-source-database`       |
 | `not found in metabase` on `force-load` | Use `object-to-collect` instead — `force-load` is unreliable |
-| `SQL Server Agent is not running` | Warning only — BCP client-side migration still works |
+| `SQL Server Agent is not running`       | Warning only — BCP client-side migration still works         |

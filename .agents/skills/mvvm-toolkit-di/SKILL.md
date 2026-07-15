@@ -1,6 +1,6 @@
 ---
 name: mvvm-toolkit-di
-description: 'Wire CommunityToolkit.Mvvm ViewModels into Microsoft.Extensions.DependencyInjection. Covers the .NET Generic Host composition root, constructor injection, service lifetimes (Singleton / Transient / Scoped), IMessenger registration, resolving ViewModels in Views, keyed services, testing seams, and the legacy Ioc.Default escape hatch. Use across WPF, WinUI 3, .NET MAUI, Uno, and Avalonia.'
+description: "Wire CommunityToolkit.Mvvm ViewModels into Microsoft.Extensions.DependencyInjection. Covers the .NET Generic Host composition root, constructor injection, service lifetimes (Singleton / Transient / Scoped), IMessenger registration, resolving ViewModels in Views, keyed services, testing seams, and the legacy Ioc.Default escape hatch. Use across WPF, WinUI 3, .NET MAUI, Uno, and Avalonia."
 ---
 
 # CommunityToolkit.Mvvm + `Microsoft.Extensions.DependencyInjection`
@@ -123,11 +123,11 @@ Why constructor injection beats a service locator:
 
 ## Lifetimes
 
-| Lifetime | Method | Typical use in XAML apps |
-|----------|--------|--------------------------|
+| Lifetime  | Method            | Typical use in XAML apps                                                                     |
+| --------- | ----------------- | -------------------------------------------------------------------------------------------- |
 | Singleton | `AddSingleton<T>` | Shell/main-window VM, settings, file/HTTP services, the shared `IMessenger`, app-wide caches |
-| Transient | `AddTransient<T>` | Per-page or per-document ViewModels (a fresh instance every resolve) |
-| Scoped | `AddScoped<T>` | Rarely needed in client apps; useful with explicit `IServiceScope` (e.g., per-window scopes) |
+| Transient | `AddTransient<T>` | Per-page or per-document ViewModels (a fresh instance every resolve)                         |
+| Scoped    | `AddScoped<T>`    | Rarely needed in client apps; useful with explicit `IServiceScope` (e.g., per-window scopes) |
 
 ```csharp
 services.AddSingleton<ShellViewModel>();   // 1 instance for app lifetime
@@ -277,8 +277,8 @@ the DI container can construct, prefer constructor injection.
 
 ## References
 
-| Topic | File |
-|-------|------|
+| Topic                                                                                        | File                                                                       |
+| -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
 | Full deep dive (Generic Host setup, lifetimes, keyed services, testing patterns, legacy Ioc) | [`references/dependency-injection.md`](references/dependency-injection.md) |
 
 External:

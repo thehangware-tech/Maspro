@@ -25,6 +25,7 @@ Systems fail, not people. The goal is to understand HOW the incident happened �
 Gather these details before writing the post-mortem. Ask for anything missing:
 
 ### Incident Metadata
+
 - Incident title (short, descriptive)
 - Date and time of detection (with timezone)
 - Date and time of resolution
@@ -32,6 +33,7 @@ Gather these details before writing the post-mortem. Ask for anything missing:
 - Incident commander / on-call owner
 
 ### Impact
+
 - Affected services and systems
 - User-facing impact (errors, slowness, full outage)
 - Estimated number of users affected
@@ -39,7 +41,9 @@ Gather these details before writing the post-mortem. Ask for anything missing:
 - SLA/SLO breach (yes/no, by how much)
 
 ### Timeline Events
+
 Key moments to reconstruct:
+
 - First symptom occurred
 - Alert fired (or was noticed manually)
 - On-call paged / incident declared
@@ -50,7 +54,9 @@ Key moments to reconstruct:
 - Customer communication sent (if any)
 
 ### Contributing Factors
+
 Ask the team: "What made this worse than it needed to be?" — not "who failed". Examples:
+
 - Alert threshold too high / alert didn't fire
 - Runbook was missing or outdated
 - Deploy lacked a feature flag for rollback
@@ -60,10 +66,13 @@ Ask the team: "What made this worse than it needed to be?" — not "who failed".
 ## Process
 
 ### Step 1 — Gather Metadata
+
 If the user has not provided full incident details, ask for them section by section. Don't proceed to writing until you have: title, times, severity, affected services, and at least a rough timeline.
 
 ### Step 2 — Reconstruct Timeline
+
 Work with the user to build a precise chronological timeline. For each event:
+
 - Exact time (UTC preferred)
 - What happened (system event or human action)
 - Who observed it or took the action
@@ -72,6 +81,7 @@ Work with the user to build a precise chronological timeline. For each event:
 Flag gaps: "We don't know what happened between 14:32 and 14:47 — worth checking logs."
 
 ### Step 3 — Root Cause Analysis
+
 Use the **5 Whys** iteratively:
 
 ```
@@ -94,28 +104,33 @@ Why did load tests only cover p50?
 Stop when you reach a system/process gap you can fix. The last "why" should point to an action item.
 
 Distinguish:
+
 - **Root cause** — the deepest systemic gap (one or two)
 - **Contributing factors** — conditions that made it worse but aren't the root cause
 
 ### Step 4 — Impact Quantification
+
 Help the user be precise:
+
 - Duration: detection to resolution (not symptom start to resolution — separate these)
 - Error rate at peak vs. normal baseline
 - Percentage of traffic affected
 - Revenue / business impact if known
 
 ### Step 5 — Action Items
+
 For each root cause and contributing factor, generate at least one action item:
 
-| # | Action | Owner | Due Date | Priority |
-|---|--------|-------|----------|----------|
-| 1 | Add load test fixtures for accounts > 10k records | @eng-team | 2026-07-01 | High |
-| 2 | Lower memory alert threshold from 90% to 75% | @platform | 2026-06-23 | High |
-| 3 | Add runbook for memory OOM pods | @on-call-rotation | 2026-06-30 | Medium |
+| #   | Action                                            | Owner             | Due Date   | Priority |
+| --- | ------------------------------------------------- | ----------------- | ---------- | -------- |
+| 1   | Add load test fixtures for accounts > 10k records | @eng-team         | 2026-07-01 | High     |
+| 2   | Lower memory alert threshold from 90% to 75%      | @platform         | 2026-06-23 | High     |
+| 3   | Add runbook for memory OOM pods                   | @on-call-rotation | 2026-06-30 | Medium   |
 
 Action items must have an owner (a person, not a team) and a due date. Vague actions like "improve monitoring" are not acceptable — break them into specific deliverables.
 
 ### Step 6 — Write the Document
+
 Produce the full post-mortem using the template below. Save to `docs/postmortems/YYYY-MM-DD-<slug>.md`.
 
 ## Output Template
@@ -137,27 +152,27 @@ Produce the full post-mortem using the template below. Save to `docs/postmortems
 
 ## Impact
 
-| Dimension | Value |
-|-----------|-------|
-| Affected services | [list] |
+| Dimension          | Value                             |
+| ------------------ | --------------------------------- |
+| Affected services  | [list]                            |
 | User-facing impact | [errors / degraded / full outage] |
-| Users affected | [estimated number or %] |
-| Peak error rate | [X% vs Y% baseline] |
-| Data loss | [none / describe scope] |
-| SLA breach | [yes/no — by how much] |
+| Users affected     | [estimated number or %]           |
+| Peak error rate    | [X% vs Y% baseline]               |
+| Data loss          | [none / describe scope]           |
+| SLA breach         | [yes/no — by how much]            |
 
 ## Timeline
 
 All times UTC.
 
-| Time | Event |
-|------|-------|
+| Time  | Event                         |
+| ----- | ----------------------------- |
 | HH:MM | [First symptom / alert fired] |
-| HH:MM | [On-call paged] |
-| HH:MM | [Incident declared] |
-| HH:MM | [Root cause identified] |
-| HH:MM | [Mitigation applied] |
-| HH:MM | [Full resolution confirmed] |
+| HH:MM | [On-call paged]               |
+| HH:MM | [Incident declared]           |
+| HH:MM | [Root cause identified]       |
+| HH:MM | [Mitigation applied]          |
+| HH:MM | [Full resolution confirmed]   |
 | HH:MM | [Customer communication sent] |
 
 ## Root Cause
@@ -182,10 +197,10 @@ All times UTC.
 
 ## Action Items
 
-| # | Action | Owner | Due Date | Priority |
-|---|--------|-------|----------|----------|
-| 1 | [Specific deliverable] | @person | YYYY-MM-DD | High/Medium/Low |
-| 2 | | | | |
+| #   | Action                 | Owner   | Due Date   | Priority        |
+| --- | ---------------------- | ------- | ---------- | --------------- |
+| 1   | [Specific deliverable] | @person | YYYY-MM-DD | High/Medium/Low |
+| 2   |                        |         |            |                 |
 
 ## Lessons Learned
 
@@ -194,11 +209,11 @@ All times UTC.
 
 ## Common Mistakes
 
-| Mistake | Fix |
-|---------|-----|
-| "Bob forgot to check the config" | "The deploy checklist did not include config validation" |
-| Root cause is "human error" | Keep asking Why — human error is always a symptom |
-| Action items without owners | Every item needs a named individual, not a team |
-| Timeline reconstructed from memory | Check logs, alerts, Slack, PagerDuty before writing |
-| "Improve monitoring" as an action | Specify: which service, which metric, what threshold, by when |
-| Post-mortem written weeks later | Write within 48–72 hours while context is fresh |
+| Mistake                            | Fix                                                           |
+| ---------------------------------- | ------------------------------------------------------------- |
+| "Bob forgot to check the config"   | "The deploy checklist did not include config validation"      |
+| Root cause is "human error"        | Keep asking Why — human error is always a symptom             |
+| Action items without owners        | Every item needs a named individual, not a team               |
+| Timeline reconstructed from memory | Check logs, alerts, Slack, PagerDuty before writing           |
+| "Improve monitoring" as an action  | Specify: which service, which metric, what threshold, by when |
+| Post-mortem written weeks later    | Write within 48–72 hours while context is fresh               |

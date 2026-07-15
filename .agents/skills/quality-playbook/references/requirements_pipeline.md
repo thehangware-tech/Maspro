@@ -8,14 +8,14 @@ This document defines the five-phase requirements generation pipeline for Step 7
 
 ## Files produced
 
-| File | Purpose |
-|------|---------|
-| `quality/CONTRACTS.md` | Raw behavioral contracts extracted from source |
-| `quality/REQUIREMENTS.md` | Testable requirements with narrative (the primary deliverable) |
-| `quality/COVERAGE_MATRIX.md` | Contract-to-requirement traceability |
-| `quality/COMPLETENESS_REPORT.md` | Final completeness assessment with verdict |
-| `quality/VERSION_HISTORY.md` | Review log with version table and provenance |
-| `quality/REFINEMENT_HINTS.md` | Review progress and feedback (created during review) |
+| File                             | Purpose                                                        |
+| -------------------------------- | -------------------------------------------------------------- |
+| `quality/CONTRACTS.md`           | Raw behavioral contracts extracted from source                 |
+| `quality/REQUIREMENTS.md`        | Testable requirements with narrative (the primary deliverable) |
+| `quality/COVERAGE_MATRIX.md`     | Contract-to-requirement traceability                           |
+| `quality/COMPLETENESS_REPORT.md` | Final completeness assessment with verdict                     |
+| `quality/VERSION_HISTORY.md`     | Review log with version table and provenance                   |
+| `quality/REFINEMENT_HINTS.md`    | Review progress and feedback (created during review)           |
 
 Versioned backups go in `quality/history/vX.Y/`.
 
@@ -207,6 +207,7 @@ This check exists because earlier versions of the pipeline produced completeness
 **After the code review and spec audit are complete**, re-read `quality/COMPLETENESS_REPORT.md` and update it. The initial completeness report was written before the code review and spec audit ran, so it cannot reflect their findings. This refresh step reconciles the completeness verdict with the actual review results.
 
 **Procedure:**
+
 1. Read the combined summary from `quality/code_reviews/` — count VIOLATED and BUG findings.
 2. Read the triage summary from `quality/spec_audits/` — count confirmed code bugs.
 3. For each finding, check whether REQUIREMENTS.md has a requirement covering that behavior.
@@ -235,6 +236,7 @@ Updated: [date]
 When the code review and spec audit disagree about the same behavioral claim — one says BUG, the other says design choice or false positive — the reconciliation must resolve the conflict, not paper over it.
 
 **Resolution procedure:**
+
 1. Identify the factual claim at the center of the disagreement. What does the code actually do?
 2. Deploy a verification probe: give a model the disputed claim and the relevant source code, and ask it to report ground truth. (See `spec_audit.md` § "The Verification Probe.")
 3. Record the resolution in the Post-Review Reconciliation section:
@@ -362,12 +364,13 @@ Maintain a version history file at `quality/VERSION_HISTORY.md`:
 
 ## Current version: vX.Y
 
-| Version | Date | Model | Author | Reqs | Summary |
-|---------|------|-------|--------|------|---------|
-| v1.0 | YYYY-MM-DD | [model] | Quality Playbook | N | Initial pipeline generation |
-| v1.1 | YYYY-MM-DD | [model] | [author] | N | [what changed] |
+| Version | Date       | Model   | Author           | Reqs | Summary                     |
+| ------- | ---------- | ------- | ---------------- | ---- | --------------------------- |
+| v1.0    | YYYY-MM-DD | [model] | Quality Playbook | N    | Initial pipeline generation |
+| v1.1    | YYYY-MM-DD | [model] | [author]         | N    | [what changed]              |
 
 ## Pending review
+
 [status from REFINEMENT_HINTS.md if review is in progress]
 ```
 
@@ -398,6 +401,7 @@ The REQUIREMENTS.md header includes the current version:
 
 ```markdown
 # Behavioral Requirements — [Project Name]
+
 Version: vX.Y
 Generated: [date]
 Pipeline: contract-extraction v2 with narrative pass
@@ -412,6 +416,7 @@ The pipeline produces a solid baseline, but AI isn't 100% reliable. The skill pr
 ### Requirements review (`quality/REVIEW_REQUIREMENTS.md`)
 
 An interactive or guided review of requirements organized by use case. Three modes:
+
 - **Self-guided**: Pick use cases to drill into
 - **Fully guided**: Walk through use cases sequentially
 - **Cross-model audit**: A different model fact-checks the completeness report

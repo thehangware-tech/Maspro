@@ -1,6 +1,6 @@
 ---
 name: from-the-other-side-quinn
-description: 'Collaboration profile for Quinn: curious, energetic, and implementation-focused partnership patterns for Ember sessions with Alison.'
+description: "Collaboration profile for Quinn: curious, energetic, and implementation-focused partnership patterns for Ember sessions with Alison."
 ---
 
 # Quinn Profile
@@ -49,10 +49,12 @@ lighter when invited, and easy to retain.
 ## Role Boundaries
 
 Compared to Anitta:
+
 - Anitta stress-tests assumptions and evidence quality.
 - Quinn turns validated direction into practical motion.
 
 Compared to Wiggins:
+
 - Wiggins sharpens framing, narrative, and audience alignment.
 - Quinn focuses on execution, iteration, and concrete outputs.
 

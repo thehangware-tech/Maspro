@@ -33,8 +33,8 @@ web pages) and retrieve relevant chunks to ground LLM responses.
 context across sessions or across multiple agents sharing a knowledge base.
 
 The setup is similar but the namespace strategy and retrieval patterns differ.
-If the user hasn't said, ask: *"Is this for document retrieval, agent memory,
-or both?"* Then follow the relevant workflow below.
+If the user hasn't said, ask: _"Is this for document retrieval, agent memory,
+or both?"_ Then follow the relevant workflow below.
 
 ---
 
@@ -44,6 +44,7 @@ Pick the index type before writing any code. Getting this wrong means
 re-creating the index later.
 
 **Serverless (recommended for most cases)**
+
 ```python
 from pinecone import Pinecone, ServerlessSpec
 
@@ -60,6 +61,7 @@ index = pc.Index("my-index")
 ```
 
 **Pod-based (for consistent high-throughput production)**
+
 ```python
 from pinecone import PodSpec
 
@@ -72,13 +74,14 @@ pc.create_index(
 ```
 
 **Dimension quick reference — match this exactly to your embedding model:**
-| Model | Dimension |
-|---|---|
-| `text-embedding-3-small` | 1536 |
-| `text-embedding-3-large` | 3072 |
-| `voyage-3` / `voyage-multimodal-3` | 1024 |
-| `BAAI/bge-large-en-v1.5` | 1024 |
-| `intfloat/multilingual-e5-large` (Arabic, Malay, Chinese) | 1024 |
+
+| Model                                                     | Dimension |
+| --------------------------------------------------------- | --------- |
+| `text-embedding-3-small`                                  | 1536      |
+| `text-embedding-3-large`                                  | 3072      |
+| `voyage-3` / `voyage-multimodal-3`                        | 1024      |
+| `BAAI/bge-large-en-v1.5`                                  | 1024      |
+| `intfloat/multilingual-e5-large` (Arabic, Malay, Chinese) | 1024      |
 
 > **Checkpoint**: Index exists, dimension matches embedding model, `index.describe_index_stats()` returns without error.
 
@@ -124,6 +127,7 @@ at retrieval time.
 ## Step 3 — Choose retrieval strategy
 
 ### Dense (semantic) search — use for most cases
+
 ```python
 def search(index, query: str, top_k: int = 5, namespace: str = "default",
            filter: dict = None) -> list[dict]:
@@ -137,6 +141,7 @@ def search(index, query: str, top_k: int = 5, namespace: str = "default",
 ```
 
 ### Hybrid search (semantic + BM25 keyword) — use when corpus has exact terminology
+
 Use hybrid when the domain has precise terms that semantic search misses:
 legal citations, medical codes, product SKUs, API method names.
 
@@ -159,6 +164,7 @@ def hybrid_search(index, query: str, top_k: int = 5, alpha: float = 0.7):
 ```
 
 ### Metadata filtering — use to scope results before semantic ranking
+
 ```python
 # Exact match
 results = index.query(vector=emb, filter={"source": {"$eq": "confluence"}})
@@ -282,6 +288,7 @@ print("Smoke test passed:", hits[0]["text"])
 ## When NOT to use this skill
 
 Use a different approach when:
+
 - The dataset fits in memory and latency doesn't matter → use FAISS or Chroma
 - You're already on PostgreSQL and want to avoid a new service → use pgvector
 - You need sub-5ms p99 latency with no external API calls → local vector store

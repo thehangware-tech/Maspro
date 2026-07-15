@@ -6,15 +6,15 @@ A macro is a string of command-line input. Anywhere Rhino accepts a command (ali
 
 ### Syntax rules
 
-| Token | Meaning |
-|---|---|
-| `!` | **Cancel** any currently running command before this one starts. Always start macros with `!`. |
-| `_` | Use the **English** (invariant) command name, so the macro works in any locale. |
-| `-` | Run the command in **script mode** — suppress dialogs, accept input from the macro string. |
-| `_Enter` | Press Enter at the current prompt. |
-| `Pause` | Stop and wait for the user to supply this input interactively. |
-| `;` | Comment to end of line. |
-| Newline | Same as a space — a separator between tokens, not a command terminator. |
+| Token    | Meaning                                                                                        |
+| -------- | ---------------------------------------------------------------------------------------------- |
+| `!`      | **Cancel** any currently running command before this one starts. Always start macros with `!`. |
+| `_`      | Use the **English** (invariant) command name, so the macro works in any locale.                |
+| `-`      | Run the command in **script mode** — suppress dialogs, accept input from the macro string.     |
+| `_Enter` | Press Enter at the current prompt.                                                             |
+| `Pause`  | Stop and wait for the user to supply this input interactively.                                 |
+| `;`      | Comment to end of line.                                                                        |
+| Newline  | Same as a space — a separator between tokens, not a command terminator.                        |
 
 ### Example macros
 
@@ -125,10 +125,10 @@ exposes (`StartScriptServer`). Scripts execute inside that server process, which
 rhinocode does not support positional arguments after the script path — any extra tokens are
 concatenated onto the file URI, causing a "file does not exist" error. Workarounds:
 
-|Channel|How|Notes|
-|---|---|---|
-|Temp file|Caller writes a file to a known location; script reads and deletes it.|Use a path derived from `__file__` (see below), not `%TEMP%` — the server may resolve a different temp dir.|
-|Rhino dialog|Script calls `rhinoscriptsyntax.ListBox` / `GetString`|Always works; user sees a prompt in Rhino.|
+| Channel      | How                                                                    | Notes                                                                                                       |
+| ------------ | ---------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| Temp file    | Caller writes a file to a known location; script reads and deletes it. | Use a path derived from `__file__` (see below), not `%TEMP%` — the server may resolve a different temp dir. |
+| Rhino dialog | Script calls `rhinoscriptsyntax.ListBox` / `GetString`                 | Always works; user sees a prompt in Rhino.                                                                  |
 
 ### `__file__` is a URI
 

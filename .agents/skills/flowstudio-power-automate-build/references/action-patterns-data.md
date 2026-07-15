@@ -38,6 +38,7 @@ Result reference: `@body('Select_Needed_Columns')` — returns a direct array of
 > downstream expressions. Works on any array — SP results, HTTP responses, variables.
 >
 > **Tips:**
+>
 > - **Single-to-array coercion:** When an API returns a single object but you need
 >   Select (which requires an array), wrap it: `@array(body('Get_Employee')?['data'])`.
 >   The output is a 1-element array — access results via `?[0]?['field']`.
@@ -177,7 +178,7 @@ Lookup: `@outputs('Assemble_Dictionary')?['myKey']`
 
 ### union() for Changed-Field Detection
 
-When you need to find records where *any* of several fields has changed, run one
+When you need to find records where _any_ of several fields has changed, run one
 `Filter Array` per field and `union()` the results. This avoids a complex
 multi-condition filter and produces a clean deduplicated set:
 
@@ -374,11 +375,13 @@ use in-line OAuth instead of a Bearer token variable:
 > and declare it in the flow's `parameters` block (type `securestring`). This
 > prevents the secret from appearing in run history or being readable via
 > `get_live_flow`. Declare the parameter like:
+>
 > ```json
 > "parameters": {
 >   "graphClientSecret": { "type": "securestring", "defaultValue": "" }
 > }
 > ```
+>
 > Then pass the real value via the flow's connections or environment variables
 > — never commit it to source control.
 

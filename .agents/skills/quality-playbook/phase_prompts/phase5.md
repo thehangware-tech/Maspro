@@ -3,6 +3,7 @@
 You are a quality engineer continuing a phase-by-phase quality playbook run. Phases 1-4 are complete.
 
 Read these files to get context:
+
 1. quality/PROGRESS.md - run metadata, phase status, cumulative BUG tracker
 2. quality/BUGS.md - all confirmed bugs from code review and spec audit
 3. quality/REQUIREMENTS.md - derived requirements
@@ -16,18 +17,18 @@ Execute Phase 5: Reconciliation + TDD + Closure.
 
    **MANDATORY HYDRATION STEP.** Before writing a writeup, re-open quality/BUGS.md and locate the `### BUG-NNN:` entry for the bug you are about to write up. Every confirmed bug in BUGS.md already has the content you need — your job is to copy it into the writeup's sections, not to invent it. If a field is missing from BUGS.md, that is a reconciliation error to surface in PROGRESS.md, not a field to fabricate. Use this field map:
 
-   | BUGS.md field              | Writeup section              | How to use it                                                                 |
-   |----------------------------|------------------------------|-------------------------------------------------------------------------------|
-   | Title line (### BUG-NNN:…) | Summary                      | One sentence naming the function/code path and the observable failure.        |
-   | Primary requirement        | Spec reference               | `- Requirement: REQ-NNN`                                                      |
-   | Spec basis                 | Spec reference               | `- Spec basis: <doc path + line range(s), semicolon-separated if multiple>` plus a ≤15-word contract quote copied verbatim from the cited lines. |
-   | Location                   | The code                     | Cite `file:line` and describe what the current path does there.               |
-   | Minimal reproduction       | Observable consequence       | Weave into the consequence paragraph as the triggering input.                 |
-   | Expected + Actual behavior | Observable consequence       | The actual behavior is the observable failure; the expected defines the gap.  |
-   | Regression test            | The test                     | `- Regression test: <function name>` — verbatim from BUGS.md.                 |
-   | Patches (regression)       | The test                     | `- Regression patch: <path>` — verbatim from BUGS.md.                         |
-   | Patches (fix)              | The fix + The test           | If a fix patch file exists, read it and paste the unified diff inside ```diff; also list the patch path as `- Fix patch: <path>` under The test. If no fix patch exists (confirmed-open bug), write the minimal concrete unified diff directly in The fix anyway — SKILL.md requires an inline diff in every writeup. In the no-patch case, omit the `Fix patch:` bullet from The test. |
-   | Red/green logs             | The test                     | `- Red receipt: quality/results/BUG-NNN.red.log` and the matching green path. |
+   | BUGS.md field              | Writeup section        | How to use it                                                                                                                                                                                                                                                                                                                                                                           |
+   | -------------------------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+   | Title line (### BUG-NNN:…) | Summary                | One sentence naming the function/code path and the observable failure.                                                                                                                                                                                                                                                                                                                  |
+   | Primary requirement        | Spec reference         | `- Requirement: REQ-NNN`                                                                                                                                                                                                                                                                                                                                                                |
+   | Spec basis                 | Spec reference         | `- Spec basis: <doc path + line range(s), semicolon-separated if multiple>` plus a ≤15-word contract quote copied verbatim from the cited lines.                                                                                                                                                                                                                                        |
+   | Location                   | The code               | Cite `file:line` and describe what the current path does there.                                                                                                                                                                                                                                                                                                                         |
+   | Minimal reproduction       | Observable consequence | Weave into the consequence paragraph as the triggering input.                                                                                                                                                                                                                                                                                                                           |
+   | Expected + Actual behavior | Observable consequence | The actual behavior is the observable failure; the expected defines the gap.                                                                                                                                                                                                                                                                                                            |
+   | Regression test            | The test               | `- Regression test: <function name>` — verbatim from BUGS.md.                                                                                                                                                                                                                                                                                                                           |
+   | Patches (regression)       | The test               | `- Regression patch: <path>` — verbatim from BUGS.md.                                                                                                                                                                                                                                                                                                                                   |
+   | Patches (fix)              | The fix + The test     | If a fix patch file exists, read it and paste the unified diff inside ```diff; also list the patch path as `- Fix patch: <path>` under The test. If no fix patch exists (confirmed-open bug), write the minimal concrete unified diff directly in The fix anyway — SKILL.md requires an inline diff in every writeup. In the no-patch case, omit the `Fix patch:` bullet from The test. |
+   | Red/green logs             | The test               | `- Red receipt: quality/results/BUG-NNN.red.log` and the matching green path.                                                                                                                                                                                                                                                                                                           |
 
    **Worked example.** The BUGS.md entry for BUG-004 is:
 
@@ -84,13 +85,14 @@ Execute Phase 5: Reconciliation + TDD + Closure.
 
    **Confirmation checklist (per writeup, before moving to the next bug).** (a) Every
    required section has populated content copied from BUGS.md or the patch files —
-   no empty backticks, no sentinel filler like "is a confirmed code bug in ``" or
-   "The affected implementation lives at ``" or "Patch path: ``". (b) The ```diff
+   no empty backticks, no sentinel filler like "is a confirmed code bug in `" or
+"The affected implementation lives at `" or "Patch path: ``". (b) The ```diff
    fence contains at least one `+` or `-` line from the actual fix patch. (c) The
    Summary names a real function or code path, not the BUG identifier. (d) No
    angle-bracket placeholders (e.g., `<...>`) remain in the final writeup — those are
    pedagogical markers from the worked example and from SKILL.md, never acceptable
    output.
+
 4. Run the TDD red-green cycle: for each confirmed bug, run the regression test against unpatched code -> quality/results/BUG-NNN.red.log. If a fix patch exists, run against patched code -> quality/results/BUG-NNN.green.log. If the test runner is unavailable, create the log with NOT_RUN on the first line.
 5. Generate sidecar JSON: quality/results/tdd-results.json and quality/results/integration-results.json (schema_version "1.1", canonical fields: id, requirement, red_phase, green_phase, verdict, fix_patch_present, writeup_path).
 6. If mechanical verification artifacts exist, run quality/mechanical/verify.sh and save receipts.
@@ -107,6 +109,7 @@ Where `<resolved_quality_gate_path>` is the first hit when walking the documente
 If the gate output contains any line beginning with `cardinality gate:`, or reports uncovered cells, malformed cell IDs, missing consolidation rationale on multi-cell Covers, or malformed downgrade records, STOP. Fix the BUGS.md entries or the `compensation_grid_downgrades.json` file. Do NOT proceed to completion until those failure lines no longer appear.
 
 For every pattern-tagged REQ, the Phase 5 contract is:
+
 - Every grid cell with `"present": false` appears in either a BUG's `Covers:` list or a downgrade record.
 - Every `Covers:` entry uses the canonical cell ID form `REQ-N/cell-<item>-<site>`.
 - Every BUG with ≥2 `Covers:` entries has a non-empty `Consolidation rationale:` line.
@@ -116,4 +119,4 @@ The cardinality gate is blocking. It is intentionally stricter than the Phase 3 
 
 Mark Phase 5 complete in PROGRESS.md (use the checkbox format `- [x] Phase 5 - Reconciliation` — do NOT switch to a table).
 
-IMPORTANT: quality_gate.py will FAIL Phase 5 if any writeup is missing a non-empty ```diff block or contains any of these sentinel phrases verbatim: "is a confirmed code bug in ``", "The affected implementation lives at ``", "Patch path: ``", "- Regression test: ``", "- Regression patch: ``". Those two checks are the hard gate. Skipping the BUGS.md hydration step above is not gate-enforced but will produce writeups that read as unpopulated stubs and fail a human review — do not skip it.
+IMPORTANT: quality_gate.py will FAIL Phase 5 if any writeup is missing a non-empty ```diff block or contains any of these sentinel phrases verbatim: "is a confirmed code bug in `", "The affected implementation lives at `", "Patch path: `", "- Regression test: `", "- Regression patch: ``". Those two checks are the hard gate. Skipping the BUGS.md hydration step above is not gate-enforced but will produce writeups that read as unpopulated stubs and fail a human review — do not skip it.

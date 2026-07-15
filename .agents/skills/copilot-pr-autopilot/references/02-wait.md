@@ -10,6 +10,7 @@ review to wait for.
 ## Inputs
 
 From step 1:
+
 - `PrNumber`.
 - `baseline` — the `LatestCopilotReview.submittedAt` string captured
   before the trigger fired (empty string if no prior Copilot review).

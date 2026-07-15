@@ -69,13 +69,14 @@ A browser window opens for authentication.
    The user completes authentication in the browser. The output contains the new connection id.
 
 ### Getting list of existing connections
+
 When you are not sure if connection already exists:
+
 1. **Check existing connections:**
    ```bash
    membrane connection list --json
    ```
    If a Razorpay connection exists, note its `connectionId`
-
 
 ### Searching for actions
 
@@ -84,8 +85,8 @@ When you know what you want to do but not the exact action ID:
 ```bash
 membrane action list --intent=QUERY --connectionId=CONNECTION_ID --json
 ```
-This will return action objects with id and inputSchema in it, so you will know how to run it.
 
+This will return action objects with id and inputSchema in it, so you will know how to run it.
 
 ## Popular actions
 
@@ -103,7 +104,6 @@ To pass JSON parameters:
 membrane action run --connectionId=CONNECTION_ID ACTION_ID --json --input "{ \"key\": \"value\" }"
 ```
 
-
 ### Proxy requests
 
 When the available actions don't cover your use case, you can send requests directly to the Razorpay API through Membrane's proxy. Membrane automatically appends the base URL to the path you provide and injects the correct authentication headers — including transparent credential refresh if they expire.
@@ -114,15 +114,15 @@ membrane request CONNECTION_ID /path/to/endpoint
 
 Common options:
 
-| Flag | Description |
-|------|-------------|
-| `-X, --method` | HTTP method (GET, POST, PUT, PATCH, DELETE). Defaults to GET |
+| Flag           | Description                                                             |
+| -------------- | ----------------------------------------------------------------------- |
+| `-X, --method` | HTTP method (GET, POST, PUT, PATCH, DELETE). Defaults to GET            |
 | `-H, --header` | Add a request header (repeatable), e.g. `-H "Accept: application/json"` |
-| `-d, --data` | Request body (string) |
-| `--json` | Shorthand to send a JSON body and set `Content-Type: application/json` |
-| `--rawData` | Send the body as-is without any processing |
-| `--query` | Query-string parameter (repeatable), e.g. `--query "limit=10"` |
-| `--pathParam` | Path parameter (repeatable), e.g. `--pathParam "id=123"` |
+| `-d, --data`   | Request body (string)                                                   |
+| `--json`       | Shorthand to send a JSON body and set `Content-Type: application/json`  |
+| `--rawData`    | Send the body as-is without any processing                              |
+| `--query`      | Query-string parameter (repeatable), e.g. `--query "limit=10"`          |
+| `--pathParam`  | Path parameter (repeatable), e.g. `--pathParam "id=123"`                |
 
 ## Best practices
 

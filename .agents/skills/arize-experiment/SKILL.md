@@ -25,6 +25,7 @@ The typical flow: export a dataset → process each example → collect outputs 
 Proceed directly with the task — run the `ax` command you need. Do NOT check versions, env vars, or profiles upfront.
 
 If an `ax` command fails, troubleshoot based on the error:
+
 - `command not found` or version error → see references/ax-setup.md
 - `401 Unauthorized` / missing API key → run `ax profiles show` to inspect the current profile. If the profile is missing or the API key is wrong, follow references/ax-profiles.md to create/update it. If the user doesn't have their key, direct them to https://app.arize.com/admin > API Keys
 - Space unknown → run `ax spaces list` to pick by name, or ask the user
@@ -45,13 +46,13 @@ ax experiments list -o json
 
 ### Flags
 
-| Flag | Type | Default | Description |
-|------|------|---------|-------------|
-| `--dataset` | string | none | Filter by dataset |
-| `--limit, -l` | int | 15 | Max results (1-100) |
-| `--cursor` | string | none | Pagination cursor from previous response |
-| `-o, --output` | string | table | Output format: table, json, csv, parquet, or file path |
-| `-p, --profile` | string | default | Configuration profile |
+| Flag            | Type   | Default | Description                                            |
+| --------------- | ------ | ------- | ------------------------------------------------------ |
+| `--dataset`     | string | none    | Filter by dataset                                      |
+| `--limit, -l`   | int    | 15      | Max results (1-100)                                    |
+| `--cursor`      | string | none    | Pagination cursor from previous response               |
+| `-o, --output`  | string | table   | Output format: table, json, csv, parquet, or file path |
+| `-p, --profile` | string | default | Configuration profile                                  |
 
 ## Get Experiment: `ax experiments get`
 
@@ -65,25 +66,25 @@ ax experiments get NAME_OR_ID --dataset DATASET_NAME --space SPACE   # required 
 
 ### Flags
 
-| Flag | Type | Default | Description |
-|------|------|---------|-------------|
-| `NAME_OR_ID` | string | required | Experiment name or ID (positional) |
-| `--dataset` | string | none | Dataset name or ID (required if using experiment name instead of ID) |
-| `--space` | string | none | Space name or ID (required if using dataset name instead of ID) |
-| `-o, --output` | string | table | Output format |
-| `-p, --profile` | string | default | Configuration profile |
+| Flag            | Type   | Default  | Description                                                          |
+| --------------- | ------ | -------- | -------------------------------------------------------------------- |
+| `NAME_OR_ID`    | string | required | Experiment name or ID (positional)                                   |
+| `--dataset`     | string | none     | Dataset name or ID (required if using experiment name instead of ID) |
+| `--space`       | string | none     | Space name or ID (required if using dataset name instead of ID)      |
+| `-o, --output`  | string | table    | Output format                                                        |
+| `-p, --profile` | string | default  | Configuration profile                                                |
 
 ### Response fields
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `id` | string | Experiment ID |
-| `name` | string | Experiment name |
-| `dataset_id` | string | Linked dataset ID |
-| `dataset_version_id` | string | Specific dataset version used |
-| `experiment_traces_project_id` | string | Project where experiment traces are stored |
-| `created_at` | datetime | When the experiment was created |
-| `updated_at` | datetime | Last modification time |
+| Field                          | Type     | Description                                |
+| ------------------------------ | -------- | ------------------------------------------ |
+| `id`                           | string   | Experiment ID                              |
+| `name`                         | string   | Experiment name                            |
+| `dataset_id`                   | string   | Linked dataset ID                          |
+| `dataset_version_id`           | string   | Specific dataset version used              |
+| `experiment_traces_project_id` | string   | Project where experiment traces are stored |
+| `created_at`                   | datetime | When the experiment was created            |
+| `updated_at`                   | datetime | Last modification time                     |
 
 ## Export Experiment: `ax experiments export`
 
@@ -102,15 +103,15 @@ ax experiments export EXPERIMENT_NAME --dataset DATASET_NAME --space SPACE --std
 
 ### Flags
 
-| Flag | Type | Default | Description |
-|------|------|---------|-------------|
-| `NAME_OR_ID` | string | required | Experiment name or ID (positional) |
-| `--dataset` | string | none | Dataset name or ID (required if using experiment name instead of ID) |
-| `--space` | string | none | Space name or ID (required if using dataset name instead of ID) |
-| `--all` | bool | false | Use Arrow Flight for bulk export (see below) |
-| `--output-dir` | string | `.` | Output directory |
-| `--stdout` | bool | false | Print JSON to stdout instead of file |
-| `-p, --profile` | string | default | Configuration profile |
+| Flag            | Type   | Default  | Description                                                          |
+| --------------- | ------ | -------- | -------------------------------------------------------------------- |
+| `NAME_OR_ID`    | string | required | Experiment name or ID (positional)                                   |
+| `--dataset`     | string | none     | Dataset name or ID (required if using experiment name instead of ID) |
+| `--space`       | string | none     | Space name or ID (required if using dataset name instead of ID)      |
+| `--all`         | bool   | false    | Use Arrow Flight for bulk export (see below)                         |
+| `--output-dir`  | string | `.`      | Output directory                                                     |
+| `--stdout`      | bool   | false    | Print JSON to stdout instead of file                                 |
+| `-p, --profile` | string | default  | Configuration profile                                                |
 
 ### REST vs Flight (`--all`)
 
@@ -129,7 +130,10 @@ Output is a JSON array of run objects:
     "output": "The answer is 4.",
     "evaluations": {
       "correctness": { "label": "correct", "score": 1.0 },
-      "relevance": { "score": 0.95, "explanation": "Directly answers the question" }
+      "relevance": {
+        "score": 0.95,
+        "explanation": "Directly answers the question"
+      }
     },
     "metadata": { "model": "gpt-4o", "latency_ms": 1234 }
   }
@@ -147,14 +151,14 @@ ax experiments create --name "claude-test" --dataset DATASET_NAME --space SPACE 
 
 ### Flags
 
-| Flag | Type | Required | Description |
-|------|------|----------|-------------|
-| `--name, -n` | string | yes | Experiment name |
-| `--dataset` | string | yes | Dataset to run the experiment against |
-| `--space, -s` | string | no | Space name or ID (required if using dataset name instead of ID) |
-| `--file, -f` | path | yes | Data file with runs: CSV, JSON, JSONL, or Parquet |
-| `-o, --output` | string | no | Output format |
-| `-p, --profile` | string | no | Configuration profile |
+| Flag            | Type   | Required | Description                                                     |
+| --------------- | ------ | -------- | --------------------------------------------------------------- |
+| `--name, -n`    | string | yes      | Experiment name                                                 |
+| `--dataset`     | string | yes      | Dataset to run the experiment against                           |
+| `--space, -s`   | string | no       | Space name or ID (required if using dataset name instead of ID) |
+| `--file, -f`    | path   | yes      | Data file with runs: CSV, JSON, JSONL, or Parquet               |
+| `-o, --output`  | string | no       | Output format                                                   |
+| `-p, --profile` | string | no       | Configuration profile                                           |
 
 ### Passing data via stdin
 
@@ -171,10 +175,10 @@ EOF
 
 ### Required columns in the runs file
 
-| Column | Type | Required | Description |
-|--------|------|----------|-------------|
-| `example_id` | string | yes | ID of the dataset example this run corresponds to |
-| `output` | string | yes | The model/system output for this example |
+| Column       | Type   | Required | Description                                       |
+| ------------ | ------ | -------- | ------------------------------------------------- |
+| `example_id` | string | yes      | ID of the dataset example this run corresponds to |
+| `output`     | string | yes      | The model/system output for this example          |
 
 Additional columns are passed through as `additionalProperties` on the run.
 
@@ -188,13 +192,13 @@ ax experiments delete NAME_OR_ID --force   # skip confirmation prompt
 
 ### Flags
 
-| Flag | Type | Default | Description |
-|------|------|---------|-------------|
-| `NAME_OR_ID` | string | required | Experiment name or ID (positional) |
-| `--dataset` | string | none | Dataset name or ID (required if using experiment name instead of ID) |
-| `--space` | string | none | Space name or ID (required if using dataset name instead of ID) |
-| `--force, -f` | bool | false | Skip confirmation prompt |
-| `-p, --profile` | string | default | Configuration profile |
+| Flag            | Type   | Default  | Description                                                          |
+| --------------- | ------ | -------- | -------------------------------------------------------------------- |
+| `NAME_OR_ID`    | string | required | Experiment name or ID (positional)                                   |
+| `--dataset`     | string | none     | Dataset name or ID (required if using experiment name instead of ID) |
+| `--space`       | string | none     | Space name or ID (required if using dataset name instead of ID)      |
+| `--force, -f`   | bool   | false    | Skip confirmation prompt                                             |
+| `-p, --profile` | string | default  | Configuration profile                                                |
 
 ## Experiment Run Schema
 
@@ -221,11 +225,11 @@ Each run corresponds to one dataset example:
 
 ### Evaluation fields
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `label` | string | no | Categorical classification (e.g., `correct`, `incorrect`, `partial`) |
-| `score` | number | no | Numeric quality score (e.g., 0.0 - 1.0) |
-| `explanation` | string | no | Freeform reasoning for the evaluation |
+| Field         | Type   | Required | Description                                                          |
+| ------------- | ------ | -------- | -------------------------------------------------------------------- |
+| `label`       | string | no       | Categorical classification (e.g., `correct`, `incorrect`, `partial`) |
+| `score`       | number | no       | Numeric quality score (e.g., 0.0 - 1.0)                              |
+| `explanation` | string | no       | Freeform reasoning for the evaluation                                |
 
 At least one of `label`, `score`, or `explanation` should be present per evaluation.
 
@@ -398,16 +402,16 @@ ax experiments export EXPERIMENT_NAME --dataset DATASET_NAME --space SPACE --std
 
 ## Troubleshooting
 
-| Problem | Solution |
-|---------|----------|
-| `ax: command not found` | See references/ax-setup.md |
-| `401 Unauthorized` | API key is wrong, expired, or doesn't have access to this space. Fix the profile using references/ax-profiles.md. |
-| `No profile found` | No profile is configured. See references/ax-profiles.md to create one. |
-| `Experiment not found` | Verify experiment name with `ax experiments list --space SPACE` |
-| `Invalid runs file` | Each run must have `example_id` and `output` fields |
-| `example_id mismatch` | Ensure `example_id` values match IDs from the dataset (export dataset to verify) |
-| `No runs found` | Export returned empty -- verify experiment has runs via `ax experiments get` |
-| `Dataset not found` | The linked dataset may have been deleted; check with `ax datasets list` |
+| Problem                 | Solution                                                                                                          |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `ax: command not found` | See references/ax-setup.md                                                                                        |
+| `401 Unauthorized`      | API key is wrong, expired, or doesn't have access to this space. Fix the profile using references/ax-profiles.md. |
+| `No profile found`      | No profile is configured. See references/ax-profiles.md to create one.                                            |
+| `Experiment not found`  | Verify experiment name with `ax experiments list --space SPACE`                                                   |
+| `Invalid runs file`     | Each run must have `example_id` and `output` fields                                                               |
+| `example_id mismatch`   | Ensure `example_id` values match IDs from the dataset (export dataset to verify)                                  |
+| `No runs found`         | Export returned empty -- verify experiment has runs via `ax experiments get`                                      |
+| `Dataset not found`     | The linked dataset may have been deleted; check with `ax datasets list`                                           |
 
 ## Save Credentials for Future Use
 

@@ -14,6 +14,7 @@ Build and scale developer-led adoption through ecosystem programs, community, an
 ## When to Use
 
 **Triggers:**
+
 - "How do we build a developer ecosystem?"
 - "Should we curate quality or go open?"
 - "Developer community isn't growing"
@@ -21,6 +22,7 @@ Build and scale developer-led adoption through ecosystem programs, community, an
 - "How do we compete with larger platforms?"
 
 **Context:**
+
 - API platforms and developer tools
 - Products with extensibility (plugins, integrations)
 - Developer-first GTM motion
@@ -52,6 +54,7 @@ Running ecosystem at a developer platform. Leadership debate: Open the marketpla
 **Result:** Network effects won. Thousands of integrations published. Quality surfaced through usage, not through us deciding upfront.
 
 **Decision Framework:**
+
 - **Curated** works when: Brand risk high, dozens of partners, can scale human review
 - **Open** works when: Hundreds/thousands of potential partners, network effects matter more than quality control
 
@@ -68,18 +71,21 @@ Defaulting to curated because "we need quality control." This works when you hav
 Most developer programs optimize for quick wins. Better approach: Build long-term talent pipeline.
 
 **Year 1: University Partnerships**
+
 - Partner with CS departments
 - Curriculum integration (hackathons, coursework)
 - Student licenses (free or heavily discounted)
 - Metrics: # universities, # students activated
 
 **Year 2: Student Community & Certification**
+
 - Student expert certification program
 - Student-led workshops and events
 - Campus ambassadors
 - Metrics: # certified, # student-led events
 
 **Year 3: Career Bridge**
+
 - Job board connecting students → companies
 - Enterprise partnerships (hire certified students)
 - Alumni network
@@ -98,30 +104,36 @@ Treating students as immediate revenue. They're not. They're future enterprise d
 ### 3. Developer Journey (Awareness → Integration → Advocacy)
 
 **Stage 1: Awareness**
+
 - How do they discover you?
 - Content, search, word-of-mouth, events
 
 **Stage 2: Onboarding**
+
 - First API call in <10 minutes
 - Quick-start guides
 - Sample code in popular languages
 
 **Stage 3: Integration**
+
 - Building real use cases
 - Integration guides
 - Support when stuck
 
 **Stage 4: Production**
+
 - Deployed and generating value
 - Monitoring usage
 - Enterprise upgrade path
 
 **Stage 5: Advocacy**
+
 - Sharing publicly
 - Recommending to others
 - Contributing back (docs, code, community)
 
 **Metrics That Matter:**
+
 - Time to first API call (onboarding)
 - % reaching production (integration success)
 - Monthly active developers (engagement)
@@ -136,21 +148,25 @@ Measuring vanity metrics (sign-ups, downloads) instead of real engagement (API c
 ### 4. Documentation Hierarchy
 
 **Tier 1: Quick Starts (Get to Value Fast)**
+
 - "Hello World" in 5 minutes
 - Common use case examples
 - Copy-paste code that works
 
 **Tier 2: Guides (Solve Real Problems)**
+
 - Use case-specific tutorials
 - Integration patterns
 - Best practices
 
 **Tier 3: Reference (Complete API Docs)**
+
 - Every endpoint documented
 - Request/response examples
 - Error codes and handling
 
 **Tier 4: Conceptual (Understand the System)**
+
 - Architecture overviews
 - Design philosophy
 - Advanced patterns
@@ -166,12 +182,14 @@ Starting with Tier 3 (comprehensive API reference). Developers want quick wins f
 ### 5. Community vs Support (When to Use Which)
 
 **Community (Async, Scalable):**
+
 - Slack/Discord for real-time help
 - Forum for searchable Q&A
 - GitHub discussions for feature requests
 - Best for: Common questions, peer-to-peer help
 
 **Support (Sync, Expensive):**
+
 - Email support for enterprise
 - Dedicated Slack channels for partners
 - Video calls for complex integrations
@@ -180,12 +198,14 @@ Starting with Tier 3 (comprehensive API reference). Developers want quick wins f
 **How to Route:**
 
 **Community first:**
+
 - Developer asks question
 - Community member answers
 - You validate and upvote
 - Searchable for future developers
 
 **Escalate to support when:**
+
 - No community answer in 24 hours
 - Enterprise/paying customer
 - Security or compliance issue
@@ -200,12 +220,14 @@ Providing white-glove support to everyone. Doesn't scale. Build community that h
 ### 6. Partner Tiering for Developer Ecosystems
 
 **Tier 1: Integration Partners (Self-Serve)**
+
 - Build with public API
 - You provide: docs, Slack channel, office hours
 - They drive their own marketing
 - Best for: Ambitious partners with resources
 
 **Tier 2: Strategic Partners (Co-Development)**
+
 - Co-developed integration
 - You provide: dedicated channel, co-marketing
 - Joint case studies
@@ -246,53 +268,65 @@ Is this a common question?
 ## Common Mistakes
 
 **1. Building ecosystem before product-market fit**
-   - Fix core product first, then build ecosystem
+
+- Fix core product first, then build ecosystem
 
 **2. No developer success team**
-   - Developers need help to succeed beyond docs
+
+- Developers need help to succeed beyond docs
 
 **3. Poor documentation**
-   - Foundation of ecosystem, non-negotiable
+
+- Foundation of ecosystem, non-negotiable
 
 **4. Treating all developers equally**
-   - Tier support by strategic value (paying > free, partners > hobbyists)
+
+- Tier support by strategic value (paying > free, partners > hobbyists)
 
 **5. No integration quality standards**
-   - Low-quality integrations hurt your brand
+
+- Low-quality integrations hurt your brand
 
 **6. Measuring only vanity metrics**
-   - Track activation and production usage, not just sign-ups
+
+- Track activation and production usage, not just sign-ups
 
 **7. Developer advocates with no technical depth**
-   - Hire developers who can code and teach
+
+- Hire developers who can code and teach
 
 ---
 
 ## Quick Reference
 
 **Open ecosystem checklist:**
+
 - [ ] Search and discovery (surface quality algorithmically)
 - [ ] Trust signals (verified badges, usage stats, ratings)
 - [ ] Community curation (user recommendations, collections)
 - [ ] Moderation (remove spam after publication)
 
 **Developer journey metrics:**
+
 - Awareness: Traffic, sign-ups
 - Onboarding: Time to first API call (<10 min target)
 - Integration: % reaching production deployment
 - Advocacy: Developer NPS, public sharing
 
 **Documentation hierarchy:**
+
 1. Quick starts (5-min "Hello World")
 2. Use case guides (solve real problems)
 3. API reference (complete documentation)
 4. Conceptual (architecture, philosophy)
 
 **Partner tiers:**
+
 - Tier 1: Self-serve (public API, docs, community)
 - Tier 2: Strategic (co-development, co-marketing)
 
 **Student program timeline:**
+
 - Year 1: University partnerships, activation
 - Year 2: Certification, student community
 - Year 3: Job board, enterprise hiring bridge
@@ -307,4 +341,4 @@ Is this a common question?
 
 ---
 
-*Based on building developer ecosystems at multiple platform companies, including the open vs curated marketplace decision, student program development (3-year arc building talent pipeline), and partner ecosystem growth. Not theory — patterns from building developer ecosystems that actually drove platform adoption and multi-year brand loyalty.*
+_Based on building developer ecosystems at multiple platform companies, including the open vs curated marketplace decision, student program development (3-year arc building talent pipeline), and partner ecosystem growth. Not theory — patterns from building developer ecosystems that actually drove platform adoption and multi-year brand loyalty._

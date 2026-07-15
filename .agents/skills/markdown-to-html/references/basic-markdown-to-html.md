@@ -56,7 +56,10 @@ Create sophisticated formatting for your prose and code on GitHub with simple sy
 ### Parsed HTML
 
 ```html
-<p>Create sophisticated formatting for your prose and code on GitHub with simple syntax.</p>
+<p>
+  Create sophisticated formatting for your prose and code on GitHub with simple
+  syntax.
+</p>
 ```
 
 ---
@@ -90,7 +93,7 @@ _This text is italicized_
 ### Bold + Italic
 
 ```md
-***All this text is important***
+_**All this text is important**_
 ```
 
 ```html
@@ -207,8 +210,8 @@ git add
 
 ```md
 | Style | Syntax |
-|------|--------|
-| Bold | ** ** |
+| ----- | ------ |
+| Bold  | ** **  |
 ```
 
 ### Parsed HTML
@@ -259,7 +262,7 @@ git add
 ### Parsed HTML
 
 ```html
-<img src="image.png" alt="Alt text">
+<img src="image.png" alt="Alt text" />
 ```
 
 ---
@@ -327,12 +330,8 @@ git add
 
 ```html
 <ul>
-  <li>
-    <input type="checkbox" checked disabled> Done
-  </li>
-  <li>
-    <input type="checkbox" disabled> Pending
-  </li>
+  <li><input type="checkbox" checked disabled /> Done</li>
+  <li><input type="checkbox" disabled /> Pending</li>
 </ul>
 ```
 
@@ -345,7 +344,9 @@ git add
 ```
 
 ```html
-<a href="https://github.com/github/support" class="user-mention">@github/support</a>
+<a href="https://github.com/github/support" class="user-mention"
+  >@github/support</a
+>
 ```
 
 ---
@@ -366,8 +367,8 @@ Here is a footnote[^1].
 <p>
   Here is a footnote
   <sup id="fnref-1">
-    <a href="#fn-1">1</a>
-  </sup>.
+    <a href="#fn-1">1</a> </sup
+  >.
 </p>
 
 <section class="footnotes">
@@ -412,7 +413,7 @@ Here is a footnote[^1].
 ```
 
 ```html
-<img class="emoji" alt="👍" src="...">
+<img class="emoji" alt="👍" src="..." />
 ```
 
 (GitHub replaces emoji with `<img>` tags.)

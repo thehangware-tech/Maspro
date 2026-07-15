@@ -1,0 +1,13 @@
+app/(tabs)/orders.tsx(27,39): error TS2339: Property 'profile' does not exist on type 'UserState'.
+app/checkout.tsx(30,39): error TS2339: Property 'profile' does not exist on type 'UserState'.
+app/checkout.tsx(31,44): error TS7006: Parameter 'a' implicitly has an 'any' type.
+app/otp.tsx(66,19): error TS2322: Type '{ ref: (ref: any) => any; className: string; keyboardType: "number-pad"; maxLength: number; value: string; onChangeText: (text: string) => void; onKeyPress: (e: TextInputKeyPressEvent) => void; selectionColor: string; }' is not assignable to type 'IntrinsicAttributes & TextInputProps & { className?: string | undefined; }'.
+  Property 'ref' does not exist on type 'IntrinsicAttributes & TextInputProps & { className?: string | undefined; }'.
+app/wishlist.tsx(18,49): error TS2339: Property 'items' does not exist on type 'WishlistState'.
+src/tw/image.tsx(31,10): error TS2589: Type instantiation is excessively deep and possibly infinite.
+src/tw/image.tsx(31,10): error TS2590: Expression produces a union type that is too complex to represent.
+src/tw/index.tsx(42,10): error TS2590: Expression produces a union type that is too complex to represent.
+src/tw/index.tsx(81,10): error TS2590: Expression produces a union type that is too complex to represent.
+src/tw/index.tsx(112,10): error TS2589: Type instantiation is excessively deep and possibly infinite.
+src/tw/index.tsx(112,10): error TS2590: Expression produces a union type that is too complex to represent.
+src/tw/index.tsx(123,11): error TS2339: Property 'underlayColor' does not exist on type 'ViewStyle'.

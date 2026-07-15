@@ -9,7 +9,6 @@ metadata:
 
 # Technical Product Pricing
 
-
 ## Initial Assessment
 
 Before recommending pricing, understand:
@@ -63,7 +62,7 @@ If Value Ratio < 2x  → You're expensive (need strong differentiation)
 - Hours spent on manual process × hourly rate × frequency
 - Cost of building in-house (engineers × months × loaded cost)
 - Cost of existing tool + switching cost + productivity loss during transition
-- Cost of *not solving the problem* (incidents, downtime, churn)
+- Cost of _not solving the problem_ (incidents, downtime, churn)
 
 **Common Mistake:**
 
@@ -76,11 +75,13 @@ Comparing your price to competitors instead of to customer's alternative cost. C
 **Model 1: Seat-Based ($X/user/month)**
 
 **Works when:**
+
 - Value scales with number of users (collaboration tools, communication)
 - Usage is relatively uniform across users
 - You want predictable revenue
 
 **Breaks when:**
+
 - Power users and casual users get same price (casual users churn)
 - Product value doesn't scale with seats (one admin configures for 1,000 users)
 - Customers consolidate seats to reduce cost (usage goes up, revenue doesn't)
@@ -88,11 +89,13 @@ Comparing your price to competitors instead of to customer's alternative cost. C
 **Model 2: Usage-Based ($X/unit)**
 
 **Works when:**
+
 - Usage varies significantly by customer (API calls, compute, storage)
 - Marginal cost is meaningful (you need usage to track with revenue)
 - Value directly correlates with usage
 
 **Breaks when:**
+
 - Customers can't predict bills (sticker shock at month-end)
 - Low-usage customers aren't worth supporting
 - High-usage customers negotiate volume discounts that compress margins
@@ -100,11 +103,13 @@ Comparing your price to competitors instead of to customer's alternative cost. C
 **Model 3: Outcome-Based ($X/result)**
 
 **Works when:**
+
 - You can measure outcomes reliably (leads generated, tickets resolved, code deployed)
 - Outcomes directly create customer value
 - You have confidence in your product's effectiveness
 
 **Breaks when:**
+
 - Outcomes depend on factors outside your control
 - Measurement is disputed ("that lead wasn't from your tool")
 - Customers game the metric
@@ -116,6 +121,7 @@ Platform fee (covers your fixed costs) + usage/outcome variable (scales with val
 Example: $500/month base + $0.05 per transaction (or API call, task completed, record processed — whatever your unit of value is).
 
 Why this works:
+
 - Base fee ensures every customer covers cost to serve
 - Variable fee aligns price with value
 - Customers can predict minimum spend (base) while scaling naturally
@@ -131,7 +137,7 @@ The hardest pricing decision for developer tools: where do you draw the line bet
 
 **The Framework: Find the Production Boundary**
 
-Free users who never pay are fine — they create awareness, community, and content. The problem is when *production users* never pay.
+Free users who never pay are fine — they create awareness, community, and content. The problem is when _production users_ never pay.
 
 **How to Find the Boundary:**
 
@@ -153,23 +159,26 @@ Why: Hobbyists and learners stay free (they're your marketing engine). Productio
 **The Three Types of Free-to-Paid Triggers:**
 
 **1. Usage limit** (most common for platforms)
+
 - Free: 1,000 units/month (API calls, tasks, records, whatever your value unit is)
 - Triggers when: Production usage exceeds limit
 - Conversion signal: User is building something real
 
 **2. Team/collaboration gate** (best for tools)
+
 - Free: Individual use
 - Triggers when: User invites second person
 - Conversion signal: Tool is valuable enough to share
 
 **3. Enterprise feature gate** (best for platforms)
+
 - Free: Core features
 - Triggers when: Needs SSO, RBAC, audit logs, SLAs
 - Conversion signal: IT/security involved (real deployment)
 
 **Common Mistake:**
 
-Setting free tier too high ("we want developers to love us"). If production users don't hit the limit, they never convert. Generosity in free tier should target *learners*, not *production users*.
+Setting free tier too high ("we want developers to love us"). If production users don't hit the limit, they never convert. Generosity in free tier should target _learners_, not _production users_.
 
 ---
 
@@ -182,19 +191,23 @@ Enterprise pricing isn't a page on your website. It's a conversation. The "Conta
 **Enterprise Pricing Variables:**
 
 **1. Deployment model** (self-serve cloud, dedicated cloud, on-prem, hybrid)
+
 - Each has different cost to serve → different price floor
 - On-prem commands 2-5x premium over cloud (support complexity)
 
 **2. Usage scale** (seats, API volume, data volume)
+
 - Volume discounts should never go below cost to serve + 40% margin
 - Discount off list price, not off already-discounted price
 
 **3. Support level** (community, standard, premium, dedicated)
+
 - Premium support: 1.5-2x base price
 - Dedicated CSM: 2-3x base price
 - 24/7 support with SLA: 3-5x base price
 
 **4. Compliance requirements** (SOC 2, HIPAA, FedRAMP, data residency)
+
 - Each compliance adds real cost (audits, infrastructure, process)
 - Price accordingly: 1.5-2x base per compliance standard
 
@@ -236,33 +249,38 @@ Your price tells buyers who you're for. This is as much a positioning decision a
 **Price Signals:**
 
 **$0 (Open source / free tier):**
+
 - Signal: We're for developers who want to try before they buy
 - Attracts: Individual contributors, experimenters
 - Risk: Perceived as "not enterprise-ready"
 
 **$20-100/month:**
+
 - Signal: We're for teams and small businesses
 - Attracts: Self-serve buyers, startups
 - Risk: Enterprises won't take you seriously (too cheap)
 
 **$500-2,000/month:**
+
 - Signal: We're for production workloads
 - Attracts: Growing companies with real budgets
 - Risk: Startups priced out (may need free tier)
 
 **$5,000-50,000/year:**
+
 - Signal: We're for enterprises
 - Attracts: Mid-market and enterprise
 - Risk: Need sales team (can't be self-serve at this price)
 
 **$100K+/year:**
+
 - Signal: We're mission-critical infrastructure
 - Attracts: Large enterprises
 - Risk: Long sales cycles, heavy support expectations
 
 **The Positioning Test:**
 
-If you price at $50/month but want enterprise customers, your price is undermining your positioning. Enterprise buyers associate low price with low value. You may need to *raise* prices to attract the customers you want.
+If you price at $50/month but want enterprise customers, your price is undermining your positioning. Enterprise buyers associate low price with low value. You may need to _raise_ prices to attract the customers you want.
 
 **Common Mistake:**
 
@@ -283,16 +301,19 @@ Pricing for the customer you have instead of the customer you want. If your road
 **How to Raise Without Losing Customers:**
 
 **1. Grandfather existing customers** (12-24 months)
+
 - New pricing for new customers only
 - Existing customers get notice + timeline
 - Creates urgency for prospects ("price is going up")
 
 **2. Add value to justify increase**
+
 - New tier with new features at higher price
 - Move current tier features to new higher tier
 - This is repositioning, not just a price increase
 
 **3. Annual increase clause in contracts**
+
 - Include 5-10% annual escalator in enterprise contracts
 - Normalizes price increases
 - Prevents "we've been paying the same for 4 years" conversations
@@ -350,4 +371,4 @@ Is value ratio > 5x for most customers?
 
 ---
 
-*Based on pricing work at developer platforms and enterprise software companies, including enterprise price increases with zero customer loss, freemium threshold design that separated hobbyists from production users, partner pricing models, and pricing conversations across hundreds of enterprise deal cycles. Not theory — patterns from pricing decisions that directly impacted revenue.*
+_Based on pricing work at developer platforms and enterprise software companies, including enterprise price increases with zero customer loss, freemium threshold design that separated hobbyists from production users, partner pricing models, and pricing conversations across hundreds of enterprise deal cycles. Not theory — patterns from pricing decisions that directly impacted revenue._

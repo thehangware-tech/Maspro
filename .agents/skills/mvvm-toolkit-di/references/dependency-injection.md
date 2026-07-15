@@ -115,11 +115,11 @@ Why constructor injection beats a service locator:
 
 ## Lifetimes
 
-| Lifetime | Method | Typical use in XAML apps |
-|----------|--------|--------------------------|
-| Singleton | `AddSingleton<T>` | Shell/main-window VM, settings, file/HTTP services, the shared `IMessenger`, app-wide caches |
-| Transient | `AddTransient<T>` | Per-page or per-document ViewModels (a fresh instance every resolve) |
-| Scoped | `AddScoped<T>` | Rarely needed in client apps; useful when you create explicit `IServiceScope`s (per-window scopes, per-request scopes for embedded HTTP) |
+| Lifetime  | Method            | Typical use in XAML apps                                                                                                                 |
+| --------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Singleton | `AddSingleton<T>` | Shell/main-window VM, settings, file/HTTP services, the shared `IMessenger`, app-wide caches                                             |
+| Transient | `AddTransient<T>` | Per-page or per-document ViewModels (a fresh instance every resolve)                                                                     |
+| Scoped    | `AddScoped<T>`    | Rarely needed in client apps; useful when you create explicit `IServiceScope`s (per-window scopes, per-request scopes for embedded HTTP) |
 
 ```csharp
 services.AddSingleton<ShellViewModel>();      // 1 instance for app lifetime

@@ -14,6 +14,7 @@ Launch new products from idea to first customers. The goal isn't headlines — i
 ## When to Use
 
 **Triggers:**
+
 - "How do we launch this product?"
 - "First customer acquisition strategy"
 - "We launched but nobody's using it"
@@ -22,6 +23,7 @@ Launch new products from idea to first customers. The goal isn't headlines — i
 - "How do I know if this is working?"
 
 **Context:**
+
 - New product launches
 - Feature launches that feel like new products
 - Finding first 10-50 customers
@@ -39,6 +41,7 @@ Launch new products from idea to first customers. The goal isn't headlines — i
 Coordinated a feature launch with full press tour. TechCrunch, VentureBeat, product blogs. Big announcement day.
 
 **Result:**
+
 - 50K impressions
 - 12 signups
 - 2 conversions
@@ -68,6 +71,7 @@ You launched. You have some awareness. But conversion is weak. The problem lives
 **Layer 1: Positioning Problem**
 
 Symptoms:
+
 - Messaging sounds like competitors
 - Differentiation requires explaining complex technical details
 - Buyers see you as interchangeable with alternatives
@@ -80,6 +84,7 @@ Fix: Stake a claim you can own structurally (not just through product features).
 **Layer 2: Experience Problem**
 
 Symptoms:
+
 - Strong awareness but weak activation
 - Users sign up but don't complete first workflow
 - Multiple entry points creating decision paralysis
@@ -92,6 +97,7 @@ Fix: Identify 2-3 "undeniable use cases" that deliver immediate value. Restrict 
 **Layer 3: Alignment Problem**
 
 Symptoms:
+
 - Team reports being "out of bandwidth" for customers
 - Different functions optimize for different metrics
 - Every idea has equal weight (no tiebreaker)
@@ -112,6 +118,7 @@ When a launch stalls, diagnose which layer is broken before throwing resources a
 **Principle:** First 10 customers are not for revenue. They're for learning.
 
 **What You're Learning:**
+
 1. Does the product actually solve the problem?
 2. What's the activation flow? (How do they get value?)
 3. What objections come up? (Price, features, integrations?)
@@ -121,21 +128,25 @@ When a launch stalls, diagnose which layer is broken before throwing resources a
 **How to Find Them:**
 
 **Channel 1: Personal Network (first 2-3)**
+
 - "I'm building [X], can I get your feedback?"
 - Convert to paying customers (don't give away for free — free users give different feedback than paying ones)
 
 **Channel 2: Direct Outreach (customers 3-20)**
+
 - Build list of 100 target accounts
 - Personalize to their specific pain
 - Test messaging variants — which angle gets replies?
 
 **Channel 3: Ceiling Moment Targeting (highest-intent)**
+
 - The highest-intent prospects are people who've already adopted a comparable solution and hit its limits
 - They've invested in learning a tool, hit its ceiling, and have low switching costs
 - Craft outreach around the limitation: "We see teams that outgrow [incumbent] when they need [capability]. That's what we built."
 - These convert 3-5x better than cold outreach because they already understand the problem
 
 **Channel 4: Community (developer products)**
+
 - "Built [X] to solve [problem], looking for early users"
 - Offer white-glove onboarding
 - Best for products where users congregate in Slack/Discord/forums
@@ -193,6 +204,7 @@ Position yourself as the integration hub that other tools naturally connect thro
 **Category Sequencing:**
 
 Don't pursue partnerships everywhere. Dominate 2-3 categories per quarter:
+
 1. Lead with genuine use cases: "Our users ask for [partner] integration 50x per month"
 2. Once you partner with a top player, competitors feel urgency to work with you too
 3. After 2-3 successful partnerships in a category, create joint customer stories
@@ -208,21 +220,25 @@ Launching partnerships without clear integration pathways. Expecting partners to
 **Product-market fit is when customers pull you forward, not when you push them.**
 
 **Retention:**
+
 - [ ] 40%+ of Week 1 users return Week 4
 - [ ] Usage increasing over time
 - [ ] Customers renewing without sales push
 
 **Organic Growth:**
+
 - [ ] Word-of-mouth referrals happening
 - [ ] Customers asking "can I add my team?"
 - [ ] Inbound interest without paid marketing
 
 **Sales Velocity:**
+
 - [ ] Sales cycles shortening
 - [ ] Win rates >30% of trials
 - [ ] Customers saying "we need this now"
 
 **Qualitative:**
+
 - [ ] >40% very disappointed if product went away (Sean Ellis test)
 - [ ] Customers can articulate what it's for (clear use case)
 - [ ] Customers advocating publicly
@@ -318,4 +334,4 @@ Customer problem first → Narrow pilot → Reference customers together → Lev
 
 ---
 
-*Based on launching features that optimized for press and got 12 signups from 50K impressions, diagnosing launch stalls across three companies using the three-layer model, and building the 2-week experiment cycle that turned ad hoc testing into a repeatable machine. Also draws on partner-led market entry across multiple geographies and segments. Not theory — lessons from mistaking vanity metrics for growth and learning to diagnose the actual problem.*
+_Based on launching features that optimized for press and got 12 signups from 50K impressions, diagnosing launch stalls across three companies using the three-layer model, and building the 2-week experiment cycle that turned ad hoc testing into a repeatable machine. Also draws on partner-led market entry across multiple geographies and segments. Not theory — lessons from mistaking vanity metrics for growth and learning to diagnose the actual problem._

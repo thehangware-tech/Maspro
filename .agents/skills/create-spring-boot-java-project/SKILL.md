@@ -1,6 +1,6 @@
 ---
 name: create-spring-boot-java-project
-description: 'Create Spring Boot Java Project Skeleton'
+description: "Create Spring Boot Java Project Skeleton"
 ---
 
 # Create Spring Boot Java project prompt

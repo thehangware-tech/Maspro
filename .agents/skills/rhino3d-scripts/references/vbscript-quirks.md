@@ -16,10 +16,10 @@ All `Dim` declarations inside a `Sub`/`Function` are hoisted to the top. A `Dim`
 
 ## `Nothing` vs `Empty` vs `Null`
 
-| Sentinel | Test with | Meaning |
-|---|---|---|
-| `Empty` | `IsEmpty(x)` | `Dim`’d but never assigned |
-| `Null` | `IsNull(x)` | Explicit “no value” — what `Rhino.GetObject` returns on cancel |
+| Sentinel  | Test with      | Meaning                                                                   |
+| --------- | -------------- | ------------------------------------------------------------------------- |
+| `Empty`   | `IsEmpty(x)`   | `Dim`’d but never assigned                                                |
+| `Null`    | `IsNull(x)`    | Explicit “no value” — what `Rhino.GetObject` returns on cancel            |
 | `Nothing` | `x Is Nothing` | An **object** reference that points to nothing — only for `Set` variables |
 
 Wrong sentinel → silently false.

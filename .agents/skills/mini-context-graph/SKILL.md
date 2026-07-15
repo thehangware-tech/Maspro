@@ -24,11 +24,11 @@ Standard RAG re-discovers knowledge from scratch on every query. This skill is d
 
 ## Three Layers
 
-| Layer | Where | What the LLM does | What Python does |
-|-------|-------|-------------------|-----------------|
-| **Raw Sources** | `data/documents.json` | Reads (never modifies) | Stores chunks + metadata |
-| **Wiki** | `wiki/` (markdown) | Writes/updates pages | Manages index.md + log.md |
-| **Graph** | `data/graph.json` | Extracts entities + relations | Persists, deduplicates, traverses |
+| Layer           | Where                 | What the LLM does             | What Python does                  |
+| --------------- | --------------------- | ----------------------------- | --------------------------------- |
+| **Raw Sources** | `data/documents.json` | Reads (never modifies)        | Stores chunks + metadata          |
+| **Wiki**        | `wiki/` (markdown)    | Writes/updates pages          | Manages index.md + log.md         |
+| **Graph**       | `data/graph.json`     | Extracts entities + relations | Persists, deduplicates, traverses |
 
 ---
 
@@ -161,21 +161,21 @@ Ask the LLM to review and fix: broken links, orphan pages, stale claims, missing
 
 ## Full Python API Reference
 
-| Method | Purpose | When to Use |
-|--------|---------|-------------|
-| `skill.ingest_with_content(doc_id, title, source, raw_content, entities, relations)` | Full RAG ingest: raw docs + graph + provenance | Every new document |
-| `skill.add_node(name, node_type)` | Add single entity (no provenance) | Quick additions without a source doc |
-| `skill.add_edge(source_name, target_name, relation, confidence)` | Add single relation | Quick additions without a source doc |
-| `skill.query(query)` | Graph-only retrieval → subgraph | Structural queries |
-| `skill.query_with_evidence(query)` | Graph + provenance → subgraph + source chunks | Queries requiring citations |
-| `wiki_store.write_page(category, title, content, summary)` | Write/update a wiki page | After every ingest; after answering queries |
-| `wiki_store.read_page(category, title)` | Read a wiki page | Before answering; for cross-referencing |
-| `wiki_store.search_wiki(query)` | Keyword search across wiki | Fast path before graph traversal |
-| `wiki_store.list_pages(category)` | List all wiki pages | Getting an overview |
-| `wiki_store.get_log(last_n)` | Read recent operations | Understanding wiki history |
-| `wiki_store.lint_wiki()` | Health check | Periodic maintenance |
-| `documents_store.list_documents()` | List all ingested raw sources | Audit / provenance checking |
-| `documents_store.search_chunks(query)` | Chunk-level search | Finding specific evidence |
+| Method                                                                               | Purpose                                        | When to Use                                 |
+| ------------------------------------------------------------------------------------ | ---------------------------------------------- | ------------------------------------------- |
+| `skill.ingest_with_content(doc_id, title, source, raw_content, entities, relations)` | Full RAG ingest: raw docs + graph + provenance | Every new document                          |
+| `skill.add_node(name, node_type)`                                                    | Add single entity (no provenance)              | Quick additions without a source doc        |
+| `skill.add_edge(source_name, target_name, relation, confidence)`                     | Add single relation                            | Quick additions without a source doc        |
+| `skill.query(query)`                                                                 | Graph-only retrieval → subgraph                | Structural queries                          |
+| `skill.query_with_evidence(query)`                                                   | Graph + provenance → subgraph + source chunks  | Queries requiring citations                 |
+| `wiki_store.write_page(category, title, content, summary)`                           | Write/update a wiki page                       | After every ingest; after answering queries |
+| `wiki_store.read_page(category, title)`                                              | Read a wiki page                               | Before answering; for cross-referencing     |
+| `wiki_store.search_wiki(query)`                                                      | Keyword search across wiki                     | Fast path before graph traversal            |
+| `wiki_store.list_pages(category)`                                                    | List all wiki pages                            | Getting an overview                         |
+| `wiki_store.get_log(last_n)`                                                         | Read recent operations                         | Understanding wiki history                  |
+| `wiki_store.lint_wiki()`                                                             | Health check                                   | Periodic maintenance                        |
+| `documents_store.list_documents()`                                                   | List all ingested raw sources                  | Audit / provenance checking                 |
+| `documents_store.search_chunks(query)`                                               | Chunk-level search                             | Finding specific evidence                   |
 
 ---
 
@@ -183,12 +183,11 @@ Ask the LLM to review and fix: broken links, orphan pages, stale claims, missing
 
 > "The wiki is a persistent, compounding artifact. The cross-references are already there. The synthesis already reflects everything you've read." — Karpathy
 
-| Layer | What Happens | Who Owns It |
-|-------|-----------|-------------|
-| **LLM Reasoning** | Extraction, synthesis, writing wiki pages | Agent (.md guidance files) |
-| **Wiki Persistence** | Index, log, file I/O | `wiki_store.py` |
-| **Graph Persistence** | Dedup, index, BFS traverse | `graph_store.py`, `retrieval_engine.py` |
-| **Raw Source Storage** | Immutable docs + chunks + provenance | `documents_store.py` |
+| Layer                  | What Happens                              | Who Owns It                             |
+| ---------------------- | ----------------------------------------- | --------------------------------------- |
+| **LLM Reasoning**      | Extraction, synthesis, writing wiki pages | Agent (.md guidance files)              |
+| **Wiki Persistence**   | Index, log, file I/O                      | `wiki_store.py`                         |
+| **Graph Persistence**  | Dedup, index, BFS traverse                | `graph_store.py`, `retrieval_engine.py` |
+| **Raw Source Storage** | Immutable docs + chunks + provenance      | `documents_store.py`                    |
 
 The human curates sources and asks questions. The LLM writes the wiki, extracts the graph, and answers with citations. Python handles all bookkeeping.
-

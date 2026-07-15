@@ -1,0 +1,14 @@
+app/otp.tsx(93,19): error TS2322: Type '{ ref: (ref: any) => any; className: string; keyboardType: "number-pad"; maxLength: number; value: string; onChangeText: (text: string) => void; onKeyPress: (e: any) => void; selectionColor: string; }' is not assignable to type 'IntrinsicAttributes & TextInputProps & { className?: string | undefined; }'.
+  Property 'ref' does not exist on type 'IntrinsicAttributes & TextInputProps & { className?: string | undefined; }'.
+app/profile/add-address.tsx(40,19): error TS2322: Type 'Address | { isDefault: boolean; name: string; phone: string; street: string; city: string; state: string; pincode: string; type: "Home" | "Work" | "Other"; id: string; }' is not assignable to type 'Address'.
+  Property 'zipCode' is missing in type '{ isDefault: boolean; name: string; phone: string; street: string; city: string; state: string; pincode: string; type: "Home" | "Work" | "Other"; id: string; }' but required in type 'Address'.
+app/profile/add-address.tsx(40,41): error TS2741: Property 'zipCode' is missing in type '{ isDefault: boolean; name: string; phone: string; street: string; city: string; state: string; pincode: string; type: "Home" | "Work" | "Other"; id: string; }' but required in type 'Address'.
+app/profile/addresses.tsx(49,77): error TS2339: Property 'pincode' does not exist on type 'Address'.
+src/store/cartStore.ts(120,45): error TS2693: 'CartState' only refers to a type, but is being used as a value here.
+src/tw/image.tsx(31,10): error TS2589: Type instantiation is excessively deep and possibly infinite.
+src/tw/image.tsx(31,10): error TS2590: Expression produces a union type that is too complex to represent.
+src/tw/index.tsx(42,10): error TS2590: Expression produces a union type that is too complex to represent.
+src/tw/index.tsx(81,10): error TS2590: Expression produces a union type that is too complex to represent.
+src/tw/index.tsx(112,10): error TS2589: Type instantiation is excessively deep and possibly infinite.
+src/tw/index.tsx(112,10): error TS2590: Expression produces a union type that is too complex to represent.
+src/tw/index.tsx(123,11): error TS2339: Property 'underlayColor' does not exist on type 'ViewStyle'.

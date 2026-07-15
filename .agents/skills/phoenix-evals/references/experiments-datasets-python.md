@@ -70,14 +70,14 @@ df = dataset.to_dataframe()
 
 ## Key Parameters
 
-| Parameter | Description |
-| --------- | ----------- |
-| `input_keys` | Columns for task input |
-| `output_keys` | Columns for expected output |
-| `metadata_keys` | Additional context |
+| Parameter        | Description                                                                          |
+| ---------------- | ------------------------------------------------------------------------------------ |
+| `input_keys`     | Columns for task input                                                               |
+| `output_keys`    | Columns for expected output                                                          |
+| `metadata_keys`  | Additional context                                                                   |
 | `example_id_key` | Column with stable example IDs; server updates the matching row instead of inserting |
-| `split_key` | Single column for split assignment (replaces deprecated `split_keys`) |
-| `split_keys` | **Deprecated** — use `split_key` (singular) instead |
+| `split_key`      | Single column for split assignment (replaces deprecated `split_keys`)                |
+| `split_keys`     | **Deprecated** — use `split_key` (singular) instead                                  |
 
 ## Using Evaluators in Experiments
 

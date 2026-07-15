@@ -14,6 +14,7 @@ Strategic account planning and execution for enterprise deals. Turn complex sale
 ## When to Use
 
 **Triggers:**
+
 - "How do I plan this enterprise deal?"
 - "This deal has been in motion 3 months, why isn't it closing?"
 - "Should I create a full account plan or simplified version?"
@@ -22,6 +23,7 @@ Strategic account planning and execution for enterprise deals. Turn complex sale
 - "Building a mutual action plan"
 
 **Context:**
+
 - Strategic deals above your average ACV
 - Multiple stakeholders involved
 - Sales cycle exceeds 60 days
@@ -41,6 +43,7 @@ The Mutual Action Plan (MAP) is the single best indicator of deal health. Not pi
 **The MAP tells you everything:**
 
 **Healthy deal:**
+
 - MAP updated weekly
 - Customer adding their own action items
 - Both sides completing tasks on schedule
@@ -48,6 +51,7 @@ The Mutual Action Plan (MAP) is the single best indicator of deal health. Not pi
 - Dates moving up (not pushed out)
 
 **Dying deal:**
+
 - MAP last updated 3+ weeks ago
 - Only your side has action items
 - Customer tasks marked "pending" for weeks
@@ -89,11 +93,13 @@ Then: radio silence.
 **What happened?** You never met the Economic Buyer.
 
 **The Economic Buyer (EB) is the person who:**
+
 - Controls budget allocation
 - Makes final purchase decision
 - Signs the contract
 
 **Not:**
+
 - Your champion (they influence, don't decide)
 - The technical lead (they validate, don't buy)
 - The VP who attended one demo (they advise, don't sign)
@@ -101,10 +107,12 @@ Then: radio silence.
 **Why Deals Die Without EB Access:**
 
 You built the business case with your champion's assumptions. But the EB has different priorities:
+
 - Champion cares about: solving their team's pain
 - EB cares about: ROI, risk mitigation, strategic alignment
 
 When you send proposal to EB through the champion, EB sees:
+
 - Price tag with no context
 - Solution to a problem they didn't articulate
 - Risk they haven't evaluated
@@ -148,6 +156,7 @@ Treating EB meeting as "nice to have." It's mandatory for any deal >$50K. No EB 
 Enterprise software purchases are made by committees. But committees don't buy. **People buy.**
 
 And people buy for personal reasons:
+
 - Career advancement
 - Looking good to their boss
 - Reducing their workload
@@ -160,16 +169,19 @@ And people buy for personal reasons:
 For each stakeholder, map:
 
 **Professional Win:**
+
 - What do they get credit for if this succeeds?
 - What pain goes away for them personally?
 - How does this make them look good?
 
 **Professional Risk:**
+
 - What happens to them if this fails?
 - What's their reputation cost if this goes wrong?
 - Who's skeptical of them internally?
 
 **Personal Motivations:**
+
 - Are they new in role? (Need quick wins)
 - Facing budget cuts? (Need to justify spend)
 - Up for promotion? (Need visible success)
@@ -178,16 +190,19 @@ For each stakeholder, map:
 **Example: VP of Engineering**
 
 **Professional Win:**
+
 - Reduce on-call burden for team (they'll stop complaining to her)
 - Faster incident response (looks good in QBRs)
 - Attract better eng talent (modern tooling)
 
 **Professional Risk:**
+
 - Team rejects new tool (she forced it on them)
 - Migration goes badly (downtime, incidents)
 - Vendor fails (she picked them)
 
 **Personal Motivations:**
+
 - New in role (6 months), needs wins
 - Under pressure to improve uptime metrics
 - Previous monitoring tool she picked failed
@@ -218,6 +233,7 @@ Selling only to the business problem. "This saves money. This improves efficienc
 A complete account plan has four interconnected pieces. Each feeds the others.
 
 **Component 1: Account Summary**
+
 - Company basics (HQ, size, industry, subsidiaries)
 - Technical landscape (infrastructure, tools, platforms)
 - Top corporate initiatives (from press, annual reports, LinkedIn)
@@ -225,12 +241,14 @@ A complete account plan has four interconnected pieces. Each feeds the others.
 - LinkedIn keyword analysis (quantify their investment in your domain)
 
 **Component 2: Org Chart**
+
 - Map all relevant contacts: name, title, location, LinkedIn, email, phone, notes
 - Notes capture: domain of responsibility, technical specialties, personal win
 - Include people across levels: C-suite, directors, architects, leads, specialists
 - Don't just map buyer — map influencers, users, potential blockers
 
 **Component 3: Opportunity Plan (MEDDICC)**
+
 - **M - Metrics**: How will the customer measure success? (Validated with EB)
 - **E - Economic Buyer**: Who has budget authority? Have you met them?
 - **D - Decision Criteria**: What criteria will they use to decide? (Technical, business, political)
@@ -242,6 +260,7 @@ A complete account plan has four interconnected pieces. Each feeds the others.
 Plus: Issues/Risks table with mitigation plans, help needed, responsible parties
 
 **Component 4: Mutual Action Plan (MAP)**
+
 - Joint timeline with: Action, Your Owner, Customer Owner, Others Involved, Due Date
 - Both sides must have actions — if only your team has actions, it's not a deal, it's a demo
 - Track status (complete/in-progress)
@@ -253,6 +272,7 @@ Plus: Issues/Risks table with mitigation plans, help needed, responsible parties
 Full account plans worth investment for top 10-20% of accounts by potential deal size. For rest, use simplified version (summary + MEDDICC + next steps).
 
 **Common Mistakes:**
+
 - Creating account plan after deal is in motion (build before first engagement)
 - Not maintaining MAP weekly (stale MAP = stale deal)
 - Filling MEDDICC with assumptions instead of validated info
@@ -277,6 +297,7 @@ Before engaging strategic account, quantify their investment in your domain via 
 If a company has 50 employees with "SRE" in their profile, they're mature in site reliability. If they have 2, they're not ready for advanced observability tools.
 
 This tells you:
+
 - Whether to pursue the account (do they have the team?)
 - Who to target (where are the concentrations?)
 - How to personalize outreach (reference their specific context)
@@ -284,14 +305,17 @@ This tells you:
 **Example:**
 
 Searching "[Company] + DevOps":
+
 - 120 results → Mature DevOps org, good fit
 - 5 results → Early, not ready
 
 Searching "[Company] + SRE":
+
 - 50 results → They care about reliability, pitch uptime/incident reduction
 - 0 results → Don't lead with SRE value prop
 
 **Common Mistakes:**
+
 - Just searching job titles (vary wildly) instead of keywords (consistent)
 - Not comparing counts to total employee count
 - Not refreshing analysis (hiring trends change quarterly)
@@ -365,36 +389,45 @@ Have you met the Economic Buyer?
 ## Common Mistakes
 
 **1. Creating account plan too late**
-   - Build before first engagement, not after deal is in motion
+
+- Build before first engagement, not after deal is in motion
 
 **2. MEDDICC filled with assumptions**
-   - Validate each element with customer, don't guess
+
+- Validate each element with customer, don't guess
 
 **3. Stale Mutual Action Plan**
-   - If MAP isn't updated weekly, deal is stalling. 3+ weeks = dead.
+
+- If MAP isn't updated weekly, deal is stalling. 3+ weeks = dead.
 
 **4. Mapping only the buyer**
-   - Need full org chart: influencers, users, blockers
+
+- Need full org chart: influencers, users, blockers
 
 **5. Ignoring personal wins**
-   - People buy for career/reputation reasons, not just business ROI
+
+- People buy for career/reputation reasons, not just business ROI
 
 **6. Not tracking deal health**
-   - Green/yellow/red indicators catch dying deals early
+
+- Green/yellow/red indicators catch dying deals early
 
 **7. Skipping champion validation**
-   - Without internal champion, you're selling alone
+
+- Without internal champion, you're selling alone
 
 ---
 
 ## Quick Reference
 
 **MAP Health Check:**
+
 - Green: Updated weekly, both sides have actions, customer completing tasks
 - Yellow: Updated bi-weekly, mostly your actions, customer slow to respond
 - Red: 3+ weeks stale, only your actions, customer unresponsive → **Dead deal**
 
 **MEDDICC Validation:**
+
 - [ ] Metrics: Success criteria agreed with EB
 - [ ] Economic Buyer: Met them, validated problem/solution
 - [ ] Decision Criteria: Understand their evaluation rubric
@@ -404,12 +437,14 @@ Have you met the Economic Buyer?
 - [ ] Competition: Know alternatives they're considering
 
 **Personal Win Questions:**
+
 - "What does success look like for you personally?"
 - "What happens to your team if this works? If it doesn't?"
 - "What are you being measured on this year?"
 - "Who internally is skeptical? Why?"
 
 **Account Plan Checklist:**
+
 - [ ] Account summary with hypothesis
 - [ ] Org chart with personal wins mapped
 - [ ] MEDDICC fully validated (not assumed)
@@ -426,4 +461,4 @@ Have you met the Economic Buyer?
 
 ---
 
-*Based on enterprise sales at a platform company during hypergrowth, with patterns from closing strategic accounts, navigating complex procurement processes, and learning the hard way that stale MAPs = dead deals. Not theory — lessons from watching deals die because we didn't track health metrics and closing deals because we validated EB alignment early.*
+_Based on enterprise sales at a platform company during hypergrowth, with patterns from closing strategic accounts, navigating complex procurement processes, and learning the hard way that stale MAPs = dead deals. Not theory — lessons from watching deals die because we didn't track health metrics and closing deals because we validated EB alignment early._

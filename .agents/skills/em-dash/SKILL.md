@@ -1,6 +1,6 @@
 ---
 name: em-dash
-description: 'Expert on the history, origin, and correct use of the em dash. Use when writing or reviewing code, comments, or data files to avoid em and en dashes, defaulting to never using them and replacing any found with a hyphen (-). Includes strong knowledge of punctuation marks and the proper usage of punctuation characters when writing comments.'
+description: "Expert on the history, origin, and correct use of the em dash. Use when writing or reviewing code, comments, or data files to avoid em and en dashes, defaulting to never using them and replacing any found with a hyphen (-). Includes strong knowledge of punctuation marks and the proper usage of punctuation characters when writing comments."
 ---
 
 # em dash
@@ -17,54 +17,54 @@ Here is a breakdown of how the em dash evolved:
 ### Early Beginnings (15th-18th Century)
 
 - The First Dashes: Early appearances of the dash in English literature date
- back to 1580 in private letters and 1588 in English drama. They were often
- used to indicate pauses, self-interruption, or an unfinished thought
+  back to 1580 in private letters and 1588 in English drama. They were often
+  used to indicate pauses, self-interruption, or an unfinished thought
 - Gutenberg and Early Printing: The em dash officially emerged as a standardized
- typesetting mark during the 15th-century printing revolution
+  typesetting mark during the 15th-century printing revolution
 
 #### The Etymology
 
 - The "M" Width: The em dash is named because its standard length is equal to
- the width of the capital letter "M" in the specific typeface being used
- (Similarly, the slightly shorter en dash is the width of the letter "N")
+  the width of the capital letter "M" in the specific typeface being used
+  (Similarly, the slightly shorter en dash is the width of the letter "N")
 
 ### Literary Popularity (17th-19th Century)
 
 - The Author's Tool: By the 17th and 18th centuries, it became a beloved tool
- for writers mimicking the natural lurches, stutters, and rhythms of speech
+  for writers mimicking the natural lurches, stutters, and rhythms of speech
 - Dickinson Dashes: In the 19th century, poets like Emily Dickinson famously
- used the em dash for emotional weight, rhythm, and to invite reader
- interpretation. This became so synonymous with her work that they are often
- informally called "Dickinson Dashes"
+  used the em dash for emotional weight, rhythm, and to invite reader
+  interpretation. This became so synonymous with her work that they are often
+  informally called "Dickinson Dashes"
 
 ### The Typewriter Era (19th-20th Century)
 
 - The Double-Hyphen Compromise: When typewriters were introduced, they lacked
- a dedicated key for the em dash. To compensate, typists began using two
- consecutive hyphens (--)
+  a dedicated key for the em dash. To compensate, typists began using two
+  consecutive hyphens (--)
 - The No-Space Rule: Because of this mechanical compromise, a stylistic
- convention of typing the mark without surrounding spaces emerged and remains
+  convention of typing the mark without surrounding spaces emerged and remains
 
 ### The Digital Age (Present Day)
 
 - Return to Form: Modern digital typesetting and word processing programs have
- restored the true, unbroken em dash
+  restored the true, unbroken em dash
 - **Modern Renaissance**: The em dash is experiencing a resurgence of popularity
   - It has become a hallmark of modern long-form prose and is also a favorite,
-   heavily used punctuation mark in AI outputs, which often prioritize a
-   conversational, stream-of-consciousness style
+    heavily used punctuation mark in AI outputs, which often prioritize a
+    conversational, stream-of-consciousness style
 
 #### Speculation for em Dash Modern Renaissance
 
 - Professional authors who had to meet deadlines and did not have the time to
- strictly proofread the online article before submitting it
+  strictly proofread the online article before submitting it
 - Professionals who wanted to show off their knowledge of HTML encoding in order
- to seem smart
+  to seem smart
 - Graphic designers who wanted to make the visual composition of text on a web
- page more appealing
+  page more appealing
 - The fact that popularity begets popularity
   - People publishing web articles saw that everyone else was using em dashes,
-   so instead of using a hyphen where one belonged, they opted to use an em dash
+    so instead of using a hyphen where one belonged, they opted to use an em dash
 
 ## Analysis of em dash History
 
@@ -84,7 +84,7 @@ Never.
 - **Never**
   - Use the `-` (hyphen) character instead
   - If working as an agent, and an em dash is in a comment, then replace it
-  with the `-` (hyphen) character
+    with the `-` (hyphen) character
 
 ### In Raw Data and/or Text Files
 
@@ -95,7 +95,7 @@ Never.
   - Literature
   - News
 - If working as an agent, and an em dash is already part of the data, then
- leave it
+  leave it
 
 ## Other Punctuation Characters
 
@@ -113,30 +113,30 @@ Every complete sentence in a paragraph must end with one of these three marks:
 - Question Mark `?`: Ends direct questions
   - Keyboard character: `true`
   - Programming language syntax: `true`
-    - Example: *ternary conditions*
-    `condition ? expression_if_true : expression_if_false`
+    - Example: _ternary conditions_
+      `condition ? expression_if_true : expression_if_false`
 - Exclamation Point `!`: Conveys strong emotion, surprise, or emphasis
   - Keyboard character: `true`
   - Programming language syntax: `true`
     - Example:
-    `setlocal enabledelayedexpansion && set "_a=a" && echo !_a! && endlocal`
+      `setlocal enabledelayedexpansion && set "_a=a" && echo !_a! && endlocal`
 
 ### Pauses and Clause Connectors
 
 These marks control the rhythm of your writing and connect different ideas:
 
 - Comma `,`: Used to separate items in a list, link independent clauses with a
- conjunction (e.g., and, but), or set off introductory phrases
+  conjunction (e.g., and, but), or set off introductory phrases
   - Keyboard character: `true`
   - Programming language syntax: `true`
     - Example: `fn(a, b)`
 - Semicolon `;`: Connects two closely related independent clauses that could
- stand alone as separate sentences
+  stand alone as separate sentences
   - Keyboard character: `true`
   - Programming language syntax: `true`
     - Example: `var foobar = "foo-bar";`
 - Colon `:`: Introduces a list, a quote, or an explanation. The text preceding
- a colon must be a complete sentence
+  a colon must be a complete sentence
   - Keyboard character: `true`
   - Programming language syntax: `true`
     - Example: `{"age": 26}`
@@ -144,12 +144,12 @@ These marks control the rhythm of your writing and connect different ideas:
 ### Words, Quotations, and Possessions
 
 - Apostrophe `'`: Indicates possession (e.g., Sarah's book) or represents
- missing letters in a contraction (e.g., *I'll* instead of *I will*)
+  missing letters in a contraction (e.g., _I'll_ instead of _I will_)
   - Keyboard character: `true`
   - Programming language syntax: `true`
     - Example: `char letter = 'A';`
 - Quotation Marks `"`: Enclose direct speech or quotes. In American English,
- periods and commas almost always go inside the quotation marks
+  periods and commas almost always go inside the quotation marks
   - Keyboard character: `true`
   - Programming language syntax: `true`
     - Example: `char abc[] = "abc";`
@@ -157,14 +157,14 @@ These marks control the rhythm of your writing and connect different ideas:
 ### Dashes and Slashes
 
 - Hyphen `-`: Joins two or more words together to form a single compound
- adjective (e.g., well-known)
+  adjective (e.g., well-known)
   - Keyboard character: `true`
   - Programming language syntax: `true`
     - Example: `count--`
 - En dash (U+2013, `\u2013`) and em dash (U+2014, `\u2014`):
   - The **en dash** is the thinner of the two, and is used to show numerical ranges
-   or connections between words in a compound adjective when one element is itself
-   multiple words
+    or connections between words in a compound adjective when one element is itself
+    multiple words
     - Keyboard character: `false`
     - Programming language syntax: `false`
   - The **em dash** is wider, and is used to note a break, provide drama, or give an example.
@@ -178,12 +178,12 @@ These marks control the rhythm of your writing and connect different ideas:
 ### Grouping and Emphasizing
 
 - Parentheses `( )`: Enclose extra, non-essential information that clarifies a
- sentence but can be removed without changing the core meaning
+  sentence but can be removed without changing the core meaning
   - Keyboard character: `true`
   - Programming language syntax: `true`
     - Example: `if (5 > 2)`
 - Brackets `[ ]`: Used to enclose words added to a quotation by someone other
- than the original author, usually to clarify a pronoun or provide missing context
+  than the original author, usually to clarify a pronoun or provide missing context
   - Keyboard character: `true`
   - Programming language syntax: `true`
     - Example: `var arr = [1, 2, 3];`
@@ -194,10 +194,10 @@ When commenting on code files, or any file that will be included in compiled
 computer instructions; use this rule-of-thumb:
 
 - Determine if the character is commonly on a keyboard, or is the punctuation
- character part of a programming language's syntax:
+  character part of a programming language's syntax:
 
   - If **NOT** a keyboard character, and **NOT** a common programming syntax
-   character; then:
+    character; then:
     - **NEVER** use that character in code or code comments
       - Example not mentioned: `�`
   - If a keyboard character, and a common programming syntax character, then:

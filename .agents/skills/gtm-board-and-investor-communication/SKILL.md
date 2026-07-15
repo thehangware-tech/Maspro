@@ -14,6 +14,7 @@ Structure board meetings, investor updates, and executive communication that bui
 ## When to Use
 
 **Triggers:**
+
 - "How do I prepare for our board meeting?"
 - "What should go in our investor update?"
 - "We missed our numbers, how do we communicate this?"
@@ -22,6 +23,7 @@ Structure board meetings, investor updates, and executive communication that bui
 - "Our board meetings aren't productive"
 
 **Context:**
+
 - Seed through growth-stage companies
 - Board meeting preparation and follow-up
 - Monthly/quarterly investor updates
@@ -47,6 +49,7 @@ Open with where you are in the journey. Not "here's our ARR" but "here's what we
 **Board Meeting Structure:**
 
 **Pre-Read (Sent 48-72 Hours Before)**
+
 - Financial dashboard (ARR, burn, runway, pipeline)
 - Metric scorecard with health indicators (green/yellow/red)
 - 2-3 page narrative summary covering market context and strategic update
@@ -98,6 +101,7 @@ Businesses are too complex to summarize in one headline. Three distinct points �
 
 **What's Working (2-3 areas):**
 Be specific. Not "sales are going well" but "closed first six-figure enterprise deal, validating the commercial motion." Quantify momentum:
+
 - New product launches gaining adoption
 - Sales motion maturing (first big customer, repeatable motion emerging)
 - Community/ecosystem milestones
@@ -127,6 +131,7 @@ It doesn't matter if you hit 100K users if you were aiming for 50K — or if you
 - **Ahead:** "Target 100K active developers. Currently 95K. Exceeding acquisition forecasts. New partnerships accelerating growth. Confidence: Very high."
 
 **The Rules:**
+
 1. Set the goal upfront (every metric needs a target)
 2. Show progress as % toward goal, not just absolute number
 3. Acknowledge misses; explain pivots
@@ -146,12 +151,14 @@ Too many metrics confuse the board. Too few miss important signals. Structure yo
 
 **Tier 1: North Star (1 metric)**
 The single metric that best represents company health.
+
 - Examples: ARR, active users, tasks completed
 - Show trend line, not just current state
 - This is the one metric the board should remember if they forget everything else
 
 **Tier 2: Driver Metrics (3-5 metrics)**
 Leading indicators that predict your north star.
+
 - User acquisition rate
 - Retention curves (how many active last month remain active this month?)
 - Feature adoption (% of users on key feature)
@@ -161,6 +168,7 @@ Leading indicators that predict your north star.
 
 **Tier 3: Health Metrics (3-5 metrics)**
 Signals of team and operational health.
+
 - Burn rate and runway
 - Headcount vs plan
 - Engineering velocity / shipping pace
@@ -169,6 +177,7 @@ Signals of team and operational health.
 
 **Tier 4: Red Flags (2-3 thresholds)**
 Metrics that, if they cross a threshold, require immediate action.
+
 - Churn rate above X%
 - CAC above $Y
 - Retention decline greater than Z%
@@ -224,6 +233,7 @@ For every piece of bad news, four elements:
    - "Changed sales motion to qualify on product readiness upfront; revised Q2 target to 15 (including Q1 backlog of 7)"
 
 **How NOT to Communicate a Miss:**
+
 - "We didn't hit Q1 goals, but the pipeline is strong"
 - "External factors slowed deals, but we're confident about Q2"
 - "We had some implementation challenges, but they're resolved now"
@@ -249,6 +259,7 @@ Sandwiching bad news between good news hoping nobody notices. Board members see 
 Most founders send investor updates quarterly at best. The best founders send monthly — even when things are bad. Especially when things are bad.
 
 **Why Monthly:**
+
 - Keeps investors engaged without scheduling calls
 - When you need help (intros, advice, bridge), investors already have context
 - Consistency signals operational discipline; irregular updates signal chaos
@@ -261,33 +272,37 @@ Most founders send investor updates quarterly at best. The best founders send mo
 One headline. Brief context.
 
 **TL;DR (3 bullets):**
+
 - One number (the metric that matters most right now)
 - One win (specific — customer name, deal size, milestone)
 - One challenge (with what you're doing about it)
 
 **Key Metrics (same table every month):**
 
-| Metric | This Month | Last Month | 3-Mo Avg | vs Plan |
-|--------|-----------|------------|----------|---------|
-| ARR | | | | |
-| MRR Growth | | | | |
-| Burn Rate | | | | |
-| Runway (months) | | | | |
-| Pipeline | | | | |
-| Customers | | | | |
+| Metric          | This Month | Last Month | 3-Mo Avg | vs Plan |
+| --------------- | ---------- | ---------- | -------- | ------- |
+| ARR             |            |            |          |         |
+| MRR Growth      |            |            |          |         |
+| Burn Rate       |            |            |          |         |
+| Runway (months) |            |            |          |         |
+| Pipeline        |            |            |          |         |
+| Customers       |            |            |          |         |
 
 Don't include metrics unchanged from last update — focus on what's new.
 
 **Key Updates (2-3 bullets):**
+
 - Major hires, product launches, partnership/customer wins
 - Strategic pivots or course corrections
 - Specific enough to matter
 
 **Asks (1-2 bullets):**
+
 - What help do you need? Intros, hiring leads, strategic advice
 - Be specific: "Looking for intro to VP Eng at [company type]" not "Looking for engineering talent"
 
 **The Cadence Rules:**
+
 - Same day every month. First Monday, last Friday — pick one and never miss it
 - Send within a week of major news (don't hold it for the next scheduled update)
 - During active fundraising: weekly updates to warm investors, monthly to existing
@@ -305,6 +320,7 @@ Only sending updates when things are good. Six months of good news followed by s
 Financial communication to the board has two separate stories. Don't conflate them.
 
 **Burn Communication:**
+
 - Monthly rate, runway in months, YoY improvement
 - Efficiency gains (what did you cut, what did you optimize?)
 - Capital plan: what's secured, what's targeted, what's the timeline
@@ -312,6 +328,7 @@ Financial communication to the board has two separate stories. Don't conflate th
 The burn story is: "We are disciplined operators who make capital go further."
 
 **Revenue Communication:**
+
 - MoM growth, CAC, LTV, payback period
 - Customer segmentation (self-serve vs enterprise, what's the mix?)
 - Monetization plan with timeline
@@ -336,20 +353,24 @@ Strategy decided in a board room doesn't matter if the team doesn't know it. Cre
 **The Four Levels:**
 
 **Level 1: Executive Team (Weekly)**
+
 - Strategic priorities and emerging risks
 - Key decisions needing alignment
 
 **Level 2: Extended Leadership (Bi-weekly)**
+
 - How strategy impacts each function
 - Key priorities and how success will be measured
 
 **Level 3: All-Hands (Monthly, 60 min)**
+
 - Leadership update (15 min): where we are, what's changed
 - Wins celebration (10 min): customers, launches, people
 - Deep dive (20 min): one strategic initiative in detail
 - Q&A (15 min): real questions, real answers
 
 **Level 4: Team-Specific (Ongoing)**
+
 - How team goals connect to company strategy
 - What success looks like for this team specifically
 
@@ -358,6 +379,7 @@ Strategy decided in a board room doesn't matter if the team doesn't know it. Cre
 Pick a random employee. Can they explain the company strategy? If not, the cascade is broken. Strategy that exists only in executive heads is not strategy — it's a secret.
 
 **Connect OKRs to Cascade:**
+
 - Company OKRs from strategy
 - Function OKRs aligned to company
 - Team OKRs aligned to function
@@ -453,4 +475,4 @@ Exec (weekly) → Leadership (bi-weekly) → All-hands (monthly) → Team (ongoi
 
 ---
 
-*Based on preparing and supporting board communications across multiple companies from Series A through post-IPO — building the deck and sitting in the room at some, reporting updates to the board at others. Includes the investor update cadence that maintained trust through missed quarters, the "Three Things" narrative model used across multiple companies, and the metric discipline framework that survived years of hypergrowth. Not theory — patterns from being close enough to the board to see what lands and what doesn't.*
+_Based on preparing and supporting board communications across multiple companies from Series A through post-IPO — building the deck and sitting in the room at some, reporting updates to the board at others. Includes the investor update cadence that maintained trust through missed quarters, the "Three Things" narrative model used across multiple companies, and the metric discipline framework that survived years of hypergrowth. Not theory — patterns from being close enough to the board to see what lands and what doesn't._

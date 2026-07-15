@@ -1,6 +1,6 @@
 # Commit Classification Heuristics
 
-> **Role in the workflow:** Commit messages are a *secondary* signal. The code diff
+> **Role in the workflow:** Commit messages are a _secondary_ signal. The code diff
 > is always read first and treated as ground truth. Use these heuristics to add
 > intent and context on top of what the diff already shows — not to replace it.
 > When a commit message contradicts the diff, trust the diff.
@@ -14,51 +14,59 @@ heuristics.
 
 ## Conventional Commit prefixes → category
 
-| Prefix | Category |
-|---|---|
-| `feat:` / `feat(scope):` | feat |
-| `fix:` / `fix(scope):` | fix |
-| `perf:` | perf |
-| `refactor:` | refactor |
-| `docs:` | docs |
-| `chore:` | chore |
-| `test:` / `tests:` | test |
-| `ci:` | chore |
-| `build:` | chore |
-| `style:` | chore |
-| `revert:` | depends on what was reverted |
-| `BREAKING CHANGE` in footer or `!` after type (e.g. `feat!:`) | breaking |
+| Prefix                                                        | Category                     |
+| ------------------------------------------------------------- | ---------------------------- |
+| `feat:` / `feat(scope):`                                      | feat                         |
+| `fix:` / `fix(scope):`                                        | fix                          |
+| `perf:`                                                       | perf                         |
+| `refactor:`                                                   | refactor                     |
+| `docs:`                                                       | docs                         |
+| `chore:`                                                      | chore                        |
+| `test:` / `tests:`                                            | test                         |
+| `ci:`                                                         | chore                        |
+| `build:`                                                      | chore                        |
+| `style:`                                                      | chore                        |
+| `revert:`                                                     | depends on what was reverted |
+| `BREAKING CHANGE` in footer or `!` after type (e.g. `feat!:`) | breaking                     |
 
 ---
 
 ## Freeform commit message heuristics
 
 **Breaking:**
-- Contains words: *breaking*, *incompatible*, *remove*, *rename*, *drop support*
-- Phrase patterns: *no longer*, *was removed*, *has been deleted*, *breaking change*
+
+- Contains words: _breaking_, _incompatible_, _remove_, _rename_, _drop support_
+- Phrase patterns: _no longer_, _was removed_, _has been deleted_, _breaking change_
 
 **Feat (new feature):**
-- Starts with: *add*, *implement*, *introduce*, *support*, *new*
-- Contains: *now supports*, *ability to*, *can now*
+
+- Starts with: _add_, _implement_, _introduce_, _support_, _new_
+- Contains: _now supports_, _ability to_, _can now_
 
 **Fix:**
-- Starts with: *fix*, *patch*, *resolve*, *correct*, *handle*
-- Contains: *bug*, *regression*, *crash*, *error*, *wrong*, *incorrect*, *broken*
+
+- Starts with: _fix_, _patch_, _resolve_, _correct_, _handle_
+- Contains: _bug_, _regression_, _crash_, _error_, _wrong_, _incorrect_, _broken_
 
 **Perf:**
-- Contains: *speed up*, *faster*, *reduce memory*, *optimize*, *performance*
+
+- Contains: _speed up_, _faster_, _reduce memory_, _optimize_, _performance_
 
 **Refactor:**
-- Contains: *refactor*, *clean up*, *reorganize*, *restructure*, *simplify*, *extract*
+
+- Contains: _refactor_, _clean up_, _reorganize_, _restructure_, _simplify_, _extract_
 
 **Docs:**
-- Contains: *docs*, *readme*, *comment*, *example*, *typo*
+
+- Contains: _docs_, _readme_, _comment_, _example_, _typo_
 
 **Chore:**
-- Contains: *bump*, *upgrade dependencies*, *update deps*, *version bump*, *ci*, *lint*
+
+- Contains: _bump_, _upgrade dependencies_, _update deps_, _version bump_, _ci_, _lint_
 
 **Test:**
-- Contains: *test*, *spec*, *coverage*, *fixture*
+
+- Contains: _test_, _spec_, _coverage_, _fixture_
 
 ---
 
@@ -79,13 +87,13 @@ evidence of a breaking change — don't guess at breaking.
 
 ## Mapping categories to Keep a Changelog sections
 
-| Category | Changelog section |
-|---|---|
-| `breaking` + new behavior | Changed |
-| `breaking` + removal | Removed |
-| `feat` | Added |
-| `fix`, `perf` | Fixed |
-| `security` | Security |
+| Category                            | Changelog section          |
+| ----------------------------------- | -------------------------- |
+| `breaking` + new behavior           | Changed                    |
+| `breaking` + removal                | Removed                    |
+| `feat`                              | Added                      |
+| `fix`, `perf`                       | Fixed                      |
+| `security`                          | Security                   |
 | `refactor`, `docs`, `chore`, `test` | Omit (unless user-visible) |
 
 **User-visible refactor example:** Extracting a previously internal helper into a

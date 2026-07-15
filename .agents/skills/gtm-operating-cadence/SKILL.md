@@ -14,6 +14,7 @@ The meeting structure that worked at 30 people collapses at 100. What worked at 
 ## When to Use
 
 **Triggers:**
+
 - "Our meetings don't produce decisions"
 - "We're growing but alignment is getting worse"
 - "How often should we meet?"
@@ -22,6 +23,7 @@ The meeting structure that worked at 30 people collapses at 100. What worked at 
 - "Leadership is in meetings all day"
 
 **Context:**
+
 - Companies scaling from 20 to 300+ people
 - Post-PMF through growth stage
 - Distributed / remote teams
@@ -48,6 +50,7 @@ Different meetings serve different purposes. Conflating them creates either inef
 **Level 2: Weekly Functional Reviews (60 min, function leadership)**
 
 Each function gets its own weekly rhythm:
+
 - Product team Friday 4pm: metrics, user feedback, roadmap blockers
 - GTM team Tuesday 4pm: pipeline, customer updates, deal health
 - Engineering Wednesday 4pm: velocity, bug backlog, deployment
@@ -92,7 +95,7 @@ Anti-pattern: No clear decisions coming out.
 - **<30 people**: Levels 2-3 only. Skip daily standups (you see everything). Skip bi-weekly leadership (you ARE leadership).
 - **30-100 people**: Add all 5 levels. Monthly review catches what you no longer see daily.
 - **100-300 people**: Add skip-level reviews. You're 2+ layers from execution.
-- **300+ people**: Add function-specific sub-cadences. CEO should be in *fewer* meetings than at 50 — not more.
+- **300+ people**: Add function-specific sub-cadences. CEO should be in _fewer_ meetings than at 50 — not more.
 
 **The Rule That Makes This Work:**
 
@@ -158,20 +161,23 @@ Without quarterly planning, companies drift. Each function optimizes locally. Sa
 **The 3-Week Planning Cycle:**
 
 **Week 1: Retrospective + Data Gathering**
+
 - Previous quarter results vs plan (leadership prepares)
 - Each function writes 1-page retrospective: what worked, what didn't, what we'd do differently
 - Finance prepares: revenue actuals, spend actuals, forecast
 - Market data: competitive moves, customer feedback themes, win/loss analysis
 
 **Week 2: Priority Setting (Leadership Half-Day)**
+
 - Review retrospectives (30 min — pre-read, don't present)
 - Agree on 3-5 company-level priorities
 - For each: owner, success metric, resource requirements
-- Identify what you're *not* doing (as important as what you are)
+- Identify what you're _not_ doing (as important as what you are)
 - Resolve cross-functional dependencies
 - Use the north star as tiebreaker: "Does this help us hit the goal? Prioritize. Nice-to-have? Defer."
 
 **Week 3: OKR Cascade + Resource Allocation**
+
 - Each function translates company priorities into team OKRs
 - Leadership reviews for alignment
 - Resource allocation finalized (headcount, budget, tools)
@@ -205,7 +211,7 @@ Pillar 4: Tech Debt (15% effort)
 
 **The "Not Doing" List:**
 
-For every priority you add, identify one thing you're stopping. If you can't name what you're *not* doing, you have too many priorities.
+For every priority you add, identify one thing you're stopping. If you can't name what you're _not_ doing, you have too many priorities.
 
 **Common Mistake:**
 
@@ -223,15 +229,15 @@ At 20 people, the CEO makes every decision in real-time. Fast. At 100 people, de
 
 **Decision Authority Matrix:**
 
-| Decision | Who Decides | Timeline | Escalation |
-|----------|------------|----------|------------|
-| Company strategy | CEO | 1 week | Board if strategic |
-| Feature priority | Product lead | 1 week | CEO if >3 eng weeks |
-| Customer support issue | CSM | Immediately | CS lead if escalated |
-| Marketing campaign | Marketing lead | 2 weeks | CMO if >$10K budget |
-| Hiring | Function leader | 2 weeks | CEO if role not approved |
-| New partnership | CEO | 2 weeks | Board if strategic |
-| Vendor selection | Function leader | 1 week | CEO if >$50K/year |
+| Decision               | Who Decides     | Timeline    | Escalation               |
+| ---------------------- | --------------- | ----------- | ------------------------ |
+| Company strategy       | CEO             | 1 week      | Board if strategic       |
+| Feature priority       | Product lead    | 1 week      | CEO if >3 eng weeks      |
+| Customer support issue | CSM             | Immediately | CS lead if escalated     |
+| Marketing campaign     | Marketing lead  | 2 weeks     | CMO if >$10K budget      |
+| Hiring                 | Function leader | 2 weeks     | CEO if role not approved |
+| New partnership        | CEO             | 2 weeks     | Board if strategic       |
+| Vendor selection       | Function leader | 1 week      | CEO if >$50K/year        |
 
 **The Problem:**
 
@@ -258,12 +264,14 @@ Consensus culture masquerading as collaboration. "Let's get everyone aligned" of
 Synchronous meetings don't scale. Default to async, escalate to sync.
 
 **Async First (No Meeting Needed):**
+
 - Decision documents (even major ones — write up proposal, solicit comments, 48-72 hours for feedback, decide if consensus or no material objections)
 - Progress updates (use weekly reporting, not meetings)
 - Process changes and SOPs
 - Decisions already made (inform, don't discuss)
 
 **Sync When:**
+
 - Real-time brainstorming needed
 - Major disagreement to work through
 - Complex topic needing whiteboard
@@ -417,4 +425,4 @@ Daily: Slack wins/customer-voice → Weekly: CEO email + function updates → Mo
 
 ---
 
-*Based on operating cadence design across companies scaling from 20 to 1,000+ employees, including the five-level meeting architecture that survived 3x headcount growth, the weekly reporting format that caught pipeline problems 3 weeks earlier than monthly reviews, and the CEO weekly update format refined across multiple companies. Not theory — patterns from building operating systems through hypergrowth and teaching them to the next team.*
+_Based on operating cadence design across companies scaling from 20 to 1,000+ employees, including the five-level meeting architecture that survived 3x headcount growth, the weekly reporting format that caught pipeline problems 3 weeks earlier than monthly reviews, and the CEO weekly update format refined across multiple companies. Not theory — patterns from building operating systems through hypergrowth and teaching them to the next team._

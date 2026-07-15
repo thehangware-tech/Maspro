@@ -86,13 +86,13 @@ RECOMMENDED ACTIONS:
 
 ## Scoring Guide
 
-| Score | Meaning                | Recommended Action                        |
-|-------|------------------------|-------------------------------------------|
-| 5     | Production-excellent   | No action needed                          |
-| 4     | Good with minor gaps   | Polish prompt clarity or output schema    |
-| 3     | Functional but risky   | Add error handling or reduce complexity   |
-| 2     | Significant issues     | Immediate attention — add retries/guards  |
-| 1     | Broken or missing      | Rebuild from scratch with clear structure |
+| Score | Meaning              | Recommended Action                        |
+| ----- | -------------------- | ----------------------------------------- |
+| 5     | Production-excellent | No action needed                          |
+| 4     | Good with minor gaps | Polish prompt clarity or output schema    |
+| 3     | Functional but risky | Add error handling or reduce complexity   |
+| 2     | Significant issues   | Immediate attention — add retries/guards  |
+| 1     | Broken or missing    | Rebuild from scratch with clear structure |
 
 ## Usage
 

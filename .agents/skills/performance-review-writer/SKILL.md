@@ -1,6 +1,6 @@
 ---
 name: performance-review-writer
-description: 'Draft performance reviews, self-assessments, peer reviews, and upward feedback in your own voice. Analyzes your contributions, emails, and meeting history via WorkIQ, then produces honest, impact-focused drafts using the STAR format. USE FOR: write my performance review, draft self-assessment, peer review, 360 feedback, annual review, mid-year review, upward feedback, write review for colleague, performance appraisal.'
+description: "Draft performance reviews, self-assessments, peer reviews, and upward feedback in your own voice. Analyzes your contributions, emails, and meeting history via WorkIQ, then produces honest, impact-focused drafts using the STAR format. USE FOR: write my performance review, draft self-assessment, peer review, 360 feedback, annual review, mid-year review, upward feedback, write review for colleague, performance appraisal."
 ---
 
 # Performance Review Writer
@@ -21,11 +21,11 @@ Draft self-assessments, peer reviews, and upward feedback that sound like you �
 
 This skill handles three distinct types:
 
-| Type | Who it's about | Typical tone |
-|---|---|---|
-| **Self-assessment** | Yourself | Confident, evidence-backed, growth-oriented |
-| **Peer review** | A colleague | Specific, constructive, balanced |
-| **Upward feedback** | Your manager | Diplomatic, honest, forward-looking |
+| Type                | Who it's about | Typical tone                                |
+| ------------------- | -------------- | ------------------------------------------- |
+| **Self-assessment** | Yourself       | Confident, evidence-backed, growth-oriented |
+| **Peer review**     | A colleague    | Specific, constructive, balanced            |
+| **Upward feedback** | Your manager   | Diplomatic, honest, forward-looking         |
 
 ---
 
@@ -48,17 +48,20 @@ If the user provides all of these upfront, proceed directly to Step 2.
 Use WorkIQ to gather evidence of real contributions for the review period:
 
 **For self-assessments:**
+
 - Pull emails and messages where the user delivered results, led initiatives, or solved problems
 - Look for patterns: what projects recur? Who praises them and for what?
 - Identify collaboration breadth (who they worked with across teams)
 - Note any explicit feedback received from others
 
 **For peer reviews:**
+
 - Pull interactions between the user and the subject (emails, meeting threads, shared projects)
 - Identify specific moments of collaboration, help given, or friction
 - Look for evidence of the subject's impact on shared outcomes
 
 **For upward feedback:**
+
 - Pull communications from the manager to the user (direction given, support offered, feedback patterns)
 - Identify themes: clarity of expectations, availability, recognition, development support
 
@@ -69,12 +72,14 @@ If WorkIQ is unavailable or returns limited data, ask the user to share 3–5 bu
 Apply the right structure for the review type (see schemas below). Follow these universal rules:
 
 **Use the STAR format for achievement statements:**
+
 - **Situation** — what was the context or challenge?
 - **Task** — what were you/they responsible for?
 - **Action** — what specifically was done?
 - **Result** — what was the measurable or observable outcome?
 
 **Tone rules:**
+
 - Be specific — name projects, outcomes, and people, not vague adjectives
 - Be honest — don't oversell or undersell; reviewers notice both
 - Be forward-looking — end sections with growth or next steps, not just past performance
@@ -178,14 +183,14 @@ A single, clear, actionable ask.
 
 ## Style Rules
 
-| Do | Don't |
-|---|---|
-| Name specific projects, dates, outcomes | Write vague generalisations ("always delivers quality work") |
-| Use numbers when available ("reduced review time by 30%") | Exaggerate or invent results |
-| Acknowledge real challenges and what you learned | Omit struggles entirely — reviewers notice the gaps |
-| Write in first person for self-assessments | Write passively ("it was achieved") |
-| Be concise — most fields need 2–4 sentences | Over-write — longer ≠ better |
-| Flag `[NEEDS DETAIL]` where evidence is weak | Leave thin sections without marking them |
+| Do                                                        | Don't                                                        |
+| --------------------------------------------------------- | ------------------------------------------------------------ |
+| Name specific projects, dates, outcomes                   | Write vague generalisations ("always delivers quality work") |
+| Use numbers when available ("reduced review time by 30%") | Exaggerate or invent results                                 |
+| Acknowledge real challenges and what you learned          | Omit struggles entirely — reviewers notice the gaps          |
+| Write in first person for self-assessments                | Write passively ("it was achieved")                          |
+| Be concise — most fields need 2–4 sentences               | Over-write — longer ≠ better                                 |
+| Flag `[NEEDS DETAIL]` where evidence is weak              | Leave thin sections without marking them                     |
 
 ---
 

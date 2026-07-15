@@ -16,11 +16,11 @@
 
 ## Key Components
 
-| Component | Type | Description |
-|-----------|------|-------------|
-[REPEAT: one row per component]
-| [FILL: PascalCase name] | [FILL: Process / Data Store / External Service / External Interactor] | [FILL: one-line description] |
-[END-REPEAT]
+| Component                       | Type                                                                  | Description                  |
+| ------------------------------- | --------------------------------------------------------------------- | ---------------------------- |
+| [REPEAT: one row per component] |
+| [FILL: PascalCase name]         | [FILL: Process / Data Store / External Service / External Interactor] | [FILL: one-line description] |
+| [END-REPEAT]                    |
 
 <!-- ⛔ POST-TABLE CHECK: Verify Key Components:
   1. Every component has PascalCase name (not kebab-case or snake_case)
@@ -57,13 +57,13 @@ sequenceDiagram
 
 ## Technology Stack
 
-| Layer | Technologies |
-|-------|--------------|
-| Languages | [FILL] |
-| Frameworks | [FILL] |
-| Data Stores | [FILL] |
-| Infrastructure | [FILL] |
-| Security | [FILL] |
+| Layer          | Technologies |
+| -------------- | ------------ |
+| Languages      | [FILL]       |
+| Frameworks     | [FILL]       |
+| Data Stores    | [FILL]       |
+| Infrastructure | [FILL]       |
+| Security       | [FILL]       |
 
 <!-- ⛔ POST-TABLE CHECK: Verify Technology Stack has all 5 rows filled. If Security row is empty, list security-relevant libraries/frameworks found in the code. -->
 
@@ -83,11 +83,11 @@ sequenceDiagram
 
 ### Component Exposure Table
 
-| Component | Listens On | Auth Required | Reachability | Min Prerequisite | Derived Tier |
-|-----------|------------|---------------|--------------|------------------|-------------|
-[REPEAT: one row per component from Key Components table]
-| [FILL: component name] | [FILL: port/address or "N/A — no listener"] | [FILL: Yes (mechanism) / No] | [FILL: one of: External / Internal Only / Localhost Only / No Listener] | [FILL: one of closed enum — see rules below] | [FILL: T1 / T2 / T3] |
-[END-REPEAT]
+| Component                                                 | Listens On                                  | Auth Required                | Reachability                                                            | Min Prerequisite                             | Derived Tier         |
+| --------------------------------------------------------- | ------------------------------------------- | ---------------------------- | ----------------------------------------------------------------------- | -------------------------------------------- | -------------------- |
+| [REPEAT: one row per component from Key Components table] |
+| [FILL: component name]                                    | [FILL: port/address or "N/A — no listener"] | [FILL: Yes (mechanism) / No] | [FILL: one of: External / Internal Only / Localhost Only / No Listener] | [FILL: one of closed enum — see rules below] | [FILL: T1 / T2 / T3] |
+| [END-REPEAT]                                              |
 
 <!-- ⛔ EXPOSURE TABLE RULES:
   1. Every component from Key Components MUST have a row.
@@ -117,17 +117,17 @@ sequenceDiagram
 
 ## Security Infrastructure Inventory
 
-| Component | Security Role | Configuration | Notes |
-|-----------|---------------|---------------|-------|
-[REPEAT: one row per security-relevant component found in code]
-| [FILL] | [FILL] | [FILL] | [FILL] |
-[END-REPEAT]
+| Component                                                       | Security Role | Configuration | Notes  |
+| --------------------------------------------------------------- | ------------- | ------------- | ------ |
+| [REPEAT: one row per security-relevant component found in code] |
+| [FILL]                                                          | [FILL]        | [FILL]        | [FILL] |
+| [END-REPEAT]                                                    |
 
 ## Repository Structure
 
-| Directory | Purpose |
-|-----------|---------|
-[REPEAT: one row per key directory]
-| [FILL: path/] | [FILL] |
-[END-REPEAT]
+| Directory                           | Purpose |
+| ----------------------------------- | ------- |
+| [REPEAT: one row per key directory] |
+| [FILL: path/]                       | [FILL]  |
+| [END-REPEAT]                        |
 ````

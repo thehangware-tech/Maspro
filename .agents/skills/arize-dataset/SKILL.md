@@ -25,6 +25,7 @@ System-managed fields on examples (`id`, `created_at`, `updated_at`) are auto-ge
 Proceed directly with the task — run the `ax` command you need. Do NOT check versions, env vars, or profiles upfront.
 
 If an `ax` command fails, troubleshoot based on the error:
+
 - `command not found` or version error → see references/ax-setup.md
 - `401 Unauthorized` / missing API key → run `ax profiles show` to inspect the current profile. If the profile is missing or the API key is wrong, follow references/ax-profiles.md to create/update it. If the user doesn't have their key, direct them to https://app.arize.com/admin > API Keys
 - Space unknown → run `ax spaces list` to pick by name, or ask the user
@@ -44,13 +45,13 @@ ax datasets list -o json
 
 ### Flags
 
-| Flag | Type | Default | Description |
-|------|------|---------|-------------|
-| `--space` | string | from profile | Filter by space |
-| `--limit, -l` | int | 15 | Max results (1-100) |
-| `--cursor` | string | none | Pagination cursor from previous response |
-| `-o, --output` | string | table | Output format: table, json, csv, parquet, or file path |
-| `-p, --profile` | string | default | Configuration profile |
+| Flag            | Type   | Default      | Description                                            |
+| --------------- | ------ | ------------ | ------------------------------------------------------ |
+| `--space`       | string | from profile | Filter by space                                        |
+| `--limit, -l`   | int    | 15           | Max results (1-100)                                    |
+| `--cursor`      | string | none         | Pagination cursor from previous response               |
+| `-o, --output`  | string | table        | Output format: table, json, csv, parquet, or file path |
+| `-p, --profile` | string | default      | Configuration profile                                  |
 
 ## Get Dataset: `ax datasets get`
 
@@ -64,23 +65,23 @@ ax datasets get NAME_OR_ID --space SPACE   # required when using dataset name in
 
 ### Flags
 
-| Flag | Type | Default | Description |
-|------|------|---------|-------------|
-| `NAME_OR_ID` | string | required | Dataset name or ID (positional) |
-| `--space` | string | none | Space name or ID (required if using dataset name instead of ID) |
-| `-o, --output` | string | table | Output format |
-| `-p, --profile` | string | default | Configuration profile |
+| Flag            | Type   | Default  | Description                                                     |
+| --------------- | ------ | -------- | --------------------------------------------------------------- |
+| `NAME_OR_ID`    | string | required | Dataset name or ID (positional)                                 |
+| `--space`       | string | none     | Space name or ID (required if using dataset name instead of ID) |
+| `-o, --output`  | string | table    | Output format                                                   |
+| `-p, --profile` | string | default  | Configuration profile                                           |
 
 ### Response fields
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `id` | string | Dataset ID |
-| `name` | string | Dataset name |
-| `space_id` | string | Space this dataset belongs to |
-| `created_at` | datetime | When the dataset was created |
-| `updated_at` | datetime | Last modification time |
-| `versions` | array | List of dataset versions (id, name, dataset_id, created_at, updated_at) |
+| Field        | Type     | Description                                                             |
+| ------------ | -------- | ----------------------------------------------------------------------- |
+| `id`         | string   | Dataset ID                                                              |
+| `name`       | string   | Dataset name                                                            |
+| `space_id`   | string   | Space this dataset belongs to                                           |
+| `created_at` | datetime | When the dataset was created                                            |
+| `updated_at` | datetime | Last modification time                                                  |
+| `versions`   | array    | List of dataset versions (id, name, dataset_id, created_at, updated_at) |
 
 ## Export Dataset: `ax datasets export`
 
@@ -100,19 +101,20 @@ ax datasets export NAME_OR_ID --space SPACE   # required when using dataset name
 
 ### Flags
 
-| Flag | Type | Default | Description |
-|------|------|---------|-------------|
-| `NAME_OR_ID` | string | required | Dataset name or ID (positional) |
-| `--space` | string | none | Space name or ID (required if using dataset name instead of ID) |
-| `--version-id` | string | latest | Export a specific dataset version |
-| `--all` | bool | false | Unlimited bulk export (use for datasets > 500 examples) |
-| `--output-dir` | string | `.` | Output directory |
-| `--stdout` | bool | false | Print JSON to stdout instead of file |
-| `-p, --profile` | string | default | Configuration profile |
+| Flag            | Type   | Default  | Description                                                     |
+| --------------- | ------ | -------- | --------------------------------------------------------------- |
+| `NAME_OR_ID`    | string | required | Dataset name or ID (positional)                                 |
+| `--space`       | string | none     | Space name or ID (required if using dataset name instead of ID) |
+| `--version-id`  | string | latest   | Export a specific dataset version                               |
+| `--all`         | bool   | false    | Unlimited bulk export (use for datasets > 500 examples)         |
+| `--output-dir`  | string | `.`      | Output directory                                                |
+| `--stdout`      | bool   | false    | Print JSON to stdout instead of file                            |
+| `-p, --profile` | string | default  | Configuration profile                                           |
 
 **Agent auto-escalation rule:** If an export returns exactly 500 examples, the result is likely truncated — re-run with `--all` to get the full dataset.
 
 **Export completeness verification:** After exporting, confirm the row count matches what the server reports:
+
 ```bash
 # Get the server-reported count from dataset metadata
 ax datasets get DATASET_NAME --space SPACE -o json | jq '.versions[-1] | {version: .id, examples: .example_count}'
@@ -151,13 +153,13 @@ ax datasets create --name "My Dataset" --space SPACE --file data.parquet
 
 ### Flags
 
-| Flag | Type | Required | Description |
-|------|------|----------|-------------|
-| `--name, -n` | string | yes | Dataset name |
-| `--space` | string | yes | Space to create the dataset in |
-| `--file, -f` | path | yes | Data file: CSV, JSON, JSONL, or Parquet |
-| `-o, --output` | string | no | Output format for the returned dataset metadata |
-| `-p, --profile` | string | no | Configuration profile |
+| Flag            | Type   | Required | Description                                     |
+| --------------- | ------ | -------- | ----------------------------------------------- |
+| `--name, -n`    | string | yes      | Dataset name                                    |
+| `--space`       | string | yes      | Space to create the dataset in                  |
+| `--file, -f`    | path   | yes      | Data file: CSV, JSON, JSONL, or Parquet         |
+| `-o, --output`  | string | no       | Output format for the returned dataset metadata |
+| `-p, --profile` | string | no       | Configuration profile                           |
 
 ### Passing data via stdin
 
@@ -176,14 +178,15 @@ To add rows to an existing dataset, use `ax datasets append --json '[...]'` inst
 
 ### Supported file formats
 
-| Format | Extension | Notes |
-|--------|-----------|-------|
-| CSV | `.csv` | Column headers become field names |
-| JSON | `.json` | Array of objects |
-| JSON Lines | `.jsonl` | One object per line (NOT a JSON array) |
-| Parquet | `.parquet` | Column names become field names; preserves types |
+| Format     | Extension  | Notes                                            |
+| ---------- | ---------- | ------------------------------------------------ |
+| CSV        | `.csv`     | Column headers become field names                |
+| JSON       | `.json`    | Array of objects                                 |
+| JSON Lines | `.jsonl`   | One object per line (NOT a JSON array)           |
+| Parquet    | `.parquet` | Column names become field names; preserves types |
 
 **Format gotchas:**
+
 - **CSV**: Loses type information — dates become strings, `null` becomes empty string. Use JSON/Parquet to preserve types.
 - **JSONL**: Each line is a separate JSON object. A JSON array (`[{...}, {...}]`) in a `.jsonl` file will fail — use `.json` extension instead.
 - **Parquet**: Preserves column types. Requires `pandas`/`pyarrow` to read locally: `pd.read_parquet("examples.parquet")`.
@@ -220,15 +223,15 @@ ax datasets append DATASET_NAME --space SPACE --json '[{"q": "..."}]' --version-
 
 ### Flags
 
-| Flag | Type | Required | Description |
-|------|------|----------|-------------|
-| `NAME_OR_ID` | string | yes | Dataset name or ID (positional); add `--space` when using name |
-| `--space` | string | no | Space name or ID (required if using dataset name instead of ID) |
-| `--json` | string | mutex | JSON array of example objects |
-| `--file, -f` | path | mutex | Data file (CSV, JSON, JSONL, Parquet) |
-| `--version-id` | string | no | Append to a specific version (default: latest) |
-| `-o, --output` | string | no | Output format for the returned dataset metadata |
-| `-p, --profile` | string | no | Configuration profile |
+| Flag            | Type   | Required | Description                                                     |
+| --------------- | ------ | -------- | --------------------------------------------------------------- |
+| `NAME_OR_ID`    | string | yes      | Dataset name or ID (positional); add `--space` when using name  |
+| `--space`       | string | no       | Space name or ID (required if using dataset name instead of ID) |
+| `--json`        | string | mutex    | JSON array of example objects                                   |
+| `--file, -f`    | path   | mutex    | Data file (CSV, JSON, JSONL, Parquet)                           |
+| `--version-id`  | string | no       | Append to a specific version (default: latest)                  |
+| `-o, --output`  | string | no       | Output format for the returned dataset metadata                 |
+| `-p, --profile` | string | no       | Configuration profile                                           |
 
 Exactly one of `--json` or `--file` is required.
 
@@ -261,12 +264,12 @@ ax datasets delete NAME_OR_ID --force   # skip confirmation prompt
 
 ### Flags
 
-| Flag | Type | Default | Description |
-|------|------|---------|-------------|
-| `NAME_OR_ID` | string | required | Dataset name or ID (positional) |
-| `--space` | string | none | Space name or ID (required if using dataset name instead of ID) |
-| `--force, -f` | bool | false | Skip confirmation prompt |
-| `-p, --profile` | string | default | Configuration profile |
+| Flag            | Type   | Default  | Description                                                     |
+| --------------- | ------ | -------- | --------------------------------------------------------------- |
+| `NAME_OR_ID`    | string | required | Dataset name or ID (positional)                                 |
+| `--space`       | string | none     | Space name or ID (required if using dataset name instead of ID) |
+| `--force, -f`   | bool   | false    | Skip confirmation prompt                                        |
+| `-p, --profile` | string | default  | Configuration profile                                           |
 
 ## Workflows
 
@@ -342,13 +345,12 @@ ax datasets export DATASET_NAME --space SPACE --stdout | jq -r '.[] | [.question
 
 Examples are free-form JSON objects. There is no fixed schema -- columns are whatever fields you provide. System-managed fields are added by the server:
 
-| Field | Type | Managed by | Notes |
-|-------|------|-----------|-------|
-| `id` | string | server | Auto-generated UUID. Required on update, forbidden on create/append |
-| `created_at` | datetime | server | Immutable creation timestamp |
-| `updated_at` | datetime | server | Auto-updated on modification |
-| *(any user field)* | any JSON type | user | String, number, boolean, null, nested object, array |
-
+| Field              | Type          | Managed by | Notes                                                               |
+| ------------------ | ------------- | ---------- | ------------------------------------------------------------------- |
+| `id`               | string        | server     | Auto-generated UUID. Required on update, forbidden on create/append |
+| `created_at`       | datetime      | server     | Immutable creation timestamp                                        |
+| `updated_at`       | datetime      | server     | Auto-updated on modification                                        |
+| _(any user field)_ | any JSON type | user       | String, number, boolean, null, nested object, array                 |
 
 ## Related Skills
 
@@ -358,18 +360,18 @@ Examples are free-form JSON objects. There is no fixed schema -- columns are wha
 
 ## Troubleshooting
 
-| Problem | Solution |
-|---------|----------|
-| `ax: command not found` | See references/ax-setup.md |
-| `401 Unauthorized` | API key is wrong, expired, or doesn't have access to this space. Fix the profile using references/ax-profiles.md. |
-| `No profile found` | No profile is configured. See references/ax-profiles.md to create one. |
-| `Dataset not found` | Verify dataset ID with `ax datasets list` |
-| `File format error` | Supported: CSV, JSON, JSONL, Parquet. Use `--file -` to read from stdin. |
-| `platform-managed column` | Remove `id`, `created_at`, `updated_at` from create/append payloads |
-| `reserved column` | Remove `time`, `count`, or any `source_record_*` field |
-| `Provide either --json or --file` | Append requires exactly one input source |
-| `Examples array is empty` | Ensure your JSON array or file contains at least one example |
-| `not a JSON object` | Each element in the `--json` array must be a `{...}` object, not a string or number |
+| Problem                           | Solution                                                                                                          |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `ax: command not found`           | See references/ax-setup.md                                                                                        |
+| `401 Unauthorized`                | API key is wrong, expired, or doesn't have access to this space. Fix the profile using references/ax-profiles.md. |
+| `No profile found`                | No profile is configured. See references/ax-profiles.md to create one.                                            |
+| `Dataset not found`               | Verify dataset ID with `ax datasets list`                                                                         |
+| `File format error`               | Supported: CSV, JSON, JSONL, Parquet. Use `--file -` to read from stdin.                                          |
+| `platform-managed column`         | Remove `id`, `created_at`, `updated_at` from create/append payloads                                               |
+| `reserved column`                 | Remove `time`, `count`, or any `source_record_*` field                                                            |
+| `Provide either --json or --file` | Append requires exactly one input source                                                                          |
+| `Examples array is empty`         | Ensure your JSON array or file contains at least one example                                                      |
+| `not a JSON object`               | Each element in the `--json` array must be a `{...}` object, not a string or number                               |
 
 ## Save Credentials for Future Use
 

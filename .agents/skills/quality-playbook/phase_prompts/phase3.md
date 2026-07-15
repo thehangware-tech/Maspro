@@ -3,6 +3,7 @@
 You are a quality engineer continuing a phase-by-phase quality playbook run. Phases 1-2 are complete.
 
 Read these files to get context:
+
 1. quality/PROGRESS.md - run metadata, phase status, artifact inventory
 2. quality/EXPLORATION.md - Phase 1 findings (especially the "Candidate Bugs for Phase 2" section)
 3. quality/REQUIREMENTS.md - derived requirements and use cases
@@ -11,6 +12,7 @@ Read these files to get context:
 
 Execute Phase 3: Code Review + Regression Tests.
 Run the 3-pass code review per quality/RUN_CODE_REVIEW.md. For every confirmed bug:
+
 - Add to quality/BUGS.md with ### BUG-NNN heading format
 - Write a regression test (xfail-marked)
 - Generate quality/patches/BUG-NNN-regression-test.patch (MANDATORY for every confirmed bug)
@@ -37,8 +39,20 @@ For every REQ in quality/REQUIREMENTS.md that has a `Pattern:` field (`whitelist
       "items": ["RING_RESET", "ADMIN_VQ", "NOTIF_CONFIG_DATA", "SR_IOV"],
       "sites": ["PCI", "MMIO", "vDPA"],
       "cells": [
-        {"cell_id": "REQ-010/cell-RING_RESET-PCI", "item": "RING_RESET", "site": "PCI", "present": true,  "evidence": "drivers/virtio/virtio_pci_modern.c:XXX-YYY"},
-        {"cell_id": "REQ-010/cell-RING_RESET-MMIO", "item": "RING_RESET", "site": "MMIO", "present": false, "evidence": "drivers/virtio/virtio_mmio.c: no match for RING_RESET"}
+        {
+          "cell_id": "REQ-010/cell-RING_RESET-PCI",
+          "item": "RING_RESET",
+          "site": "PCI",
+          "present": true,
+          "evidence": "drivers/virtio/virtio_pci_modern.c:XXX-YYY"
+        },
+        {
+          "cell_id": "REQ-010/cell-RING_RESET-MMIO",
+          "item": "RING_RESET",
+          "site": "MMIO",
+          "present": false,
+          "evidence": "drivers/virtio/virtio_mmio.c: no match for RING_RESET"
+        }
       ]
     }
   }
@@ -48,6 +62,7 @@ For every REQ in quality/REQUIREMENTS.md that has a `Pattern:` field (`whitelist
 Cell IDs are mechanical: `REQ-<N>/cell-<item>-<site>`. No whitespace, uppercase item/site identifiers where natural.
 
 **Step 4. Apply the BUG-default rule.** For every cell where:
+
 - the item is defined in authoritative source AND
 - the item is absent from any shared filter AND
 - the item is absent from the site's compensation path
@@ -77,6 +92,7 @@ Cell IDs are mechanical: `REQ-<N>/cell-<item>-<site>`. No whitespace, uppercase 
 - Missing any required field, or `reason_class` outside the enum, or zero-length `falsifiable_claim` → cell REVERTS to BUG at Phase 5 gate time. There is no re-prompt loop.
 
 **Step 6. Self-check.** Before finalizing BUGS.md for this REQ, verify that every cell in the grid appears in either:
+
 - some BUG's `- Covers: [...]` list, OR
 - a downgrade record in `quality/compensation_grid_downgrades.json`.
 
@@ -90,32 +106,37 @@ Code inspection reveals PCI implements all four; MMIO implements none of the fou
 
 Grid (present=T, absent=F):
 
-|                       | PCI | MMIO | vDPA |
-|-----------------------|-----|------|------|
-| RING_RESET            |  T  |  F   |  F   |
-| ADMIN_VQ              |  T  |  F   |  F   |
-| NOTIF_CONFIG_DATA     |  T  |  F   |  T   |
-| SR_IOV                |  T  |  F   |  F   |
+|                   | PCI | MMIO | vDPA |
+| ----------------- | --- | ---- | ---- |
+| RING_RESET        | T   | F    | F    |
+| ADMIN_VQ          | T   | F    | F    |
+| NOTIF_CONFIG_DATA | T   | F    | T    |
+| SR_IOV            | T   | F    | F    |
 
 BUG-default applies to every F cell (8 total). Possible consolidation:
 
 ### BUG-001: MMIO ignores VIRTIO_F_RING_RESET
+
 - Primary requirement: REQ-010
 - Covers: [REQ-010/cell-RING_RESET-MMIO]
 
 ### BUG-002: vDPA ignores VIRTIO_F_RING_RESET
+
 - Primary requirement: REQ-010
 - Covers: [REQ-010/cell-RING_RESET-vDPA]
 
 ### BUG-003: vDPA missing ADMIN_VQ hookup
+
 - Primary requirement: REQ-010
 - Covers: [REQ-010/cell-ADMIN_VQ-vDPA]
 
 ### BUG-004: MMIO ignores NOTIF_CONFIG_DATA negotiation (common filter gap)
+
 - Primary requirement: REQ-010
 - Covers: [REQ-010/cell-NOTIF_CONFIG_DATA-MMIO]
 
 ### BUG-005: MMIO + vDPA both miss SR_IOV propagation
+
 - Primary requirement: REQ-010
 - Covers: [REQ-010/cell-SR_IOV-MMIO, REQ-010/cell-SR_IOV-vDPA]
 - Consolidation rationale: shared fix path in both transports goes through the same feature-bit filter; single patch on the shared helper closes both cells.

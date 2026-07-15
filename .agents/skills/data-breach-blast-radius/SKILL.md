@@ -12,6 +12,7 @@ This skill performs a **proactive blast radius analysis**: a full audit of what 
 > **Why this matters:** 83% of organizations have experienced more than one data breach (IBM Cost of a Data Breach Report). The global average breach cost was **$4.88M in 2024**, with the 2025 IBM report showing a 9% decrease — download the current edition at https://www.ibm.com/reports/data-breach. Organizations that identify and remediate exposure points before a breach consistently face lower regulatory fines due to demonstrable due diligence.
 
 > **What this skill produces vs. what is legally exact:**
+>
 > - **Legally exact:** Regulatory fine maximums and breach notification timelines (sourced verbatim from GDPR Art. 83, CCPA § 1798.155, 45 CFR § 160.404, etc. — all cited in `references/SOURCES.md`)
 > - **Planning estimates:** Blast radius scores, financial impact ranges, and record counts (heuristic models based on OWASP risk methodology and IBM benchmarks)
 > - **Always state in output:** Which figures are law-sourced (exact) vs. model-derived (estimate)
@@ -53,6 +54,7 @@ Follow these steps **in order** every time:
 ### Step 1 — Scope & Stack Detection
 
 Determine what to analyze:
+
 - If a path was given (`/data-breach-blast-radius src/`), analyze that scope
 - If no path is given, analyze the **entire project**
 - Detect language(s) and frameworks (check `package.json`, `requirements.txt`, `go.mod`, `pom.xml`, `Cargo.toml`, `Gemfile`, `composer.json`, `.csproj`)
@@ -69,12 +71,14 @@ Read `references/data-classification.md` to load the full sensitivity tier taxon
 Scan ALL files for sensitive data definitions:
 
 **Data Model Layer:**
+
 - Database schemas, migrations, ORM models, entity classes
 - GraphQL types, Prisma schema, TypeORM entities, Mongoose schemas
 - Identify every field that maps to a data category in `references/data-classification.md`
 - Note the table/collection name and estimated cardinality (if seeders, fixtures, or comments reveal scale)
 
 **API Contract Layer:**
+
 - REST request/response DTOs and serializers
 - GraphQL query/mutation return types
 - gRPC proto message definitions
@@ -82,17 +86,20 @@ Scan ALL files for sensitive data definitions:
 - Flag fields that expose sensitive data externally
 
 **Configuration & Secrets:**
+
 - Environment files (`.env`, `.env.*`), config files, `appsettings.json`, `application.yml`
 - Terraform/Bicep variable files and outputs
 - CI/CD pipeline files (`.github/workflows/`, `.gitlab-ci.yml`, `Jenkinsfile`, `azure-pipelines.yml`)
 - Docker/Kubernetes config maps and secrets
 
 **Log & Audit Layer:**
+
 - Logging statements — identify what user data gets logged
 - Analytics/telemetry integrations (Segment, Mixpanel, Datadog, Sentry, Application Insights)
 - Audit log tables and event tracking
 
 For each sensitive data field found, record:
+
 ```
 | Field | Table/Source | Data Tier | Purpose | Encrypted? | Notes |
 ```
@@ -106,17 +113,20 @@ For each sensitive data field found, record:
 Trace how sensitive data moves through the system:
 
 **Ingestion Points (data enters the system):**
+
 - Form submissions, API POST/PUT endpoints, file uploads
 - Third-party webhooks, OAuth callbacks, SSO assertions
 - Data imports, CSV/Excel ingestion, ETL pipelines
 
 **Processing Points (data is used/transformed):**
+
 - Business logic operating on sensitive fields
 - Caching layers (Redis, Memcached) — what keys contain PII?
 - Message queues (Kafka, SQS, Service Bus, RabbitMQ) — what payloads?
 - Background jobs and workers — what data do they process?
 
 **Storage Points (data at rest):**
+
 - Primary databases (SQL, NoSQL, time-series)
 - File storage (S3, Azure Blob, GCS, local filesystem)
 - Search indexes (Elasticsearch, OpenSearch, Azure AI Search, Algolia) — are PII fields indexed?
@@ -124,12 +134,14 @@ Trace how sensitive data moves through the system:
 - Backup stores — are backups encrypted and access-controlled?
 
 **Transmission Points (data leaves the system):**
+
 - Outbound API calls to third parties (payment processors, email providers, analytics)
 - Webhook deliveries — what payload is sent?
 - Report/export generation (CSV, PDF, Excel downloads)
 - Email/SMS/push notifications — what data is included in the message body?
 
 **Exposure Points (data can reach unauthorized parties):**
+
 - Public-facing API endpoints without authentication
 - Missing authorization checks (IDOR / BOLA vulnerabilities)
 - Overly broad API responses (returning more fields than needed)
@@ -152,6 +164,7 @@ Blast Radius Score = Data Sensitivity Tier × Exposure Likelihood × Population 
 ```
 
 **Population Scale Estimate:**
+
 - If user counts are hard-coded (e.g., seeder files, comments, README): use that
 - If no count found: use a conservative estimate and state the assumption
   - SaaS product → assume 10K–1M users
@@ -160,6 +173,7 @@ Blast Radius Score = Data Sensitivity Tier × Exposure Likelihood × Population 
 - Apply a **multiplier** if the breach would expose data of minors (×2), health data (×3), or financial credentials (×5) due to regulatory severity
 
 **Regulatory Jurisdiction Detection:**
+
 - If `gdpr` / EU currencies / EU phone formats / `.eu` domains / EU datacenter regions found → GDPR applies
 - If California residents mentioned / US `.com` / Stripe US / state-specific tax logic → CCPA applies
 - If health record fields (diagnosis, medication, ICD codes, FHIR resources) → HIPAA applies
@@ -174,12 +188,14 @@ Read `references/regulatory-impact.md` for fine calculation formulas and notific
 ### Step 5 — Regulatory Impact Estimation
 
 For each triggered jurisdiction:
+
 - Calculate the **maximum fine exposure** using formulas in `references/regulatory-impact.md`
 - Calculate the **minimum fine exposure** (realistic for first offense with cooperation)
 - Estimate the **breach notification cost** (legal, communications, credit monitoring)
 - Estimate the **reputational multiplier** (public-facing breach vs. internal tool)
 
 Generate a **Financial Impact Summary Table:**
+
 ```
 | Regulation | Max Fine | Realistic Fine | Notification Cost | Timeline |
 ```
@@ -193,6 +209,7 @@ Generate a **Financial Impact Summary Table:**
 Read `references/report-format.md` and generate the full report.
 
 The report MUST include:
+
 1. **Executive Summary** (2–3 paragraphs, no jargon)
 2. **Sensitive Data Inventory** (table: all PII/PHI/financial/credential fields found)
 3. **Data Flow Map** (Mermaid diagram of data moving through the system)
@@ -210,6 +227,7 @@ The report MUST include:
 Read `references/hardening-playbook.md` and generate a **prioritized action plan**:
 
 For each critical or high-severity exposure vector:
+
 - **What to fix**: specific code/config change
 - **Why**: regulatory risk and user impact
 - **Effort**: Low / Medium / High
@@ -236,13 +254,13 @@ Sort by: `(Impact × Severity) / Effort` — highest value first.
 
 ## Severity Tiers for Blast Radius
 
-| Tier | Label | Examples | Multiplier |
-|------|-------|----------|------------|
-| T1 | **Catastrophic** | Government IDs, biometric data, health records, financial credentials, passwords | ×5 |
-| T2 | **Critical** | Full name + address + DOB combined, payment card data (PAN), SSN, passport numbers | ×4 |
-| T3 | **High** | Email + password (hashed), phone numbers, precise geolocation, IP addresses, device fingerprints | ×3 |
-| T4 | **Elevated** | First name only, email address only, general location (city), usage analytics | ×2 |
-| T5 | **Standard** | Non-personal config data, public content, anonymized aggregates | ×1 |
+| Tier | Label            | Examples                                                                                         | Multiplier |
+| ---- | ---------------- | ------------------------------------------------------------------------------------------------ | ---------- |
+| T1   | **Catastrophic** | Government IDs, biometric data, health records, financial credentials, passwords                 | ×5         |
+| T2   | **Critical**     | Full name + address + DOB combined, payment card data (PAN), SSN, passport numbers               | ×4         |
+| T3   | **High**         | Email + password (hashed), phone numbers, precise geolocation, IP addresses, device fingerprints | ×3         |
+| T4   | **Elevated**     | First name only, email address only, general location (city), usage analytics                    | ×2         |
+| T5   | **Standard**     | Non-personal config data, public content, anonymized aggregates                                  | ×1         |
 
 ---
 
@@ -250,10 +268,10 @@ Sort by: `(Impact × Severity) / Effort` — highest value first.
 
 Load on-demand as needed:
 
-| File | Use When | Content |
-|------|----------|---------|
-| `references/data-classification.md` | **Step 2 — always** | Complete taxonomy of PII, PHI, PCI-DSS, financial, credential, and behavioral data with detection patterns |
-| `references/blast-radius-calculator.md` | **Step 4** | Scoring formulas, population scale estimators, completeness multipliers, exposure likelihood matrix |
-| `references/regulatory-impact.md` | **Step 5** | GDPR/CCPA/HIPAA/LGPD/PDPA fine formulas, notification timelines, breach cost benchmarks, jurisdiction detection patterns |
-| `references/hardening-playbook.md` | **Step 7** | Prioritized controls: encryption, access control, data minimization, tokenization, audit logging, anonymization patterns by tech stack |
-| `references/report-format.md` | **Step 6** | Full report template with Mermaid data flow diagram syntax, financial summary table, hardening roadmap format |
+| File                                    | Use When            | Content                                                                                                                                |
+| --------------------------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `references/data-classification.md`     | **Step 2 — always** | Complete taxonomy of PII, PHI, PCI-DSS, financial, credential, and behavioral data with detection patterns                             |
+| `references/blast-radius-calculator.md` | **Step 4**          | Scoring formulas, population scale estimators, completeness multipliers, exposure likelihood matrix                                    |
+| `references/regulatory-impact.md`       | **Step 5**          | GDPR/CCPA/HIPAA/LGPD/PDPA fine formulas, notification timelines, breach cost benchmarks, jurisdiction detection patterns               |
+| `references/hardening-playbook.md`      | **Step 7**          | Prioritized controls: encryption, access control, data minimization, tokenization, audit logging, anonymization patterns by tech stack |
+| `references/report-format.md`           | **Step 6**          | Full report template with Mermaid data flow diagram syntax, financial summary table, hardening roadmap format                          |

@@ -8,14 +8,14 @@ Common errors, diagnostics, and gotchas with `CommunityToolkit.Mvvm` 8.x.
 
 The generators emit numbered diagnostics. The most common ones:
 
-| Code | Meaning | Fix |
-|------|---------|-----|
-| `MVVMTK0008` | The containing type (or an enclosing type) is not `partial` | Add `partial` to the class declaration **and** every enclosing type |
-| `MVVMTK0016` | `[NotifyCanExecuteChangedFor]` target is not an accessible `IRelayCommand` property | Make sure the target is a `[RelayCommand]`-generated command (or a manually declared `IRelayCommand` property) on the same type |
-| `MVVMTK0017` | `[NotifyDataErrorInfo]` used outside `ObservableValidator` | Inherit from `ObservableValidator` or remove the attribute |
-| `MVVMTK0018` | `[NotifyPropertyChangedRecipients]` used outside `ObservableRecipient` | Inherit from `ObservableRecipient` or remove the attribute |
-| `MVVMTK0030` | `[ObservableProperty]` used in a type that does not implement `INotifyPropertyChanged` (and the class-level `[INotifyPropertyChanged]` / `[ObservableObject]` attributes are also missing) | Inherit from `ObservableObject` or apply `[INotifyPropertyChanged]` / `[ObservableObject]` to the type |
-| `MVVMTK0042` | The `[ObservableProperty]` field belongs to a generic type without proper `partial` declarations | Same fix as `MVVMTK0008` (add `partial`) |
+| Code         | Meaning                                                                                                                                                                                    | Fix                                                                                                                             |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| `MVVMTK0008` | The containing type (or an enclosing type) is not `partial`                                                                                                                                | Add `partial` to the class declaration **and** every enclosing type                                                             |
+| `MVVMTK0016` | `[NotifyCanExecuteChangedFor]` target is not an accessible `IRelayCommand` property                                                                                                        | Make sure the target is a `[RelayCommand]`-generated command (or a manually declared `IRelayCommand` property) on the same type |
+| `MVVMTK0017` | `[NotifyDataErrorInfo]` used outside `ObservableValidator`                                                                                                                                 | Inherit from `ObservableValidator` or remove the attribute                                                                      |
+| `MVVMTK0018` | `[NotifyPropertyChangedRecipients]` used outside `ObservableRecipient`                                                                                                                     | Inherit from `ObservableRecipient` or remove the attribute                                                                      |
+| `MVVMTK0030` | `[ObservableProperty]` used in a type that does not implement `INotifyPropertyChanged` (and the class-level `[INotifyPropertyChanged]` / `[ObservableObject]` attributes are also missing) | Inherit from `ObservableObject` or apply `[INotifyPropertyChanged]` / `[ObservableObject]` to the type                          |
+| `MVVMTK0042` | The `[ObservableProperty]` field belongs to a generic type without proper `partial` declarations                                                                                           | Same fix as `MVVMTK0008` (add `partial`)                                                                                        |
 
 Search the full table at:
 <https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/generators/errors/>

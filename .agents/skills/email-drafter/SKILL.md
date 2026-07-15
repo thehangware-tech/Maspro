@@ -1,6 +1,6 @@
 ---
 name: email-drafter
-description: 'Draft and review professional emails that match your personal writing style. Analyzes your sent emails for tone, greeting, structure, and sign-off patterns via WorkIQ, then generates context-aware drafts for any recipient. USE FOR: draft email, write email, compose email, reply email, follow-up email, analyze email tone, email style.'
+description: "Draft and review professional emails that match your personal writing style. Analyzes your sent emails for tone, greeting, structure, and sign-off patterns via WorkIQ, then generates context-aware drafts for any recipient. USE FOR: draft email, write email, compose email, reply email, follow-up email, analyze email tone, email style."
 ---
 
 # Email Drafter
@@ -48,26 +48,31 @@ If WorkIQ is unavailable or no prior emails exist, use sensible professional def
 Apply the discovered (or default) style rules:
 
 **Greeting:**
+
 - Match whatever greeting style was found in Step 2
 - Default: "Hello [FirstName]," for external, "Hi [FirstName]," for internal
 - For multiple recipients: "Hello [Name1], [Name2],"
 
 **Tone:**
+
 - Direct and concise — no filler language
 - Friendly but professional
 - Get to the point quickly
 - Offer help proactively where appropriate ("Happy to discuss further", "Let me know if you need anything")
 
 **Structure:**
+
 - Short emails (1–2 points): simple paragraphs, no bullets needed
 - Longer emails (proposals, multi-point updates): use bullet points or numbered lists
 - Include context from prior conversations when relevant ("Following our recent conversation about...")
 
 **Sign-off:**
+
 - Match the user's established sign-off pattern from Step 2
 - Default: "Best regards," followed by the user's first name on the next line
 
 **Language:**
+
 - Default to English unless the user specifies otherwise
 - Match the recipient's language if prior correspondence was in another language
 

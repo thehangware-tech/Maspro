@@ -10,13 +10,13 @@ https://api.namecheap.com/xml.response
 
 All requests require these common parameters:
 
-| Parameter | Description |
-|-----------|-------------|
-| `ApiUser` | Namecheap username |
-| `ApiKey` | API key from https://ap.www.namecheap.com/settings/tools/apiaccess/ |
-| `UserName` | Same as ApiUser |
-| `ClientIp` | The whitelisted public IP address of the client |
-| `Command` | The API command prefixed with `namecheap.` |
+| Parameter  | Description                                                         |
+| ---------- | ------------------------------------------------------------------- |
+| `ApiUser`  | Namecheap username                                                  |
+| `ApiKey`   | API key from https://ap.www.namecheap.com/settings/tools/apiaccess/ |
+| `UserName` | Same as ApiUser                                                     |
+| `ClientIp` | The whitelisted public IP address of the client                     |
+| `Command`  | The API command prefixed with `namecheap.`                          |
 
 ## Setup Requirements
 
@@ -36,13 +36,13 @@ Lists all domains in the account.
 
 **Additional Parameters:**
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `ListType` | No | `ALL` (default), `EXPIRING`, or `EXPIRED` |
-| `SearchTerm` | No | Keyword to filter domains |
-| `Page` | No | Page number (default: 1) |
-| `PageSize` | No | Results per page, 10-100 (default: 20) |
-| `SortBy` | No | `NAME`, `NAME_DESC`, `EXPIREDATE`, `EXPIREDATE_DESC`, `CREATEDATE`, `CREATEDATE_DESC` |
+| Parameter    | Required | Description                                                                           |
+| ------------ | -------- | ------------------------------------------------------------------------------------- |
+| `ListType`   | No       | `ALL` (default), `EXPIRING`, or `EXPIRED`                                             |
+| `SearchTerm` | No       | Keyword to filter domains                                                             |
+| `Page`       | No       | Page number (default: 1)                                                              |
+| `PageSize`   | No       | Results per page, 10-100 (default: 20)                                                |
+| `SortBy`     | No       | `NAME`, `NAME_DESC`, `EXPIREDATE`, `EXPIREDATE_DESC`, `CREATEDATE`, `CREATEDATE_DESC` |
 
 **Response XML:**
 
@@ -67,10 +67,10 @@ Gets the list of DNS servers associated with a domain (shows whether it uses Nam
 
 **Additional Parameters:**
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `SLD` | Yes | Second-level domain (e.g., `example` for `example.com`) |
-| `TLD` | Yes | Top-level domain (e.g., `com` for `example.com`) |
+| Parameter | Required | Description                                             |
+| --------- | -------- | ------------------------------------------------------- |
+| `SLD`     | Yes      | Second-level domain (e.g., `example` for `example.com`) |
+| `TLD`     | Yes      | Top-level domain (e.g., `com` for `example.com`)        |
 
 **Response XML:**
 
@@ -93,10 +93,10 @@ Gets DNS host records for a domain.
 
 **Additional Parameters:**
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `SLD` | Yes | Second-level domain (e.g., `example` for `example.com`) |
-| `TLD` | Yes | Top-level domain (e.g., `com` for `example.com`) |
+| Parameter | Required | Description                                             |
+| --------- | -------- | ------------------------------------------------------- |
+| `SLD`     | Yes      | Second-level domain (e.g., `example` for `example.com`) |
+| `TLD`     | Yes      | Top-level domain (e.g., `com` for `example.com`)        |
 
 **Response XML:**
 
@@ -123,15 +123,15 @@ Sets (replaces) all DNS host records for a domain.
 
 **Additional Parameters:**
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `SLD` | Yes | Second-level domain |
-| `TLD` | Yes | Top-level domain |
-| `HostNameN` | Yes | Host name for record N (e.g., `@`, `www`, `mail`) |
-| `RecordTypeN` | Yes | Record type for record N (A, AAAA, CNAME, MX, TXT, etc.) |
-| `AddressN` | Yes | Value for record N (IP address or target hostname) |
-| `MXPrefN` | No | MX priority for record N (required for MX records) |
-| `TTLN` | No | TTL in seconds for record N (default: 1800) |
+| Parameter     | Required | Description                                              |
+| ------------- | -------- | -------------------------------------------------------- |
+| `SLD`         | Yes      | Second-level domain                                      |
+| `TLD`         | Yes      | Top-level domain                                         |
+| `HostNameN`   | Yes      | Host name for record N (e.g., `@`, `www`, `mail`)        |
+| `RecordTypeN` | Yes      | Record type for record N (A, AAAA, CNAME, MX, TXT, etc.) |
+| `AddressN`    | Yes      | Value for record N (IP address or target hostname)       |
+| `MXPrefN`     | No       | MX priority for record N (required for MX records)       |
+| `TTLN`        | No       | TTL in seconds for record N (default: 1800)              |
 
 Records are numbered starting from 1: `HostName1`, `RecordType1`, `Address1`, `HostName2`, `RecordType2`, `Address2`, etc.
 
@@ -153,10 +153,10 @@ Sets a domain to use Namecheap's default DNS servers.
 
 **Additional Parameters:**
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `SLD` | Yes | Second-level domain |
-| `TLD` | Yes | Top-level domain |
+| Parameter | Required | Description         |
+| --------- | -------- | ------------------- |
+| `SLD`     | Yes      | Second-level domain |
+| `TLD`     | Yes      | Top-level domain    |
 
 **Response XML:**
 
@@ -176,11 +176,11 @@ Sets a domain to use custom nameservers (e.g., Cloudflare, Route53).
 
 **Additional Parameters:**
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `SLD` | Yes | Second-level domain |
-| `TLD` | Yes | Top-level domain |
-| `Nameservers` | Yes | Comma-separated list of nameservers (max 12, no spaces) |
+| Parameter     | Required | Description                                             |
+| ------------- | -------- | ------------------------------------------------------- |
+| `SLD`         | Yes      | Second-level domain                                     |
+| `TLD`         | Yes      | Top-level domain                                        |
+| `Nameservers` | Yes      | Comma-separated list of nameservers (max 12, no spaces) |
 
 **Example:** `Nameservers=ns1.cloudflare.com,ns2.cloudflare.com`
 
@@ -202,9 +202,9 @@ Gets email forwarding settings for a domain.
 
 **Additional Parameters:**
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `DomainName` | Yes | Full domain name (e.g., `example.com`) |
+| Parameter    | Required | Description                            |
+| ------------ | -------- | -------------------------------------- |
+| `DomainName` | Yes      | Full domain name (e.g., `example.com`) |
 
 **Response XML:**
 
@@ -227,11 +227,11 @@ Sets email forwarding for a domain. Replaces all existing forwarding rules.
 
 **Additional Parameters:**
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `DomainName` | Yes | Full domain name (e.g., `example.com`) |
-| `MailBoxN` | Yes | Mailbox name for rule N (e.g., `info`, `support`) |
-| `ForwardToN` | Yes | Destination email for rule N |
+| Parameter    | Required | Description                                       |
+| ------------ | -------- | ------------------------------------------------- |
+| `DomainName` | Yes      | Full domain name (e.g., `example.com`)            |
+| `MailBoxN`   | Yes      | Mailbox name for rule N (e.g., `info`, `support`) |
+| `ForwardToN` | Yes      | Destination email for rule N                      |
 
 Rules are numbered starting from 1: `MailBox1`, `ForwardTo1`, `MailBox2`, `ForwardTo2`, etc.
 Omitting all MailBox/ForwardTo parameters deletes all forwarding rules.
@@ -254,12 +254,12 @@ Creates a child nameserver (glue record) for a domain.
 
 **Additional Parameters:**
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `SLD` | Yes | Second-level domain |
-| `TLD` | Yes | Top-level domain |
-| `Nameserver` | Yes | Nameserver hostname to create (e.g., `ns1.example.com`) |
-| `IP` | Yes | IP address for the nameserver |
+| Parameter    | Required | Description                                             |
+| ------------ | -------- | ------------------------------------------------------- |
+| `SLD`        | Yes      | Second-level domain                                     |
+| `TLD`        | Yes      | Top-level domain                                        |
+| `Nameserver` | Yes      | Nameserver hostname to create (e.g., `ns1.example.com`) |
+| `IP`         | Yes      | IP address for the nameserver                           |
 
 **Response XML:**
 
@@ -279,11 +279,11 @@ Deletes a child nameserver.
 
 **Additional Parameters:**
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `SLD` | Yes | Second-level domain |
-| `TLD` | Yes | Top-level domain |
-| `Nameserver` | Yes | Nameserver hostname to delete |
+| Parameter    | Required | Description                   |
+| ------------ | -------- | ----------------------------- |
+| `SLD`        | Yes      | Second-level domain           |
+| `TLD`        | Yes      | Top-level domain              |
+| `Nameserver` | Yes      | Nameserver hostname to delete |
 
 **Response XML:**
 
@@ -303,11 +303,11 @@ Gets information about a child nameserver.
 
 **Additional Parameters:**
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `SLD` | Yes | Second-level domain |
-| `TLD` | Yes | Top-level domain |
-| `Nameserver` | Yes | Nameserver hostname to query |
+| Parameter    | Required | Description                  |
+| ------------ | -------- | ---------------------------- |
+| `SLD`        | Yes      | Second-level domain          |
+| `TLD`        | Yes      | Top-level domain             |
+| `Nameserver` | Yes      | Nameserver hostname to query |
 
 **Response XML:**
 
@@ -331,13 +331,13 @@ Updates the IP address of a child nameserver.
 
 **Additional Parameters:**
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `SLD` | Yes | Second-level domain |
-| `TLD` | Yes | Top-level domain |
-| `Nameserver` | Yes | Nameserver hostname to update |
-| `OldIP` | Yes | Current IP address of the nameserver |
-| `IP` | Yes | New IP address for the nameserver |
+| Parameter    | Required | Description                          |
+| ------------ | -------- | ------------------------------------ |
+| `SLD`        | Yes      | Second-level domain                  |
+| `TLD`        | Yes      | Top-level domain                     |
+| `Nameserver` | Yes      | Nameserver hostname to update        |
+| `OldIP`      | Yes      | Current IP address of the nameserver |
+| `IP`         | Yes      | New IP address for the nameserver    |
 
 **Response XML:**
 
@@ -360,6 +360,7 @@ Updates the IP address of a child nameserver.
 ```
 
 Common error codes:
+
 - `1011102` — Invalid API key
 - `1011148` — IP not whitelisted
 - `2019166` — Domain not found
@@ -367,26 +368,26 @@ Common error codes:
 
 ## Record Types
 
-| Type | Description | Address Format |
-|------|-------------|---------------|
-| `A` | IPv4 address | `1.2.3.4` |
-| `AAAA` | IPv6 address | `2001:db8::1` |
-| `CNAME` | Canonical name | `target.example.com.` |
-| `MX` | Mail exchange | `mail.example.com.` (requires MXPref) |
-| `MXE` | MX equivalent (IP) | `1.2.3.4` |
-| `TXT` | Text record | Any text value |
-| `URL` | URL redirect (unmasked) | `http://example.com` |
-| `URL301` | Permanent redirect | `http://example.com` |
-| `FRAME` | URL redirect (masked) | `http://example.com` |
+| Type     | Description             | Address Format                        |
+| -------- | ----------------------- | ------------------------------------- |
+| `A`      | IPv4 address            | `1.2.3.4`                             |
+| `AAAA`   | IPv6 address            | `2001:db8::1`                         |
+| `CNAME`  | Canonical name          | `target.example.com.`                 |
+| `MX`     | Mail exchange           | `mail.example.com.` (requires MXPref) |
+| `MXE`    | MX equivalent (IP)      | `1.2.3.4`                             |
+| `TXT`    | Text record             | Any text value                        |
+| `URL`    | URL redirect (unmasked) | `http://example.com`                  |
+| `URL301` | Permanent redirect      | `http://example.com`                  |
+| `FRAME`  | URL redirect (masked)   | `http://example.com`                  |
 
 ## TTL Values
 
-| Seconds | Human Readable |
-|---------|---------------|
-| 60 | 1 minute |
-| 300 | 5 minutes |
-| 1800 | 30 minutes (default) |
-| 3600 | 1 hour |
-| 14400 | 4 hours |
-| 43200 | 12 hours |
-| 86400 | 1 day |
+| Seconds | Human Readable       |
+| ------- | -------------------- |
+| 60      | 1 minute             |
+| 300     | 5 minutes            |
+| 1800    | 30 minutes (default) |
+| 3600    | 1 hour               |
+| 14400   | 4 hours              |
+| 43200   | 12 hours             |
+| 86400   | 1 day                |

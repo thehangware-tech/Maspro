@@ -51,9 +51,15 @@ export function createNeonWebSocket(app: Hono, baseUrl = "http://localhost") {
             const payload = isBinary
               ? chunk instanceof ArrayBuffer
                 ? chunk
-                : chunk.buffer.slice(chunk.byteOffset, chunk.byteOffset + chunk.byteLength)
+                : chunk.buffer.slice(
+                    chunk.byteOffset,
+                    chunk.byteOffset + chunk.byteLength,
+                  )
               : chunk.toString("utf-8");
-            events.onMessage?.(new MessageEvent("message", { data: payload }), ctx);
+            events.onMessage?.(
+              new MessageEvent("message", { data: payload }),
+              ctx,
+            );
           } catch (e) {
             onError(e);
           }
@@ -61,7 +67,10 @@ export function createNeonWebSocket(app: Hono, baseUrl = "http://localhost") {
       });
       ws.on("close", (code, reason) => {
         try {
-          events.onClose?.(new CloseEvent("close", { code, reason: reason.toString() }), ctx);
+          events.onClose?.(
+            new CloseEvent("close", { code, reason: reason.toString() }),
+            ctx,
+          );
         } catch (e) {
           onError(e);
         }
@@ -93,7 +102,9 @@ export function createNeonWebSocket(app: Hono, baseUrl = "http://localhost") {
       const wire = pending.get(env);
       pending.delete(env);
       if (!wire) {
-        socket.end(`HTTP/1.1 ${response.status} ${STATUS_CODES[response.status] ?? ""}\r\nConnection: close\r\nContent-Length: 0\r\n\r\n`);
+        socket.end(
+          `HTTP/1.1 ${response.status} ${STATUS_CODES[response.status] ?? ""}\r\nConnection: close\r\nContent-Length: 0\r\n\r\n`,
+        );
         return;
       }
       wss.handleUpgrade(req, socket, head, (ws) => wire(ws));

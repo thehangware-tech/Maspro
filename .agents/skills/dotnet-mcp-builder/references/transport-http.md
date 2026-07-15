@@ -56,16 +56,17 @@ public static class EchoTool
 
 ## Stateless vs. stateful — the most important decision
 
-| Mode | `options.Stateless` | Behaviour | Use when |
-|---|---|---|---|
-| **Stateless** | `true` | No `Mcp-Session-Id`. Each POST is independent. | Horizontal scaling, simple tool servers, no server-initiated traffic. |
-| **Stateful** | `false` (default) | Server assigns and tracks `Mcp-Session-Id`. Long-lived session. | You need elicitation, sampling, roots, log notifications, or anything that pushes from server to client. Requires session affinity at the load balancer. |
+| Mode          | `options.Stateless` | Behaviour                                                       | Use when                                                                                                                                                 |
+| ------------- | ------------------- | --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Stateless** | `true`              | No `Mcp-Session-Id`. Each POST is independent.                  | Horizontal scaling, simple tool servers, no server-initiated traffic.                                                                                    |
+| **Stateful**  | `false` (default)   | Server assigns and tracks `Mcp-Session-Id`. Long-lived session. | You need elicitation, sampling, roots, log notifications, or anything that pushes from server to client. Requires session affinity at the load balancer. |
 
 **Rule:** if the user wants any of `ElicitAsync`, `SampleAsync`, `RequestRootsAsync`, or to push log/notification messages, **do not** set `Stateless = true`. The calls will fail at runtime with no transport to deliver them on.
 
 ## Endpoint shape
 
 `MapMcp(pattern = "")` creates a route group at `pattern` and maps:
+
 - **POST** — accepts JSON-RPC requests/responses/notifications. Returns either a JSON response or an SSE stream depending on `Accept` header and whether multiple messages need to flow back.
 - **GET** — used by stateful sessions for the server-to-client SSE channel.
 - **DELETE** — terminates a stateful session.
@@ -116,7 +117,7 @@ app.UseAuthorization();
 app.MapMcp().RequireAuthorization();   // protect the endpoint
 ```
 
-For OAuth flows where the *MCP server* is the resource server, follow the [MCP authorization spec](https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization). The [`ProtectedMcpServer` sample](https://github.com/modelcontextprotocol/csharp-sdk/tree/main/samples/ProtectedMcpServer) shows a working setup with discovery endpoints.
+For OAuth flows where the _MCP server_ is the resource server, follow the [MCP authorization spec](https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization). The [`ProtectedMcpServer` sample](https://github.com/modelcontextprotocol/csharp-sdk/tree/main/samples/ProtectedMcpServer) shows a working setup with discovery endpoints.
 
 For machine-to-machine, an API key middleware is fine:
 

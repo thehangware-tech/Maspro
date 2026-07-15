@@ -21,6 +21,7 @@ See the `flowstudio-power-automate-mcp` skill for connection setup.
 Subscribe at https://mcp.flowstudio.app
 
 Workflow:
+
 1. Load current build tools.
 2. Check for an existing flow.
 3. Resolve connection references.
@@ -202,6 +203,7 @@ from `get_live_flow`.
 
 Construct the definition object. See [flow-schema.md](references/flow-schema.md)
 for the full schema and these action pattern references for copy-paste templates:
+
 - [action-patterns-core.md](references/action-patterns-core.md) — Variables, control flow, expressions
 - [action-patterns-data.md](references/action-patterns-data.md) — Array transforms, HTTP, parsing
 - [action-patterns-connectors.md](references/action-patterns-connectors.md) — SharePoint, Outlook, Teams, Approvals
@@ -342,12 +344,12 @@ else:
 
 ### Common deployment errors
 
-| Error message (contains) | Cause | Fix |
-|---|---|---|
-| `missing from connectionReferences` | An action's `host.connectionName` references a key that doesn't exist in the `connectionReferences` map | Ensure `host.connectionName` uses the **key** from `connectionReferences` (e.g. `shared_teams`), not the raw GUID |
-| `ConnectionAuthorizationFailed` / 403 | The connection GUID belongs to another user or is not authorized | Re-run Step 2a and use a connection owned by the current `x-api-key` user |
-| `InvalidTemplate` / `InvalidDefinition` | Syntax error in the definition JSON | Check `runAfter` chains, expression syntax, and action type spelling |
-| `ConnectionNotConfigured` | A connector action exists but the connection GUID is invalid or expired | Re-check `list_live_connections` for a fresh GUID |
+| Error message (contains)                | Cause                                                                                                   | Fix                                                                                                               |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `missing from connectionReferences`     | An action's `host.connectionName` references a key that doesn't exist in the `connectionReferences` map | Ensure `host.connectionName` uses the **key** from `connectionReferences` (e.g. `shared_teams`), not the raw GUID |
+| `ConnectionAuthorizationFailed` / 403   | The connection GUID belongs to another user or is not authorized                                        | Re-run Step 2a and use a connection owned by the current `x-api-key` user                                         |
+| `InvalidTemplate` / `InvalidDefinition` | Syntax error in the definition JSON                                                                     | Check `runAfter` chains, expression syntax, and action type spelling                                              |
+| `ConnectionNotConfigured`               | A connector action exists but the connection GUID is invalid or expired                                 | Re-check `list_live_connections` for a fresh GUID                                                                 |
 
 ---
 
@@ -459,30 +461,30 @@ payload.
 
 ## Gotchas
 
-| Mistake | Consequence | Prevention |
-|---|---|---|
-| Missing `connectionReferences` in deploy | 400 "Supply connectionReferences" | Always call `list_live_connections` first |
-| `"operationOptions"` missing on Foreach | Parallel execution, race conditions on writes | Always add `"Sequential"` |
-| `union(old_data, new_data)` | Old values override new (first-wins) | Use `union(new_data, old_data)` |
-| `split()` on potentially-null string | `InvalidTemplate` crash | Wrap with `coalesce(field, '')` |
-| Checking `result["error"]` exists | Always present; true error is `!= null` | Use `result.get("error") is not None` |
-| Flow deployed but state is "Stopped" | Flow won't run on schedule | Call `set_live_flow_state` with `state: "Started"` — do **not** use `update_live_flow` for state changes |
-| Teams "Chat with Flow bot" recipient as object | 400 `GraphUserDetailNotFound` | Use plain string with trailing semicolon (see below) |
-| Copilot/Skills flow not in a solution | Copilot Studio may not discover it as an agent tool | After deploy, call `add_live_flow_to_solution` with the target `solutionId` |
-| Button/Skills trigger used for MCP testing | MCP cannot directly fire the production trigger | Test the same actions through a temporary HTTP twin, then swap the trigger back |
-| Connector action missing `metadata.operationMetadataId` | Designer/run-only UI can behave inconsistently | Preserve existing IDs; add stable GUIDs for new connector actions |
-| Placeholder Excel `scriptId` | Dynamic validation fails at save time | Resolve the real Office Script ID before deploying |
-| SharePoint `PatchItem` omits required fields | Save can fail even if the field is not changing | Echo unchanged required fields such as `item/Title` |
-| Copilot Studio connector calls a draft agent | Connector invocation can fail or hit stale behavior | Publish the agent before testing/resubmitting the flow |
+| Mistake                                                 | Consequence                                         | Prevention                                                                                               |
+| ------------------------------------------------------- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| Missing `connectionReferences` in deploy                | 400 "Supply connectionReferences"                   | Always call `list_live_connections` first                                                                |
+| `"operationOptions"` missing on Foreach                 | Parallel execution, race conditions on writes       | Always add `"Sequential"`                                                                                |
+| `union(old_data, new_data)`                             | Old values override new (first-wins)                | Use `union(new_data, old_data)`                                                                          |
+| `split()` on potentially-null string                    | `InvalidTemplate` crash                             | Wrap with `coalesce(field, '')`                                                                          |
+| Checking `result["error"]` exists                       | Always present; true error is `!= null`             | Use `result.get("error") is not None`                                                                    |
+| Flow deployed but state is "Stopped"                    | Flow won't run on schedule                          | Call `set_live_flow_state` with `state: "Started"` — do **not** use `update_live_flow` for state changes |
+| Teams "Chat with Flow bot" recipient as object          | 400 `GraphUserDetailNotFound`                       | Use plain string with trailing semicolon (see below)                                                     |
+| Copilot/Skills flow not in a solution                   | Copilot Studio may not discover it as an agent tool | After deploy, call `add_live_flow_to_solution` with the target `solutionId`                              |
+| Button/Skills trigger used for MCP testing              | MCP cannot directly fire the production trigger     | Test the same actions through a temporary HTTP twin, then swap the trigger back                          |
+| Connector action missing `metadata.operationMetadataId` | Designer/run-only UI can behave inconsistently      | Preserve existing IDs; add stable GUIDs for new connector actions                                        |
+| Placeholder Excel `scriptId`                            | Dynamic validation fails at save time               | Resolve the real Office Script ID before deploying                                                       |
+| SharePoint `PatchItem` omits required fields            | Save can fail even if the field is not changing     | Echo unchanged required fields such as `item/Title`                                                      |
+| Copilot Studio connector calls a draft agent            | Connector invocation can fail or hit stale behavior | Publish the agent before testing/resubmitting the flow                                                   |
 
 ### Teams `PostMessageToConversation` — Recipient Formats
 
 The `body/recipient` parameter format depends on the `location` value:
 
-| Location | `body/recipient` format | Example |
-|---|---|---|
-| **Chat with Flow bot** | Plain email string with **trailing semicolon** | `"user@contoso.com;"` |
-| **Channel** | Object with `groupId` and `channelId` | `{"groupId": "...", "channelId": "..."}` |
+| Location               | `body/recipient` format                        | Example                                  |
+| ---------------------- | ---------------------------------------------- | ---------------------------------------- |
+| **Chat with Flow bot** | Plain email string with **trailing semicolon** | `"user@contoso.com;"`                    |
+| **Channel**            | Object with `groupId` and `channelId`          | `{"groupId": "...", "channelId": "..."}` |
 
 > **Common mistake**: passing `{"to": "user@contoso.com"}` for "Chat with Flow bot"
 > returns a 400 `GraphUserDetailNotFound` error. The API expects a plain string.

@@ -23,9 +23,9 @@ Open coding's diagnostic in [open-coding.md#choosing-the-unit-of-analysis](open-
 
 **An axial label can live at a different level than the note that informed it** — that's a feature, and it works in every direction:
 
-- *Trace → span*: a trace-level note "answered shipping when asked about returns" can produce a span-level annotation on the retrieval span once a pattern reveals retrieval as the consistent culprit.
-- *Trace → session*: a batch of trace-level notes describing single-turn confusion can produce a session-level annotation once you see the pattern is "the agent doesn't track the user's stated context across turns."
-- *Session → trace*: a session-level note about cross-turn drift may, on closer reading, attribute to one specific turn where the agent dropped the thread; a trace-level annotation can name that turn.
+- _Trace → span_: a trace-level note "answered shipping when asked about returns" can produce a span-level annotation on the retrieval span once a pattern reveals retrieval as the consistent culprit.
+- _Trace → session_: a batch of trace-level notes describing single-turn confusion can produce a session-level annotation once you see the pattern is "the agent doesn't track the user's stated context across turns."
+- _Session → trace_: a session-level note about cross-turn drift may, on closer reading, attribute to one specific turn where the agent dropped the thread; a trace-level annotation can name that turn.
 
 Whichever level you write the axial label on, write the matching `coding_session_id` UI-filter annotation on the same entity (see [UI-filter annotation](#ui-filter-annotation) below) so the UI link picks it up.
 
@@ -93,10 +93,19 @@ Use the matching annotate command for the level the **label** belongs at — whi
 **Axial sidecar JSONL line shape (one per `annotate`):**
 
 ```json
-{"entity_kind":"trace","entity_id":"<trace-id>","annotation_name":"axial_coding_category","axial_label":"<label>","explanation":"<optional explanation>","identifier":"<original identifier value, unsanitized>","ts":"<ISO-8601 UTC>"}
+{
+  "entity_kind": "trace",
+  "entity_id": "<trace-id>",
+  "annotation_name": "axial_coding_category",
+  "axial_label": "<label>",
+  "explanation": "<optional explanation>",
+  "identifier": "<original identifier value, unsanitized>",
+  "ts": "<ISO-8601 UTC>"
+}
 ```
 
 Fields:
+
 - `entity_kind` — `"trace"`, `"span"`, or `"session"` (matches the `annotate` subcommand)
 - `entity_id` — the entity argument passed to `annotate`
 - `annotation_name` — always `"axial_coding_category"` for axial labels (the workflow's reserved annotation name)
@@ -203,6 +212,7 @@ Use the output to tally which state-to-state transitions are most failure-prone 
 ## What Makes a Good Category
 
 A useful category is:
+
 - **Named for the cause**, not the symptom ("wrong_tool_selected", not "bad_output")
 - **Tied to a fix** — if you can't name a remediation, the category is too vague
 - **Grounded in data** — emerged from actual note text, not assumed upfront

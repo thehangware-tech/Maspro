@@ -1,6 +1,6 @@
 ---
 name: rhino3d-scripts
-description: 'Authoring and debugging scripts for Rhinoceros 3D (Rhino 8 and later). Use when asked to write RhinoScript (VBScript / .rvb / .vbs), RhinoPython, or RhinoCommon-based scripts; automate Rhino modeling tasks; build command macros; manipulate Rhino geometry, layers, blocks, or document objects; pick objects from the viewport; control redraw and undo; or load and run scripts from the Rhino Script Editor. Covers `rhinoscriptsyntax`, `scriptcontext`, the `Rhino.*` RhinoCommon namespaces (`Rhino.Geometry`, `Rhino.DocObjects`, `Rhino.Input`, `Rhino.UI`, `Rhino.Display`, `Rhino.FileIO`), and the Rhino 8 unified Script Editor.'
+description: "Authoring and debugging scripts for Rhinoceros 3D (Rhino 8 and later). Use when asked to write RhinoScript (VBScript / .rvb / .vbs), RhinoPython, or RhinoCommon-based scripts; automate Rhino modeling tasks; build command macros; manipulate Rhino geometry, layers, blocks, or document objects; pick objects from the viewport; control redraw and undo; or load and run scripts from the Rhino Script Editor. Covers `rhinoscriptsyntax`, `scriptcontext`, the `Rhino.*` RhinoCommon namespaces (`Rhino.Geometry`, `Rhino.DocObjects`, `Rhino.Input`, `Rhino.UI`, `Rhino.Display`, `Rhino.FileIO`), and the Rhino 8 unified Script Editor."
 ---
 
 # Rhino 3D Scripting Skill
@@ -20,12 +20,12 @@ Write production-quality scripts for Rhinoceros 3D. Covers the three scripting s
 
 Pick the surface based on the task, not preference. Recommend Python by default for new work.
 
-| Surface | When to choose | File ext |
-|---|---|---|
-| **RhinoPython** (`rhinoscriptsyntax` + RhinoCommon) | Default for new scripts. Best ecosystem, readable, full RhinoCommon access. | `.py` |
-| **RhinoScript** (VBScript) | Maintaining legacy `.rvb`/`.vbs` files; integrating with VBA/COM. | `.rvb`, `.vbs` |
-| **RhinoCommon (C#/.NET) via Script Editor** | Performance-critical loops, complex geometry, leveraging .NET libraries. | `.cs` |
-| **Command macro** | Pure sequence of existing Rhino commands; no logic. | toolbar/alias |
+| Surface                                             | When to choose                                                              | File ext       |
+| --------------------------------------------------- | --------------------------------------------------------------------------- | -------------- |
+| **RhinoPython** (`rhinoscriptsyntax` + RhinoCommon) | Default for new scripts. Best ecosystem, readable, full RhinoCommon access. | `.py`          |
+| **RhinoScript** (VBScript)                          | Maintaining legacy `.rvb`/`.vbs` files; integrating with VBA/COM.           | `.rvb`, `.vbs` |
+| **RhinoCommon (C#/.NET) via Script Editor**         | Performance-critical loops, complex geometry, leveraging .NET libraries.    | `.cs`          |
+| **Command macro**                                   | Pure sequence of existing Rhino commands; no logic.                         | toolbar/alias  |
 
 A macro is **not** a script — it is a string of command-line input (e.g. `! _-Line 0,0,0 10,0,0 _Enter`). Use a script the moment you need a variable, loop, or conditional.
 
@@ -127,7 +127,7 @@ else:
 ## Gotchas
 
 - **`rhinoscriptsyntax` returns GUIDs, RhinoCommon returns objects.** Mixing them is fine, but `doc.Objects.Find(guid)` is the bridge from a `rs.*` id to a `RhinoObject`.
-- **Coordinates differ by surface.** Python uses `(x, y, z)` tuples *or* `Rhino.Geometry.Point3d`; VBScript uses 3-element `Array(x, y, z)`. Never pass a Python list to a VBScript helper through COM.
+- **Coordinates differ by surface.** Python uses `(x, y, z)` tuples _or_ `Rhino.Geometry.Point3d`; VBScript uses 3-element `Array(x, y, z)`. Never pass a Python list to a VBScript helper through COM.
 - **`Option Explicit` is off by default in VBScript.** Typos silently create new variables. Always add `Option Explicit` at the top of `.rvb` files.
 - **VBScript has no block scope.** All `Dim`s inside a `Sub` are hoisted to the top of the procedure. Loop counters leak.
 - **`Nothing`, `Empty`, and `Null` are different** in VBScript. Use `IsNull` for `Rhino.GetObject` failure, `IsEmpty` for uninitialized `Variant`, `Is Nothing` for object refs.
@@ -146,20 +146,20 @@ else:
 
 ## Troubleshooting
 
-| Symptom | Fix |
-|---|---|
-| `rs.GetObject` returns `None` immediately | The user pressed Escape, or your `filter` excludes everything. Re-check `rs.filter.*` flags. |
-| “Unable to find script” when running by name | The folder isn’t in `Options → Files → Search paths`. |
-| VBScript `Type mismatch` on coordinates | You passed a 2-element array. Rhino requires 3-element `Array(x, y, z)`. |
-| Python `ImportError: No module named Rhino` | You’re running CPython outside Rhino. RhinoCommon is only available in Rhino’s embedded Python (or via `rhino3dm` for read-only file work). |
-| Created geometry doesn’t appear | You forgot `doc.Views.Redraw()`, or `rs.EnableRedraw(False)` was never re-enabled. |
-| Undo undoes only the last object of a batch | Wrap the batch in `BeginUndoRecord` / `EndUndoRecord`. |
-| Script works alone but fails as a startup script | Startup runs before any document is open — return early or skip document-dependent work when `sc.doc is None`. |
-| `rs.Command("...")` returns `False` | The macro string is malformed. Prefix with `!` and `-`, end every prompt with `_Enter` or a value. |
-| `AttributeError: type object 'RhinoApp' has no attribute 'IsHeadless'` | Property added in a later Rhino 8 build. Use `getattr(Rhino.RhinoApp, "IsHeadless", None)` and guard against `None`. |
-| `rhinocode script` ignores arguments after the script path | rhinocode concatenates extra tokens onto the file URI. Pass data via a temp file or a Rhino dialog instead. See `references/macros-and-loading.md`. |
+| Symptom                                                                                       | Fix                                                                                                                                                                                                                                                                                                                               |
+| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `rs.GetObject` returns `None` immediately                                                     | The user pressed Escape, or your `filter` excludes everything. Re-check `rs.filter.*` flags.                                                                                                                                                                                                                                      |
+| “Unable to find script” when running by name                                                  | The folder isn’t in `Options → Files → Search paths`.                                                                                                                                                                                                                                                                             |
+| VBScript `Type mismatch` on coordinates                                                       | You passed a 2-element array. Rhino requires 3-element `Array(x, y, z)`.                                                                                                                                                                                                                                                          |
+| Python `ImportError: No module named Rhino`                                                   | You’re running CPython outside Rhino. RhinoCommon is only available in Rhino’s embedded Python (or via `rhino3dm` for read-only file work).                                                                                                                                                                                       |
+| Created geometry doesn’t appear                                                               | You forgot `doc.Views.Redraw()`, or `rs.EnableRedraw(False)` was never re-enabled.                                                                                                                                                                                                                                                |
+| Undo undoes only the last object of a batch                                                   | Wrap the batch in `BeginUndoRecord` / `EndUndoRecord`.                                                                                                                                                                                                                                                                            |
+| Script works alone but fails as a startup script                                              | Startup runs before any document is open — return early or skip document-dependent work when `sc.doc is None`.                                                                                                                                                                                                                    |
+| `rs.Command("...")` returns `False`                                                           | The macro string is malformed. Prefix with `!` and `-`, end every prompt with `_Enter` or a value.                                                                                                                                                                                                                                |
+| `AttributeError: type object 'RhinoApp' has no attribute 'IsHeadless'`                        | Property added in a later Rhino 8 build. Use `getattr(Rhino.RhinoApp, "IsHeadless", None)` and guard against `None`.                                                                                                                                                                                                              |
+| `rhinocode script` ignores arguments after the script path                                    | rhinocode concatenates extra tokens onto the file URI. Pass data via a temp file or a Rhino dialog instead. See `references/macros-and-loading.md`.                                                                                                                                                                               |
 | `Cannot import name <X>` inside stdlib (e.g. `tempfile`, `os`) when using `_-RunPythonScript` | Script filename shadows a stdlib module (e.g. `random.py` shadows `random`). IronPython 2.7 searches the script directory before stdlib. Rename the script, or remove the `import` that pulls in the shadowed module and replace it with a direct alternative (e.g. read `%TEMP%` via `os.environ` instead of `import tempfile`). |
-| `SyntaxError: Non-ASCII character '\xe2' ... but no encoding declared` | IronPython 2.7 (`_-RunPythonScript`) hit an em dash or similar character. Add `# -*- coding: utf-8 -*-` as line 1, or replace the character: em dash `--`, arrow `->`. The same file runs fine under `rhinocode` (CPython 3), which hides the problem. |
+| `SyntaxError: Non-ASCII character '\xe2' ... but no encoding declared`                        | IronPython 2.7 (`_-RunPythonScript`) hit an em dash or similar character. Add `# -*- coding: utf-8 -*-` as line 1, or replace the character: em dash `--`, arrow `->`. The same file runs fine under `rhinocode` (CPython 3), which hides the problem.                                                                            |
 
 ## References
 

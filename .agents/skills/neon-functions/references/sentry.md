@@ -30,7 +30,8 @@ Sentry.init({
   // can't be used as a truthy "is this a branch?" flag. Treat the project's default branch as
   // "production" (its name passed in via neon.ts env) and tag every other branch by its name.
   environment:
-    process.env.NEON_BRANCH && process.env.NEON_BRANCH !== process.env.PRODUCTION_BRANCH
+    process.env.NEON_BRANCH &&
+    process.env.NEON_BRANCH !== process.env.PRODUCTION_BRANCH
       ? process.env.NEON_BRANCH
       : "production",
 });

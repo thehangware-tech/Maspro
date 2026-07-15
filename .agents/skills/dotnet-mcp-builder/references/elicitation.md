@@ -6,14 +6,15 @@ Elicitation lets a tool **ask the user for input mid-execution**, via the client
 
 ## Two modes
 
-| Mode | What it does | When to use |
-|---|---|---|
-| **Form (in-band)** | Server sends a JSON Schema; client renders a form; user submits values back through the same MCP channel. | Confirmations, missing parameters, structured choices. |
+| Mode                  | What it does                                                                                                     | When to use                                             |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| **Form (in-band)**    | Server sends a JSON Schema; client renders a form; user submits values back through the same MCP channel.        | Confirmations, missing parameters, structured choices.  |
 | **URL (out-of-band)** | Server sends a URL; client opens it in a browser; user completes the flow there; server checks state separately. | OAuth, payments, anything the MCP channel must not see. |
 
 ## Prerequisite: stateful transport
 
-Elicitation requires the server to send a request *to* the client and wait for a response. That only works on:
+Elicitation requires the server to send a request _to_ the client and wait for a response. That only works on:
+
 - STDIO (always).
 - Stateful HTTP (`options.Stateless = false`).
 
@@ -75,20 +76,21 @@ public class BookingTools
 
 You can build a `RequestedSchema` from these:
 
-| Type | C# class | Notes |
-|---|---|---|
-| String | `StringSchema` | `Default`, `Description`. Add JSON-Schema validation at server side if you need it. |
-| Number | `NumberSchema` | Use for ints and floats. |
-| Boolean | `BooleanSchema` | Renders as a checkbox / toggle. |
-| Single-select enum (untitled) | `UntitledSingleSelectEnumSchema` | List of values; client renders as dropdown/radio. |
-| Single-select enum (titled) | `TitledSingleSelectEnumSchema` | Each value has a display title. |
-| Multi-select enum | `UntitledMultiSelectEnumSchema` / `TitledMultiSelectEnumSchema` | Multi-select dropdown / checkbox group. |
+| Type                          | C# class                                                        | Notes                                                                               |
+| ----------------------------- | --------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| String                        | `StringSchema`                                                  | `Default`, `Description`. Add JSON-Schema validation at server side if you need it. |
+| Number                        | `NumberSchema`                                                  | Use for ints and floats.                                                            |
+| Boolean                       | `BooleanSchema`                                                 | Renders as a checkbox / toggle.                                                     |
+| Single-select enum (untitled) | `UntitledSingleSelectEnumSchema`                                | List of values; client renders as dropdown/radio.                                   |
+| Single-select enum (titled)   | `TitledSingleSelectEnumSchema`                                  | Each value has a display title.                                                     |
+| Multi-select enum             | `UntitledMultiSelectEnumSchema` / `TitledMultiSelectEnumSchema` | Multi-select dropdown / checkbox group.                                             |
 
 Each accepts `Description` and `Default`.
 
 ### Response shape
 
 `ElicitResult`:
+
 - `Action` — `"accept"`, `"reject"`, or `"cancel"`. Always check this first.
 - `Content` — `Dictionary<string, JsonElement>?` with the user's submitted values. `null` if the user rejected/cancelled.
 
@@ -135,7 +137,7 @@ public static async Task<string> ConnectGitHub(
 
 ### `UrlElicitationRequiredException`
 
-When a tool is *blocked* on auth (rather than walking the user through it), throw `UrlElicitationRequiredException`. The client surfaces the URL to the user and the call fails cleanly. Useful for retry-after-auth patterns:
+When a tool is _blocked_ on auth (rather than walking the user through it), throw `UrlElicitationRequiredException`. The client surfaces the URL to the user and the call fails cleanly. Useful for retry-after-auth patterns:
 
 ```csharp
 if (!oauth.HasValidToken)

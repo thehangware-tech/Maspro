@@ -79,13 +79,12 @@ Before writing a single test, build a function call map. For every function you 
 Walk each spec document section by section. For each section, ask: "What testable requirement does this state?" Then write a test.
 
 Each test should:
+
 1. **Set up** — Load a fixture, create test data, configure the system
 2. **Execute** — Call the function, run the pipeline, make the request
 3. **Assert specific properties** the spec requires
 
 Each test should include a traceability annotation (via docstring, display name, or comment) citing the spec section it verifies, e.g., `[Req: formal — Design Doc §N] X should produce Y`.
-
-
 
 ## What Makes a Good Functional Test
 
@@ -93,7 +92,7 @@ Each test should include a traceability annotation (via docstring, display name,
 - **Specific** — Checks a specific property, not just "something happened"
 - **Robust** — Uses real data (fixtures from the actual system), not synthetic data
 - **Cross-variant** — If the project handles multiple input types, test all of them
-- **Tests at the right layer** — Test the *behavior* you care about. If the requirement is "invalid data doesn't produce wrong output," test the pipeline output — don't just test that the schema validator rejects the input.
+- **Tests at the right layer** — Test the _behavior_ you care about. If the requirement is "invalid data doesn't produce wrong output," test the pipeline output — don't just test that the schema validator rejects the input.
 
 ## Cross-Variant Testing Strategy
 
@@ -101,11 +100,9 @@ If the project handles multiple input types, cross-variant coverage is where sil
 
 Use your framework's parametrization mechanism (e.g., `@pytest.mark.parametrize`, `@ParameterizedTest`, `test.each`, table-driven tests, iterating over cases) to run the same assertion logic across all variants.
 
-
-
 If parametrization doesn't fit, loop explicitly within a single test.
 
-**Which tests should be cross-variant?** Any test verifying a property that *should* hold regardless of input type: entity identity, structural properties, required links, temporal fields, domain-specific semantics.
+**Which tests should be cross-variant?** Any test verifying a property that _should_ hold regardless of input type: entity identity, structural properties, required links, temporal fields, domain-specific semantics.
 
 **After writing all tests, do a cross-variant audit.** Count cross-variant tests divided by total. If below 30%, convert more.
 
@@ -140,13 +137,11 @@ def test_bad_value_not_in_output(fixture):
 
 The pattern is the same in every language: don't test that the validation mechanism rejects bad input — test that the system produces correct output when given edge-case input the schema accepts. The WRONG approach tests the implementation (the validator); the RIGHT approach tests the requirement (the output).
 
-
-
 Always check your Step 5b schema map before choosing mutation values.
 
 ## Testing at the Right Layer
 
-Ask: "What does the *spec* say should happen?" The spec says "invalid data should not appear in output" — not "validation layer should reject it." Test the spec, not the implementation.
+Ask: "What does the _spec_ say should happen?" The spec says "invalid data should not appear in output" — not "validation layer should reject it." Test the spec, not the implementation.
 
 **Exception:** When a spec explicitly mandates a specific mechanism (e.g., "must fail-fast at the schema layer"), testing that mechanism is appropriate. But this is rare.
 
@@ -154,22 +149,20 @@ Ask: "What does the *spec* say should happen?" The spec says "invalid data shoul
 
 For each scenario in QUALITY.md, write a test. This is a 1:1 mapping. Each test should include a traceability annotation citing the scenario, e.g., `[Req: formal — QUALITY.md Scenario 1]`, and be named to match the scenario's memorable name.
 
-
-
 ## Boundary and Negative Tests
 
 One test per defensive pattern from Step 5. Each test should include a traceability annotation citing the defensive pattern, e.g., `[Req: inferred — from function_name() guard] guards against X`.
 
 For each boundary test:
+
 1. Mutate input to trigger the defensive code path (using a value the schema accepts)
 2. Process the mutated input
 3. Assert graceful handling — the result is valid despite the edge-case input
 
-
-
 Use your Step 5b schema map when choosing mutation values. Every mutation must use a value the schema accepts.
 
 Systematic approach:
+
 - **Missing fields** — Optional field absent? Set to null.
 - **Wrong types** — Field gets different type? Use schema-valid alternative.
 - **Empty values** — Empty list? Empty string? Empty dict?

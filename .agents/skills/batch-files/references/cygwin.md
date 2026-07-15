@@ -92,10 +92,10 @@ C:\cygwin64\bin\cygpath.exe -w "/home/jdoe/project"
 
 ### Common Environment Variables
 
-| Variable | Purpose |
-|----------|---------|
+| Variable | Purpose                                                                |
+| -------- | ---------------------------------------------------------------------- |
 | `CYGWIN` | Runtime options (e.g., `nodosfilewarning`, `winsymlinks:nativestrict`) |
-| `HOME` | User home directory |
-| `PATH` | Must include `/usr/local/bin:/usr/bin` for Cygwin tools |
-| `SHELL` | Default shell (typically `/bin/bash`) |
-| `TERM` | Terminal type for console applications |
+| `HOME`   | User home directory                                                    |
+| `PATH`   | Must include `/usr/local/bin:/usr/bin` for Cygwin tools                |
+| `SHELL`  | Default shell (typically `/bin/bash`)                                  |
+| `TERM`   | Terminal type for console applications                                 |

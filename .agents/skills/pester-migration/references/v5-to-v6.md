@@ -33,6 +33,7 @@ For most suites this is low risk. Run through these, then read the details for a
 ## Breaking changes (symptom → fix)
 
 ### PowerShell 5.1 and 7.4+ only
+
 PowerShell 3, 4, 6, and early/unsupported 7 are dropped (all out of support from Microsoft), which
 let Pester move its C# to .NET 8 (net462 for Windows PowerShell 5.1).
 
@@ -40,11 +41,12 @@ let Pester move its C# to .NET 8 (net462 for Windows PowerShell 5.1).
 - **Fix:** Update your machines and CI agents to Windows PowerShell 5.1 or PowerShell 7.4+.
 
 ### Discovery and Run now happen per file
+
 In v5 the run had two global phases: discover **every** file, then run every file. In v6 the unit
 of work is a single file — Pester discovers a file and runs it before moving to the next. This is
 what enables the experimental parallel runner, and serial runs follow the same model.
 
-- **Symptom:** a file that relied on *another* file's discovery-time side effect fails — e.g. a
+- **Symptom:** a file that relied on _another_ file's discovery-time side effect fails — e.g. a
   module imported at the top of one file, a global variable, a changed working directory, or
   `-ForEach` data defined in a different file.
 - **Fix:** make each test file self-contained. Do discovery-time setup in `BeforeDiscovery`, and
@@ -67,6 +69,7 @@ gone for a normal run. The parallel runner (`Run.Parallel`) keeps the same resul
 edge cases — see https://pester.dev/docs/usage/result-object#parallel-runner-edge-cases.
 
 ### Empty or `$null` `-ForEach` throws
+
 `-ForEach` (or `-TestCases`) given `$null` or `@()` now throws instead of silently skipping. This
 catches the common bug of pointing `-ForEach` at a variable that wasn't defined in
 `BeforeDiscovery`, or external data that failed to load.
@@ -82,11 +85,12 @@ catches the common bug of pointing `-ForEach` at a variable that wasn't defined 
       It 'runs only when there is data' { }
   }
   ```
-  You *can* disable the check for the whole run with `Run.FailOnNullOrEmptyForEach = $false`, but
+  You _can_ disable the check for the whole run with `Run.FailOnNullOrEmptyForEach = $false`, but
   that brings back the silent skipping it's meant to catch — prefer fixing the data or using
   `-AllowNullOrEmptyForEach` where empty is genuinely expected.
 
 ### Duplicate setup/teardown blocks throw
+
 A block may have only one of each `BeforeAll`/`BeforeEach`/`AfterAll`/`AfterEach`. Two of the same
 (a common copy-paste bug) was silently allowed in v5; v6 throws.
 
@@ -102,6 +106,7 @@ A block may have only one of each `BeforeAll`/`BeforeEach`/`AfterAll`/`AfterEach
   ```
 
 ### Test names evaluate `<...>` templates as expressions
+
 In v6 the content of every `<...>` token in a `Describe`/`Context`/`It` name is evaluated as a
 PowerShell expression in the test's run scope (current `-ForEach` item and its properties, in-scope
 variables, arithmetic, method calls). Everything outside `<...>` is kept literal. In v5 only simple
@@ -119,6 +124,7 @@ data/variable/property references were substituted.
   ```
 
 ### `Assert-MockCalled` and `Assert-VerifiableMock` removed
+
 Deprecated in v5, removed in v6.
 
 - **Symptom:** `The term 'Assert-MockCalled' is not recognized ...`
@@ -131,6 +137,7 @@ Deprecated in v5, removed in v6.
   ```
 
 ### Mocks no longer fall through to the real command
+
 In v5, a call to a mocked command that matched none of your `-ParameterFilter` mocks quietly ran
 the **real** command. v6 removes that implicit fall-through.
 
@@ -146,6 +153,7 @@ the **real** command. v6 removes that implicit fall-through.
   ```
 
 ### `Set-ItResult -Pending` removed
+
 `Pending` was never fully implemented in v5 and is gone.
 
 - **Symptom:** `Parameter set cannot be resolved using the specified named parameters.`
@@ -155,6 +163,7 @@ the **real** command. v6 removes that implicit fall-through.
   ```
 
 ### Code coverage uses the Profiler tracer by default
+
 Coverage no longer sets a breakpoint on every command; it uses the Profiler's tracer, which is much
 faster on large code bases. `CodeCoverage.UseBreakpoints` is no longer experimental and defaults to
 `$false`.
@@ -163,6 +172,7 @@ faster on large code bases. `CodeCoverage.UseBreakpoints` is no longer experimen
 - **Fix:** `$config.CodeCoverage.UseBreakpoints = $true`.
 
 ### `CodeCoverage.OutputFormat = 'CoverageGutters'` removed
+
 All coverage output is now relative to the repo root (`Run.RepoRoot`, found from the `.git`
 directory), so plain `JaCoCo` already works with the Coverage Gutters extension.
 
@@ -170,11 +180,12 @@ directory), so plain `JaCoCo` already works with the Coverage Gutters extension.
 - **Fix:** use `JaCoCo` (default) or `Cobertura`.
 
 ### `Invoke-Pester` legacy (v4) parameters removed
+
 Only the **Simple** set (`-Path`, `-Output`, `-Container`, `-Tag`, …) and the **Advanced** set
 (`-Configuration`) remain. The v4-style parameter set is gone.
 
 - **Symptom:** calls like `Invoke-Pester -Script … -OutputFile … -OutputFormat … -EnableExit
-  -CodeCoverage …` fail with a parameter-binding error.
+-CodeCoverage …` fail with a parameter-binding error.
 - **Fix:** use a configuration object (the full parameter→config map is in the
   "`Invoke-Pester` parameters → `New-PesterConfiguration`" section of [v4-to-v5.md](v4-to-v5.md)):
   ```powershell

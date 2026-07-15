@@ -3,6 +3,7 @@
 Resources are server-exposed "things" identified by a URI. Hosts list them so the user can pick which ones to attach to the conversation; tools and prompts can also reference them via `EmbeddedResourceBlock`. Think files, database rows, API objects, settings — anything addressable.
 
 Two flavours:
+
 - **Static resource** — a fixed URI (`config://app/settings`). Useful for singletons.
 - **Resource template** — a URI with placeholders (`docs://articles/{id}`). The host (or LLM) substitutes parameters; your method receives them.
 
@@ -65,13 +66,13 @@ public class DocumentResources
 
 ## Return types
 
-| Return | Result |
-|---|---|
-| `string` | Wrapped in `TextResourceContents` with the URI from the template and the declared `MimeType`. |
-| `byte[]` | Wrapped in `BlobResourceContents`. |
-| `TextResourceContents` | Returned as-is — set `Uri`, `MimeType`, `Text`. |
-| `BlobResourceContents` | Returned as-is — use `BlobResourceContents.FromBytes(...)`. |
-| `IEnumerable<ResourceContents>` | Multi-part resource. |
+| Return                          | Result                                                                                        |
+| ------------------------------- | --------------------------------------------------------------------------------------------- |
+| `string`                        | Wrapped in `TextResourceContents` with the URI from the template and the declared `MimeType`. |
+| `byte[]`                        | Wrapped in `BlobResourceContents`.                                                            |
+| `TextResourceContents`          | Returned as-is — set `Uri`, `MimeType`, `Text`.                                               |
+| `BlobResourceContents`          | Returned as-is — use `BlobResourceContents.FromBytes(...)`.                                   |
+| `IEnumerable<ResourceContents>` | Multi-part resource.                                                                          |
 
 ### Binary resource
 
@@ -177,7 +178,7 @@ foreach (var content in result.Contents)
 
 ## Resources vs. tools — when to pick which
 
-- **Resource:** the user (or LLM) wants to *attach context* to the conversation. Read-only, addressable, listable. The host controls when/whether to load it. Ideal for documents, configs, schemas.
-- **Tool:** the LLM wants to *do something* (which may include reading data). Side-effects, actions, parameters that don't fit a URI.
+- **Resource:** the user (or LLM) wants to _attach context_ to the conversation. Read-only, addressable, listable. The host controls when/whether to load it. Ideal for documents, configs, schemas.
+- **Tool:** the LLM wants to _do something_ (which may include reading data). Side-effects, actions, parameters that don't fit a URI.
 
-If you have something the LLM might want to *search* over, expose both: a `search_articles` tool and `docs://articles/{id}` resource template. The tool returns a list of URIs; the host fetches the content via the resource.
+If you have something the LLM might want to _search_ over, expose both: a `search_articles` tool and `docs://articles/{id}` resource template. The tool returns a list of URIs; the host fetches the content via the resource.

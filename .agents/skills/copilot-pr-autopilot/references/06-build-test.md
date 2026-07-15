@@ -34,7 +34,7 @@ back to step 5 for a follow-up fix or push as-is.
 - `Makefile`,
 - language-specific tooling configs,
 - AND recent CI workflow runs (`gh run list`, `gh run view`) to learn
-  the *actual* command set in use.
+  the _actual_ command set in use.
 
 THEN run those exact commands on the changed code. Independent
 discovery axes (build tool / test runner / lint / spelling / format)

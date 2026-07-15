@@ -118,7 +118,7 @@ builder.Services.Configure<McpServerOptions>(options =>
 });
 ```
 
-If you don't need full structured content, the tool can return *just* JSON in a text block — the UI fetches it via `app.callServerTool(...)` after rendering.
+If you don't need full structured content, the tool can return _just_ JSON in a text block — the UI fetches it via `app.callServerTool(...)` after rendering.
 
 ### Backwards compatibility key
 
@@ -142,7 +142,12 @@ A minimum viable bundle: vanilla JS using `@modelcontextprotocol/ext-apps`. The 
   <head>
     <meta charset="utf-8" />
     <title>Chart</title>
-    <style>body { font-family: system-ui; margin: 0; }</style>
+    <style>
+      body {
+        font-family: system-ui;
+        margin: 0;
+      }
+    </style>
   </head>
   <body>
     <div id="root">Loading…</div>
@@ -155,7 +160,7 @@ A minimum viable bundle: vanilla JS using `@modelcontextprotocol/ext-apps`. The 
       // Fetch the data we need from the server.
       const resp = await app.callServerTool({
         name: "visualize_data",
-        arguments: { datasetId: "default" }
+        arguments: { datasetId: "default" },
       });
 
       const data = JSON.parse(resp.content[0].text);
@@ -164,7 +169,7 @@ A minimum viable bundle: vanilla JS using `@modelcontextprotocol/ext-apps`. The 
 
       // Tell the model what just happened (becomes part of its context).
       await app.updateModelContext({
-        content: [{ type: "text", text: "User opened the chart UI." }]
+        content: [{ type: "text", text: "User opened the chart UI." }],
       });
     </script>
   </body>

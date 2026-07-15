@@ -1,31 +1,61 @@
-import React, { useState } from 'react';
-import { View, Text, Pressable, TextInput, KeyboardAvoidingView, Platform, Alert, ActivityIndicator } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { ArrowLeft, Phone, ShieldCheck, ChevronDown } from 'lucide-react-native';
-import Svg, { Path, Circle } from 'react-native-svg';
-import { View as TwView, Text as TwText, Pressable as TwPressable, TextInput as TwTextInput } from '../../src/tw';
-import { useRouter } from 'expo-router';
-import { useSignIn, useSignUp } from '@clerk/clerk-expo';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  Pressable,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  ArrowLeft,
+  Phone,
+  ShieldCheck,
+  ChevronDown,
+} from "lucide-react-native";
+import Svg, { Path, Circle } from "react-native-svg";
+import {
+  View as TwView,
+  Text as TwText,
+  Pressable as TwPressable,
+  TextInput as TwTextInput,
+} from "../../src/tw";
+import { useRouter } from "expo-router";
+import { useSignIn, useSignUp } from "@clerk/clerk-expo";
 
 const MasproLogo = () => (
   <TwView className="items-center justify-center mt-4 mb-6">
     <TwView className="flex-row items-center justify-center">
       <TwView className="mr-2">
         <Svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-          <Path d="M8 30 L15 15 L20 25 L28 10 L35 30" stroke="#FF6B00" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+          <Path
+            d="M8 30 L15 15 L20 25 L28 10 L35 30"
+            stroke="#FF6B00"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            fill="none"
+          />
           <Circle cx="12" cy="10" r="3" fill="#FF6B00" />
         </Svg>
       </TwView>
       <TwView>
-        <TwText className="text-white font-bold text-2xl tracking-widest leading-none">MASPRO</TwText>
-        <TwText className="text-[#FF6B00] font-bold text-xs tracking-wider">SPORTS INDIA</TwText>
+        <TwText className="text-white font-bold text-2xl tracking-widest leading-none">
+          MASPRO
+        </TwText>
+        <TwText className="text-[#FF6B00] font-bold text-xs tracking-wider">
+          SPORTS INDIA
+        </TwText>
       </TwView>
     </TwView>
   </TwView>
 );
 
 export default function AuthScreen() {
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const handleSendOTP = () => {
@@ -33,18 +63,21 @@ export default function AuthScreen() {
       Alert.alert("Invalid Phone Number", "Please enter a valid phone number");
       return;
     }
-    router.push({ pathname: '/(auth)/otp', params: { phone: `+91 ${phoneNumber}` } });
+    router.push({
+      pathname: "/(auth)/otp",
+      params: { phone: `+91 ${phoneNumber}` },
+    });
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#0A0D14' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#0A0D14" }}>
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
         style={{ flex: 1, paddingHorizontal: 24, paddingTop: 16 }}
       >
         {/* Back Button */}
         <TwView className="mb-6">
-          <TwPressable 
+          <TwPressable
             className="w-10 h-10 items-center justify-center"
             onPress={() => router.back()}
           >
@@ -59,7 +92,9 @@ export default function AuthScreen() {
           <TwView className="w-20 h-20 bg-[#15171E] rounded-full items-center justify-center mb-6">
             <Phone color="#FF6B00" size={32} strokeWidth={2} />
           </TwView>
-          <TwText className="text-3xl font-bold text-white mb-3">Login with Phone</TwText>
+          <TwText className="text-3xl font-bold text-white mb-3">
+            Login with Phone
+          </TwText>
           <TwText className="text-gray-400 text-center text-base leading-6">
             {"Enter your mobile number\nto continue"}
           </TwText>
@@ -69,7 +104,9 @@ export default function AuthScreen() {
         <TwView className="flex-row items-center bg-[#15171E] rounded-2xl h-14 mb-6 border border-[#22252D]">
           <TwPressable className="flex-row items-center pl-4 pr-3 h-full">
             <TwText className="text-xl mr-2">🇮🇳</TwText>
-            <TwText className="text-white font-semibold text-base mr-1">+91</TwText>
+            <TwText className="text-white font-semibold text-base mr-1">
+              +91
+            </TwText>
             <ChevronDown color="#6B7280" size={16} />
           </TwPressable>
           <TwView className="w-[1px] h-6 bg-[#2A2D35]" />
@@ -84,7 +121,7 @@ export default function AuthScreen() {
         </TwView>
 
         {/* Send OTP Button */}
-        <TwPressable 
+        <TwPressable
           className="bg-[#FF6B00] h-14 rounded-2xl items-center justify-center mb-6"
           onPress={handleSendOTP}
           disabled={loading}

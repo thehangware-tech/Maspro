@@ -10,12 +10,13 @@ This skill helps you write production-quality MCP servers and basic clients in C
 ## When this skill earns its keep
 
 The .NET MCP SDK had years of preview packages (`0.x-preview`) before reaching `1.0`. Without help, the model tends to:
+
 - Pin a stale preview version that won't compile against current samples.
 - Miss recent spec features (elicitation URL mode, MCP Apps, structured content blocks).
 - Get HTTP transport details wrong (stateful/stateless, proxy buffering, OAuth wiring).
 - Forget the STDIO stdout/stderr trap.
 
-If the task is one of those, *load the matching reference* and follow it. If it's truly trivial (e.g. "rename this tool method"), you don't need to read everything — the cardinal rules below are the minimum.
+If the task is one of those, _load the matching reference_ and follow it. If it's truly trivial (e.g. "rename this tool method"), you don't need to read everything — the cardinal rules below are the minimum.
 
 ## Mental model in 30 seconds
 
@@ -38,20 +39,20 @@ Server-to-client features (sampling, elicitation, roots, log/progress notificati
 
 Always load `references/packages.md` if you're creating a new project or unsure of the current package version.
 
-| Task | Load |
-|---|---|
-| New STDIO server | `references/transport-stdio.md` |
-| New HTTP (Streamable) server | `references/transport-http.md` |
-| Add/modify a tool | `references/tool-primitive.md` |
-| Add/modify a prompt | `references/prompt-primitive.md` |
-| Add/modify a resource | `references/resource-primitive.md` |
-| Ask the user a question mid-tool | `references/elicitation.md` |
-| Call the client's LLM from a tool | `references/sampling.md` |
-| Read the user's project roots | `references/roots.md` |
-| Return an interactive UI | `references/mcp-apps.md` |
-| Argument completions, log/progress notifications, filters, server instructions | `references/server-features.md` |
-| Write a .NET program that **consumes** an MCP server | `references/client.md` |
-| MCP Inspector, in-memory tests, mocks, CI | `references/testing.md` |
+| Task                                                                           | Load                               |
+| ------------------------------------------------------------------------------ | ---------------------------------- |
+| New STDIO server                                                               | `references/transport-stdio.md`    |
+| New HTTP (Streamable) server                                                   | `references/transport-http.md`     |
+| Add/modify a tool                                                              | `references/tool-primitive.md`     |
+| Add/modify a prompt                                                            | `references/prompt-primitive.md`   |
+| Add/modify a resource                                                          | `references/resource-primitive.md` |
+| Ask the user a question mid-tool                                               | `references/elicitation.md`        |
+| Call the client's LLM from a tool                                              | `references/sampling.md`           |
+| Read the user's project roots                                                  | `references/roots.md`              |
+| Return an interactive UI                                                       | `references/mcp-apps.md`           |
+| Argument completions, log/progress notifications, filters, server instructions | `references/server-features.md`    |
+| Write a .NET program that **consumes** an MCP server                           | `references/client.md`             |
+| MCP Inspector, in-memory tests, mocks, CI                                      | `references/testing.md`            |
 
 For multi-primitive tasks, load several at once. For trivial edits in an existing file, you usually don't need any.
 
@@ -74,6 +75,7 @@ For multi-primitive tasks, load several at once. For trivial edits in an existin
 ## When the user is stuck
 
 Walk this checklist before guessing:
+
 1. **STDIO:** something is writing to stdout (logger sink, `Console.WriteLine`, library banner).
 2. **HTTP 404:** path mismatch — `app.MapMcp()` is root, `app.MapMcp("/mcp")` puts it under `/mcp`.
 3. **Tool not appearing:** missing `[McpServerToolType]` on the class, or no `.WithToolsFromAssembly()` / `.WithTools<T>()` registered.

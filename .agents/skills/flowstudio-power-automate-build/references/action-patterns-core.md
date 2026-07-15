@@ -509,12 +509,12 @@ Power Automate expressions are Workflow Definition Language, not JavaScript.
 These patterns often look plausible but do not deploy or do not behave as agents
 expect:
 
-| Goal | Avoid | Use instead |
-|---|---|---|
-| Build an object inline | `createObject(...)` | A Compose action with a JSON object literal |
-| Transform an array inline | `select(...)` inside an expression | Data Operations `Select` action |
-| Filter an array inline | `filter(...)` inside an expression | Data Operations `Filter array` action |
-| Find an array item index | `indexOf(array, item)` | Foreach with a counter variable, or build a keyed object map |
+| Goal                      | Avoid                              | Use instead                                                  |
+| ------------------------- | ---------------------------------- | ------------------------------------------------------------ |
+| Build an object inline    | `createObject(...)`                | A Compose action with a JSON object literal                  |
+| Transform an array inline | `select(...)` inside an expression | Data Operations `Select` action                              |
+| Filter an array inline    | `filter(...)` inside an expression | Data Operations `Filter array` action                        |
+| Find an array item index  | `indexOf(array, item)`             | Foreach with a counter variable, or build a keyed object map |
 
 ### Newlines in Expressions
 
@@ -530,6 +530,7 @@ CRLF:           decodeUriComponent('%0d%0a')
 ```
 
 Example — multi-line Teams or email body via `concat()`:
+
 ```json
 "Compose_Message": {
   "type": "Compose",
@@ -538,6 +539,7 @@ Example — multi-line Teams or email body via `concat()`:
 ```
 
 Example — `join()` with newline separator:
+
 ```json
 "Compose_List": {
   "type": "Compose",

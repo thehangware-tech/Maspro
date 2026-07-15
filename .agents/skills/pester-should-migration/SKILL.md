@@ -1,6 +1,6 @@
 ---
 name: pester-should-migration
-description: 'Experimental (preview) Pester skill for migrating classic Should -Be (v5) assertion syntax to the new Should-* (v6) assertions (note the hyphen, no space), e.g. `Should -Be` -> `Should-Be`, `Should -Not -Be` -> `Should-NotBe`. Tracks Pester 6, which is still a release candidate, so this guidance may change; verified against Pester 6.0.0-rc2. Use when converting Pester v5 assertions to Pester v6 Should-* operators, modernizing a Pester test suite, or when a user asks to migrate, convert, or rewrite `Should -...` calls in .Tests.ps1 / PowerShell files.'
+description: "Experimental (preview) Pester skill for migrating classic Should -Be (v5) assertion syntax to the new Should-* (v6) assertions (note the hyphen, no space), e.g. `Should -Be` -> `Should-Be`, `Should -Not -Be` -> `Should-NotBe`. Tracks Pester 6, which is still a release candidate, so this guidance may change; verified against Pester 6.0.0-rc2. Use when converting Pester v5 assertions to Pester v6 Should-* operators, modernizing a Pester test suite, or when a user asks to migrate, convert, or rewrite `Should -...` calls in .Tests.ps1 / PowerShell files."
 argument-hint: "File, folder, or test suite to migrate"
 ---
 
@@ -12,7 +12,7 @@ new Pester v6 `Should-*` assertions (`Should-Be`, hyphen, no space).
 > **Status: experimental / preview.** Verified against Pester 6.0.0-rc2. The classic
 > `Should -Be` style still works in v6, so migrate incrementally and keep the suite green.
 
-> **Companion skill.** This skill covers the *optional* move to the new `Should-*` operators.
+> **Companion skill.** This skill covers the _optional_ move to the new `Should-*` operators.
 > To upgrade a suite across major Pester versions (v3→v4→v5→v6 — the runtime, mocks, and config),
 > use the separate **pester-migration** skill. In v6 the classic `Should -Be` keeps working, so
 > adopting `Should-*` is independent of any version bump.
@@ -54,22 +54,22 @@ Limit the scope to PowerShell test files (`*.Tests.ps1`, `*.ps1`).
 
 Most-used conversions (full list in [references/assertion-map.md](references/assertion-map.md)):
 
-| Classic (v5) | New (v6) |
-|---|---|
-| `$x \| Should -Be 1` | `$x \| Should-Be 1` |
-| `$x \| Should -Not -Be 1` | `$x \| Should-NotBe 1` |
-| `$x \| Should -BeExactly 'A'` | `$x \| Should-BeString 'A' -CaseSensitive` |
-| `$x \| Should -BeGreaterOrEqual 2` | `$x \| Should-BeGreaterThanOrEqual 2` |
-| `$x \| Should -BeLessOrEqual 2` | `$x \| Should-BeLessThanOrEqual 2` |
-| `$x \| Should -BeLike 'a*'` | `$x \| Should-BeLikeString 'a*'` |
-| `$x \| Should -Match 're'` | `$x \| Should-MatchString 're'` |
-| `$x \| Should -BeOfType [int]` | `$x \| Should-HaveType ([int])` |
-| `$x \| Should -BeNullOrEmpty` | depends — see gotchas (no single equivalent) |
-| `$c \| Should -HaveCount 3` | `$c \| Should-BeCollection -Count 3` |
-| `$c \| Should -Contain 2` | `$c \| Should-ContainCollection 2` |
-| `{ ... } \| Should -Throw 'msg'` | `{ ... } \| Should-Throw -ExceptionMessage 'msg'` |
-| `Should -Invoke Get-Thing` | `Should-Invoke Get-Thing` |
-| `Should -InvokeVerifiable` | `Should-Invoke -Verifiable` |
+| Classic (v5)                       | New (v6)                                          |
+| ---------------------------------- | ------------------------------------------------- |
+| `$x \| Should -Be 1`               | `$x \| Should-Be 1`                               |
+| `$x \| Should -Not -Be 1`          | `$x \| Should-NotBe 1`                            |
+| `$x \| Should -BeExactly 'A'`      | `$x \| Should-BeString 'A' -CaseSensitive`        |
+| `$x \| Should -BeGreaterOrEqual 2` | `$x \| Should-BeGreaterThanOrEqual 2`             |
+| `$x \| Should -BeLessOrEqual 2`    | `$x \| Should-BeLessThanOrEqual 2`                |
+| `$x \| Should -BeLike 'a*'`        | `$x \| Should-BeLikeString 'a*'`                  |
+| `$x \| Should -Match 're'`         | `$x \| Should-MatchString 're'`                   |
+| `$x \| Should -BeOfType [int]`     | `$x \| Should-HaveType ([int])`                   |
+| `$x \| Should -BeNullOrEmpty`      | depends — see gotchas (no single equivalent)      |
+| `$c \| Should -HaveCount 3`        | `$c \| Should-BeCollection -Count 3`              |
+| `$c \| Should -Contain 2`          | `$c \| Should-ContainCollection 2`                |
+| `{ ... } \| Should -Throw 'msg'`   | `{ ... } \| Should-Throw -ExceptionMessage 'msg'` |
+| `Should -Invoke Get-Thing`         | `Should-Invoke Get-Thing`                         |
+| `Should -InvokeVerifiable`         | `Should-Invoke -Verifiable`                       |
 
 ### Step 3 — Check the behavioral gotchas (do NOT skip)
 
@@ -80,8 +80,8 @@ These do **not** translate by a plain rename. Read each before converting:
    equivalent — use `Should-BeString -CaseSensitive`. (`Should-Be` is never
    case-sensitive.) Same pattern for `BeLikeExactly` → `Should-BeLikeString -CaseSensitive`
    and `MatchExactly` → `Should-MatchString -CaseSensitive`.
-2. **Truthy vs. true.** Classic `Should -BeTrue` / `-BeFalse` accept any *truthy* /
-   *falsy* value (`1`, `'x'`, `0`, `''`, `$null`, `@()`). The new `Should-BeTrue` /
+2. **Truthy vs. true.** Classic `Should -BeTrue` / `-BeFalse` accept any _truthy_ /
+   _falsy_ value (`1`, `'x'`, `0`, `''`, `$null`, `@()`). The new `Should-BeTrue` /
    `Should-BeFalse` are **strict** (exactly `$true` / `$false`). To preserve the old
    loose behavior use `Should-BeTruthy` / `Should-BeFalsy`. Only use the strict ones
    when the value really is a boolean.
@@ -91,7 +91,7 @@ These do **not** translate by a plain rename. Read each before converting:
    `Should -Not -BeNullOrEmpty` similarly splits into `Should-NotBeNull` /
    `Should-NotBeEmptyString` / `Should-NotBeWhiteSpaceString`.
 4. **Collections.** Classic `Should -Be` also compares arrays; the new `Should-Be` is
-   a *value* assertion and **errors** if `-Expected` is a collection ("You provided a
+   a _value_ assertion and **errors** if `-Expected` is a collection ("You provided a
    collection to the -Expected parameter"). Use `Should-BeCollection` to compare arrays.
    `Should -Contain` (single-item membership) → `Should-ContainCollection`. The new
    command also takes a **collection** of expected items and checks they are all present,

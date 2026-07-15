@@ -49,18 +49,18 @@ set _MY_VAR=
 
 ### Special Variables
 
-| Variable | Value |
-|----------|-------|
-| `%CD%` | Current directory |
-| `%DATE%` | System date (locale-dependent) |
-| `%TIME%` | System time HH:MM:SS.mm |
-| `%RANDOM%` | Pseudorandom number 0–32767 |
-| `%ERRORLEVEL%` | Exit code of last command |
-| `%USERNAME%` | Current user name |
-| `%USERPROFILE%` | Current user profile path |
-| `%TEMP%` / `%TMP%` | Temporary file directory |
-| `%PATHEXT%` | Executable extensions list |
-| `%COMSPEC%` | Path to cmd.exe |
+| Variable           | Value                          |
+| ------------------ | ------------------------------ |
+| `%CD%`             | Current directory              |
+| `%DATE%`           | System date (locale-dependent) |
+| `%TIME%`           | System time HH:MM:SS.mm        |
+| `%RANDOM%`         | Pseudorandom number 0–32767    |
+| `%ERRORLEVEL%`     | Exit code of last command      |
+| `%USERNAME%`       | Current user name              |
+| `%USERPROFILE%`    | Current user profile path      |
+| `%TEMP%` / `%TMP%` | Temporary file directory       |
+| `%PATHEXT%`        | Executable extensions list     |
+| `%COMSPEC%`        | Path to cmd.exe                |
 
 ### Scoping with SETLOCAL / ENDLOCAL
 
@@ -157,21 +157,21 @@ goto :eof
 
 ## Command-Line Arguments
 
-| Syntax | Value |
-|--------|-------|
-| `%0` | Script name as invoked |
-| `%1`–`%9` | Positional arguments |
-| `%*` | All arguments (unaffected by SHIFT) |
-| `%~1` | Argument 1 with enclosing quotes removed |
-| `%~f1` | Full path of argument 1 |
-| `%~d1` | Drive letter of argument 1 |
-| `%~p1` | Path (without drive) of argument 1 |
-| `%~n1` | File name (no extension) of argument 1 |
-| `%~x1` | Extension of argument 1 |
-| `%~dp0` | Drive and path of the batch file itself |
-| `%~nx0` | File name with extension of the batch file |
-| `%~z1` | File size of argument 1 |
-| `%~$PATH:1` | Search PATH for argument 1 |
+| Syntax      | Value                                      |
+| ----------- | ------------------------------------------ |
+| `%0`        | Script name as invoked                     |
+| `%1`–`%9`   | Positional arguments                       |
+| `%*`        | All arguments (unaffected by SHIFT)        |
+| `%~1`       | Argument 1 with enclosing quotes removed   |
+| `%~f1`      | Full path of argument 1                    |
+| `%~d1`      | Drive letter of argument 1                 |
+| `%~p1`      | Path (without drive) of argument 1         |
+| `%~n1`      | File name (no extension) of argument 1     |
+| `%~x1`      | Extension of argument 1                    |
+| `%~dp0`     | Drive and path of the batch file itself    |
+| `%~nx0`     | File name with extension of the batch file |
+| `%~z1`      | File size of argument 1                    |
+| `%~$PATH:1` | Search PATH for argument 1                 |
 
 ### Argument Parsing Pattern
 
@@ -284,97 +284,97 @@ cmd /c "exit /b 42"   & REM Set ERRORLEVEL to 42 inline
 
 ### File Operations
 
-| Command | Purpose |
-|---------|---------|
-| `DIR` | List directory contents |
-| `COPY` | Copy files |
-| `XCOPY` | Extended copy with subdirectories (legacy) |
-| `ROBOCOPY` | Robust copy with retry, mirror, logging |
-| `MOVE` | Move or rename files |
-| `DEL` | Delete files |
-| `REN` | Rename files |
-| `MD` / `MKDIR` | Create directories |
-| `RD` / `RMDIR` | Remove directories |
-| `MKLINK` | Create symbolic or hard links |
-| `ATTRIB` | View or set file attributes |
-| `TYPE` | Print file contents |
-| `MORE` | Paginated file display |
-| `TREE` | Display directory structure |
-| `REPLACE` | Replace files in destination with source |
-| `COMPACT` | Show or set NTFS compression |
-| `EXPAND` | Extract from .cab files |
-| `MAKECAB` | Create .cab archives |
-| `TAR` | Create or extract tar archives |
+| Command        | Purpose                                    |
+| -------------- | ------------------------------------------ |
+| `DIR`          | List directory contents                    |
+| `COPY`         | Copy files                                 |
+| `XCOPY`        | Extended copy with subdirectories (legacy) |
+| `ROBOCOPY`     | Robust copy with retry, mirror, logging    |
+| `MOVE`         | Move or rename files                       |
+| `DEL`          | Delete files                               |
+| `REN`          | Rename files                               |
+| `MD` / `MKDIR` | Create directories                         |
+| `RD` / `RMDIR` | Remove directories                         |
+| `MKLINK`       | Create symbolic or hard links              |
+| `ATTRIB`       | View or set file attributes                |
+| `TYPE`         | Print file contents                        |
+| `MORE`         | Paginated file display                     |
+| `TREE`         | Display directory structure                |
+| `REPLACE`      | Replace files in destination with source   |
+| `COMPACT`      | Show or set NTFS compression               |
+| `EXPAND`       | Extract from .cab files                    |
+| `MAKECAB`      | Create .cab archives                       |
+| `TAR`          | Create or extract tar archives             |
 
 ### Text Search and Processing
 
-| Command | Purpose |
-|---------|---------|
-| `FIND` | Search for literal strings |
-| `FINDSTR` | Search with limited regular expressions |
-| `SORT` | Sort lines alphabetically |
-| `CLIP` | Copy piped input to clipboard |
-| `FC` | Compare two files |
-| `COMP` | Binary file comparison |
-| `CERTUTIL` | Encode/decode Base64, compute hashes |
+| Command    | Purpose                                 |
+| ---------- | --------------------------------------- |
+| `FIND`     | Search for literal strings              |
+| `FINDSTR`  | Search with limited regular expressions |
+| `SORT`     | Sort lines alphabetically               |
+| `CLIP`     | Copy piped input to clipboard           |
+| `FC`       | Compare two files                       |
+| `COMP`     | Binary file comparison                  |
+| `CERTUTIL` | Encode/decode Base64, compute hashes    |
 
 ### System Information
 
-| Command | Purpose |
-|---------|---------|
-| `SYSTEMINFO` | Full system configuration |
-| `HOSTNAME` | Display computer name |
-| `VER` | Windows version |
-| `WHOAMI` | Current user and group info |
-| `TASKLIST` | List running processes |
-| `TASKKILL` | Terminate processes |
-| `WMIC` | WMI queries (drives, OS, memory) |
-| `SC` | Service control (query, start, stop) |
-| `DRIVERQUERY` | List installed drivers |
-| `REG` | Registry operations (query, add, delete) |
-| `SETX` | Set persistent environment variables |
+| Command       | Purpose                                  |
+| ------------- | ---------------------------------------- |
+| `SYSTEMINFO`  | Full system configuration                |
+| `HOSTNAME`    | Display computer name                    |
+| `VER`         | Windows version                          |
+| `WHOAMI`      | Current user and group info              |
+| `TASKLIST`    | List running processes                   |
+| `TASKKILL`    | Terminate processes                      |
+| `WMIC`        | WMI queries (drives, OS, memory)         |
+| `SC`          | Service control (query, start, stop)     |
+| `DRIVERQUERY` | List installed drivers                   |
+| `REG`         | Registry operations (query, add, delete) |
+| `SETX`        | Set persistent environment variables     |
 
 ### Network
 
-| Command | Purpose |
-|---------|---------|
-| `PING` | Test network connectivity |
-| `IPCONFIG` | IP configuration |
-| `NSLOOKUP` | DNS lookup |
-| `NETSTAT` | Network connections and ports |
-| `TRACERT` | Trace route to host |
-| `NET USE` | Map/disconnect network drives |
-| `NET USER` | Manage user accounts |
-| `NETSH` | Network configuration utility |
-| `ARP` | ARP cache management |
-| `ROUTE` | Routing table management |
-| `CURL` | HTTP requests (Windows 10+) |
-| `SSH` | Secure shell (Windows 10+) |
+| Command    | Purpose                       |
+| ---------- | ----------------------------- |
+| `PING`     | Test network connectivity     |
+| `IPCONFIG` | IP configuration              |
+| `NSLOOKUP` | DNS lookup                    |
+| `NETSTAT`  | Network connections and ports |
+| `TRACERT`  | Trace route to host           |
+| `NET USE`  | Map/disconnect network drives |
+| `NET USER` | Manage user accounts          |
+| `NETSH`    | Network configuration utility |
+| `ARP`      | ARP cache management          |
+| `ROUTE`    | Routing table management      |
+| `CURL`     | HTTP requests (Windows 10+)   |
+| `SSH`      | Secure shell (Windows 10+)    |
 
 ### Scheduling and Automation
 
-| Command | Purpose |
-|---------|---------|
-| `SCHTASKS` | Create and manage scheduled tasks |
-| `TIMEOUT` | Wait N seconds (Vista+) |
-| `START` | Launch programs asynchronously |
-| `RUNAS` | Run as different user |
-| `SHUTDOWN` | Shutdown or restart |
+| Command    | Purpose                                 |
+| ---------- | --------------------------------------- |
+| `SCHTASKS` | Create and manage scheduled tasks       |
+| `TIMEOUT`  | Wait N seconds (Vista+)                 |
+| `START`    | Launch programs asynchronously          |
+| `RUNAS`    | Run as different user                   |
+| `SHUTDOWN` | Shutdown or restart                     |
 | `FORFILES` | Find files by date and execute commands |
 
 ### Shell Utilities
 
-| Command | Purpose |
-|---------|---------|
-| `WHERE` | Locate executables in PATH |
-| `DOSKEY` | Create command macros |
-| `CHOICE` | Prompt for single-key input |
-| `MODE` | Configure console size and ports |
-| `SUBST` | Map folder to drive letter |
-| `CHCP` | Get or set console code page |
-| `COLOR` | Set console colors |
-| `TITLE` | Set console window title |
-| `ASSOC` / `FTYPE` | File type associations |
+| Command           | Purpose                          |
+| ----------------- | -------------------------------- |
+| `WHERE`           | Locate executables in PATH       |
+| `DOSKEY`          | Create command macros            |
+| `CHOICE`          | Prompt for single-key input      |
+| `MODE`            | Configure console size and ports |
+| `SUBST`           | Map folder to drive letter       |
+| `CHCP`            | Get or set console code page     |
+| `COLOR`           | Set console colors               |
+| `TITLE`           | Set console window title         |
+| `ASSOC` / `FTYPE` | File type associations           |
 
 ## Shell Syntax and Expressions
 
@@ -491,64 +491,64 @@ exit /b %ERRORLEVEL%
 
 ## Debugging and Troubleshooting
 
-| Technique | How |
-|-----------|-----|
-| Trace execution | Remove `@echo off` or use `@echo on` temporarily |
-| Step through | Add `PAUSE` between sections |
-| Check error level | `echo Exit code: %ERRORLEVEL%` after each command |
-| Inspect variables | `set _MY_` to list all variables starting with `_MY_` |
-| Delayed expansion issues | Variable inside `( )` block not updating? Enable `!VAR!` syntax |
-| FOR loop `%%` vs `%` | Use `%%i` in batch files, `%i` on the command line |
-| Spaces in SET | `set name=value` not `set name = value` |
-| Caret in pipes | After a pipe, use `^^^` to escape special chars |
-| Parentheses in SET /A | Escape with `^(` and `^)` inside `if` blocks, or use quotes |
-| Double percent for modulo | `set /a r=14 %% 3` in batch files |
+| Technique                 | How                                                             |
+| ------------------------- | --------------------------------------------------------------- |
+| Trace execution           | Remove `@echo off` or use `@echo on` temporarily                |
+| Step through              | Add `PAUSE` between sections                                    |
+| Check error level         | `echo Exit code: %ERRORLEVEL%` after each command               |
+| Inspect variables         | `set _MY_` to list all variables starting with `_MY_`           |
+| Delayed expansion issues  | Variable inside `( )` block not updating? Enable `!VAR!` syntax |
+| FOR loop `%%` vs `%`      | Use `%%i` in batch files, `%i` on the command line              |
+| Spaces in SET             | `set name=value` not `set name = value`                         |
+| Caret in pipes            | After a pipe, use `^^^` to escape special chars                 |
+| Parentheses in SET /A     | Escape with `^(` and `^)` inside `if` blocks, or use quotes     |
+| Double percent for modulo | `set /a r=14 %% 3` in batch files                               |
 
 ## Cross-Platform and Extended Tools
 
 When batch scripting reaches its limits, these tools extend cmd.exe capabilities:
 
-| Tool | Purpose |
-|------|---------|
-| **Cygwin** | Full POSIX environment on Windows (grep, sed, awk, ssh) |
-| **MSYS2** | Lightweight Unix tools and package manager (pacman) |
-| **WSL** | Windows Subsystem for Linux — run native Linux binaries |
-| **GnuWin32** | Individual GNU utilities as native Windows executables |
-| **PowerShell** | Modern Windows scripting with .NET integration |
+| Tool           | Purpose                                                 |
+| -------------- | ------------------------------------------------------- |
+| **Cygwin**     | Full POSIX environment on Windows (grep, sed, awk, ssh) |
+| **MSYS2**      | Lightweight Unix tools and package manager (pacman)     |
+| **WSL**        | Windows Subsystem for Linux — run native Linux binaries |
+| **GnuWin32**   | Individual GNU utilities as native Windows executables  |
+| **PowerShell** | Modern Windows scripting with .NET integration          |
 
 Use batch when you need: fast startup, simple file operations, PATH-based CLI tools, or Task Scheduler integration. Consider PowerShell or WSL for complex data processing, REST APIs, or object-oriented scripting.
 
 ## CMD Keyboard Shortcuts
 
-| Shortcut | Action |
-|----------|--------|
-| `Tab` | Auto-complete file/folder names |
-| `Up` / `Down` | Navigate command history |
-| `F7` | Show command history popup |
-| `F3` | Repeat last command |
-| `Esc` | Clear current line |
-| `Ctrl+C` | Cancel running command |
-| `Alt+F7` | Clear command history |
+| Shortcut      | Action                          |
+| ------------- | ------------------------------- |
+| `Tab`         | Auto-complete file/folder names |
+| `Up` / `Down` | Navigate command history        |
+| `F7`          | Show command history popup      |
+| `F3`          | Repeat last command             |
+| `Esc`         | Clear current line              |
+| `Ctrl+C`      | Cancel running command          |
+| `Alt+F7`      | Clear command history           |
 
 ## Reference Files
 
 The `references/` folder contains detailed documentation:
 
-| File | Contents |
-|------|----------|
-| `tools-and-resources.md` | Windows tools, utilities, package managers, terminals |
-| `batch-files-and-functions.md` | Example scripts, techniques, best practices links |
-| `windows-commands.md` | Comprehensive A-Z Windows command reference |
-| `cygwin.md` | Cygwin user guide and FAQ |
-| `msys2.md` | MSYS2 installation, packages, and environments |
-| `windows-subsystem-on-linux.md` | WSL setup, commands, and documentation |
+| File                            | Contents                                              |
+| ------------------------------- | ----------------------------------------------------- |
+| `tools-and-resources.md`        | Windows tools, utilities, package managers, terminals |
+| `batch-files-and-functions.md`  | Example scripts, techniques, best practices links     |
+| `windows-commands.md`           | Comprehensive A-Z Windows command reference           |
+| `cygwin.md`                     | Cygwin user guide and FAQ                             |
+| `msys2.md`                      | MSYS2 installation, packages, and environments        |
+| `windows-subsystem-on-linux.md` | WSL setup, commands, and documentation                |
 
 ## Asset Templates
 
 The `assets/` folder contains starter batch file template data, but as text files:
 
-| Template | Purpose |
-|----------|---------|
-| `executable.txt` | Standalone CLI tool with argument parsing |
-| `library.txt` | Reusable function library with CALL-able labels |
-| `task.txt` | Scheduled task / automation script |
+| Template         | Purpose                                         |
+| ---------------- | ----------------------------------------------- |
+| `executable.txt` | Standalone CLI tool with argument parsing       |
+| `library.txt`    | Reusable function library with CALL-able labels |
+| `task.txt`       | Scheduled task / automation script              |

@@ -53,12 +53,14 @@ public static class EchoTool
 The single most common bug in STDIO servers is something writing to stdout that isn't a JSON-RPC frame. The client will then drop the connection with a parse error.
 
 **Things that silently break STDIO:**
+
 - `Console.WriteLine(...)` anywhere in your code.
 - A logger configured with the default console sink (writes to stdout).
 - `Trace.WriteLine(...)` if a default trace listener is attached.
 - Third-party libraries that print banners on startup.
 
 **Defensive checklist:**
+
 1. Configure logging to stderr **before** anything else (the snippet above does this).
 2. Don't `Console.Write*` from tools or startup code. Use `ILogger` injected into the tool class.
 3. If a dependency is noisy, redirect its logs through `ILogger` or suppress them at startup.

@@ -94,13 +94,13 @@ Default values, when the user asks for a quick generation:
 
 Load these on demand when needed:
 
-| Reference | When to load |
-|---|---|
+| Reference                               | When to load                                                                  |
+| --------------------------------------- | ----------------------------------------------------------------------------- |
 | `references/efcore-model-extraction.md` | Rules for reading DbContext, DbSet, Fluent API, configurations and migrations |
-| `references/d2-erd-style.md` | D2 syntax and visual conventions for ERD diagrams |
-| `references/relationship-rules.md` | How to infer one-to-one, one-to-many, many-to-many and owned relationships |
-| `references/grouping-modes.md` | Rules for bounded-context, schema, namespace and flat grouping |
-| `references/quality-gate.md` | Final checklist before delivering the generated diagram |
+| `references/d2-erd-style.md`            | D2 syntax and visual conventions for ERD diagrams                             |
+| `references/relationship-rules.md`      | How to infer one-to-one, one-to-many, many-to-many and owned relationships    |
+| `references/grouping-modes.md`          | Rules for bounded-context, schema, namespace and flat grouping                |
+| `references/quality-gate.md`            | Final checklist before delivering the generated diagram                       |
 
 ## EF Core Extraction Rules
 

@@ -1,6 +1,6 @@
 ---
 name: screen-recording
-description: 'Create annotated animated GIF demos and screen recordings for pull requests and documentation. Covers frame capture, timing, imageio-based GIF creation, and per-frame annotation workflows.'
+description: "Create annotated animated GIF demos and screen recordings for pull requests and documentation. Covers frame capture, timing, imageio-based GIF creation, and per-frame annotation workflows."
 ---
 
 # Screen Recording
@@ -75,11 +75,11 @@ iio.imwrite("demo.gif", frames, duration=durations, loop=0)
 
 Uniform timing makes everything feel either too fast or too slow. Use variable durations:
 
-| Phase | Duration | Why |
-|-------|----------|-----|
-| Fast action (typing, clicking) | 100ms | Feels natural, keeps energy |
-| Pause after action | 600-800ms | Let the viewer process what happened |
-| Hero/final message | 500ms+ | Main takeaway needs time to land |
+| Phase                          | Duration  | Why                                  |
+| ------------------------------ | --------- | ------------------------------------ |
+| Fast action (typing, clicking) | 100ms     | Feels natural, keeps energy          |
+| Pause after action             | 600-800ms | Let the viewer process what happened |
+| Hero/final message             | 500ms+    | Main takeaway needs time to land     |
 
 ### 4. Annotate frames
 
@@ -216,10 +216,10 @@ def find_changed_clusters(frame_a, frame_b, threshold=30, min_pixels=300, dilate
 ## Format Compatibility
 
 | Format | VS Code Preview | GitHub | Browser |
-|--------|----------------|--------|---------|
-| GIF | ✅ Animates | ✅ | ✅ |
-| WebP | ⚠️ Static only | ✅ | ✅ |
-| MP4 | ❌ Broken | ⚠️ | ✅ |
+| ------ | --------------- | ------ | ------- |
+| GIF    | ✅ Animates     | ✅     | ✅      |
+| WebP   | ⚠️ Static only  | ✅     | ✅      |
+| MP4    | ❌ Broken       | ⚠️     | ✅      |
 
 **GIF is the only universally supported animated format** across VS Code preview, GitHub markdown, and browsers.
 

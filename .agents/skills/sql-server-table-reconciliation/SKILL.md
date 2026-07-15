@@ -18,18 +18,18 @@ Compare identical tables across two SQL Server instances using Python with `mssq
 
 ## Collect Inputs
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| Source server | Yes | Source SQL Server (e.g. `prod-server.database.windows.net`) |
-| Source database | Yes | Source database name |
-| Target server | Yes | Target SQL Server (e.g. `staging-server.database.windows.net`) |
-| Target database | Yes | Target database name |
-| Tables | Yes | Comma-separated `schema.table` names, or `schema.*` wildcard (e.g. `dbo.Orders,dbo.Items` or `dbo.*`) |
-| Auth mode | Yes | `sql` (user/password) or `entra` (Azure AD/token) |
-| Primary key | Auto-detect | Column(s) forming the row identity. Auto-detect from metadata if not provided. |
-| Columns to compare | All | Subset of columns, or all non-PK columns |
-| Chunk size | `100000` | Rows per batch for large tables |
-| Output format | `console` | `console`, `csv`, `parquet`, or `json` |
+| Parameter          | Required    | Description                                                                                           |
+| ------------------ | ----------- | ----------------------------------------------------------------------------------------------------- |
+| Source server      | Yes         | Source SQL Server (e.g. `prod-server.database.windows.net`)                                           |
+| Source database    | Yes         | Source database name                                                                                  |
+| Target server      | Yes         | Target SQL Server (e.g. `staging-server.database.windows.net`)                                        |
+| Target database    | Yes         | Target database name                                                                                  |
+| Tables             | Yes         | Comma-separated `schema.table` names, or `schema.*` wildcard (e.g. `dbo.Orders,dbo.Items` or `dbo.*`) |
+| Auth mode          | Yes         | `sql` (user/password) or `entra` (Azure AD/token)                                                     |
+| Primary key        | Auto-detect | Column(s) forming the row identity. Auto-detect from metadata if not provided.                        |
+| Columns to compare | All         | Subset of columns, or all non-PK columns                                                              |
+| Chunk size         | `100000`    | Rows per batch for large tables                                                                       |
+| Output format      | `console`   | `console`, `csv`, `parquet`, or `json`                                                                |
 
 ## Bundled Script
 
@@ -49,10 +49,10 @@ python scripts/reconcile.py \
 
 ### Optional arguments
 
-| Argument | Description |
-|----------|-------------|
-| `--primary-key` | Comma-separated PK column(s). Omit to auto-detect. |
-| `--columns` | Comma-separated columns to compare. Omit to compare all non-PK columns. |
+| Argument        | Description                                                             |
+| --------------- | ----------------------------------------------------------------------- |
+| `--primary-key` | Comma-separated PK column(s). Omit to auto-detect.                      |
+| `--columns`     | Comma-separated columns to compare. Omit to compare all non-PK columns. |
 
 ### Example invocations
 
@@ -138,13 +138,13 @@ When a single table is provided, include full detail (schema drift, sample rows,
 
 ## Performance Considerations
 
-| Scenario | Strategy |
-|----------|----------|
-| < 100K rows | Single Arrow fetch, in-memory pandas compare |
-| 100K–1M rows | Chunked extraction (100K batches), streaming comparison |
-| > 1M rows | Hash pre-check → only fetch mismatched rows |
+| Scenario                | Strategy                                                         |
+| ----------------------- | ---------------------------------------------------------------- |
+| < 100K rows             | Single Arrow fetch, in-memory pandas compare                     |
+| 100K–1M rows            | Chunked extraction (100K batches), streaming comparison          |
+| > 1M rows               | Hash pre-check → only fetch mismatched rows                      |
 | Wide tables (100+ cols) | Compare PK + hash first, drill into specific columns on mismatch |
-| Network-constrained | Use Arrow columnar format (10-50x smaller than row-by-row) |
+| Network-constrained     | Use Arrow columnar format (10-50x smaller than row-by-row)       |
 
 ## Constraints
 

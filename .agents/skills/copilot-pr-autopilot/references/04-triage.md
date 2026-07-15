@@ -6,8 +6,9 @@ Sub-agent type: `general-purpose`; budget: **5 min per ≤5 threads**
 ## Inputs
 
 From step 3:
+
 - Classified thread table — `{ thread_id, file, line, author,
-  author_class, severity, summary }` per open thread.
+author_class, severity, summary }` per open thread.
 - Original PR context (description, recent commits to the affected
   files) for re-deriving from principles in oscillation cases.
 
@@ -71,24 +72,24 @@ Score every proposed change on two axes, then decide:
   user's cost to review.
 - **Risk** = blast radius, reversibility, effect on unrelated code.
 
-| ROI | Risk | Action |
-|---|---|---|
-| Clear positive | Low | Fix unilaterally. |
-| Marginal | Low | Fix if cheap; otherwise decline with rationale. |
-| Clear positive | High / Irreversible | Propose to the user first. |
-| Marginal | High | Decline. |
-| Negative (over-engineering for hypothetical) | Any | Decline. |
+| ROI                                          | Risk                | Action                                          |
+| -------------------------------------------- | ------------------- | ----------------------------------------------- |
+| Clear positive                               | Low                 | Fix unilaterally.                               |
+| Marginal                                     | Low                 | Fix if cheap; otherwise decline with rationale. |
+| Clear positive                               | High / Irreversible | Propose to the user first.                      |
+| Marginal                                     | High                | Decline.                                        |
+| Negative (over-engineering for hypothetical) | Any                 | Decline.                                        |
 
 ## Reviewer-type policy (foundation, not a nit)
 
 Each thread's `author` (returned by `03-list-open-threads.ps1`) drives
 who can decide it:
 
-| Reviewer | Default action |
-|----------|----------------|
-| `copilot-pull-request-reviewer` / `copilot-pull-request-reviewer[bot]` | Loop-owned — triage with the rubric below. (`03-list-open-threads.ps1` reports the raw `author.login`, which may carry the `[bot]` suffix on some surfaces; match both forms.) |
-| Human reviewer | **Default `escalate-to-user`** unless the user explicitly scoped them into the loop. Auto-replying or auto-resolving a human thread can hide unaddressed concerns and is socially wrong. |
-| `github-advanced-security` / other automated bots | **Default `escalate-to-user`** unless the project has a documented suppression / fix convention you can follow. |
+| Reviewer                                                               | Default action                                                                                                                                                                           |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `copilot-pull-request-reviewer` / `copilot-pull-request-reviewer[bot]` | Loop-owned — triage with the rubric below. (`03-list-open-threads.ps1` reports the raw `author.login`, which may carry the `[bot]` suffix on some surfaces; match both forms.)           |
+| Human reviewer                                                         | **Default `escalate-to-user`** unless the user explicitly scoped them into the loop. Auto-replying or auto-resolving a human thread can hide unaddressed concerns and is socially wrong. |
+| `github-advanced-security` / other automated bots                      | **Default `escalate-to-user`** unless the project has a documented suppression / fix convention you can follow.                                                                          |
 
 ## Fix when the finding is...
 
@@ -166,7 +167,7 @@ Resolution rules — apply in order, stop at the first that fires:
    pick.
 
 **Hard stop**: if you are about to make the same edit you
-*reverted* in an earlier round, stop and escalate. That is the
+_reverted_ in an earlier round, stop and escalate. That is the
 unambiguous signature of an oscillation loop.
 
 ## Reply hygiene

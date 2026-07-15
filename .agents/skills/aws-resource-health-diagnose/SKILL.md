@@ -1,6 +1,6 @@
 ---
 name: aws-resource-health-diagnose
-description: 'Analyze AWS resource health, diagnose issues from CloudWatch logs and metrics, and create a remediation plan for identified problems.'
+description: "Analyze AWS resource health, diagnose issues from CloudWatch logs and metrics, and create a remediation plan for identified problems."
 ---
 
 # AWS Resource Health & Issue Diagnosis
@@ -8,6 +8,7 @@ description: 'Analyze AWS resource health, diagnose issues from CloudWatch logs 
 This workflow analyzes a specific AWS resource to assess its health status, diagnose potential issues using CloudWatch logs and metrics, and develop a comprehensive remediation plan for any problems discovered.
 
 ## Prerequisites
+
 - AWS CLI configured and authenticated
 - Target AWS resource identified (name, type, and optionally region/account)
 - CloudWatch logging and metrics enabled on the target resource
@@ -15,9 +16,11 @@ This workflow analyzes a specific AWS resource to assess its health status, diag
 ## Workflow Steps
 
 ### Step 1: Get AWS Diagnostic Best Practices
+
 Fetch `https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/` for monitoring and troubleshooting guidance to inform the diagnostic approach.
 
 ### Step 2: Resource Discovery & Identification
+
 Locate the target resource using the appropriate AWS CLI command for its type:
 
 ```bash
@@ -42,6 +45,7 @@ aws apigatewayv2 get-apis
 If multiple matches are found, prompt the user to specify region/account.
 
 ### Step 3: Health Status Assessment
+
 Run service-specific health checks:
 
 ```bash
@@ -65,6 +69,7 @@ aws ecs describe-services --cluster <cluster> --services <name> \
 ```
 
 Key health indicators by service type:
+
 - **Lambda**: Error rate, throttle rate, duration P99, concurrent executions
 - **RDS**: CPU utilization, FreeStorageSpace, DatabaseConnections, ReadLatency/WriteLatency
 - **ECS**: Running vs desired task count, task stop reason
@@ -73,6 +78,7 @@ Key health indicators by service type:
 - **DynamoDB**: ConsumedReadCapacityUnits, ThrottledRequests, SuccessfulRequestLatency
 
 ### Step 4: Log & Metrics Analysis
+
 Find log groups and run CloudWatch Logs Insights queries:
 
 ```bash
@@ -108,13 +114,16 @@ aws pi get-resource-metrics \
 Identify: recurring error patterns, correlation with deployments (CloudTrail), performance trends, dependency failures.
 
 ### Step 5: Issue Classification & Root Cause Analysis
+
 **Severity**:
+
 - **Critical**: Service unavailable, data loss, security incidents
 - **High**: Performance degradation, error rates >5%, intermittent failures
 - **Medium**: Warnings, suboptimal configuration, minor performance issues
 - **Low**: Informational alerts, optimization opportunities
 
 **Root Cause Categories**:
+
 - Configuration Issues: wrong settings, missing env vars, IAM permission denials
 - Resource Constraints: CPU/memory/disk limits, Lambda throttling, RDS connection exhaustion
 - Network Issues: security group rules, VPC routing, DNS, NACLs
@@ -125,6 +134,7 @@ Identify: recurring error patterns, correlation with deployments (CloudTrail), p
 ### Step 6: Generate Remediation Plan
 
 **Immediate Actions** (Critical):
+
 ```bash
 # Lambda throttling — increase reserved concurrency
 aws lambda put-reserved-concurrency \
@@ -141,6 +151,7 @@ aws rds reboot-db-instance --db-instance-identifier <name>
 ### Step 7: Report & User Confirmation
 
 Present findings:
+
 ```
 🏥 AWS Resource Health Assessment
 
@@ -164,6 +175,7 @@ Present findings:
 Then generate a full markdown report covering: health metrics, issues with root cause analysis, phased remediation steps with AWS CLI commands, CloudWatch alarm recommendations, and validation checklist.
 
 ## Error Handling
+
 - **Resource Not Found**: Ask user to clarify name/region
 - **Authentication Issues**: Guide through `aws configure`
 - **Insufficient Permissions**: List required IAM actions (`logs:*`, `cloudwatch:*`, `pi:*`)
@@ -171,6 +183,7 @@ Then generate a full markdown report covering: health metrics, issues with root 
 - **Query Timeouts**: Use shorter time windows
 
 ## Success Criteria
+
 - ✅ Resource health accurately assessed across all key metrics
 - ✅ All significant issues identified and classified by severity
 - ✅ Root cause analysis completed for major problems

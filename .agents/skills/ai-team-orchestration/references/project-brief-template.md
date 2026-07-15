@@ -26,23 +26,24 @@ Copy this template to your project root and fill in every section. **Do not abbr
 - **CI/CD:** [pipeline tool]
 
 ## 4. Architecture
+```
 
-```
 ┌─────────────────────────────────────────┐
-│              Frontend                    │
-│  [Main Component] → [Sub Components]    │
+│ Frontend │
+│ [Main Component] → [Sub Components] │
 └──────────────┬──────────────────────────┘
-               │ HTTPS
+│ HTTPS
 ┌──────────────▼──────────────────────────┐
-│              Backend API                 │
-│  [Endpoints and their purpose]          │
+│ Backend API │
+│ [Endpoints and their purpose] │
 └──────────────┬──────────────────────────┘
-               │
+│
 ┌──────────────▼──────────────────────────┐
-│              Storage / Database          │
-│  [Tables, collections, env vars]        │
+│ Storage / Database │
+│ [Tables, collections, env vars] │
 └─────────────────────────────────────────┘
-```
+
+````
 
 ## 5. Key Files Map
 
@@ -97,7 +98,7 @@ npm install
 cd api && npm install
 cp api/local.settings.json.example api/local.settings.json
 npm run dev:all
-```
+````
 
 ## 11. How to Deploy
 
@@ -130,12 +131,14 @@ Bugs are tracked as GitHub Issues on the repo. Single source of truth for all te
 Each team works in their own separate clone of the repo. No worktrees. Everyone works on their own branch, pushes to origin, creates PRs.
 
 **Teams:**
+
 - Producer on `main` (coordination hub)
 - Dev Team on `feature/sprint-N`
 - QA on `feature/qa-N`
 - DevOps on `feature/devops-N` (only when needed)
 
 **Setup:**
+
 ```bash
 git clone <repo> <folder-name>
 cd <folder-name>
@@ -144,4 +147,7 @@ npm install
 ```
 
 **Branch strategy:** Feature branches → PR → regular merge to main. Never push directly to main. Never squash. Never rebase feature branches (causes commit loss).
+
+```
+
 ```

@@ -1,6 +1,6 @@
 ---
 name: acreadiness-assess
-description: 'Run the AgentRC readiness assessment on the current repository and produce a static HTML dashboard at reports/index.html. Wraps `npx github:microsoft/agentrc readiness` and hands off rendering to the @ai-readiness-reporter custom agent. Supports policies (--policy) for org-specific scoring. Use when asked to assess, audit, or score the AI readiness of a repo.'
+description: "Run the AgentRC readiness assessment on the current repository and produce a static HTML dashboard at reports/index.html. Wraps `npx github:microsoft/agentrc readiness` and hands off rendering to the @ai-readiness-reporter custom agent. Supports policies (--policy) for org-specific scoring. Use when asked to assess, audit, or score the AI readiness of a repo."
 argument-hint: "[--policy <path-or-pkg>] [--per-area] — e.g. /acreadiness-assess, /acreadiness-assess --policy ./policies/strict.json"
 ---
 
@@ -8,7 +8,7 @@ argument-hint: "[--policy <path-or-pkg>] [--per-area] — e.g. /acreadiness-asse
 
 Use this skill whenever the user asks for an **AI-readiness assessment**, a **readiness check**, an **audit**, or wants to **see how AI-ready** their repository is.
 
-This skill is the *Measure* step in AgentRC's **Measure → Generate → Maintain** loop. The result is a self-contained HTML dashboard the user can open with `file://` or commit to the repo.
+This skill is the _Measure_ step in AgentRC's **Measure → Generate → Maintain** loop. The result is a self-contained HTML dashboard the user can open with `file://` or commit to the repo.
 
 ## Steps
 
@@ -21,16 +21,18 @@ This skill is the *Measure* step in AgentRC's **Measure → Generate → Maintai
    - For a primer on policies, suggest the `acreadiness-policy` skill.
 
 3. **Run the readiness scan** in the repo root with structured output:
+
    ```bash
    npx -y github:microsoft/agentrc readiness --json [--policy <source>] [--per-area]
    ```
+
    The `CommandResult<T>` JSON envelope is your input for the next step.
 
 4. **Hand off to the `ai-readiness-reporter` custom agent** to interpret the JSON and produce `reports/index.html`. The agent renders via the bundled template `report-template.html` (shipped alongside this skill) so every report has an identical look & feel. The agent:
    - Reads the bundled `report-template.html` and substitutes placeholders with real data.
    - Inlines all CSS, ships a single static file (works under `file://`).
    - Renders maturity level, overall score, grade, pass-rate vs threshold.
-   - Breaks down all 9 pillars across **Repo Health** (8) and **AI Setup** (1) with *what it measures*, *why it matters for AI*, *current state*, and *a specific recommendation*.
+   - Breaks down all 9 pillars across **Repo Health** (8) and **AI Setup** (1) with _what it measures_, _why it matters for AI_, _current state_, and _a specific recommendation_.
    - Tags every pillar with an **AI relevance** badge (High / Medium / Low).
    - Surfaces **Extras** separately (they never affect the score).
    - Shows the **Active Policy** including any disabled/overridden criteria and thresholds.

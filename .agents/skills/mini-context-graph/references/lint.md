@@ -37,6 +37,7 @@ issues = wiki_store.lint_wiki()
 ## Step 2: Triage Each Issue Type
 
 ### Orphan Pages
+
 Pages exist on disk but are not in the index. They are invisible to search.
 **Fix**: Add them to the index or delete if stale.
 
@@ -49,14 +50,17 @@ wiki_store.write_page(category="...", title="...", content=existing_content)
 ```
 
 ### Missing Pages
+
 In the index but the file was deleted. Dangling references.
 **Fix**: Either recreate the page from knowledge or remove from index.
 
 ### Broken Wikilinks
+
 `[[slug]]` references that point to pages that don't exist.
 **Fix**: Create the missing page, or correct the link.
 
 ### Isolated Pages
+
 Pages with no `[[wikilinks]]` — they are unreachable via link traversal.
 **Fix**: Add links from/to related pages.
 
@@ -72,14 +76,17 @@ pages = wiki_store.list_pages()
 ```
 
 Look for:
+
 - Same entity with conflicting `type` in different pages
 - Same relation with different direction in different pages
 - Newer ingests that update/supersede older claims
 
 **When you find a contradiction:**
+
 - Add a `## Contradictions` section to the relevant entity/topic pages:
   ```markdown
   ## Contradictions
+
   - doc_001 says X; doc_003 says not-X — unresolved
   ```
 - Flag it in the log:
@@ -95,6 +102,7 @@ Review pages ingested more than N days ago (use the `date` field from the index)
 Ask: "Has any newer document superseded this claim?"
 
 **When a claim is stale:**
+
 - Update the page: add a `## Superseded` section or update the body.
 - Mark the old claim with _(superseded by [[newer-doc-summary]])_.
 
@@ -112,6 +120,7 @@ For each summary page, check: does it link to all entity pages it extracted?
 ## Step 6: Identify Data Gaps
 
 Review entity pages that lack:
+
 - A proper description (just a stub)
 - Any `## Relations` section
 - Any `## Mentioned in` links

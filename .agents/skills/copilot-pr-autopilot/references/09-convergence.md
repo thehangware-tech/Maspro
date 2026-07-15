@@ -61,7 +61,7 @@ else:
      re-check via this step)
 ```
 
-A non-converged result is **never** terminal *on its own* — each round
+A non-converged result is **never** terminal _on its own_ — each round
 addresses the open review feedback on the previous round's HEAD,
 whether that's a **Copilot finding or a human review comment** (this
 skill handles both). The loop terminates only when there are **no new
@@ -70,10 +70,10 @@ or human — has a reply from the agent** (a thread the agent escalated
 to the user counts as replied; it stays open in `OpenThreadCount` as an
 explicit hand-off, not as loop work). But "never terminal" must not be
 read as "infinite": a bot-review loop has no guaranteed fixed point and
-can drift into over-engineering or oscillation. No script *enforces* a
+can drift into over-engineering or oscillation. No script _enforces_ a
 cap or stops the loop — capping is a reasoning decision the parent owns
 at the [round-cap recap gate](#round-cap--recap-gate-circuit-breaker)
-below. What *is* scripted is the round **count** itself
+below. What _is_ scripted is the round **count** itself
 ([09-review-round.ps1](#round-cap--recap-gate-circuit-breaker)), so the
 gate's trigger is deterministic rather than a fallible mental tally
 (and oscillation — the same finding re-raised across rounds — is
@@ -104,14 +104,14 @@ the convergence proof.
 
 ## Round cap & recap gate (circuit breaker)
 
-No script *enforces* a max-rounds cap or stops the loop — a hard number
-can't tell a *productive* round from a *drifting* one. Instead the parent
+No script _enforces_ a max-rounds cap or stops the loop — a hard number
+can't tell a _productive_ round from a _drifting_ one. Instead the parent
 agent runs a **recap gate** as reasoning: default **STOP at every 10th
 round** (10, 20, 30, …) **before** looping back to step 1, recap all
 prior rounds, and decide whether the loop is still serving the PR's
 original scope.
 
-What *is* scripted is the **count**, so the gate's trigger is
+What _is_ scripted is the **count**, so the gate's trigger is
 deterministic instead of a fallible mental tally. A **round** is **one
 execution of [step 1](01-request-review.md)** — one Copilot-review
 trigger at the top of the loop — which produces exactly one Copilot
@@ -161,21 +161,19 @@ early, every 10 rounds, instead of once at the end.
 
 ### Verdicts
 
-| Verdict | When | Action |
-| --- | --- | --- |
-| **CONTINUE** | Every round so far traces to the original PR scope; no drift signals; Copilot is still surfacing in-scope findings. | Loop back to step 1 for the next 10-round block. |
-| **REVERT-AND-SHIP** | One or more rounds drifted (over-engineering / wrong-direction / oscillation) but the in-scope fixes are sound. | `git revert` (or drop) only the drifted commits, keep the in-scope ones, run step 6 build/test, then ship the clean result. Record which rounds were reverted in the convergence proof. |
-| **HAND-OFF** | Drift is entangled with in-scope work, the right fix is a redesign, or the change belongs in a separate PR. | Stop the loop, reply on the relevant threads, and escalate to the user with the recap and a recommendation (separate PR / redesign). Do **not** keep looping. |
+| Verdict             | When                                                                                                                | Action                                                                                                                                                                                  |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **CONTINUE**        | Every round so far traces to the original PR scope; no drift signals; Copilot is still surfacing in-scope findings. | Loop back to step 1 for the next 10-round block.                                                                                                                                        |
+| **REVERT-AND-SHIP** | One or more rounds drifted (over-engineering / wrong-direction / oscillation) but the in-scope fixes are sound.     | `git revert` (or drop) only the drifted commits, keep the in-scope ones, run step 6 build/test, then ship the clean result. Record which rounds were reverted in the convergence proof. |
+| **HAND-OFF**        | Drift is entangled with in-scope work, the right fix is a redesign, or the change belongs in a separate PR.         | Stop the loop, reply on the relevant threads, and escalate to the user with the recap and a recommendation (separate PR / redesign). Do **not** keep looping.                           |
 
 The **trigger** is scripted but the **verdict** is agent reasoning —
 deliberately. [`09-review-round.ps1`](../scripts/09-review-round.ps1)
-makes the *count* deterministic (so the gate can't be missed), but
-*which verdict to pick* stays a judgment call: no number can tell a
+makes the _count_ deterministic (so the gate can't be missed), but
+_which verdict to pick_ stays a judgment call: no number can tell a
 productive round from a drifting one. The recap is cheap (read the
-per-round commits + the PR base diff); the cost of *skipping* it is
+per-round commits + the PR base diff); the cost of _skipping_ it is
 another runaway loop.
-
-
 
 - **Trust `02-check-review-status.ps1`'s `Converged` flag, not your
   own re-derivation.** The script enforces all three conditions

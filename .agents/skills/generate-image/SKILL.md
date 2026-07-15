@@ -43,10 +43,12 @@ Only run this if no keys are set. Guide the user conversationally.
 **URL:** `https://api.openai.com/v1/images/generations`
 
 **Headers:**
+
 - `Authorization: Bearer <SKILL_IMAGE_GEN_OPENAI_KEY>`
 - `Content-Type: application/json`
 
 **Body (JSON):**
+
 ```json
 {
   "model": "gpt-image-2",
@@ -57,11 +59,11 @@ Only run this if no keys are set. Guide the user conversationally.
 }
 ```
 
-| Field | Default | Options |
-|---|---|---|
-| model | `gpt-image-2` | `gpt-image-2`, `gpt-image-1` |
-| size | `1024x1024` | `1024x1024`, `1024x1536`, `1536x1024`, `auto` |
-| quality | `medium` | `low`, `medium`, `high` |
+| Field   | Default       | Options                                       |
+| ------- | ------------- | --------------------------------------------- |
+| model   | `gpt-image-2` | `gpt-image-2`, `gpt-image-1`                  |
+| size    | `1024x1024`   | `1024x1024`, `1024x1536`, `1536x1024`, `auto` |
+| quality | `medium`      | `low`, `medium`, `high`                       |
 
 **Response:** `data[0].b64_json` contains the base64-encoded image. Decode it and save to the output path. If `data[0].url` is present instead, download the image from that URL.
 
@@ -71,19 +73,21 @@ Only run this if no keys are set. Guide the user conversationally.
 **URL:** `https://generativelanguage.googleapis.com/v1beta/models/<model>:generateContent`
 
 **Headers:**
+
 - `x-goog-api-key: <SKILL_IMAGE_GEN_GEMINI_KEY>`
 - `Content-Type: application/json`
 
 **Body (JSON):**
+
 ```json
 {
-  "contents": [{"parts": [{"text": "Generate an image: <user prompt>"}]}],
-  "generationConfig": {"responseModalities": ["TEXT", "IMAGE"]}
+  "contents": [{ "parts": [{ "text": "Generate an image: <user prompt>" }] }],
+  "generationConfig": { "responseModalities": ["TEXT", "IMAGE"] }
 }
 ```
 
-| Field | Default | Options |
-|---|---|---|
+| Field          | Default                | Options                                          |
+| -------------- | ---------------------- | ------------------------------------------------ |
 | model (in URL) | `gemini-2.0-flash-exp` | `gemini-2.0-flash-exp`, `gemini-2.5-flash-image` |
 
 **Response:** Find `candidates[0].content.parts[]` — look for a part with `inlineData.data` (base64 image) and `inlineData.mimeType`. Decode and save.

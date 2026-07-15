@@ -84,6 +84,7 @@ float4 mainPS(VSOut v) : SV_Target { ... }
 ```
 
 When reviewing or refactoring existing code:
+
 1. Identify **correctness** risks first.
 2. Then **portability** issues.
 3. Then **performance** issues.
@@ -94,6 +95,7 @@ When reviewing or refactoring existing code:
 ## Module Structure Patterns
 
 ### Small project (single file)
+
 ```slang
 // shader.slang — all-in-one; acceptable for prototypes
 [shader("compute")]
@@ -102,6 +104,7 @@ void main(uint3 id : SV_DispatchThreadID) { ... }
 ```
 
 ### Medium project (domain-split modules)
+
 ```
 shaders/
 ├── common/
@@ -118,6 +121,7 @@ shaders/
 ```
 
 ### Parameter block organization by update frequency
+
 ```slang
 // Updated once per frame
 struct PerFrameParams { float4x4 view; float4x4 proj; float time; };
@@ -184,12 +188,14 @@ When the task touches engine or host code:
 - Always prefer reflection-friendly and engine-friendly interfaces over clever shader-only abstractions.
 
 ### Slang CMake integration snippet
+
 ```cmake
 find_package(slang REQUIRED PATHS ${CMAKE_INSTALL_PREFIX} NO_DEFAULT_PATH)
 target_link_libraries(yourLib PUBLIC slang::slang)
 ```
 
 ### Slang compile targets (slangc CLI)
+
 ```bash
 # SPIR-V for Vulkan
 slangc shader.slang -target spirv -o shader.spv

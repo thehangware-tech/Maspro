@@ -1,4 +1,4 @@
 /// <reference types="expo/types" />
 /// <reference types="nativewind/types" />
 
-declare module '*.css';
+declare module "*.css";

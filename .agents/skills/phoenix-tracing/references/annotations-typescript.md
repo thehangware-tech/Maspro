@@ -6,7 +6,7 @@ Add feedback to spans, traces, documents, and sessions using the TypeScript clie
 
 ```typescript
 import { createClient } from "@arizeai/phoenix-client";
-const client = createClient();  // Default: http://localhost:6006
+const client = createClient(); // Default: http://localhost:6006
 ```
 
 ## Span Annotations
@@ -25,9 +25,9 @@ await addSpanAnnotation({
     label: "high_quality",
     score: 0.95,
     explanation: "Accurate and well-formatted",
-    metadata: { reviewer: "alice" }
+    metadata: { reviewer: "alice" },
   },
-  sync: true
+  sync: true,
 });
 ```
 
@@ -44,8 +44,8 @@ await addSpanNote({
   client,
   spanNote: {
     spanId: "abc123",
-    note: "This span shows unexpected behavior, needs review"
-  }
+    note: "This span shows unexpected behavior, needs review",
+  },
 });
 ```
 
@@ -60,12 +60,12 @@ await addDocumentAnnotation({
   client,
   documentAnnotation: {
     spanId: "retriever_span",
-    documentPosition: 0,  // 0-based index
+    documentPosition: 0, // 0-based index
     name: "relevance",
     annotatorKind: "LLM",
     label: "relevant",
-    score: 0.95
-  }
+    score: 0.95,
+  },
 });
 ```
 
@@ -83,8 +83,8 @@ await addTraceAnnotation({
     name: "correctness",
     annotatorKind: "HUMAN",
     label: "correct",
-    score: 1.0
-  }
+    score: 1.0,
+  },
 });
 ```
 
@@ -99,8 +99,8 @@ await addTraceNote({
   client,
   traceNote: {
     traceId: "abc123def456",
-    note: "Needs follow-up — unexpected tool call sequence"
-  }
+    note: "Needs follow-up — unexpected tool call sequence",
+  },
 });
 ```
 
@@ -118,8 +118,8 @@ await addSessionAnnotation({
     name: "user_satisfaction",
     annotatorKind: "HUMAN",
     label: "satisfied",
-    score: 0.85
-  }
+    score: 0.85,
+  },
 });
 ```
 
@@ -127,7 +127,10 @@ await addSessionAnnotation({
 
 ```typescript
 import { createClient } from "@arizeai/phoenix-client";
-import { logDocumentAnnotations, addSpanAnnotation } from "@arizeai/phoenix-client/spans";
+import {
+  logDocumentAnnotations,
+  addSpanAnnotation,
+} from "@arizeai/phoenix-client/spans";
 import { addTraceAnnotation } from "@arizeai/phoenix-client/traces";
 
 const client = createClient();
@@ -136,11 +139,23 @@ const client = createClient();
 await logDocumentAnnotations({
   client,
   documentAnnotations: [
-    { spanId: "retriever_span", documentPosition: 0, name: "relevance",
-      annotatorKind: "LLM", label: "relevant", score: 0.95 },
-    { spanId: "retriever_span", documentPosition: 1, name: "relevance",
-      annotatorKind: "LLM", label: "relevant", score: 0.80 }
-  ]
+    {
+      spanId: "retriever_span",
+      documentPosition: 0,
+      name: "relevance",
+      annotatorKind: "LLM",
+      label: "relevant",
+      score: 0.95,
+    },
+    {
+      spanId: "retriever_span",
+      documentPosition: 1,
+      name: "relevance",
+      annotatorKind: "LLM",
+      label: "relevant",
+      score: 0.8,
+    },
+  ],
 });
 
 // LLM response quality
@@ -151,8 +166,8 @@ await addSpanAnnotation({
     name: "faithfulness",
     annotatorKind: "LLM",
     label: "faithful",
-    score: 0.90
-  }
+    score: 0.9,
+  },
 });
 
 // Overall trace quality
@@ -163,8 +178,8 @@ await addTraceAnnotation({
     name: "correctness",
     annotatorKind: "HUMAN",
     label: "correct",
-    score: 1.0
-  }
+    score: 1.0,
+  },
 });
 ```
 

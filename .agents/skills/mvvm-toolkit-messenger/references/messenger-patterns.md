@@ -5,11 +5,11 @@ ViewModels (or any objects) without forcing a shared reference graph.
 
 ## Choosing an implementation
 
-| Type | When to use |
-|------|------------|
-| `WeakReferenceMessenger.Default` | **Default.** Recipients held weakly — eligible for GC even if still registered. Internal trimming runs during full GCs. No manual `Cleanup()` required. |
+| Type                               | When to use                                                                                                                                              |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `WeakReferenceMessenger.Default`   | **Default.** Recipients held weakly — eligible for GC even if still registered. Internal trimming runs during full GCs. No manual `Cleanup()` required.  |
 | `StrongReferenceMessenger.Default` | Use when profiling shows the messenger is hot and allocation matters. Recipients are pinned until you `Unregister`. Forgetting to unregister leaks them. |
-| Custom `IMessenger` instance | Per-window/per-scope messengers (e.g., one per app window). Construct directly and inject through DI. |
+| Custom `IMessenger` instance       | Per-window/per-scope messengers (e.g., one per app window). Construct directly and inject through DI.                                                    |
 
 `ObservableRecipient`'s parameterless constructor uses
 `WeakReferenceMessenger.Default`. Pass a different `IMessenger` to its

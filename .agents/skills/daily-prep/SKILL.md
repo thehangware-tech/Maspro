@@ -1,6 +1,6 @@
 ---
 name: daily-prep
-description: 'Prepare for tomorrow''s meetings and tasks. Pulls calendar from Outlook via WorkIQ, cross-references open tasks and workspace context, classifies meetings, detects conflicts and day-fit issues, finds learning and deep-work slots, and generates a structured HTML prep file with productivity recommendations.'
+description: "Prepare for tomorrow's meetings and tasks. Pulls calendar from Outlook via WorkIQ, cross-references open tasks and workspace context, classifies meetings, detects conflicts and day-fit issues, finds learning and deep-work slots, and generates a structured HTML prep file with productivity recommendations."
 ---
 
 # Daily Prep
@@ -35,27 +35,27 @@ If the response is insufficient, make a follow-up query:
 
 Apply these labels based on attendee domains and subject:
 
-| Label | Criteria |
-|-------|----------|
+| Label               | Criteria                                                                                   |
+| ------------------- | ------------------------------------------------------------------------------------------ |
 | `[Customer · HIGH]` | External attendees from customer/partner domains, or subject matches a known customer name |
-| `[Internal]` | Only internal company domain attendees |
-| `[Community]` | CoP, community, guild, learning sessions |
-| `[Upskilling]` | Training, workshop, certification, learning |
-| `[Optional · skip]` | Tentative, low importance, or known recurring optional (e.g., "Office Hours", "Open Q&A") |
-| `[Personal]` | Private events, non-work |
+| `[Internal]`        | Only internal company domain attendees                                                     |
+| `[Community]`       | CoP, community, guild, learning sessions                                                   |
+| `[Upskilling]`      | Training, workshop, certification, learning                                                |
+| `[Optional · skip]` | Tentative, low importance, or known recurring optional (e.g., "Office Hours", "Open Q&A")  |
+| `[Personal]`        | Private events, non-work                                                                   |
 
 #### Zone Markers
 
 For every meeting, check the organizer field and apply these additional markers:
 
-| Condition | Marker | Action |
-|-----------|--------|--------|
-| Starts ≥ 15:30 and < 16:00 (any organizer) | `⚠️ After-hours` | Recommend decline |
-| Starts ≥ 16:00 and **not** self-organized | `⚠️ After-hours` | Recommend decline |
-| Starts ≥ 16:00 and self-organized | _(no flag)_ | OK — you chose to schedule it |
-| Before 09:00 and **not** self-organized | `⚠️ Early` | Recommend decline — intrudes on learning window |
-| Before 09:00 and self-organized | _(no flag)_ | OK — you chose to schedule it |
-| Overlaps 12:00–13:00 | `🍽️ Lunch conflict` | Note in Calendar Notes |
+| Condition                                  | Marker              | Action                                          |
+| ------------------------------------------ | ------------------- | ----------------------------------------------- |
+| Starts ≥ 15:30 and < 16:00 (any organizer) | `⚠️ After-hours`    | Recommend decline                               |
+| Starts ≥ 16:00 and **not** self-organized  | `⚠️ After-hours`    | Recommend decline                               |
+| Starts ≥ 16:00 and self-organized          | _(no flag)_         | OK — you chose to schedule it                   |
+| Before 09:00 and **not** self-organized    | `⚠️ Early`          | Recommend decline — intrudes on learning window |
+| Before 09:00 and self-organized            | _(no flag)_         | OK — you chose to schedule it                   |
+| Overlaps 12:00–13:00                       | `🍽️ Lunch conflict` | Note in Calendar Notes                          |
 
 "Self-organized" means **you** are the meeting organizer (check the organizer field from WorkIQ).
 
@@ -63,16 +63,17 @@ For every meeting, check the organizer field and apply these additional markers:
 
 Use this as the decision framework for all analysis steps. Every meeting must be evaluated against these zones. Users should adapt these times and targets to their personal routine.
 
-| Zone | Time | Purpose | Rules |
-|------|------|---------|-------|
-| Morning Focus | Before 09:00 | Admin, learning, personal work | Protect from others' meetings. Flag external events. |
-| Customer Zone | 09:00–12:00 | Customer / external meetings | Max 2 customer meetings. Prefer mornings for external calls. |
-| Lunch | 12:00–13:00 | Break | Protected. Flag any overlap. |
-| Deep Work | 13:00–15:30 | Deliverables, focused coding/writing | Minimize meetings. Flag non-essential meetings as deep work disruption. |
-| Protected (strict) | 15:30–16:00 | End of day wind-down | Flag all meetings regardless of organizer. |
-| Protected (flex) | 16:00+ | End of day | Flag others' meetings only. Self-organized OK. |
+| Zone               | Time         | Purpose                              | Rules                                                                   |
+| ------------------ | ------------ | ------------------------------------ | ----------------------------------------------------------------------- |
+| Morning Focus      | Before 09:00 | Admin, learning, personal work       | Protect from others' meetings. Flag external events.                    |
+| Customer Zone      | 09:00–12:00  | Customer / external meetings         | Max 2 customer meetings. Prefer mornings for external calls.            |
+| Lunch              | 12:00–13:00  | Break                                | Protected. Flag any overlap.                                            |
+| Deep Work          | 13:00–15:30  | Deliverables, focused coding/writing | Minimize meetings. Flag non-essential meetings as deep work disruption. |
+| Protected (strict) | 15:30–16:00  | End of day wind-down                 | Flag all meetings regardless of organizer.                              |
+| Protected (flex)   | 16:00+       | End of day                           | Flag others' meetings only. Self-organized OK.                          |
 
 **Targets per day:**
+
 - Learning hours: **1.5h** (from morning focus + gap time)
 - Deep work hours: **2.5h** (13:00–15:30 zone)
 - Customer meetings: **max 2** (preferably in 09:00–12:00)
@@ -83,13 +84,13 @@ Compare event time windows. Flag overlaps in a Conflicts table with a recommenda
 
 Also detect these **day fit issues** (report in a separate "Day Fit Issues" table):
 
-| Check | Condition | Flag |
-|-------|-----------|------|
-| **Customer overload** | >2 `[Customer · HIGH]` meetings | Flag 3rd+ as "Consider rescheduling to another day" |
-| **Deep work disruption** | Non-essential meetings in 13:00–15:30 zone | "Disrupts deep work — consider moving to morning" |
-| **Non-ideal placement** | Customer meetings outside 09:00–12:00 | "Customer meeting outside preferred morning zone" |
-| **Early intrusion** | Others' meetings before 09:00 | "Intrudes on learning window — recommend decline" |
-| **Lunch conflict** | Meeting overlaps 12:00–13:00 | "Conflicts with lunch break" |
+| Check                    | Condition                                  | Flag                                                |
+| ------------------------ | ------------------------------------------ | --------------------------------------------------- |
+| **Customer overload**    | >2 `[Customer · HIGH]` meetings            | Flag 3rd+ as "Consider rescheduling to another day" |
+| **Deep work disruption** | Non-essential meetings in 13:00–15:30 zone | "Disrupts deep work — consider moving to morning"   |
+| **Non-ideal placement**  | Customer meetings outside 09:00–12:00      | "Customer meeting outside preferred morning zone"   |
+| **Early intrusion**      | Others' meetings before 09:00              | "Intrudes on learning window — recommend decline"   |
+| **Lunch conflict**       | Meeting overlaps 12:00–13:00               | "Conflicts with lunch break"                        |
 
 ### 6. Gather Context from Workspace
 
@@ -101,6 +102,7 @@ Also detect these **day fit issues** (report in a separate "Day Fit Issues" tabl
 ### 7. Generate Prep per Meeting
 
 For each meeting (chronological), include:
+
 - Time, subject, organizer
 - Attendee list (first name, company if external)
 - 3–5 actionable prep bullets based on open tasks, recent summaries, and meeting subject
@@ -124,16 +126,16 @@ After generating prep per meeting, analyze the day's schedule to find open slots
 
 Analyze the full day and provide:
 
-| Section | What to Include |
-|---------|------------------|
-| **Day Fit Score** | Rate 0–100% how well the day matches the Ideal Day Structure. Criteria: (1) morning focus clear (+20%), (2) ≤2 customer meetings in 09:00–12:00 (+20%), (3) lunch 12:00–13:00 protected (+15%), (4) deep work 13:00–15:30 intact (+20%), (5) nothing after 15:30 or only self-organized after 16:00 (+15%), (6) ≥1h learning slots found (+10%). Show as: 🟢 ≥80%, 🟡 50–79%, 🔴 <50%. |
-| **Day Shape** | Total meeting hours, focus time available, learning hours, deep work hours, heavy/moderate/light assessment |
-| **Decline Candidates** | Auto-include: (1) all meetings 15:30–16:00, (2) others' meetings ≥16:00, (3) others' meetings <09:00, (4) 3rd+ customer meeting, (5) optional meetings during deep work zone. Show "Reclaim" column with minutes recovered. Self-organized meetings before 09:00 or after 16:00 are **excluded** from auto-decline. |
-| **Conflict Resolution** | Specific recommendation for each overlap |
-| **Learning Slots** | Gaps for upskilling — from Step 8. Table: Window, Duration, Suggested Activity. Show total vs. 1.5h target. |
-| **Deep Work Blocks** | Free gaps in 13:00–15:30 for deliverables — from Step 8. Table: Window, Duration, Suggested Task. |
-| **Energy Management** | Flag if >3h back-to-back customer meetings without a break |
-| **Top 3 Priorities** | The 3 most impactful things to accomplish (meetings + tasks combined) |
+| Section                 | What to Include                                                                                                                                                                                                                                                                                                                                                                        |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Day Fit Score**       | Rate 0–100% how well the day matches the Ideal Day Structure. Criteria: (1) morning focus clear (+20%), (2) ≤2 customer meetings in 09:00–12:00 (+20%), (3) lunch 12:00–13:00 protected (+15%), (4) deep work 13:00–15:30 intact (+20%), (5) nothing after 15:30 or only self-organized after 16:00 (+15%), (6) ≥1h learning slots found (+10%). Show as: 🟢 ≥80%, 🟡 50–79%, 🔴 <50%. |
+| **Day Shape**           | Total meeting hours, focus time available, learning hours, deep work hours, heavy/moderate/light assessment                                                                                                                                                                                                                                                                            |
+| **Decline Candidates**  | Auto-include: (1) all meetings 15:30–16:00, (2) others' meetings ≥16:00, (3) others' meetings <09:00, (4) 3rd+ customer meeting, (5) optional meetings during deep work zone. Show "Reclaim" column with minutes recovered. Self-organized meetings before 09:00 or after 16:00 are **excluded** from auto-decline.                                                                    |
+| **Conflict Resolution** | Specific recommendation for each overlap                                                                                                                                                                                                                                                                                                                                               |
+| **Learning Slots**      | Gaps for upskilling — from Step 8. Table: Window, Duration, Suggested Activity. Show total vs. 1.5h target.                                                                                                                                                                                                                                                                            |
+| **Deep Work Blocks**    | Free gaps in 13:00–15:30 for deliverables — from Step 8. Table: Window, Duration, Suggested Task.                                                                                                                                                                                                                                                                                      |
+| **Energy Management**   | Flag if >3h back-to-back customer meetings without a break                                                                                                                                                                                                                                                                                                                             |
+| **Top 3 Priorities**    | The 3 most impactful things to accomplish (meetings + tasks combined)                                                                                                                                                                                                                                                                                                                  |
 
 ### 10. Write the File
 

@@ -1,7 +1,7 @@
 # Migrating Pester v4 → v5
 
 This is the hard jump. v5 introduced a new runtime that splits a test run into two phases —
-**Discovery** and **Run** — and that changes how you must *structure* tests. It is not a pure
+**Discovery** and **Run** — and that changes how you must _structure_ tests. It is not a pure
 find-and-replace. Read this whole file before editing a suite.
 
 Official guide: https://pester.dev/docs/migrations/v4-to-v5 ·
@@ -13,7 +13,7 @@ Breaking changes: https://pester.dev/docs/migrations/breaking-changes-in-v5
 
 A v5+ run happens in two passes:
 
-- **Discovery** — Pester executes each `*.Tests.ps1` file top to bottom but only to *find* tests.
+- **Discovery** — Pester executes each `*.Tests.ps1` file top to bottom but only to _find_ tests.
   It invokes the `Describe`/`Context` script blocks to collect the tree of `It`s, evaluates `It`
   `-Name` strings and `-TestCases`/`-ForEach` data, and records `BeforeAll`/`It`/etc. script blocks
   **without running them**.
@@ -62,12 +62,12 @@ Describe 'Get-Cactus' {
 ```
 
 Why `$MyInvocation.MyCommand.Path` fails: it returns the path only when evaluated directly in the
-script body. Inside *any* function or script block (and `BeforeAll` is a script block) `Path` is
+script body. Inside _any_ function or script block (and `BeforeAll` is a script block) `Path` is
 empty. Use `$PSScriptRoot` (the test file's directory) or `$PSCommandPath` (the test file's full
 path) instead. `string.Replace('.Tests.ps1','.ps1')` is case-sensitive — keep the `.Tests.ps1`
 casing exact.
 
-> `$MyInvocation.MyCommand.Path` is fine *inside your module/product code* — the change only
+> `$MyInvocation.MyCommand.Path` is fine _inside your module/product code_ — the change only
 > affects the test-file header pattern. See
 > https://pester.dev/docs/usage/importing-tested-functions#migrating-from-pester-v4.
 
@@ -169,7 +169,7 @@ substring that used to match now needs wildcards.
   them — the current block/test — not the entire `Describe`/`Context`. Define the `Mock` in the
   same `BeforeAll`/`It` scope where it applies, and assert counts in that scope.
 - **`Assert-VerifiableMocks` was removed.** Use `Should -InvokeVerifiable`. (`Assert-MockCalled`
-  and `Assert-VerifiableMock` still exist but are *deprecated* in v5 and **removed in v6** — prefer
+  and `Assert-VerifiableMock` still exist but are _deprecated_ in v5 and **removed in v6** — prefer
   `Should -Invoke` / `Should -InvokeVerifiable` now to save a second migration. See
   [v5-to-v6.md](v5-to-v6.md).)
 - **Mocks are debuggable.** v5 no longer rewrites your mock script block, so you can set
@@ -195,32 +195,32 @@ mostly still run (with a warning), but you should move to either the **Simple** 
 
 **Simple interface** (parameter → config property):
 
-| Simple parameter | Configuration property |
-|---|---|
-| `-Path` | `Run.Path` |
-| `-ExcludePath` | `Run.ExcludePath` |
-| `-Tag` | `Filter.Tag` |
-| `-ExcludeTag` | `Filter.ExcludeTag` |
-| `-FullNameFilter` | `Filter.FullName` |
-| `-Output` | `Output.Verbosity` |
-| `-CI` | `TestResult.Enabled` + `Run.Exit` (both `$true`) |
-| `-PassThru` | `Run.PassThru` |
+| Simple parameter  | Configuration property                           |
+| ----------------- | ------------------------------------------------ |
+| `-Path`           | `Run.Path`                                       |
+| `-ExcludePath`    | `Run.ExcludePath`                                |
+| `-Tag`            | `Filter.Tag`                                     |
+| `-ExcludeTag`     | `Filter.ExcludeTag`                              |
+| `-FullNameFilter` | `Filter.FullName`                                |
+| `-Output`         | `Output.Verbosity`                               |
+| `-CI`             | `TestResult.Enabled` + `Run.Exit` (both `$true`) |
+| `-PassThru`       | `Run.PassThru`                                   |
 
 **Legacy (v4) parameters → config:**
 
-| v4 parameter | Configuration property |
-|---|---|
-| `-Script` | `Run.Path` (paths only — no hashtables) |
-| `-EnableExit` | `Run.Exit` |
-| `-TestName` | replaced by `-FullNameFilter` / `Filter.FullName` |
-| `-CodeCoverage` | `CodeCoverage.Path` (+ `CodeCoverage.Enabled = $true`) |
-| `-CodeCoverageOutputFile` | `CodeCoverage.OutputPath` |
-| `-CodeCoverageOutputFileEncoding` | `CodeCoverage.OutputEncoding` |
-| `-CodeCoverageOutputFileFormat` | `CodeCoverage.OutputFormat` |
-| `-OutputFile` | `TestResult.OutputPath` (+ `TestResult.Enabled = $true`) |
-| `-OutputFormat` | `TestResult.OutputFormat` |
-| `-Show` / `-Output` | `Output.Verbosity` (see mapping below) |
-| `-PesterOption`, `-Strict` | ignored / not available |
+| v4 parameter                      | Configuration property                                   |
+| --------------------------------- | -------------------------------------------------------- |
+| `-Script`                         | `Run.Path` (paths only — no hashtables)                  |
+| `-EnableExit`                     | `Run.Exit`                                               |
+| `-TestName`                       | replaced by `-FullNameFilter` / `Filter.FullName`        |
+| `-CodeCoverage`                   | `CodeCoverage.Path` (+ `CodeCoverage.Enabled = $true`)   |
+| `-CodeCoverageOutputFile`         | `CodeCoverage.OutputPath`                                |
+| `-CodeCoverageOutputFileEncoding` | `CodeCoverage.OutputEncoding`                            |
+| `-CodeCoverageOutputFileFormat`   | `CodeCoverage.OutputFormat`                              |
+| `-OutputFile`                     | `TestResult.OutputPath` (+ `TestResult.Enabled = $true`) |
+| `-OutputFormat`                   | `TestResult.OutputFormat`                                |
+| `-Show` / `-Output`               | `Output.Verbosity` (see mapping below)                   |
+| `-PesterOption`, `-Strict`        | ignored / not available                                  |
 
 `-Show` value → `Output.Verbosity`: `All`/`Default`/`Detailed` → `Detailed`; `Fails`/`Normal` →
 `Normal`; `Diagnostic` → `Diagnostic`; `Minimal` → `Minimal`; `None` → `None`.

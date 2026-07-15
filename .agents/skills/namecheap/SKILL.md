@@ -1,6 +1,6 @@
 ---
 name: namecheap
-description: 'Manage DNS records for domains registered with Namecheap via their API. List domains, view/add/update/remove DNS host entries (A, AAAA, CNAME, MX, TXT, etc.), and guide users through API setup including public IP detection and credential configuration. Use when the user mentions Namecheap, DNS records, domain management, or wants to add/change/remove A records, CNAME records, MX records, or TXT records for their domains.'
+description: "Manage DNS records for domains registered with Namecheap via their API. List domains, view/add/update/remove DNS host entries (A, AAAA, CNAME, MX, TXT, etc.), and guide users through API setup including public IP detection and credential configuration. Use when the user mentions Namecheap, DNS records, domain management, or wants to add/change/remove A records, CNAME records, MX records, or TXT records for their domains."
 ---
 
 # Namecheap DNS Management
@@ -87,7 +87,13 @@ python3 namecheap.py domains.ns.update --domain example.com --nameserver ns1.exa
 [
   { "HostName": "@", "RecordType": "A", "Address": "1.2.3.4", "TTL": 1800 },
   { "HostName": "www", "RecordType": "CNAME", "Address": "@", "TTL": 1800 },
-  { "HostName": "@", "RecordType": "MX", "Address": "mail.example.com.", "TTL": 1800, "MXPref": 10 }
+  {
+    "HostName": "@",
+    "RecordType": "MX",
+    "Address": "mail.example.com.",
+    "TTL": 1800,
+    "MXPref": 10
+  }
 ]
 ```
 

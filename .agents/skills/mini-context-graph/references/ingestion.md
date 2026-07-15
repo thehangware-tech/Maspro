@@ -7,6 +7,7 @@ This file defines how the agent extracts entities and relations from a raw docum
 ## Step 1: Read the Document
 
 Read the provided text carefully. Identify:
+
 - **Entities**: noun phrases that refer to real-world objects, systems, components, actors, concepts, or events.
 - **Relations**: verb phrases that describe how one entity affects, contains, causes, uses, or is related to another.
 
@@ -15,22 +16,24 @@ Read the provided text carefully. Identify:
 ## Step 2: Extract Entities
 
 For each entity:
+
 - Record its **name** (normalized: lowercase, strip leading/trailing whitespace)
 - Assign a **type**: a short label (1–3 words) that categorizes the entity
 
 ### Entity Type Examples
 
-| Entity Name | Suggested Type |
-|-------------|---------------|
-| Python interpreter | software |
-| memory leak | issue |
-| operating system | system |
-| database | infrastructure |
-| user | actor |
-| API endpoint | interface |
-| server | infrastructure |
+| Entity Name        | Suggested Type |
+| ------------------ | -------------- |
+| Python interpreter | software       |
+| memory leak        | issue          |
+| operating system   | system         |
+| database           | infrastructure |
+| user               | actor          |
+| API endpoint       | interface      |
+| server             | infrastructure |
 
 **Rules:**
+
 - Types must be general enough to reuse across documents
 - Do NOT create unique types per entity (e.g., avoid `python-interpreter-type`)
 - Use `ontology.md` normalization rules to canonicalize types
@@ -40,6 +43,7 @@ For each entity:
 ## Step 3: Extract Relations
 
 For each pair of entities with an explicit connection in the text:
+
 - Record the **source** entity name
 - Record the **target** entity name
 - Record the **relation type**: a verb or verb phrase (normalized: lowercase)
@@ -58,7 +62,11 @@ Produce a JSON object in this exact format:
 ```json
 {
   "entities": [
-    { "name": "entity name", "type": "entity type", "supporting_text": "exact quote mentioning this entity" }
+    {
+      "name": "entity name",
+      "type": "entity type",
+      "supporting_text": "exact quote mentioning this entity"
+    }
   ],
   "relations": [
     {
@@ -163,18 +171,32 @@ For **existing** entity pages, read the current page and append new information,
 ## Example
 
 **Input document:**
+
 ```
 System crashes due to memory leaks.
 Memory leaks occur when objects are not released.
 ```
 
 **Expected extraction output:**
+
 ```json
 {
   "entities": [
-    { "name": "system crash", "type": "issue",     "supporting_text": "system crashes due to memory leaks" },
-    { "name": "memory leak",  "type": "issue",     "supporting_text": "memory leaks occur when objects are not released" },
-    { "name": "object",       "type": "component", "supporting_text": "objects are not released" }
+    {
+      "name": "system crash",
+      "type": "issue",
+      "supporting_text": "system crashes due to memory leaks"
+    },
+    {
+      "name": "memory leak",
+      "type": "issue",
+      "supporting_text": "memory leaks occur when objects are not released"
+    },
+    {
+      "name": "object",
+      "type": "component",
+      "supporting_text": "objects are not released"
+    }
   ],
   "relations": [
     {

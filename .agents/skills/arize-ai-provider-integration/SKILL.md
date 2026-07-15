@@ -25,6 +25,7 @@ compatibility: Requires the ax CLI and a configured Arize profile.
 Proceed directly with the task — run the `ax` command you need. Do NOT check versions, env vars, or profiles upfront.
 
 If an `ax` command fails, troubleshoot based on the error:
+
 - `command not found` or version error → see references/ax-setup.md
 - `401 Unauthorized` / missing API key → run `ax profiles show` to inspect the current profile. If the profile is missing or the API key is wrong, follow references/ax-profiles.md to create/update it. If the user doesn't have their key, direct them to https://app.arize.com/admin > API Keys
 - Space unknown → run `ax spaces list` to pick by name, or ask the user
@@ -59,26 +60,26 @@ ax ai-integrations list --space SPACE --limit 20 --cursor CURSOR_TOKEN -o json
 
 **Key flags:**
 
-| Flag | Description |
-|------|-------------|
-| `--space` | Space name or ID to filter integrations |
-| `--name` | Case-insensitive substring filter on integration name |
-| `--limit` | Max results (1–100, default 15) |
-| `--cursor` | Pagination token from a previous response |
-| `-o, --output` | Output format: `table` (default) or `json` |
+| Flag           | Description                                           |
+| -------------- | ----------------------------------------------------- |
+| `--space`      | Space name or ID to filter integrations               |
+| `--name`       | Case-insensitive substring filter on integration name |
+| `--limit`      | Max results (1–100, default 15)                       |
+| `--cursor`     | Pagination token from a previous response             |
+| `-o, --output` | Output format: `table` (default) or `json`            |
 
 **Response fields:**
 
-| Field | Description |
-|-------|-------------|
-| `id` | Base64 integration ID — copy this for downstream commands |
-| `name` | Human-readable name |
-| `provider` | LLM provider enum (see Supported Providers below) |
-| `has_api_key` | `true` if credentials are stored |
-| `model_names` | Allowed model list, or `null` if all models are enabled |
-| `enable_default_models` | Whether default models for this provider are allowed |
-| `function_calling_enabled` | Whether tool/function calling is enabled |
-| `auth_type` | Authentication method: `default`, `proxy_with_headers`, or `bearer_token` |
+| Field                      | Description                                                               |
+| -------------------------- | ------------------------------------------------------------------------- |
+| `id`                       | Base64 integration ID — copy this for downstream commands                 |
+| `name`                     | Human-readable name                                                       |
+| `provider`                 | LLM provider enum (see Supported Providers below)                         |
+| `has_api_key`              | `true` if credentials are stored                                          |
+| `model_names`              | Allowed model list, or `null` if all models are enabled                   |
+| `enable_default_models`    | Whether default models for this provider are allowed                      |
+| `function_calling_enabled` | Whether tool/function calling is enabled                                  |
+| `auth_type`                | Authentication method: `default`, `proxy_with_headers`, or `bearer_token` |
 
 ---
 
@@ -185,27 +186,27 @@ ax ai-integrations create \
 
 ### Supported Providers
 
-| Provider | Required extra flags |
-|----------|---------------------|
-| `openAI` | `--api-key <key>` |
-| `anthropic` | `--api-key <key>` |
-| `azureOpenAI` | `--api-key <key>`, `--base-url <azure-endpoint>` |
-| `awsBedrock` | `--provider-metadata '{"role_arn": "<arn>"}'` |
-| `vertexAI` | `--provider-metadata '{"project_id": "<gcp-project>", "location": "<region>"}'` |
-| `gemini` | `--api-key <key>` |
-| `nvidiaNim` | `--api-key <key>`, `--base-url <nim-endpoint>` |
-| `custom` | `--base-url <endpoint>` |
+| Provider      | Required extra flags                                                            |
+| ------------- | ------------------------------------------------------------------------------- |
+| `openAI`      | `--api-key <key>`                                                               |
+| `anthropic`   | `--api-key <key>`                                                               |
+| `azureOpenAI` | `--api-key <key>`, `--base-url <azure-endpoint>`                                |
+| `awsBedrock`  | `--provider-metadata '{"role_arn": "<arn>"}'`                                   |
+| `vertexAI`    | `--provider-metadata '{"project_id": "<gcp-project>", "location": "<region>"}'` |
+| `gemini`      | `--api-key <key>`                                                               |
+| `nvidiaNim`   | `--api-key <key>`, `--base-url <nim-endpoint>`                                  |
+| `custom`      | `--base-url <endpoint>`                                                         |
 
 ### Optional flags for any provider
 
-| Flag | Description |
-|------|-------------|
-| `--model-name` | Allowed model name (repeat for multiple, e.g. `--model-name gpt-4o --model-name gpt-4o-mini`); omit to allow all models |
-| `--enable-default-models` | Enable the provider's default model list |
-| `--function-calling-enabled` | Enable tool/function calling support |
-| `--auth-type` | Authentication type: `default`, `proxy_with_headers`, or `bearer_token` |
-| `--headers` | Custom headers as JSON object or file path (for proxy auth) |
-| `--provider-metadata` | Provider-specific metadata as JSON object or file path |
+| Flag                         | Description                                                                                                             |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `--model-name`               | Allowed model name (repeat for multiple, e.g. `--model-name gpt-4o --model-name gpt-4o-mini`); omit to allow all models |
+| `--enable-default-models`    | Enable the provider's default model list                                                                                |
+| `--function-calling-enabled` | Enable tool/function calling support                                                                                    |
+| `--auth-type`                | Authentication type: `default`, `proxy_with_headers`, or `bearer_token`                                                 |
+| `--headers`                  | Custom headers as JSON object or file path (for proxy auth)                                                             |
+| `--provider-metadata`        | Provider-specific metadata as JSON object or file path                                                                  |
 
 ### After creation
 
@@ -256,15 +257,15 @@ Omit `--force` to get a confirmation prompt instead of deleting immediately.
 
 ## Troubleshooting
 
-| Problem | Solution |
-|---------|----------|
-| `ax: command not found` | See references/ax-setup.md |
-| `401 Unauthorized` | API key may not have access to this space. Verify key and space ID at https://app.arize.com/admin > API Keys |
-| `No profile found` | Run `ax profiles show --expand`; set `ARIZE_API_KEY` env var or write `~/.arize/config.toml` |
-| `Integration not found` | Verify with `ax ai-integrations list --space SPACE` |
-| `has_api_key: false` after create | Credentials were not saved — re-run `update` with the correct `--api-key` or `--provider-metadata` |
-| Evaluator runs fail with LLM errors | Check integration credentials with `ax ai-integrations get INT_ID`; rotate the API key if needed |
-| `provider` mismatch | Cannot change provider after creation — delete and recreate with the correct provider |
+| Problem                             | Solution                                                                                                     |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `ax: command not found`             | See references/ax-setup.md                                                                                   |
+| `401 Unauthorized`                  | API key may not have access to this space. Verify key and space ID at https://app.arize.com/admin > API Keys |
+| `No profile found`                  | Run `ax profiles show --expand`; set `ARIZE_API_KEY` env var or write `~/.arize/config.toml`                 |
+| `Integration not found`             | Verify with `ax ai-integrations list --space SPACE`                                                          |
+| `has_api_key: false` after create   | Credentials were not saved — re-run `update` with the correct `--api-key` or `--provider-metadata`           |
+| Evaluator runs fail with LLM errors | Check integration credentials with `ax ai-integrations get INT_ID`; rotate the API key if needed             |
+| `provider` mismatch                 | Cannot change provider after creation — delete and recreate with the correct provider                        |
 
 ---
 

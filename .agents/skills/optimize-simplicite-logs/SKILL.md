@@ -10,6 +10,7 @@ This skill provides the capability to parse Simplicité logs from a raw `.txt` f
 ## When to Use This Skill
 
 Use this skill when you need to:
+
 - Analyze user-provided Simplicité log files in `.txt` format.
 - Avoid ingesting massive raw log files into your context window.
 - Extract structured fields (like `timestamp`, `level`, `body`) from verbose multi-line log output.
@@ -23,17 +24,21 @@ Use this skill when you need to:
 ## Core Capabilities
 
 ### 1. Context Optimization
+
 Reduces the tokens consumed by large Simplicité logs by extracting only relevant log fields (e.g. `body`, `timestamp`, `level`) and discarding non-relevant structural log data (like `app`, `endpoint`, `contextPath`).
 
 ### 2. Multi-line Support
+
 Properly captures stack traces and multiline errors inside the `body` field of the JSON structure, which a simple text search might miss.
 
 ### 3. Stdout Support
+
 If no output path is provided for the JSON file (e.g. omitting `--output` or `-Output`), the parsed JSON will be printed directly to stdout, allowing you to pipe the output to other tools.
 
 ## Output Summary
 
 After processing, the tool prints a summary to stderr (or console):
+
 ```
 Processed: 123 entries, Skipped: 2 entries
 ```
@@ -41,12 +46,15 @@ Processed: 123 entries, Skipped: 2 entries
 ## Usage Examples
 
 ### Example 1: Python Version (Recommended)
+
 Convert a log file to JSON, keeping only the most important fields:
+
 ```sh
 python /absolute/path/to/skills/optimize-simplicite-logs/scripts/simplicite-log2json.py <input.txt> --include timestamp,level,body --output <output.json>
 ```
 
 ### Example 2: PowerShell Version
+
 ```powershell
 /python /absolute/path/to/skills/optimize-simplicite-logs/scripts/SimpliciteLog2Json.ps1 -InputPath "<input.txt>" -Output "<output.json>" -Include "body,timestamp,level"
 ```
@@ -62,6 +70,7 @@ After generating the `<output.json>`, you can safely read the resulting file to 
 ## Common Patterns
 
 ### Pattern: Fast Contextual Troubleshooting
+
 ```sh
 # 1. Run the script to generate a minified JSON output in the current directory
 python /absolute/path/to/skills/optimize-simplicite-logs/scripts/simplicite-log2json.py logs.txt --include timestamp,level,body --output logs_minified.json

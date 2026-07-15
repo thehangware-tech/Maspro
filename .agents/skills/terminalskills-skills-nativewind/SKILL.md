@@ -104,10 +104,8 @@ export function ProductCard({ product }) {
 ```tsx
 // Automatic dark mode with system preference
 <View className="bg-white dark:bg-gray-900">
-  <Text className="text-black dark:text-white">
-    Adapts to system theme
-  </Text>
-</View>
+  <Text className="text-black dark:text-white">Adapts to system theme</Text>
+</View>;
 
 // Toggle programmatically
 import { useColorScheme } from "nativewind";

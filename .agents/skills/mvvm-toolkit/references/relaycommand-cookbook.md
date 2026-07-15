@@ -138,18 +138,18 @@ exception is surfaced through `ExecutionTask` and bubbles to
 
 Useful properties on `IAsyncRelayCommand`:
 
-| Property | Type | Purpose |
-|----------|------|---------|
-| `ExecutionTask` | `Task?` | The currently running (or last completed) task |
-| `IsRunning` | `bool` | `true` while a task is in flight |
-| `CanBeCanceled` | `bool` | `true` if the wrapped method takes a `CancellationToken` |
-| `IsCancellationRequested` | `bool` | `true` after `Cancel()` was called for the in-flight task |
+| Property                  | Type    | Purpose                                                   |
+| ------------------------- | ------- | --------------------------------------------------------- |
+| `ExecutionTask`           | `Task?` | The currently running (or last completed) task            |
+| `IsRunning`               | `bool`  | `true` while a task is in flight                          |
+| `CanBeCanceled`           | `bool`  | `true` if the wrapped method takes a `CancellationToken`  |
+| `IsCancellationRequested` | `bool`  | `true` after `Cancel()` was called for the in-flight task |
 
 Methods:
 
-| Method | Purpose |
-|--------|---------|
-| `Cancel()` | Signals the active `CancellationToken` |
+| Method                      | Purpose                                                  |
+| --------------------------- | -------------------------------------------------------- |
+| `Cancel()`                  | Signals the active `CancellationToken`                   |
 | `NotifyCanExecuteChanged()` | Re-evaluates `CanExecute` and raises `CanExecuteChanged` |
 
 ---

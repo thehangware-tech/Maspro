@@ -73,17 +73,20 @@ all. I'll interview you for preferences first, then create role and
 communication-style, then fill the gaps in tools-config. OK?"
 
 ### 1. No context files referenced
+
 None of the expected filenames appear anywhere in the loaded instructions.
 Treat this as first-time setup. Run **First-Time Setup** below.
 
 ### 2. Some files referenced but missing on disk
+
 The user started setup previously and didn't finish, or paths exist without
 files behind them. **Resume where they left off:**
+
 - List which files exist and which are missing.
 - Tell the user: "You have {existing files}. Still need: {missing files}. Want to
   pick up where you left off?"
 - When choosing the next file to interview for, the priority order from
-  *Discovering existing context* still applies. Within a tie, use this
+  _Discovering existing context_ still applies. Within a tie, use this
   default sequence: identity -> role -> team -> tools -> communication-style
   -> preferences-and-constraints.
 
@@ -101,16 +104,19 @@ Files exist but some contain unfilled placeholder values. **Fill gaps:**
 - Update the file in place with the user's answer.
 
 ### 4. Files are complete, user wants to update
+
 The user asked to change something, or mentioned a context change in passing
 (e.g., "my manager changed", "we hired someone new", "I moved to a different
 team"). **Targeted update:**
+
 - If the user mentioned the change in passing during another task, offer: "It
   sounds like your {file} may need updating. Want me to fix that now?"
 - If the user explicitly asked, proceed directly.
-- Read the file from the path resolved in *Discovering existing context*.
+- Read the file from the path resolved in _Discovering existing context_.
 - Make the edit and confirm with the user.
 
 ### 5. Files are complete, user wants a full refresh
+
 The user wants to redo a file from scratch. Re-run the interview for that
 specific file following the same steps as first-time setup.
 
@@ -159,14 +165,14 @@ type information a connected system already knows.
 
 **What to look for (per file):**
 
-| File | Factual fields to pre-fill |
-|------|---------------------------|
-| `identity.md` | Name, role/title, organization, team, manager |
-| `role-and-responsibilities.md` | Teams supported, cadences (from calendar), reporting line |
-| `team.md` | Direct reports, frequent collaborators, org chart data |
-| `tools-systems-and-config.md` | ADO org/project/team/area path, repos, tools in use |
-| `communication-style.md` | Writing samples from mail/docs (ask permission first) |
-| `preferences-and-constraints.md` | No pre-fill (these are subjective boundaries) |
+| File                             | Factual fields to pre-fill                                |
+| -------------------------------- | --------------------------------------------------------- |
+| `identity.md`                    | Name, role/title, organization, team, manager             |
+| `role-and-responsibilities.md`   | Teams supported, cadences (from calendar), reporting line |
+| `team.md`                        | Direct reports, frequent collaborators, org chart data    |
+| `tools-systems-and-config.md`    | ADO org/project/team/area path, repos, tools in use       |
+| `communication-style.md`         | Writing samples from mail/docs (ask permission first)     |
+| `preferences-and-constraints.md` | No pre-fill (these are subjective boundaries)             |
 
 **How to execute:**
 
@@ -186,8 +192,8 @@ access to a work profile or directory in this environment, so I'll ask you
 directly") and proceed to the interview questions. Do not silently skip this
 step.
 
-See the full rules and constraints in the *Pre-fill from available data
-sources before asking* section under Interview Rules.
+See the full rules and constraints in the _Pre-fill from available data
+sources before asking_ section under Interview Rules.
 
 ### 4. Interview for identity.md
 
@@ -341,8 +347,8 @@ questions one at a time:
 
 1. "If a colleague described how you write in one sentence, what would they
    say?"
-2. "Read this sentence: *'I'd encourage you to lean into the opportunity to
-   be a genuine force multiplier for the team.'* What's wrong with it for
+2. "Read this sentence: _'I'd encourage you to lean into the opportunity to
+   be a genuine force multiplier for the team.'_ What's wrong with it for
    your voice?" (Surfaces the avoid-list faster than positive questions.)
 3. "When you write a weekly status to leadership, what do you wish you could
    automate, and what do you always end up rewriting?"
@@ -411,10 +417,10 @@ require elevation on macOS or Linux).
 **Step 10a. Detect which harnesses the user uses.** Check whether any of these
 user-scope paths exist (use the filesystem; no need to ask first):
 
-| Harness | User-scope custom instructions path |
-|---------|--------------------------------------|
-| VS Code Copilot Chat / Claude Code | `%USERPROFILE%\.claude\CLAUDE.md` |
-| GitHub Copilot CLI | `%USERPROFILE%\.copilot\copilot-instructions.md` |
+| Harness                            | User-scope custom instructions path              |
+| ---------------------------------- | ------------------------------------------------ |
+| VS Code Copilot Chat / Claude Code | `%USERPROFILE%\.claude\CLAUDE.md`                |
+| GitHub Copilot CLI                 | `%USERPROFILE%\.copilot\copilot-instructions.md` |
 
 VS Code Copilot Chat does not natively read `%USERPROFILE%\.agents\AGENTS.md`,
 but it does read `%USERPROFILE%\.claude\CLAUDE.md`, which is the same file
@@ -485,6 +491,7 @@ If yes, for each other harness file the user wants linked:
 
    Don't keep going without either Dev Mode on or confirmation that the user
    ran the elevated command.
+
 2. **Back up the existing file** to `<file>.bak-<yyyyMMddHHmmss>` so nothing
    is lost. Never delete.
 3. **Create the symlink** pointing to `%USERPROFILE%\.agents\AGENTS.md`
@@ -534,6 +541,7 @@ evolve as you catch me repeating mistakes and ask me to fold the
 correction in. Treat these as living documents, not a finished product."
 
 Show the user:
+
 - List of files created and their paths.
 - The custom instructions file path where the pointers were written.
 
@@ -541,14 +549,14 @@ Show the user:
 
 ## Context Files
 
-| File | Purpose | Consumed By |
-|------|---------|-------------|
-| `identity.md` | Name, role, org, team, manager, what you do | Any skill that needs to know who the user is |
-| `role-and-responsibilities.md` | Responsibilities per team, cadences, deliverables | Status, reporting, and planning skills |
-| `team.md` | Team rosters with roles and focus areas | Skills that prepare for or summarize interactions with people |
-| `tools-systems-and-config.md` | Tools, meeting tags, ADO config per team, pillars, reporting settings | Skills that read meeting notes, run reports, or talk to ADO |
-| `communication-style.md` | Voice, tone, formatting rules, words to avoid, audience-specific adjustments | Any skill that writes content on the user's behalf |
-| `preferences-and-constraints.md` | Hard boundaries, approval rules, working preferences, memory rules | All skills (especially ones that write or send) |
+| File                             | Purpose                                                                      | Consumed By                                                   |
+| -------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| `identity.md`                    | Name, role, org, team, manager, what you do                                  | Any skill that needs to know who the user is                  |
+| `role-and-responsibilities.md`   | Responsibilities per team, cadences, deliverables                            | Status, reporting, and planning skills                        |
+| `team.md`                        | Team rosters with roles and focus areas                                      | Skills that prepare for or summarize interactions with people |
+| `tools-systems-and-config.md`    | Tools, meeting tags, ADO config per team, pillars, reporting settings        | Skills that read meeting notes, run reports, or talk to ADO   |
+| `communication-style.md`         | Voice, tone, formatting rules, words to avoid, audience-specific adjustments | Any skill that writes content on the user's behalf            |
+| `preferences-and-constraints.md` | Hard boundaries, approval rules, working preferences, memory rules           | All skills (especially ones that write or send)               |
 
 Consumers find these files by reading the pointers loaded from any custom
 instructions file (`AGENTS.md`, `copilot-instructions.md`, `CLAUDE.md`,
@@ -559,10 +567,12 @@ instructions file (`AGENTS.md`, `copilot-instructions.md`, `CLAUDE.md`,
 ## Interview Rules
 
 ### Tone
+
 Be direct, warm, and specific. You're an interviewer, not a coach. Don't
 editorialize, compliment, or offer opinions about the user's answers.
 
 ### Pre-fill from available data sources before asking
+
 Before walking the user through a question list, check whether any of your
 available tools or data sources can answer the factual fields for you. The
 user shouldn't have to type things a connected system already knows.
@@ -596,6 +606,7 @@ Rules:
    indirect signals.
 
 ### Questions
+
 - Ask one question at a time. Never present lists of questions.
 - Never ask compound questions.
 - Use what you learn in earlier files to inform later interviews. Don't
@@ -607,6 +618,7 @@ Rules:
 - When you have enough to draft, say so and draft. Don't keep asking. "Enough" means you have answers covering the core fields in that file's template (for identity: name, role, org, team, manager, and what they do). You don't need to walk every listed question if earlier answers already covered the information.
 
 ### The Reaction Pass
+
 After drafting each file, present it and say:
 "Here's my draft. Read through it and tell me what doesn't sound right.
 Anything that feels off, anything I assumed wrong, anything that's missing."
@@ -618,6 +630,7 @@ more specifically you?"
 If they push back a second time and say it's fine, accept it and move on.
 
 ### File Quality
+
 - Keep files concise. One page, not five.
 - The files should sound like the user, not like an AI writing about them.
 - Use their language, their framing, their level of formality.
@@ -693,8 +706,8 @@ make it more specifically you?
 the connective tissue between engineering, leadership, and the ops cadence.
 Nobody else holds all three perspectives at once.
 
-**Agent:** *(Updates the "What I Do" paragraph and writes the file to the
-context directory.)*
+**Agent:** _(Updates the "What I Do" paragraph and writes the file to the
+context directory.)_
 
 That's identity done. Next is role-and-responsibilities, which captures what
 your weeks actually look like. Ready?
@@ -714,9 +727,9 @@ needs updating. Want me to fix that now?
 
 **User:** Yeah go ahead.
 
-**Agent:** *(Resolves the identity.md path from the loaded custom instructions,
+**Agent:** _(Resolves the identity.md path from the loaded custom instructions,
 reads the file, updates the Manager field from "Jordan Rivera" to "Morgan",
-writes the file back.)*
+writes the file back.)_
 
 Done. Updated your manager to Morgan in identity.md. I'll proceed with
 fetching your meetings now.
@@ -744,7 +757,9 @@ step 10d, so every consuming skill picks up the rules automatically.
 ## Error Handling
 
 ### Write failures
+
 If a write to a context file fails:
+
 1. Retry once.
 2. If the retry fails, present the drafted content to the user in a code
    block so nothing is lost.
@@ -752,8 +767,10 @@ If a write to a context file fails:
    a different directory."
 
 ### Malformed existing files
+
 If an existing context file cannot be parsed (missing headings, broken
 tables, garbled content):
+
 - Show the user what looks wrong.
 - Offer to regenerate the file from scratch using the template, preserving
   any recognizable values from the broken file.

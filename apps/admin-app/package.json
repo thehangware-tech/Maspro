@@ -34,6 +34,7 @@
     "typescript": "~6.0.3"
   },
   "scripts": {
+    "dev": "ELECTRON_DISABLE_SANDBOX=1 expo start",
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",

@@ -9,7 +9,7 @@
     "NIMBUSPOST_API_TOKEN",
     "NIMBUSPOST_ORIGIN_PINCODE"
   ],
-  "pipeline": {
+  "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]

@@ -7,12 +7,13 @@ alternative API or modifying the bundled scripts.
 ## GraphQL trigger — `requestReviewsByLogin` is the supported path
 
 ```graphql
-mutation($p: ID!) {
-  requestReviewsByLogin(input: {
-    pullRequestId: $p,
-    botLogins: ["copilot-pull-request-reviewer"]
-  }) {
-    pullRequest { number }
+mutation ($p: ID!) {
+  requestReviewsByLogin(
+    input: { pullRequestId: $p, botLogins: ["copilot-pull-request-reviewer"] }
+  ) {
+    pullRequest {
+      number
+    }
   }
 }
 ```
@@ -31,7 +32,7 @@ Three GraphQL traps:
    `Could not resolve user with login 'Copilot'`.
 3. Slug is **`copilot-pull-request-reviewer`** (the App slug). The
    display login `Copilot` returns `Could not resolve bot with slug
-   'Copilot'`.
+'Copilot'`.
 
 Verify success via a new `copilot_work_started` event on the issue's
 events feed — `GET /repos/{o}/{r}/issues/{n}/events` (see SKILL.md
@@ -49,7 +50,7 @@ trigger rounds on PR 236); it is not timeline-only.
   `reviewers[]=Copilot`** → can return HTTP 201 while silently
   dropping the bot. Not used by the script.
 - **`gh pr edit --add-reviewer Copilot`** → returns `'Copilot' not
-  found` on current `gh`. Not used by the script.
+found` on current `gh`. Not used by the script.
 
 ## GraphQL `latestReviews` — stale cache, do NOT use
 
@@ -95,16 +96,21 @@ flipping `ReviewAtHead` to false.
 ## Reply + resolve mutations — both work
 
 ```graphql
-mutation($tid: ID!, $body: String!) {
-  addPullRequestReviewThreadReply(input: {
-    pullRequestReviewThreadId: $tid,
-    body: $body
-  }) { comment { id } }
+mutation ($tid: ID!, $body: String!) {
+  addPullRequestReviewThreadReply(
+    input: { pullRequestReviewThreadId: $tid, body: $body }
+  ) {
+    comment {
+      id
+    }
+  }
 }
 
-mutation($tid: ID!) {
+mutation ($tid: ID!) {
   resolveReviewThread(input: { threadId: $tid }) {
-    thread { isResolved }
+    thread {
+      isResolved
+    }
   }
 }
 ```

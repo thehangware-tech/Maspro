@@ -13,12 +13,13 @@ azd provision --preview [options]
 ```
 
 **Options:**
-| Option | Description |
-|--------|-------------|
-| `--environment`, `-e` | Name of the environment to use |
-| `--no-prompt` | Accept defaults without prompting |
-| `--debug` | Enable debug logging |
-| `--cwd` | Set working directory |
+
+| Option                | Description                       |
+| --------------------- | --------------------------------- |
+| `--environment`, `-e` | Name of the environment to use    |
+| `--no-prompt`         | Accept defaults without prompting |
+| `--debug`             | Enable debug logging              |
+| `--cwd`               | Set working directory             |
 
 **Examples:**
 
@@ -44,12 +45,13 @@ azd auth login [options]
 ```
 
 **Options:**
-| Option | Description |
-|--------|-------------|
-| `--check-status` | Check login status without logging in |
-| `--use-device-code` | Use device code flow |
-| `--tenant-id` | Specify tenant |
-| `--client-id` | Service principal client ID |
+
+| Option              | Description                           |
+| ------------------- | ------------------------------------- |
+| `--check-status`    | Check login status without logging in |
+| `--use-device-code` | Use device code flow                  |
+| `--tenant-id`       | Specify tenant                        |
+| `--client-id`       | Service principal client ID           |
 
 ### azd env list
 
@@ -75,27 +77,30 @@ az deployment group what-if \
 ```
 
 **Required Parameters:**
-| Parameter | Description |
-|-----------|-------------|
+
+| Parameter                | Description                |
+| ------------------------ | -------------------------- |
 | `--resource-group`, `-g` | Target resource group name |
-| `--template-file`, `-f` | Path to Bicep file |
+| `--template-file`, `-f`  | Path to Bicep file         |
 
 **Optional Parameters:**
-| Parameter | Description |
-|-----------|-------------|
-| `--parameters`, `-p` | Parameter file or inline values |
-| `--validation-level` | `Provider` (default), `ProviderNoRbac`, or `Template` |
-| `--result-format` | `FullResourcePayloads` (default) or `ResourceIdOnly` |
-| `--no-pretty-print` | Output raw JSON for parsing |
-| `--name`, `-n` | Deployment name |
-| `--exclude-change-types` | Exclude specific change types from output |
+
+| Parameter                | Description                                           |
+| ------------------------ | ----------------------------------------------------- |
+| `--parameters`, `-p`     | Parameter file or inline values                       |
+| `--validation-level`     | `Provider` (default), `ProviderNoRbac`, or `Template` |
+| `--result-format`        | `FullResourcePayloads` (default) or `ResourceIdOnly`  |
+| `--no-pretty-print`      | Output raw JSON for parsing                           |
+| `--name`, `-n`           | Deployment name                                       |
+| `--exclude-change-types` | Exclude specific change types from output             |
 
 **Validation Levels:**
-| Level | Description | Use Case |
-|-------|-------------|----------|
-| `Provider` | Full validation with RBAC checks | Default, most thorough |
+
+| Level            | Description                            | Use Case                        |
+| ---------------- | -------------------------------------- | ------------------------------- |
+| `Provider`       | Full validation with RBAC checks       | Default, most thorough          |
 | `ProviderNoRbac` | Full validation, read permissions only | When lacking deploy permissions |
-| `Template` | Static syntax validation only | Quick syntax check |
+| `Template`       | Static syntax validation only          | Quick syntax check              |
 
 **Examples:**
 
@@ -137,10 +142,11 @@ az deployment sub what-if \
 ```
 
 **Required Parameters:**
-| Parameter | Description |
-|-----------|-------------|
-| `--location`, `-l` | Location for deployment metadata |
-| `--template-file`, `-f` | Path to Bicep file |
+
+| Parameter               | Description                      |
+| ----------------------- | -------------------------------- |
+| `--location`, `-l`      | Location for deployment metadata |
+| `--template-file`, `-f` | Path to Bicep file               |
 
 **Examples:**
 
@@ -165,11 +171,12 @@ az deployment mg what-if \
 ```
 
 **Required Parameters:**
-| Parameter | Description |
-|-----------|-------------|
-| `--location`, `-l` | Location for deployment metadata |
-| `--management-group-id`, `-m` | Target management group ID |
-| `--template-file`, `-f` | Path to Bicep file |
+
+| Parameter                     | Description                      |
+| ----------------------------- | -------------------------------- |
+| `--location`, `-l`            | Location for deployment metadata |
+| `--management-group-id`, `-m` | Target management group ID       |
+| `--template-file`, `-f`       | Path to Bicep file               |
 
 ### az deployment tenant what-if
 
@@ -183,10 +190,11 @@ az deployment tenant what-if \
 ```
 
 **Required Parameters:**
-| Parameter | Description |
-|-----------|-------------|
-| `--location`, `-l` | Location for deployment metadata |
-| `--template-file`, `-f` | Path to Bicep file |
+
+| Parameter               | Description                      |
+| ----------------------- | -------------------------------- |
+| `--location`, `-l`      | Location for deployment metadata |
+| `--template-file`, `-f` | Path to Bicep file               |
 
 ### az login
 
@@ -197,10 +205,11 @@ az login [options]
 ```
 
 **Options:**
-| Option | Description |
-|--------|-------------|
-| `--tenant`, `-t` | Tenant ID or domain |
-| `--use-device-code` | Use device code flow |
+
+| Option                | Description                |
+| --------------------- | -------------------------- |
+| `--tenant`, `-t`      | Tenant ID or domain        |
+| `--use-device-code`   | Use device code flow       |
 | `--service-principal` | Login as service principal |
 
 ### az account show
@@ -232,12 +241,13 @@ bicep build <bicep-file> [options]
 ```
 
 **Options:**
-| Option | Description |
-|--------|-------------|
-| `--stdout` | Output to stdout instead of file |
-| `--outdir` | Output directory |
-| `--outfile` | Output file path |
-| `--no-restore` | Skip module restore |
+
+| Option         | Description                      |
+| -------------- | -------------------------------- |
+| `--stdout`     | Output to stdout instead of file |
+| `--outdir`     | Output directory                 |
+| `--outfile`    | Output file path                 |
+| `--no-restore` | Skip module restore              |
 
 **Examples:**
 
@@ -253,6 +263,7 @@ for f in *.bicep; do bicep build "$f" --stdout; done
 ```
 
 **Error Output Format:**
+
 ```
 /path/to/file.bicep(22,51) : Error BCP064: Found unexpected tokens in interpolated expression.
 /path/to/file.bicep(22,51) : Error BCP004: The string at this location is not terminated.
@@ -305,6 +316,7 @@ Traditional ARM parameter files:
 ```
 
 **Detection patterns:**
+
 - `<template-name>.parameters.json`
 - `parameters.json`
 - `parameters/<env>.json`
@@ -354,24 +366,25 @@ targetScope = 'tenant'
 
 **Scope to Command Mapping:**
 
-| targetScope | Command | Required Parameters |
-|-------------|---------|---------------------|
-| `resourceGroup` | `az deployment group what-if` | `--resource-group` |
-| `subscription` | `az deployment sub what-if` | `--location` |
-| `managementGroup` | `az deployment mg what-if` | `--location`, `--management-group-id` |
-| `tenant` | `az deployment tenant what-if` | `--location` |
+| targetScope       | Command                        | Required Parameters                   |
+| ----------------- | ------------------------------ | ------------------------------------- |
+| `resourceGroup`   | `az deployment group what-if`  | `--resource-group`                    |
+| `subscription`    | `az deployment sub what-if`    | `--location`                          |
+| `managementGroup` | `az deployment mg what-if`     | `--location`, `--management-group-id` |
+| `tenant`          | `az deployment tenant what-if` | `--location`                          |
 
 ---
 
 ## Version Requirements
 
-| Tool | Minimum Version | Recommended Version | Key Features |
-|------|-----------------|---------------------|--------------|
-| Azure CLI | 2.14.0 | 2.76.0+ | `--validation-level` switch |
-| Azure Developer CLI | 1.0.0 | Latest | `--preview` flag |
-| Bicep CLI | 0.4.0 | Latest | Best error messages |
+| Tool                | Minimum Version | Recommended Version | Key Features                |
+| ------------------- | --------------- | ------------------- | --------------------------- |
+| Azure CLI           | 2.14.0          | 2.76.0+             | `--validation-level` switch |
+| Azure Developer CLI | 1.0.0           | Latest              | `--preview` flag            |
+| Bicep CLI           | 0.4.0           | Latest              | Best error messages         |
 
 **Check versions:**
+
 ```bash
 az --version
 azd version

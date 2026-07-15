@@ -68,13 +68,13 @@ myblog/
 
 ## CLI Commands
 
-| Command | Description |
-|---------|-------------|
-| `jekyll new <name>` | Create new site |
-| `jekyll build` | Build to `_site/` |
-| `jekyll serve` | Build and serve locally |
-| `jekyll clean` | Remove generated files |
-| `jekyll doctor` | Check for issues |
+| Command             | Description             |
+| ------------------- | ----------------------- |
+| `jekyll new <name>` | Create new site         |
+| `jekyll build`      | Build to `_site/`       |
+| `jekyll serve`      | Build and serve locally |
+| `jekyll clean`      | Remove generated files  |
+| `jekyll doctor`     | Check for issues        |
 
 ### Build Options
 
@@ -179,7 +179,7 @@ Your content here...
 # _config.yml
 markdown: kramdown
 kramdown:
-  input: GFM                    # GitHub Flavored Markdown
+  input: GFM # GitHub Flavored Markdown
   syntax_highlighter: rouge
   syntax_highlighter_opts:
     block:
@@ -249,17 +249,18 @@ commonmark:
 ```html
 <!DOCTYPE html>
 <html>
-<head>
-  <title>{{ page.title }} | {{ site.title }}</title>
-  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
-</head>
-<body>
-  {% include header.html %}
-  <main>
-    {{ content }}
-  </main>
-  {% include footer.html %}
-</body>
+  <head>
+    <title>{{ page.title }} | {{ site.title }}</title>
+    <link
+      rel="stylesheet"
+      href="{{ '/assets/css/style.css' | relative_url }}"
+    />
+  </head>
+  <body>
+    {% include header.html %}
+    <main>{{ content }}</main>
+    {% include footer.html %}
+  </body>
 </html>
 ```
 
@@ -269,6 +270,7 @@ commonmark:
 ---
 layout: default
 ---
+
 <article>
   <h1>{{ page.title }}</h1>
   <time>{{ page.date | date: "%B %d, %Y" }}</time>
@@ -303,14 +305,14 @@ plugins:
 
 ## Troubleshooting
 
-| Issue | Solution |
-|-------|----------|
-| Ruby 3.0+ webrick error | `bundle add webrick` |
-| Permission denied | Use `--user-install` or rbenv |
-| Slow builds | Use `--incremental` |
-| Liquid errors | Check for unescaped `{` `}` |
-| Encoding issues | Add `encoding: utf-8` to config |
-| Plugin not loading | Add to both Gemfile and _config.yml |
+| Issue                   | Solution                            |
+| ----------------------- | ----------------------------------- |
+| Ruby 3.0+ webrick error | `bundle add webrick`                |
+| Permission denied       | Use `--user-install` or rbenv       |
+| Slow builds             | Use `--incremental`                 |
+| Liquid errors           | Check for unescaped `{` `}`         |
+| Encoding issues         | Add `encoding: utf-8` to config     |
+| Plugin not loading      | Add to both Gemfile and _config.yml |
 
 ## Resources
 

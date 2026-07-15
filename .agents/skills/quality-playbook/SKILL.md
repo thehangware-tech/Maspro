@@ -54,14 +54,14 @@ If the operator hands you this skill (or points you at any QPB-installed target)
 
 QPB ships in two execution shapes. Pick the one that matches your runtime — the wrong choice produces the codex-on-codex indirection pathology surfaced by the 2026-04-30 bootstrap test.
 
-| Mode | When this is you | What you do |
-|------|------------------|-------------|
-| **A. Skill-direct (UI-context)** | You are a coding agent (Claude Code, Cursor, Copilot, Codex desktop, etc.) handed this skill in your own chat. Your runtime IS the reasoning loop — you read files, you write files, you decide. | Walk through Phase 1 → Phase 6 yourself using the externalized phase prompts in `phase_prompts/`. Write artifacts into the target's `quality/` directory directly. No subprocess, no runner. |
-| **B. Runner-driven (CLI-automation)** | The operator is invoking `python3 -m bin.run_playbook` deliberately — to batch across multiple targets, drive a headless CI run, or fan out per-phase work to a different model than the one reading this prose. | The orchestrator spawns a CLI agent (`claude`, `copilot`, `codex`, or `cursor`) per phase. You (or whoever is reading this) are the operator-side control loop, not the per-phase reasoner. |
+| Mode                                  | When this is you                                                                                                                                                                                                 | What you do                                                                                                                                                                                  |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **A. Skill-direct (UI-context)**      | You are a coding agent (Claude Code, Cursor, Copilot, Codex desktop, etc.) handed this skill in your own chat. Your runtime IS the reasoning loop — you read files, you write files, you decide.                 | Walk through Phase 1 → Phase 6 yourself using the externalized phase prompts in `phase_prompts/`. Write artifacts into the target's `quality/` directory directly. No subprocess, no runner. |
+| **B. Runner-driven (CLI-automation)** | The operator is invoking `python3 -m bin.run_playbook` deliberately — to batch across multiple targets, drive a headless CI run, or fan out per-phase work to a different model than the one reading this prose. | The orchestrator spawns a CLI agent (`claude`, `copilot`, `codex`, or `cursor`) per phase. You (or whoever is reading this) are the operator-side control loop, not the per-phase reasoner.  |
 
 **Both modes use the same phase prompt content** — the `phase_prompts/*.md` files at the repo root are the single source of truth, loaded by `bin/run_playbook.py::_load_phase_prompt` and read directly by Mode A walkthroughs. The only thing the two modes differ on is WHO drives — you (Mode A) or the orchestrator subprocess-spawning a CLI agent (Mode B).
 
-**When in doubt, default to Mode A.** If the operator wanted runner-driven invocation they would have run the runner themselves; if they pasted "Run the Quality Playbook" into your chat, they want you to drive. The Mode B section below tells you what to do *if* the operator explicitly invokes the runner.
+**When in doubt, default to Mode A.** If the operator wanted runner-driven invocation they would have run the runner themselves; if they pasted "Run the Quality Playbook" into your chat, they want you to drive. The Mode B section below tells you what to do _if_ the operator explicitly invokes the runner.
 
 ### Mode A — skill-direct walkthrough (UI-context)
 
@@ -115,13 +115,13 @@ When the bare invocation fires, the orchestrator emits a one-line stderr banner 
 
 Use only when the operator asks for something specific:
 
-| Need | Flag | Effect |
-|------|------|--------|
-| Run a single phase | `--phase N` (where N ∈ 1..6) | Recovers the v1.5.3 "explore only" pattern with `--phase 1`. |
-| Skip iteration strategies | omit `--iterations` and pass `--phase 1,2,3,4,5,6` | Phases run; iterations don't. |
-| Specific iteration | `--strategy <name> --next-iteration` | Iterates on an existing `quality/` run with a chosen strategy. |
-| Multi-target | pass several positional targets | Each runs independently. |
-| Per-phase CLI agent | `--claude` / `--copilot` / `--codex` / `--cursor` | Picks which CLI runner the orchestrator spawns. Default is `--copilot`. v1.5.4 added the `--cursor` runner (cursor-cli 3.1+). |
+| Need                      | Flag                                               | Effect                                                                                                                        |
+| ------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Run a single phase        | `--phase N` (where N ∈ 1..6)                       | Recovers the v1.5.3 "explore only" pattern with `--phase 1`.                                                                  |
+| Skip iteration strategies | omit `--iterations` and pass `--phase 1,2,3,4,5,6` | Phases run; iterations don't.                                                                                                 |
+| Specific iteration        | `--strategy <name> --next-iteration`               | Iterates on an existing `quality/` run with a chosen strategy.                                                                |
+| Multi-target              | pass several positional targets                    | Each runs independently.                                                                                                      |
+| Per-phase CLI agent       | `--claude` / `--copilot` / `--codex` / `--cursor`  | Picks which CLI runner the orchestrator spawns. Default is `--copilot`. v1.5.4 added the `--cursor` runner (cursor-cli 3.1+). |
 
 #### Recovering from a partial / aborted runner-driven run
 
@@ -167,26 +167,26 @@ If the operator's prompt says something that conflicts with these guardrails (e.
 
 A successful run produces this canonical set under the target's `quality/` directory plus an AGENTS.md at the target's repo root. Every file listed here is gate-validated:
 
-| Path | Role |
-|------|------|
-| `quality/EXPLORATION.md` | Phase 1 findings — the foundation. |
-| `quality/exploration_role_map.json` | Per-file role tagging from Phase 1. |
-| `quality/REQUIREMENTS.md` | Testable requirements with use cases. |
-| `quality/QUALITY.md` | Quality constitution. |
-| `quality/CONTRACTS.md` | Behavioral contracts. |
-| `quality/COVERAGE_MATRIX.md` | Requirement → test traceability. |
-| `quality/COMPLETENESS_REPORT.md` | Final gate verdict. |
-| `quality/test_functional.*` | Automated functional tests. |
-| `quality/RUN_CODE_REVIEW.md` | Three-pass code review protocol. |
-| `quality/RUN_INTEGRATION_TESTS.md` | Integration test protocol. |
-| `quality/RUN_SPEC_AUDIT.md` | Council of Three spec audit protocol. |
-| `quality/RUN_TDD_TESTS.md` | TDD red-green verification protocol. |
-| `quality/BUGS.md` | Consolidated bug report. |
-| `quality/INDEX.md` | Run metadata + role breakdown + gate verdict. |
-| `quality/PROGRESS.md` | Phase-by-phase checkpoint log. |
-| `quality/previous_runs/<TIMESTAMP>/` | Archive of any prior run. |
-| `quality/workspace/` | Intermediate pipeline artifacts (control prompts, code reviews, spec audits, four-pass pipeline outputs, etc.). |
-| `AGENTS.md` (target repo root) | Per-project orientation generated post-Phase-6. Carries a QPB sentinel marker so future runs detect QPB-managed copies. |
+| Path                                 | Role                                                                                                                    |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
+| `quality/EXPLORATION.md`             | Phase 1 findings — the foundation.                                                                                      |
+| `quality/exploration_role_map.json`  | Per-file role tagging from Phase 1.                                                                                     |
+| `quality/REQUIREMENTS.md`            | Testable requirements with use cases.                                                                                   |
+| `quality/QUALITY.md`                 | Quality constitution.                                                                                                   |
+| `quality/CONTRACTS.md`               | Behavioral contracts.                                                                                                   |
+| `quality/COVERAGE_MATRIX.md`         | Requirement → test traceability.                                                                                        |
+| `quality/COMPLETENESS_REPORT.md`     | Final gate verdict.                                                                                                     |
+| `quality/test_functional.*`          | Automated functional tests.                                                                                             |
+| `quality/RUN_CODE_REVIEW.md`         | Three-pass code review protocol.                                                                                        |
+| `quality/RUN_INTEGRATION_TESTS.md`   | Integration test protocol.                                                                                              |
+| `quality/RUN_SPEC_AUDIT.md`          | Council of Three spec audit protocol.                                                                                   |
+| `quality/RUN_TDD_TESTS.md`           | TDD red-green verification protocol.                                                                                    |
+| `quality/BUGS.md`                    | Consolidated bug report.                                                                                                |
+| `quality/INDEX.md`                   | Run metadata + role breakdown + gate verdict.                                                                           |
+| `quality/PROGRESS.md`                | Phase-by-phase checkpoint log.                                                                                          |
+| `quality/previous_runs/<TIMESTAMP>/` | Archive of any prior run.                                                                                               |
+| `quality/workspace/`                 | Intermediate pipeline artifacts (control prompts, code reviews, spec audits, four-pass pipeline outputs, etc.).         |
+| `AGENTS.md` (target repo root)       | Per-project orientation generated post-Phase-6. Carries a QPB sentinel marker so future runs detect QPB-managed copies. |
 
 The gate verdict in `quality/INDEX.md` (`pass` / `partial` / `fail`) is the operator-facing summary of how the run went. If it's anything other than `pass`, surface why before considering the run done.
 
@@ -203,7 +203,7 @@ All reference file mentions in this skill use the short form `references/filenam
 
 ## Why This Exists
 
-Most software projects have tests, but few have a quality *system*. Tests check whether code works. A quality system answers harder questions: what does "working correctly" mean for this specific project? What are the ways it could fail that wouldn't be caught by tests? What should every developer (human or AI) know before touching this code?
+Most software projects have tests, but few have a quality _system_. Tests check whether code works. A quality system answers harder questions: what does "working correctly" mean for this specific project? What are the ways it could fail that wouldn't be caught by tests? What should every developer (human or AI) know before touching this code?
 
 Without a quality playbook, every new contributor (and every new AI session) starts from scratch — guessing at what matters, writing tests that look good but don't catch real bugs, and rediscovering failure modes that were already found and fixed months ago. A quality playbook makes the bar explicit, persistent, and inherited.
 
@@ -211,17 +211,17 @@ Without a quality playbook, every new contributor (and every new AI session) sta
 
 Nine files that together form a repeatable quality system:
 
-| File | Purpose | Why It Matters | Executes Code? |
-|------|---------|----------------|----------------|
-| `quality/QUALITY.md` | Quality constitution — coverage targets, fitness-to-purpose scenarios, theater prevention | Every AI session reads this first. It tells them what "good enough" means so they don't guess. | No |
-| `quality/REQUIREMENTS.md` | Testable requirements with project overview, use cases, and narrative — generated by a five-phase pipeline (contract extraction → derivation → verification → completeness → narrative) | The foundation for Passes 2 and 3 of the code review. Without requirements, review is limited to structural anomalies (~65% ceiling). With them, the review can catch intent violations — absence bugs, cross-file contradictions, and design gaps that are invisible to code reading alone. | No |
-| `quality/test_functional.*` | Automated functional tests derived from specifications | The safety net. Tests tied to what the spec says should happen, not just what the code does. Use the project's language: `test_functional.py` (Python), `FunctionalSpec.scala` (Scala), `functional.test.ts` (TypeScript), `FunctionalTest.java` (Java), etc. | **Yes** |
-| `quality/RUN_CODE_REVIEW.md` | Three-pass code review protocol: structural review, requirement verification, cross-requirement consistency | Structural review alone misses ~35% of real defects. The three-pass pipeline adds requirement verification and consistency checking — backed by experiment evidence showing it finds bugs invisible to all structural review conditions. | No |
-| `quality/RUN_INTEGRATION_TESTS.md` | Integration test protocol — end-to-end pipeline across all variants | Unit tests pass, but does the system actually work end-to-end with real external services? | **Yes** |
-| `quality/BUGS.md` | Consolidated bug report with patches | Every confirmed bug in one place with reproduction details, spec basis, severity, and patch references. The single source of truth for what's broken and how to verify it. | No |
-| `quality/RUN_TDD_TESTS.md` | TDD red-green verification protocol | Proves each bug is real (test fails on unpatched code) and each fix works (test passes after patch). Stronger evidence than a bug report alone — maintainers trust FAIL→PASS demonstrations. | **Yes** |
-| `quality/RUN_SPEC_AUDIT.md` | Council of Three multi-model spec audit protocol | No single AI model catches everything. Three independent models with different blind spots catch defects that any one alone would miss. | No |
-| `AGENTS.md` | Bootstrap context for any AI session working on this project | The "read this first" file. Without it, AI sessions waste their first hour figuring out what's going on. | No |
+| File                               | Purpose                                                                                                                                                                                 | Why It Matters                                                                                                                                                                                                                                                                               | Executes Code? |
+| ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
+| `quality/QUALITY.md`               | Quality constitution — coverage targets, fitness-to-purpose scenarios, theater prevention                                                                                               | Every AI session reads this first. It tells them what "good enough" means so they don't guess.                                                                                                                                                                                               | No             |
+| `quality/REQUIREMENTS.md`          | Testable requirements with project overview, use cases, and narrative — generated by a five-phase pipeline (contract extraction → derivation → verification → completeness → narrative) | The foundation for Passes 2 and 3 of the code review. Without requirements, review is limited to structural anomalies (~65% ceiling). With them, the review can catch intent violations — absence bugs, cross-file contradictions, and design gaps that are invisible to code reading alone. | No             |
+| `quality/test_functional.*`        | Automated functional tests derived from specifications                                                                                                                                  | The safety net. Tests tied to what the spec says should happen, not just what the code does. Use the project's language: `test_functional.py` (Python), `FunctionalSpec.scala` (Scala), `functional.test.ts` (TypeScript), `FunctionalTest.java` (Java), etc.                                | **Yes**        |
+| `quality/RUN_CODE_REVIEW.md`       | Three-pass code review protocol: structural review, requirement verification, cross-requirement consistency                                                                             | Structural review alone misses ~35% of real defects. The three-pass pipeline adds requirement verification and consistency checking — backed by experiment evidence showing it finds bugs invisible to all structural review conditions.                                                     | No             |
+| `quality/RUN_INTEGRATION_TESTS.md` | Integration test protocol — end-to-end pipeline across all variants                                                                                                                     | Unit tests pass, but does the system actually work end-to-end with real external services?                                                                                                                                                                                                   | **Yes**        |
+| `quality/BUGS.md`                  | Consolidated bug report with patches                                                                                                                                                    | Every confirmed bug in one place with reproduction details, spec basis, severity, and patch references. The single source of truth for what's broken and how to verify it.                                                                                                                   | No             |
+| `quality/RUN_TDD_TESTS.md`         | TDD red-green verification protocol                                                                                                                                                     | Proves each bug is real (test fails on unpatched code) and each fix works (test passes after patch). Stronger evidence than a bug report alone — maintainers trust FAIL→PASS demonstrations.                                                                                                 | **Yes**        |
+| `quality/RUN_SPEC_AUDIT.md`        | Council of Three multi-model spec audit protocol                                                                                                                                        | No single AI model catches everything. Three independent models with different blind spots catch defects that any one alone would miss.                                                                                                                                                      | No             |
+| `AGENTS.md`                        | Bootstrap context for any AI session working on this project                                                                                                                            | The "read this first" file. Without it, AI sessions waste their first hour figuring out what's going on.                                                                                                                                                                                     | No             |
 
 Plus output directories: `quality/code_reviews/`, `quality/spec_audits/`, `quality/results/`, `quality/history/`.
 
@@ -233,47 +233,47 @@ The two critical deliverables are the requirements file and the functional test 
 
 The quality gate (`quality_gate.py`) validates these artifacts. If the gate checks for it, this skill must instruct its creation. This is the canonical list — any artifact not listed here should not be gate-enforced, and any gate check should trace to an artifact listed here.
 
-| Artifact | Location | Required? | Created In |
-|----------|----------|-----------|------------|
-| Formal docs manifest (v1.5.3) | `quality/formal_docs_manifest.json` | Yes | Phase 1 (`bin/reference_docs_ingest.py`) |
-| Requirements manifest (v1.5.3) | `quality/requirements_manifest.json` | Yes | Phase 2 |
-| Use cases manifest (v1.5.3) | `quality/use_cases_manifest.json` | Yes | Phase 2 |
-| Bugs manifest (v1.5.3) | `quality/bugs_manifest.json` | If bugs found | Phase 3/4/5 |
-| Citation semantic check (v1.5.3) | `quality/citation_semantic_check.json` | Yes | Phase 4 (Layer 2 Council) |
-| Exploration findings | `quality/EXPLORATION.md` | Yes | Phase 1 |
-| Quality constitution | `quality/QUALITY.md` | Yes | Phase 2 |
-| Requirements (UC identifiers) | `quality/REQUIREMENTS.md` | Yes | Phase 2 |
-| Behavioral contracts | `quality/CONTRACTS.md` | Yes | Phase 2 |
-| Functional tests | `quality/test_functional.*` | Yes | Phase 2 |
-| Regression tests | `quality/test_regression.*` | If bugs found | Phase 3 |
-| Code review protocol | `quality/RUN_CODE_REVIEW.md` | Yes | Phase 2 |
-| Integration test protocol | `quality/RUN_INTEGRATION_TESTS.md` | Yes | Phase 2 |
-| Spec audit protocol | `quality/RUN_SPEC_AUDIT.md` | Yes | Phase 2 |
-| TDD verification protocol | `quality/RUN_TDD_TESTS.md` | Yes | Phase 2 |
-| Bug tracker | `quality/BUGS.md` | Yes | Phase 3 |
-| Coverage matrix | `quality/COVERAGE_MATRIX.md` | Yes | Phase 2 |
-| Completeness report | `quality/COMPLETENESS_REPORT.md` | Yes | Phase 2 (baseline), Phase 5 (final verdict) |
-| Progress tracker | `quality/PROGRESS.md` | Yes | Throughout |
-| AI bootstrap | `AGENTS.md` (target repo root) | Yes | Generated by orchestrator after Phase 6 — not a Phase 2 deliverable |
-| Bug writeups | `quality/writeups/BUG-NNN.md` | If bugs found | Phase 5 |
-| Regression patches | `quality/patches/BUG-NNN-regression-test.patch` | If bugs found | Phase 3 |
-| Fix patches | `quality/patches/BUG-NNN-fix.patch` | Optional | Phase 3 |
-| TDD traceability | `quality/TDD_TRACEABILITY.md` | If bugs have red-phase results | Phase 5 |
-| TDD sidecar | `quality/results/tdd-results.json` | If bugs found | Phase 5 |
-| TDD red-phase logs | `quality/results/BUG-NNN.red.log` | If bugs found | Phase 5 |
-| TDD green-phase logs | `quality/results/BUG-NNN.green.log` | If fix patch exists | Phase 5 |
-| Integration sidecar | `quality/results/integration-results.json` | When integration tests run | Phase 5 |
-| Mechanical verify script | `quality/mechanical/verify.sh` | Yes (benchmark) | Phase 2 |
-| Verify receipt | `quality/results/mechanical-verify.log` + `.exit` | Yes (benchmark) | Phase 5 |
-| Triage probes | `quality/spec_audits/triage_probes.sh` | When triage runs | Phase 4 |
-| Code review reports | `quality/code_reviews/*.md` | Yes | Phase 3 |
-| Spec audit reports | `quality/spec_audits/*auditor*.md` + `*triage*` | Yes | Phase 4 |
-| Recheck results (JSON) | `quality/results/recheck-results.json` | When recheck runs | Recheck |
-| Recheck summary (MD) | `quality/results/recheck-summary.md` | When recheck runs | Recheck |
-| Seed checks | `quality/SEED_CHECKS.md` | If Phase 0b ran | Phase 0b |
-| Run metadata | `quality/results/run-YYYY-MM-DDTHH-MM-SS.json` | Yes | Phase 1 (created), Throughout (updated) |
+| Artifact                         | Location                                          | Required?                      | Created In                                                          |
+| -------------------------------- | ------------------------------------------------- | ------------------------------ | ------------------------------------------------------------------- |
+| Formal docs manifest (v1.5.3)    | `quality/formal_docs_manifest.json`               | Yes                            | Phase 1 (`bin/reference_docs_ingest.py`)                            |
+| Requirements manifest (v1.5.3)   | `quality/requirements_manifest.json`              | Yes                            | Phase 2                                                             |
+| Use cases manifest (v1.5.3)      | `quality/use_cases_manifest.json`                 | Yes                            | Phase 2                                                             |
+| Bugs manifest (v1.5.3)           | `quality/bugs_manifest.json`                      | If bugs found                  | Phase 3/4/5                                                         |
+| Citation semantic check (v1.5.3) | `quality/citation_semantic_check.json`            | Yes                            | Phase 4 (Layer 2 Council)                                           |
+| Exploration findings             | `quality/EXPLORATION.md`                          | Yes                            | Phase 1                                                             |
+| Quality constitution             | `quality/QUALITY.md`                              | Yes                            | Phase 2                                                             |
+| Requirements (UC identifiers)    | `quality/REQUIREMENTS.md`                         | Yes                            | Phase 2                                                             |
+| Behavioral contracts             | `quality/CONTRACTS.md`                            | Yes                            | Phase 2                                                             |
+| Functional tests                 | `quality/test_functional.*`                       | Yes                            | Phase 2                                                             |
+| Regression tests                 | `quality/test_regression.*`                       | If bugs found                  | Phase 3                                                             |
+| Code review protocol             | `quality/RUN_CODE_REVIEW.md`                      | Yes                            | Phase 2                                                             |
+| Integration test protocol        | `quality/RUN_INTEGRATION_TESTS.md`                | Yes                            | Phase 2                                                             |
+| Spec audit protocol              | `quality/RUN_SPEC_AUDIT.md`                       | Yes                            | Phase 2                                                             |
+| TDD verification protocol        | `quality/RUN_TDD_TESTS.md`                        | Yes                            | Phase 2                                                             |
+| Bug tracker                      | `quality/BUGS.md`                                 | Yes                            | Phase 3                                                             |
+| Coverage matrix                  | `quality/COVERAGE_MATRIX.md`                      | Yes                            | Phase 2                                                             |
+| Completeness report              | `quality/COMPLETENESS_REPORT.md`                  | Yes                            | Phase 2 (baseline), Phase 5 (final verdict)                         |
+| Progress tracker                 | `quality/PROGRESS.md`                             | Yes                            | Throughout                                                          |
+| AI bootstrap                     | `AGENTS.md` (target repo root)                    | Yes                            | Generated by orchestrator after Phase 6 — not a Phase 2 deliverable |
+| Bug writeups                     | `quality/writeups/BUG-NNN.md`                     | If bugs found                  | Phase 5                                                             |
+| Regression patches               | `quality/patches/BUG-NNN-regression-test.patch`   | If bugs found                  | Phase 3                                                             |
+| Fix patches                      | `quality/patches/BUG-NNN-fix.patch`               | Optional                       | Phase 3                                                             |
+| TDD traceability                 | `quality/TDD_TRACEABILITY.md`                     | If bugs have red-phase results | Phase 5                                                             |
+| TDD sidecar                      | `quality/results/tdd-results.json`                | If bugs found                  | Phase 5                                                             |
+| TDD red-phase logs               | `quality/results/BUG-NNN.red.log`                 | If bugs found                  | Phase 5                                                             |
+| TDD green-phase logs             | `quality/results/BUG-NNN.green.log`               | If fix patch exists            | Phase 5                                                             |
+| Integration sidecar              | `quality/results/integration-results.json`        | When integration tests run     | Phase 5                                                             |
+| Mechanical verify script         | `quality/mechanical/verify.sh`                    | Yes (benchmark)                | Phase 2                                                             |
+| Verify receipt                   | `quality/results/mechanical-verify.log` + `.exit` | Yes (benchmark)                | Phase 5                                                             |
+| Triage probes                    | `quality/spec_audits/triage_probes.sh`            | When triage runs               | Phase 4                                                             |
+| Code review reports              | `quality/code_reviews/*.md`                       | Yes                            | Phase 3                                                             |
+| Spec audit reports               | `quality/spec_audits/*auditor*.md` + `*triage*`   | Yes                            | Phase 4                                                             |
+| Recheck results (JSON)           | `quality/results/recheck-results.json`            | When recheck runs              | Recheck                                                             |
+| Recheck summary (MD)             | `quality/results/recheck-summary.md`              | When recheck runs              | Recheck                                                             |
+| Seed checks                      | `quality/SEED_CHECKS.md`                          | If Phase 0b ran                | Phase 0b                                                            |
+| Run metadata                     | `quality/results/run-YYYY-MM-DDTHH-MM-SS.json`    | Yes                            | Phase 1 (created), Throughout (updated)                             |
 
-**Sidecar JSON lifecycle:** Write all bug writeups *before* finalizing `tdd-results.json` — the sidecar's `writeup_path` field must point to an existing file, not a placeholder. Similarly, run integration tests and collect results before writing `integration-results.json`.
+**Sidecar JSON lifecycle:** Write all bug writeups _before_ finalizing `tdd-results.json` — the sidecar's `writeup_path` field must point to an existing file, not a placeholder. Similarly, run integration tests and collect results before writing `integration-results.json`.
 
 ### Sidecar JSON Canonical Examples
 
@@ -297,7 +297,11 @@ The quality gate (`quality_gate.py`) validates these artifacts. If the gate chec
     }
   ],
   "summary": {
-    "total": 3, "confirmed_open": 1, "red_failed": 0, "green_failed": 0, "verified": 2
+    "total": 3,
+    "confirmed_open": 1,
+    "red_failed": 0,
+    "green_failed": 0,
+    "verified": 2
   }
 }
 ```
@@ -313,7 +317,17 @@ The quality gate (`quality_gate.py`) validates these artifacts. If the gate chec
   "date": "2026-04-12",
   "project": "repo-name",
   "recommendation": "SHIP",
-  "groups": [{ "group": 1, "name": "Group 1", "use_cases": ["UC-01"], "result": "pass", "tests_passed": 3, "tests_failed": 0, "notes": "" }],
+  "groups": [
+    {
+      "group": 1,
+      "name": "Group 1",
+      "use_cases": ["UC-01"],
+      "result": "pass",
+      "tests_passed": 3,
+      "tests_failed": 0,
+      "notes": ""
+    }
+  ],
   "summary": { "total_groups": 12, "passed": 11, "failed": 1, "skipped": 0 },
   "uc_coverage": { "UC-01": "covered_pass", "UC-02": "not_mapped" }
 }
@@ -338,7 +352,14 @@ Every playbook run creates a timestamped metadata file at `quality/results/run-Y
   "start_time": "2026-04-16T10:30:00Z",
   "end_time": "2026-04-16T11:45:00Z",
   "duration_minutes": 75,
-  "phases_completed": ["Phase 0b", "Phase 1", "Phase 2", "Phase 3", "Phase 4", "Phase 5"],
+  "phases_completed": [
+    "Phase 0b",
+    "Phase 1",
+    "Phase 2",
+    "Phase 3",
+    "Phase 4",
+    "Phase 5"
+  ],
   "iterations_completed": ["gap", "unfiltered", "parity", "adversarial"],
   "bug_count": 12,
   "bug_severity": { "HIGH": 2, "MEDIUM": 5, "LOW": 5 },
@@ -367,7 +388,7 @@ Every playbook run creates a timestamped metadata file at `quality/results/run-Y
 
 **If the user asks "help", "how does this work", "what is this", or any similar phrasing**, respond with this explanation (adapt the wording naturally, don't copy verbatim):
 
-> The Quality Playbook finds bugs that structural code review alone can't catch — the 35% of real defects that require understanding what the code is *supposed* to do. It works phase by phase:
+> The Quality Playbook finds bugs that structural code review alone can't catch — the 35% of real defects that require understanding what the code is _supposed_ to do. It works phase by phase:
 >
 > - **Phase 1 (Explore):** Understand the codebase — architecture, risks, failure modes, specifications
 > - **Phase 2 (Generate):** Produce quality artifacts — requirements, tests, review protocols
@@ -464,6 +485,7 @@ Two files in `quality/` track this run's state across the filesystem so the run 
 ### Initialization (before any phase work, including Phase 0)
 
 If `quality/run_state.jsonl` does not exist:
+
 1. Create `quality/` if absent.
 2. Append the `_index` event to `quality/run_state.jsonl`. Required fields: `event=_index`, `ts` (ISO 8601 UTC with `Z`), `schema_version="1.5.6"`, `event_types` (array listing all event types this run will use — at minimum `_index`, `run_start`, `phase_start`, `pattern_walked`, `pass_started`, `pass_ended`, `finding_logged`, `artifact_written`, `gate_check`, `phase_end`, `error`, `run_end`), `benchmark` (target name), `lever_state` (e.g. `"baseline"` for normal runs), `started_at`.
 3. Append the `run_start` event. Required fields: `event=run_start`, `ts`, `runner` (one of `claude`/`codex`/`copilot`/`cursor`), `playbook_version` (read from SKILL.md frontmatter `version` field), `target_path`.
@@ -476,34 +498,38 @@ If `quality/run_state.jsonl` already exists at run start: this is a **resumed ru
 At every phase boundary (1 through 6), write events:
 
 - **At phase start:** append `{"event":"phase_start","ts":"<now>","phase":N}` to `quality/run_state.jsonl`. Update `quality/PROGRESS.md`: mark phase N as in-progress with current timestamp.
-- **At phase end:** *first* cross-validate the phase's expected artifacts (table below). If validation fails, append `{"event":"error","ts":"<now>","phase":N,"message":"<what's missing>","recoverable":true}` and re-run the phase. If validation passes, append `{"event":"phase_end","ts":"<now>","phase":N,"key_counts":{...},"artifacts_produced":[...]}`. Update PROGRESS.md: check off phase N with summary stats.
+- **At phase end:** _first_ cross-validate the phase's expected artifacts (table below). If validation fails, append `{"event":"error","ts":"<now>","phase":N,"message":"<what's missing>","recoverable":true}` and re-run the phase. If validation passes, append `{"event":"phase_end","ts":"<now>","phase":N,"key_counts":{...},"artifacts_produced":[...]}`. Update PROGRESS.md: check off phase N with summary stats.
 
 **Phase 1 sub-events (in addition to phase_start/phase_end):**
+
 - After walking each of the seven exploration patterns: append `{"event":"pattern_walked","ts":"<now>","phase":1,"pattern":N,"findings_count":K}`. (One event per pattern, even if zero findings.)
 - When `quality/EXPLORATION.md` is written: append `{"event":"artifact_written","ts":"<now>","relative_path":"quality/EXPLORATION.md","byte_size":<size>,"line_count":<lines>}`.
 
 **Phase 4 sub-events:**
+
 - At each pass start (A through D): `{"event":"pass_started","ts":"<now>","phase":4,"pass":"A"}`.
 - At each pass end: `{"event":"pass_ended","ts":"<now>","phase":4,"pass":"A","output_artifact":"<path>"}`.
 
 **Phase 5 / Phase 6 sub-events:**
+
 - At each gate-check completion: `{"event":"gate_check","ts":"<now>","gate_name":"<name>","verdict":"pass|fail|warn|skip","reason":"<short>"}`.
 
 **Run end:**
+
 - After Phase 6 `phase_end`: append `{"event":"run_end","ts":"<now>","status":"success","total_findings":<N>,"final_verdict":"<gate verdict>"}`. Status is `aborted` for `recoverable:false` failures, `failed` for unrecoverable runtime errors.
 
 ### Cross-validation rules at phase_end
 
 Verify the corresponding artifacts before writing each `phase_end` event:
 
-| Phase | Required |
-|---|---|
-| 1 | `quality/EXPLORATION.md` and `quality/PROGRESS.md` satisfy the 13-check Phase 1 gate documented at SKILL.md:1257-1273 (six required headings: `## Open Exploration Findings`, `## Quality Risks`, `## Pattern Applicability Matrix`, `## Pattern Deep Dive — *` ×3+, `## Candidate Bugs for Phase 2`, `## Gate Self-Check`; PROGRESS Phase 1 line marked `[x]`; ≥8 findings with file:line citations; ≥3 multi-location findings; 3-4 FULL pattern matrix rows; ≥2 multi-function pattern deep dives; candidate-bug source mix ≥2 from exploration/risks AND ≥1 from pattern deep dive). `bin/run_state_lib.validate_phase_artifacts(quality_dir, phase=1)` enforces the full gate. |
-| 2 | All nine Generate-contract artifacts exist non-empty under `quality/`: `REQUIREMENTS.md`, `QUALITY.md`, `CONTRACTS.md`, `COVERAGE_MATRIX.md`, `COMPLETENESS_REPORT.md`, `RUN_CODE_REVIEW.md`, `RUN_INTEGRATION_TESTS.md`, `RUN_SPEC_AUDIT.md`, `RUN_TDD_TESTS.md`. Plus at least one non-empty `quality/test_functional.<ext>` (extension varies by language). |
-| 3 | `quality/RUN_CODE_REVIEW.md` exists |
-| 4 | `quality/REQUIREMENTS.md` non-empty AND `quality/COVERAGE_MATRIX.md` exists. If the four-pass skill-derivation pipeline ran (i.e., `quality/phase3/` exists), then `quality/phase3/pass_a_drafts.jsonl`, `quality/phase3/pass_b_citations.jsonl`, `quality/phase3/pass_c_formal.jsonl`, and the Pass D inbox under `quality/phase3/` must all exist and be non-empty. |
-| 5 | `quality/results/quality-gate.log` exists, non-empty |
-| 6 | `quality/BUGS.md` non-empty with `^##\s+BUG-` sections AND `quality/INDEX.md` updated with `gate_verdict` field |
+| Phase | Required                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1     | `quality/EXPLORATION.md` and `quality/PROGRESS.md` satisfy the 13-check Phase 1 gate documented at SKILL.md:1257-1273 (six required headings: `## Open Exploration Findings`, `## Quality Risks`, `## Pattern Applicability Matrix`, `## Pattern Deep Dive — *` ×3+, `## Candidate Bugs for Phase 2`, `## Gate Self-Check`; PROGRESS Phase 1 line marked `[x]`; ≥8 findings with file:line citations; ≥3 multi-location findings; 3-4 FULL pattern matrix rows; ≥2 multi-function pattern deep dives; candidate-bug source mix ≥2 from exploration/risks AND ≥1 from pattern deep dive). `bin/run_state_lib.validate_phase_artifacts(quality_dir, phase=1)` enforces the full gate. |
+| 2     | All nine Generate-contract artifacts exist non-empty under `quality/`: `REQUIREMENTS.md`, `QUALITY.md`, `CONTRACTS.md`, `COVERAGE_MATRIX.md`, `COMPLETENESS_REPORT.md`, `RUN_CODE_REVIEW.md`, `RUN_INTEGRATION_TESTS.md`, `RUN_SPEC_AUDIT.md`, `RUN_TDD_TESTS.md`. Plus at least one non-empty `quality/test_functional.<ext>` (extension varies by language).                                                                                                                                                                                                                                                                                                                      |
+| 3     | `quality/RUN_CODE_REVIEW.md` exists                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| 4     | `quality/REQUIREMENTS.md` non-empty AND `quality/COVERAGE_MATRIX.md` exists. If the four-pass skill-derivation pipeline ran (i.e., `quality/phase3/` exists), then `quality/phase3/pass_a_drafts.jsonl`, `quality/phase3/pass_b_citations.jsonl`, `quality/phase3/pass_c_formal.jsonl`, and the Pass D inbox under `quality/phase3/` must all exist and be non-empty.                                                                                                                                                                                                                                                                                                               |
+| 5     | `quality/results/quality-gate.log` exists, non-empty                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| 6     | `quality/BUGS.md` non-empty with `^##\s+BUG-` sections AND `quality/INDEX.md` updated with `gate_verdict` field                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 
 If a check fails, append the `error` event (recoverable=true) and re-run the phase. Do **not** write `phase_end` against missing artifacts — that's the failure mode v1.5.6 is built to catch.
 
@@ -541,9 +567,9 @@ When prior runs exist, the playbook enters **continuation mode**. This enables i
 ```markdown
 ## Seed Checks (from N prior runs)
 
-| Seed | Origin Run | File:Line | Summary | Assertion |
-|------|-----------|-----------|---------|-----------|
-| SEED-001 | run-1 | virtio_ring.c:3509-3529 | RING_RESET dropped | `"case VIRTIO_F_RING_RESET:" in func` |
+| Seed     | Origin Run | File:Line               | Summary            | Assertion                             |
+| -------- | ---------- | ----------------------- | ------------------ | ------------------------------------- |
+| SEED-001 | run-1      | virtio_ring.c:3509-3529 | RING_RESET dropped | `"case VIRTIO_F_RING_RESET:" in func` |
 ```
 
 **Step 0b: Execute seed checks mechanically.** For each seed, run the assertion against the current source tree. Record PASS (bug was fixed since last run) or FAIL (bug still present). A failing seed is a confirmed carry-forward bug — it must appear in this run's BUGS.md regardless of whether any auditor independently finds it. A passing seed means the bug was fixed — note it in PROGRESS.md as "SEED-NNN: resolved since prior run."
@@ -551,6 +577,7 @@ When prior runs exist, the playbook enters **continuation mode**. This enables i
 **Step 0c: Identify prior-run scope.** Read `quality/previous_runs/*/quality/PROGRESS.md` for scope declarations. Note which subsystems were covered in prior runs. During Phase 1 exploration, prioritize areas NOT covered by prior runs to maximize the chance of finding new bugs. If all subsystems were covered in prior runs, explore the same scope but with different emphasis (e.g., different scrutiny areas, different entry points).
 
 **Step 0d: Inject seeds into downstream phases.** The seed list becomes input to:
+
 - **Phase 3 (code review):** Add to the code review prompt: "Prior runs confirmed these bugs — verify they are still present and look for additional findings in the same subsystems."
 - **Phase 4 (spec audit):** Add to `RUN_SPEC_AUDIT.md`: "Known open issues from prior runs: [seed list]. Expect auditors to find these. If an auditor does NOT flag a known seed bug, that is a coverage gap in their review, not evidence the bug was fixed."
 
@@ -578,6 +605,7 @@ When no `quality/previous_runs/` directory exists but sibling versioned director
 **v1.5.6 instrumentation:** Append `phase_start phase=1` to `quality/run_state.jsonl` now. After walking each exploration pattern, append `pattern_walked phase=1 pattern=N findings_count=K`. At phase end, cross-validate (`quality/EXPLORATION.md` ≥ 200 bytes with finding sections) then append `phase_end phase=1`. See "Run-state instrumentation" above.
 
 > **Required references for this phase** — read these before proceeding:
+>
 > - `references/exploration_patterns.md` — seven bug-finding patterns to apply after open exploration
 
 **First action: create run metadata.** Before any exploration, create the run metadata file:
@@ -620,8 +648,8 @@ Fill in `project`, `model` (exact model string, e.g., `"claude-sonnet-4-6"`), `m
 > Phase 1 found no documentation in reference_docs/. The playbook will proceed
 > using only Tier 3 evidence (the source tree itself). For better results, drop
 > plaintext documentation into:
->   reference_docs/            ← AI chats, design notes, retrospectives (Tier 4 context)
->   reference_docs/cite/       ← project specs, RFCs, API contracts (citable, byte-verified)
+> reference_docs/ ← AI chats, design notes, retrospectives (Tier 4 context)
+> reference_docs/cite/ ← project specs, RFCs, API contracts (citable, byte-verified)
 > See README.md "Step 1: Provide documentation" for details.
 
 **Plaintext only — conversion happens outside the playbook.** Reference docs are `.txt` or `.md` only (schemas.md §2). PDFs, DOCX, HTML, etc. are rejected with an actionable conversion hint (`pdftotext`, `pandoc -t plain`, `lynx -dump`). Do NOT attempt to parse binary or formatted documents inside the skill — run the conversion outside and commit the plaintext.
@@ -706,7 +734,7 @@ Read the README, existing documentation, and build config (`pyproject.toml` / `p
 2. **README and inline documentation** — many projects embed requirements in their README, API docs, or code comments.
 3. **Existing test suite** — tests are implicit specifications. If a test asserts `process(x) == y`, that's a requirement.
 4. **Type signatures and validation rules** — schemas, type annotations, and validators define what the system accepts and rejects.
-5. **Infer from code behavior** — as a last resort, read the code and infer what it's supposed to do. Mark these as *inferred requirements* in QUALITY.md and flag them for user confirmation.
+5. **Infer from code behavior** — as a last resort, read the code and infer what it's supposed to do. Mark these as _inferred requirements_ in QUALITY.md and flag them for user confirmation.
 
 When working from non-formal requirements, label each scenario and test with a **requirement tag** that includes a confidence tier and source:
 
@@ -737,9 +765,9 @@ Record the depth classification for each `reference_docs/` file in PROGRESS.md s
 **Coverage commitment table:** After classifying all `reference_docs/` documents, produce this table in PROGRESS.md under the `## Documentation depth assessment` section:
 
 | Document | Depth | Subsystem | Requirements commitment | If excluded: justification |
-|----------|-------|-----------|------------------------|---------------------------|
+| -------- | ----- | --------- | ----------------------- | -------------------------- |
 
-For every **deep** document, map it to the subsystem it covers, then either commit to deriving requirements from it ("will cover in Phase 2") or provide a specific justification that names the tradeoff. A sentence like "out of scope for this run" is not sufficient — the justification must say *why*, e.g., "interpreter JIT is excluded because this run focuses on the parser/compiler/GC pipeline; separate run recommended."
+For every **deep** document, map it to the subsystem it covers, then either commit to deriving requirements from it ("will cover in Phase 2") or provide a specific justification that names the tradeoff. A sentence like "out of scope for this run" is not sufficient — the justification must say _why_, e.g., "interpreter JIT is excluded because this run focuses on the parser/compiler/GC pipeline; separate run recommended."
 
 **Gate:** A high-risk subsystem documented deeply in `reference_docs/` must not silently disappear from the requirements set. If a deep document has a "will cover" commitment but produces zero requirements by the end of Step 7, the requirements pipeline is incomplete — go back and derive requirements for the gap before proceeding to Phase 2 artifact generation.
 
@@ -815,12 +843,14 @@ If the project has a validation layer (Pydantic models in Python, JSON Schema, T
 Every project has a different failure profile. This step uses **two sources** — not just code exploration, but your training knowledge of what goes wrong in similar systems.
 
 **From code exploration**, ask:
+
 - What does "silently wrong" look like for this project?
 - What external dependencies can change without warning?
 - What looks simple but is actually complex?
 - Where do cross-cutting concerns hide?
 
 **From domain knowledge**, ask:
+
 - "What goes wrong in systems like this?" — If it's an HTTP router, think about header parsing edge cases (quality values, token lists, case sensitivity), middleware ordering dependencies, and path normalization. If it's an HTTP client, think about redirect credential stripping, encoding detection, and connection state leaking. If it's a serialization library, think about null handling asymmetry, API surface consistency between direct methods and view wrappers, lazy evaluation caching bugs, and round-trip fidelity. If it's a web framework, think about response helper edge cases, configuration compilation chains, and middleware state isolation. If it's a batch processor, think about crash recovery, idempotency, silent data loss, state corruption. If it handles randomness or statistics, think about seeding, correlation, distribution bias.
 - "What produces correct-looking output that is actually wrong?" — This is the most dangerous class of bug: output that passes all checks but is subtly corrupted. A response with a `200 OK` but the wrong `Content-Type`. A redirect that succeeds but leaks credentials. A deserialized object that has silently truncated values.
 - "What happens at 10x scale that doesn't happen at 1x?" — Chunk boundaries, rate limits, timeout cascading, memory pressure.
@@ -889,7 +919,7 @@ This is the most important step for the code review protocol. Everything found d
    # Auto-generated: re-run mechanical extraction commands and verify saved artifacts
    set -euo pipefail
    FAIL=0
-   
+
    # Verify <function>
    ACTUAL=$(awk '/void vring_transport_features/,/^}$/' drivers/virtio/virtio_ring.c | grep -nE '^\s*case\s+')
    SAVED=$(cat quality/mechanical/vring_transport_features_cases.txt)
@@ -900,7 +930,7 @@ This is the most important step for the code review protocol. Everything found d
    else
      echo "OK: vring_transport_features_cases.txt"
    fi
-   
+
    exit $FAIL
    ```
 
@@ -920,6 +950,7 @@ This is the most important step for the code review protocol. Everything found d
 4. **Phase D — Completeness check + self-refinement loop.** Apply the domain checklist, testability audit, and cross-requirement consistency check. Also verify that every deep document with a "will cover" commitment in the coverage commitment table has at least one requirement traced to it — if not, add requirements for the gap before continuing.
 
    Write to `quality/COMPLETENESS_REPORT.md` as a **baseline** completeness report (without a `## Verdict` section — the verdict is deferred to Phase 5 post-reconciliation, which produces the only verdict that counts for closure). Then run up to 3 self-refinement iterations: read the report, fix gaps, re-check. Short-circuit when fewer than 3 changes per iteration.
+
 5. **Phase E — Narrative pass.** Add project overview (with overview validation gate), then derive use cases (with use case derivation gate). Both gates must pass before proceeding to category narratives, cross-cutting concerns, and final reordering. This sequencing prevents multi-pass loops where a failed late gate forces re-derivation. Reorder for top-down flow. Renumber sequentially.
 
 **REQUIREMENTS.md must begin with a human-readable overview** that answers: What is this project? What does it do? Who are the actors (users, systems, hardware, protocols)? What are the highest-risk areas? This overview should be useful to someone who has never seen the project before. If the project is a library or driver where all actors are systems, describe the system actors (kernel maintainers, protocol peers, integrators, end-user developers) and their interactions. Do not start with raw scope metadata or HTML comments — lead with a plain-language description.
@@ -927,6 +958,7 @@ This is the most important step for the code review protocol. Everything found d
 **Overview validation gate (mandatory).** After writing the overview, perform this self-check before proceeding to use case derivation:
 
 > Does this overview describe the project the way its actual users would recognize it? Specifically:
+>
 > - Does it name the project's ecosystem role and real-world significance?
 > - Does it identify who depends on it and for what?
 > - Would a developer who uses this project daily say "yes, that's what it is and why it matters"?
@@ -1001,6 +1033,7 @@ For `tier ∈ {1, 2}`, the REQ also carries a `citation` block per `schemas.md` 
 Re-read the coverage commitment table from PROGRESS.md. For each deep document you committed to covering ("will cover in Phase 2"), verify that at least one requirement traces to the subsystem it documents. If your requirements cover only some committed subsystems, add requirements for the gaps before completing Step 7.
 
 For each subsystem, record one of the following in PROGRESS.md:
+
 - the requirement IDs that cover it, or
 - an explicit exclusion with rationale, risk acknowledgment, and recommended follow-up
 
@@ -1052,12 +1085,14 @@ The full PROGRESS.md format the v1.5.6-initialized file will have populated by P
 # Quality Playbook Progress
 
 ## Run metadata
+
 Started: [date/time]
 Project: [project name]
 Skill version: [read from SKILL.md metadata using the reference file resolution order — must match exactly]
 With docs: [yes/no]
 
 ## Phase completion
+
 - [x] Phase 1: Exploration — completed [date/time]
 - [ ] Phase 2: Artifact generation (QUALITY.md, REQUIREMENTS.md, tests, protocols, RUN_TDD_TESTS.md) — `AGENTS.md` is generated by the orchestrator after Phase 6, not here
 - [ ] Phase 3: Code review + regression tests
@@ -1068,30 +1103,33 @@ With docs: [yes/no]
 - [ ] Phase 7: Present, Explore, Improve (interactive)
 
 ## Artifact inventory
-| Artifact | Status | Path | Notes |
-|----------|--------|------|-------|
-| QUALITY.md | pending | | |
-| REQUIREMENTS.md | pending | | |
-| CONTRACTS.md | pending | | |
-| COVERAGE_MATRIX.md | pending | | |
-| COMPLETENESS_REPORT.md | pending | | |
-| Functional tests | pending | | |
-| RUN_CODE_REVIEW.md | pending | | |
-| RUN_INTEGRATION_TESTS.md | pending | | |
-| BUGS.md | pending | | |
-| RUN_TDD_TESTS.md | pending | | |
-| RUN_SPEC_AUDIT.md | pending | | |
-| tdd-results.json | pending | quality/results/ | Structured TDD output |
-| integration-results.json | pending | quality/results/ | Structured integration output |
-| Bug writeups | pending | quality/writeups/ | One per TDD-verified bug |
+
+| Artifact                 | Status  | Path              | Notes                         |
+| ------------------------ | ------- | ----------------- | ----------------------------- |
+| QUALITY.md               | pending |                   |                               |
+| REQUIREMENTS.md          | pending |                   |                               |
+| CONTRACTS.md             | pending |                   |                               |
+| COVERAGE_MATRIX.md       | pending |                   |                               |
+| COMPLETENESS_REPORT.md   | pending |                   |                               |
+| Functional tests         | pending |                   |                               |
+| RUN_CODE_REVIEW.md       | pending |                   |                               |
+| RUN_INTEGRATION_TESTS.md | pending |                   |                               |
+| BUGS.md                  | pending |                   |                               |
+| RUN_TDD_TESTS.md         | pending |                   |                               |
+| RUN_SPEC_AUDIT.md        | pending |                   |                               |
+| tdd-results.json         | pending | quality/results/  | Structured TDD output         |
+| integration-results.json | pending | quality/results/  | Structured integration output |
+| Bug writeups             | pending | quality/writeups/ | One per TDD-verified bug      |
 
 ## Cumulative BUG tracker
+
 <!-- Every confirmed BUG from code review and spec audit goes here.
      Each entry tracks closure status: regression test reference or explicit exemption.
      The closure verification step reads this list to ensure nothing is orphaned. -->
 
-| # | Source | File:Line | Description | Severity | Closure Status | Test/Exemption |
-|---|--------|-----------|-------------|----------|----------------|----------------|
+| #   | Source | File:Line | Description | Severity | Closure Status | Test/Exemption |
+| --- | ------ | --------- | ----------- | -------- | -------------- | -------------- |
+
 <!-- Closure Status values:
      - "confirmed open (xfail)" — bug exists, regression test confirms it, fix pending
        Language equivalents: Python "xfail", TypeScript/JS "test.fails", Go "t.Skip",
@@ -1101,11 +1139,12 @@ With docs: [yes/no]
      - "fixed (test passes)" — bug fixed, regression test now passes, xfail marker removed
      - "exempt (reason)" — no regression test possible, reason documented -->
 
-
 ## Terminal Gate Verification
+
 <!-- Filled in during Phase 5. Must match BUG tracker counts exactly. -->
 
 ## Exploration summary
+
 [Brief notes on architecture, key modules, spec sources, defensive patterns found]
 ```
 
@@ -1119,24 +1158,30 @@ After initializing PROGRESS.md, write your full exploration findings to `quality
 # Exploration Findings
 
 ## Domain and Stack
+
 [Language, framework, build system, deployment target]
 
 ## Architecture
+
 [Key modules with file paths, entry points, data flow, layering]
 
 ## Existing Tests
+
 [Test framework, test count, coverage areas, gaps]
 
 ## Specifications
+
 [What reference_docs/ contains, key spec sections, behavioral rules]
 
 ## Open Exploration Findings
+
 [At least 8 concrete findings from domain-driven investigation.
 Each must have a file path, line number, and specific bug hypothesis.
 At least 4 must reference different modules or subsystems.
 At least 3 must trace a behavior across 2+ functions.]
 
 ## Quality Risks
+
 [At least 5 domain-driven failure scenarios ranked by priority.
 Each must name a specific function, file, and line and explain the failure
 mechanism using domain knowledge of what goes wrong in systems like this.
@@ -1146,48 +1191,58 @@ edge case] will produce [wrong behavior] instead of [correct behavior]."
 A section that lists defensive patterns the code already has does NOT belong here.]
 
 ## Skeletons and Dispatch
+
 [State machines, dispatch tables, feature registries — with file:line citations]
 
 ## Pattern Applicability Matrix
-| Pattern | Decision (`FULL` / `SKIP`) | Target modules | Why |
-|---|---|---|---|
-| Fallback and Degradation Path Parity | | | |
-| Dispatcher Return-Value Correctness | | | |
-| Cross-Implementation Consistency | | | |
-| Enumeration and Representation Completeness | | | |
-| API Surface Consistency | | | |
-| Spec-Structured Parsing Fidelity | | | |
+
+| Pattern                                     | Decision (`FULL` / `SKIP`) | Target modules | Why |
+| ------------------------------------------- | -------------------------- | -------------- | --- |
+| Fallback and Degradation Path Parity        |                            |                |     |
+| Dispatcher Return-Value Correctness         |                            |                |     |
+| Cross-Implementation Consistency            |                            |                |     |
+| Enumeration and Representation Completeness |                            |                |     |
+| API Surface Consistency                     |                            |                |     |
+| Spec-Structured Parsing Fidelity            |                            |                |     |
 
 [3 to 4 patterns must be marked FULL. The rest are SKIP with codebase-specific rationale. Select 4 when a fourth pattern clearly applies and covers different code areas.]
 
 ## Pattern Deep Dive — [Pattern Name]
+
 [Use the output format from `exploration_patterns.md`.
 Trace the relevant code path across 2+ functions, implementations, or API surfaces.
 Each deep dive should pressure-test, refine, or extend findings from the open
 exploration and quality risks stages.]
 
 ## Pattern Deep Dive — [Pattern Name]
+
 [Repeat for each selected FULL pattern. 3 to 4 deep-dive sections total.]
 
 ## Pattern Deep Dive — [Pattern Name]
+
 [Third and final deep dive.]
 
 ## Candidate Bugs for Phase 2
+
 [Consolidated from ALL earlier sections — open exploration, quality risks, AND patterns.
 Minimum 4 candidates with file:line references. At least 2 from open exploration or
 quality risks, at least 1 from a pattern deep dive. For each candidate include the
 source stage and what the Phase 2 code review should inspect.]
 
 ## Derived Requirements
+
 [REQ-001 through REQ-NNN, each with spec basis and tier]
 
 ## Derived Use Cases
+
 [UC-01 through UC-NN, each with actor, trigger, expected outcome]
 
 ## Notes for Artifact Generation
+
 [Anything the next phase needs to know — naming conventions, test patterns, framework quirks]
 
 ## Gate Self-Check
+
 [Written by the Phase 1 gate. Each check 1–12 with PASS/FAIL and one-line evidence.
 This section proves the gate was executed. Do not write this section until you have
 actually verified each check against the file contents.]
@@ -1244,6 +1299,7 @@ Or say "keep going" to continue automatically.
 **v1.5.6 instrumentation:** Append `phase_start phase=2` to `quality/run_state.jsonl` now. At phase end, cross-validate by calling `bin/run_state_lib.validate_phase_artifacts(quality_dir, 2)` — it checks the full Generate contract (REQUIREMENTS.md, QUALITY.md, CONTRACTS.md, COVERAGE_MATRIX.md, COMPLETENESS_REPORT.md, RUN_CODE_REVIEW.md, RUN_INTEGRATION_TESTS.md, RUN_SPEC_AUDIT.md, RUN_TDD_TESTS.md, plus one non-empty `quality/test_functional.<ext>`). If validation passes, append `phase_end phase=2`. If it fails, append an `error` event with `recoverable: true` and re-run the missing artifact generation. (BUG-014 fix: pre-v1.5.6 this note referenced the v1.5.5-design triage model that never shipped.)
 
 > **Required references for this phase** — read these before proceeding:
+>
 > - `quality/EXPLORATION.md` — your Phase 1 findings (architecture, requirements, use cases, pattern analysis)
 > - `references/requirements_pipeline.md` — five-phase pipeline for requirement derivation
 > - `references/defensive_patterns.md` — grep patterns for finding defensive code
@@ -1293,12 +1349,14 @@ Every generated code file (test files, scripts) must begin with a comment header
 Use the comment syntax appropriate for the language (`#`, `//`, `/* */`, etc.). The version in the stamp must match the `metadata.version` in this skill's frontmatter. This stamp makes every generated artifact traceable back to the tool, version, and run that created it — essential when files are emailed, attached to tickets, or reviewed outside the repository context. Use the date the playbook generation started, not the date each individual file was written.
 
 **Stamp placement and exemptions:**
-- For Python files with an encoding pragma (`# -*- coding: utf-8 -*-`) or a shebang (`#!/usr/bin/env python`), place the stamp comment *after* the pragma/shebang, not before — pushing it past line 2 causes `SyntaxWarning`.
+
+- For Python files with an encoding pragma (`# -*- coding: utf-8 -*-`) or a shebang (`#!/usr/bin/env python`), place the stamp comment _after_ the pragma/shebang, not before — pushing it past line 2 causes `SyntaxWarning`.
 - For sidecar JSON files (`tdd-results.json`, `integration-results.json`), the `skill_version` field already serves as the version stamp. JSON does not support comments — do not inject one.
 - For JUnit XML files, no stamp is needed — these are framework-generated.
 - For `.patch` files, do not inject a stamp into the diff body — it would break `git apply`. Rely on the surrounding artifact metadata (BUGS.md, tdd-results.json) for provenance.
 
 **Artifact dependency rules:**
+
 - `quality/RUN_CODE_REVIEW.md` Pass 2 depends on a stable `quality/REQUIREMENTS.md` — thin requirements produce thin Pass 2 review. If the requirements count seems low for the code surface (fewer than ~3–4 requirements per core module), note this at the start of the Pass 2 report.
 - Functional tests depend on `quality/REQUIREMENTS.md` and `quality/QUALITY.md` — after any requirements refinement, re-verify that `test_functional.*` still covers every requirement.
 - `quality/RUN_SPEC_AUDIT.md` depends on requirements, quality scenarios, and docs validation.
@@ -1325,7 +1383,7 @@ Every manifest follows the §1.6 wrapper with `schema_version`, `generated_at`, 
 {
   "schema_version": "<from SKILL.md metadata.version>",
   "generated_at": "<ISO 8601 with explicit Z timezone>",
-  "records": [ /* per-schema records, per schemas.md §4–§8 */ ]
+  "records": [/* per-schema records, per schemas.md §4–§8 */]
 }
 ```
 
@@ -1341,7 +1399,7 @@ Every manifest follows the §1.6 wrapper with `schema_version`, `generated_at`, 
 
 The constitution has six sections:
 
-1. **Purpose** — What quality means for this project, grounded in Deming (built in, not inspected), Juran (fitness for use), Crosby (quality is free). Apply these specifically: what does "fitness for use" mean for *this system*? Not "tests pass" but the actual operational requirement.
+1. **Purpose** — What quality means for this project, grounded in Deming (built in, not inspected), Juran (fitness for use), Crosby (quality is free). Apply these specifically: what does "fitness for use" mean for _this system_? Not "tests pass" but the actual operational requirement.
 2. **Coverage Targets** — Table mapping each subsystem to a target with rationale referencing real risks. Every target must have a "why" grounded in a specific scenario — without it, a future AI session will argue the target down.
 3. **Coverage Theater Prevention** — Project-specific examples of fake tests, derived from what you saw during exploration. (Why: AI-generated tests often pad coverage numbers without catching real bugs — asserting that imports worked, that dicts have keys, or that mocks return what they were configured to return. Calling this out explicitly stops the pattern.)
 4. **Fitness-to-Purpose Scenarios** — The heart of it. Each scenario documents a realistic failure mode with code references and verification method. Aim for 2+ scenarios per core module — typically 8–10 total for a medium project, fewer for small projects, more for complex ones. Quality matters more than count: a scenario that precisely captures a real architectural vulnerability is worth more than three generic ones. (Why: Coverage percentages tell you how much code ran, not whether it ran correctly. A system can have 95% coverage and still lose records silently. Fitness scenarios define what "working correctly" actually means in concrete terms that no one can argue down.)
@@ -1363,6 +1421,7 @@ Organize the tests into three logical groups (classes, describe blocks, modules,
 - **Boundaries and edge cases** — One test per defensive pattern from Step 5.
 
 Key rules:
+
 - **Match the existing import pattern exactly.** Read how existing tests import project modules and do the same thing. Getting this wrong means every test fails.
 - **Read every function's signature before calling it.** Read the actual `def` line — parameter names, types, defaults. Read real data files from the project to understand data shapes. Do not guess at function parameters or fixture structures.
 - **No placeholder tests.** Every test must import and call actual project code. If the body is `pass` or the assertion is trivial (`assert isinstance(x, list)`), delete it. A test that doesn't exercise project code inflates the count and creates false confidence.
@@ -1395,7 +1454,7 @@ The code review protocol has three passes. Each pass runs independently — a fr
 
    (a) **List A (code extraction):** If a `quality/mechanical/<function>_cases.txt` artifact exists for this function, use it as the authoritative code-side list — do not re-extract manually. If no mechanical artifact exists, extract every branch/case label actually present in the code. List each with its exact line number: "line 3511: `case VIRTIO_RING_F_INDIRECT_DESC`", "line 3513: `case VIRTIO_RING_F_EVENT_IDX`", etc. **Extract this list from the code only — do not copy from REQUIREMENTS.md, CONTRACTS.md, or any other generated artifact.** If you cannot cite a line number for a case label, it is not present.
 
-   (b) **List B (spec extraction):** List every constant defined in the relevant header, enum, or spec that *should* be handled.
+   (b) **List B (spec extraction):** List every constant defined in the relevant header, enum, or spec that _should_ be handled.
 
    (c) **Diff:** Compare the two lists. For each constant in List B, mark it as "FOUND (line NNN)" or "NOT IN CODE." Report any constants that are defined but not handled.
 
@@ -1461,6 +1520,7 @@ This is an early filter that catches the most obvious false positives at confirm
 **Spec basis (mandatory field per bug):** Cite the specific documentation passage that establishes the expected behavior — the gathered doc filename, section/page, and the behavioral contract it defines. If no gathered doc covers the behavior, check whether the project's own comments, README, or API docs define it. If no documentation exists for the expected behavior, classify the bug as a "code inconsistency" rather than a "spec violation" and note this in the severity assessment. A spec violation is a stronger finding than a code inconsistency — it means the code contradicts an authoritative source, not just that the code looks wrong. This distinction matters when reporting upstream: maintainers respond to "your code violates section X.Y of your own spec" differently than "this looks like it might be a bug."
 
 **Patch files (mandatory for every confirmed bug).** For each confirmed bug, generate:
+
 - `quality/patches/BUG-NNN-regression-test.patch` — a `git diff` that adds a test demonstrating the bug. **This patch is mandatory, not optional.** It is the strongest evidence a bug exists — independent of any opinion about the fix. A confirmed bug without a regression-test patch is incomplete and will cause `quality_gate.py` to FAIL. Generate this patch immediately after confirming the bug, before moving to the next bug.
 - `quality/patches/BUG-NNN-fix.patch` (optional but strongly encouraged) — a `git diff` with the proposed fix. For bugs where the fix is a single-line or few-line change (e.g., adding a case label, fixing an argument), generate the fix patch — these are low-effort and high-value.
 
@@ -1501,6 +1561,7 @@ git worktree remove /tmp/qpb-patch-check --force
 If `git worktree` is unavailable (shallow clone, detached HEAD), use `git stash && git apply ... && <compile> && git checkout . && git stash pop` as a fallback, or accept `--check`-only validation and note the limitation.
 
 **Compile check for interpreted languages.** The compile command varies by ecosystem:
+
 - **Go:** `go build ./...`
 - **Rust:** `cargo check`
 - **Java/Kotlin (Maven):** `mvn compile -q`
@@ -1515,6 +1576,7 @@ If no compile/syntax check is feasible for the project's language, document this
 If any step fails, fix the patch before recording the bug as confirmed. A bug with a corrupt patch that won't apply is not a confirmed bug — it's a hypothesis with broken evidence. The TDD red-green cycle cannot run on patches that don't apply, and reporting a bug with an unapplyable patch undermines credibility with upstream maintainers. Common patch failures: truncated hunks (missing closing braces), wrong line offsets (patch generated against modified tree instead of clean tree), and syntax errors in generated test code.
 
 **Fix patch requirement.** Every confirmed bug must have either:
+
 - A `quality/patches/BUG-NNN-fix.patch` that passes the validation gate above, OR
 - An explicit justification in BUGS.md explaining why no fix patch is provided (e.g., "fix requires architectural change beyond patch scope," "multiple valid fix strategies — deferring to maintainer judgment," "bug is in upstream dependency").
 
@@ -1540,6 +1602,7 @@ When a bug is fixed (fix patch applied permanently), remove the skip guard and u
 **Source-inspection tests must execute (no `run=False`).** Regression tests that verify source-file structure — string presence in function bodies, case label existence, enum extraction, generated-code shape checks — are safe, deterministic, and fast. They read repository files and perform string matches. For these tests, use `@pytest.mark.xfail(strict=True)` with execution enabled. **Do not use `run=False`** unless the test would mutate external state, hang, or require unavailable infrastructure. A source-inspection test with `run=False` is the worst possible state: the correct check exists but is inert. In v1.3.18, the regression test for BUG-004 (`test_bug_004_transport_feature_whitelist_keeps_ring_reset`) contained the correct assertion `assert "case VIRTIO_F_RING_RESET:" in func` but was marked `run=False` — so the test never executed, the assertion never fired, and the bug remained undetected despite the test suite "passing." When an `xfail(strict=True)` test actually executes and fails, the test suite reports it as XFAIL (expected failure) — this is correct behavior, not a suite failure.
 
 **TDD red/green interaction with skip guards.** During the TDD verification cycle, the red and green phases must temporarily bypass the skip guard to actually execute the test. The protocol should instruct the agent to:
+
 - **Red phase (NEVER SKIPPED):** Remove or disable the skip/xfail guard, then run the test against unpatched code. It must fail. Re-enable the guard after recording the result. **The red phase is mandatory for every confirmed bug, even when no fix patch exists.** A bug without red-phase evidence is unverified — do not record `verdict: "skipped"` without a failing red run. If the red phase cannot execute for a documented reason (compilation failure, environment unavailable), record `red_phase: "error"` with an explanation in `notes`.
 - **Green phase:** Remove or disable the guard, apply the fix patch, run the test. It must pass. If the fix will be reverted, re-enable the guard. **If no fix patch exists, record `green_phase: "skipped"` — but the red phase must still have run.**
 - **After TDD cycle:** The guard remains in the committed regression test file. It is only permanently removed when the fix is merged into the source tree.
@@ -1561,6 +1624,7 @@ When a bug is fixed (fix patch applied permanently), remove the skip guard and u
 If the project uses a language or test framework not listed above, use whatever test runner the project already uses (check for `Makefile`, `package.json`, `build.gradle`, `Cargo.toml`, `go.mod`, `setup.py`, `pyproject.toml`, etc.) and adapt the pattern. If no test runner is available or the language runtime is not installed, record `NOT_RUN` with an explanation — do not skip the log file entirely.
 
 **Log capture format.** Each `BUG-NNN.red.log` and `BUG-NNN.green.log` must follow this format:
+
 ```
 RED
 --- Test output for BUG-NNN red phase ---
@@ -1611,6 +1675,7 @@ After generating the test matrix, check: does every use case in REQUIREMENTS.md 
 **No-selector fallback.** If the project's test framework cannot select tests at the granularity needed for splitting (e.g., a monolithic test suite with no tag/filter support), document the limitation in the integration protocol and use the narrowest feasible command. Record which UCs the group covers and why further splitting is not possible. **A single-command project must still use the grouped JSON schema** — wrap the command in one group with a `use_cases` list covering all UCs that command exercises. A flat list of commands is never a valid substitute for the `groups[]` structure.
 
 **Pre-flight command validation (mandatory).** Before finalizing `RUN_INTEGRATION_TESTS.md`, verify that each group's test command actually discovers and runs tests. Use the framework's dry-run or list mode to confirm:
+
 - **Python:** `pytest --collect-only -q <selector>` — must list at least one test
 - **Go:** `go test -list "." <package>` — must list at least one test name
 - **Java/Kotlin:** `mvn -Dtest=<selector> test -pl <module> --batch-mode -DfailIfNoTests=true`
@@ -1624,6 +1689,7 @@ If the dry-run exits with "no tests found," "No test files found," or a zero-tes
 If the dry-run fails with a **build error** (compilation failure, import error, missing dependency, test setup exception) rather than "no tests found," record the failure in the group's `notes` field as `"pre_flight_error": "environment"` and do not attempt to fix the selector. Environment errors during pre-flight require environment setup, not selector changes.
 
 **Infrastructure group definition.** A single `[Infrastructure]` group may cover build validation, race detection, static analysis, and platform compatibility checks without UC mapping. Infrastructure tests verify build toolchain and platform support, not user-observable behavior. Infrastructure groups:
+
 - Do **not** count toward use-case coverage (the UC coverage check ignores them)
 - Must include a one-line rationale explaining what they validate
 - May **not** be used to relabel broad user-workflow commands to avoid splitting — if the tests exercise user-facing behavior described in a use case, they must be mapped to that UC regardless of how the test is organized
@@ -1635,6 +1701,7 @@ If the dry-run fails with a **build error** (compilation failure, import error, 
 **Structured output (mandatory).** The protocol must instruct the agent to produce machine-readable results alongside the Markdown report, using **JUnit XML** for test execution and a **sidecar JSON** for QPB-specific metadata.
 
 **JUnit XML output:** Each test group should run with the framework's native JUnit XML reporter:
+
 - Python: `pytest --junitxml=quality/results/integration-group-N.xml`
 - Go: `gotestsum --junitxml quality/results/integration-group-N.xml -- -run "TestPattern"`
 - Java/Kotlin: Copy Surefire XML reports to `quality/results/`
@@ -1682,6 +1749,7 @@ If the JUnit XML reporter is unavailable, skip XML and note `"junit_available": 
 **Required top-level fields:** `schema_version`, `skill_version`, `date`, `project`, `recommendation`, `groups`, `summary`, `uc_coverage`. If any of these fields are missing from your output, the result is non-conformant.
 
 **Invalid examples (do not emit these):**
+
 - A flat `"results": [{"command": "go test ./...", "result": "pass"}]` — this is not the grouped schema.
 - A schema with `"commands_run"` instead of `"groups"` — wrong key name.
 - A schema missing `"uc_coverage"` — every use case from REQUIREMENTS.md must appear.
@@ -1733,7 +1801,7 @@ The protocol defines: a copy-pasteable audit prompt with guardrails, project-spe
 
 **Why this rule exists:** In v1.3.16 virtio testing, the triage correctly received a minority finding that `VIRTIO_F_RING_RESET` was missing from a switch/case whitelist. The triage performed a "verification probe" that claimed lines 3527-3528 "explicitly preserve VIRTIO_F_RING_RESET" — but those lines actually contained the `default:` branch. The triage hallucinated compliance with the code. Had it been required to write `assert "case VIRTIO_F_RING_RESET:" in source`, the assertion would have failed, exposing the hallucination. Requiring executable evidence for rejections makes hallucinated rejections self-defeating: the model cannot write a passing assertion for something that isn't in the code.
 
-**Triage evidence must be written to disk.** Verification probe assertions must appear in a file on disk — either appended to `quality/mechanical/verify.sh` or written to a dedicated `quality/spec_audits/triage_probes.sh`. Assertions described in the triage report prose but never written to an executable file are not executable evidence. The gate checks for the existence of probe assertions in the triage output; a triage report that says "verification probe confirms..." without a corresponding assertion in an executable file is non-conformant. This prevents the failure mode where the model narrates what a probe *would* show without actually running it.
+**Triage evidence must be written to disk.** Verification probe assertions must appear in a file on disk — either appended to `quality/mechanical/verify.sh` or written to a dedicated `quality/spec_audits/triage_probes.sh`. Assertions described in the triage report prose but never written to an executable file are not executable evidence. The gate checks for the existence of probe assertions in the triage output; a triage report that says "verification probe confirms..." without a corresponding assertion in an executable file is non-conformant. This prevents the failure mode where the model narrates what a probe _would_ show without actually running it.
 
 ### File 6: `AGENTS.md` (orchestrator-generated; you do NOT write this in Phase 2)
 
@@ -1781,7 +1849,7 @@ The generated protocol must include:
 5. **Traceability table.** The protocol produces a `quality/TDD_TRACEABILITY.md` file mapping:
 
    | Bug ID | Requirement ID | Spec Doc | Spec Section | Behavioral Contract | Test File:Function | Red Result | Green Result |
-   |--------|---------------|----------|-------------|--------------------|--------------------|------------|--------------|
+   | ------ | -------------- | -------- | ------------ | ------------------- | ------------------ | ---------- | ------------ |
 
    Every row must be fully populated. A bug without a spec doc entry is a code inconsistency, not a spec violation — note this in the table and adjust the upstream reporting language accordingly.
 
@@ -1864,7 +1932,7 @@ The generated protocol must include:
    2. **Spec reference** — The specific spec section violated, with URL if available. Quote the behavioral contract (≤15 words) that the code fails to satisfy.
    3. **The code** — The buggy code with file:line citation. Explain why it's wrong in terms of the spec, not just "it looks weird."
    4. **Observable consequence** — What actually breaks. Not "could theoretically fail" — what does fail, under what conditions, with what symptoms.
-   5. **Depth judgment** *(include only when expansion is warranted)* — After drafting sections 1–4, assess: is the consequence self-evident from the code and test alone? If a reader would reasonably ask "why hasn't anyone noticed this?" or "does this affect all configurations equally?", expand the analysis. Trace the buggy function's callers. Show which code paths expose the bug and which mask it. Concrete expansion triggers: transport/config-dependent behavior, feature flags that mask the bug on some paths, indirect dispatch hiding callers, bugs in negotiation/initialization code that only manifest under specific runtime conditions. If the consequence is obvious from the immediate code (e.g., a null dereference, an off-by-one), keep sections 1–4 tight and omit this section.
+   5. **Depth judgment** _(include only when expansion is warranted)_ — After drafting sections 1–4, assess: is the consequence self-evident from the code and test alone? If a reader would reasonably ask "why hasn't anyone noticed this?" or "does this affect all configurations equally?", expand the analysis. Trace the buggy function's callers. Show which code paths expose the bug and which mask it. Concrete expansion triggers: transport/config-dependent behavior, feature flags that mask the bug on some paths, indirect dispatch hiding callers, bugs in negotiation/initialization code that only manifest under specific runtime conditions. If the consequence is obvious from the immediate code (e.g., a null dereference, an off-by-one), keep sections 1–4 tight and omit this section.
    6. **The fix** — A proposed fix as an inline diff (unified diff format), with a brief explanation of why this is the right fix. **Always include a concrete diff** — even for confirmed-open bugs without a separate `.patch` file. If the fix is a one-line change (adding a case label, fixing an argument), write the diff. If the fix requires broader changes, write the minimal diff that addresses the core defect and note what additional changes a full fix would need. The inline diff in the writeup is what makes the writeup actionable — a writeup that says "No fix patch is included" is incomplete and not useful to a maintainer. Example format:
       ```diff
       --- a/drivers/virtio/virtio_ring.c
@@ -1876,7 +1944,7 @@ The generated protocol must include:
        	default:
       ```
    7. **The test** — What the test proves, how to run it, and what output to expect on unpatched vs patched code.
-   8. **Related issues** *(include only when related bugs exist)* — Other bugs in the same class, if any. Flag them even if they're not confirmed yet. Omit this section if no related issues were identified.
+   8. **Related issues** _(include only when related bugs exist)_ — Other bugs in the same class, if any. Flag them even if they're not confirmed yet. Omit this section if no related issues were identified.
 
    **Include the version stamp** at the top of the writeup file (same format as all other generated files).
 
@@ -1887,11 +1955,13 @@ The generated protocol must include:
 ### Checkpoint: Update PROGRESS.md after artifact generation
 
 Re-read `quality/PROGRESS.md`. Update:
+
 - Mark Phase 2 complete with timestamp
 - Update the artifact inventory: set each generated artifact to "generated" with its file path
 - Add exploration summary notes if not already present
 
 **Phase 2 completion gate (mandatory).** Before proceeding to Phase 3, verify:
+
 1. All core artifacts exist on disk under `quality/` (`QUALITY.md`, `CONTRACTS.md`, `REQUIREMENTS.md`, `COVERAGE_MATRIX.md`, `COMPLETENESS_REPORT.md`, `test_functional.*`, `RUN_CODE_REVIEW.md`, `RUN_INTEGRATION_TESTS.md`, `RUN_SPEC_AUDIT.md`, `RUN_TDD_TESTS.md`). `AGENTS.md` is NOT in this list — the orchestrator writes it to the target repo root after Phase 6, not Phase 2.
 2. `REQUIREMENTS.md` contains requirements with specific conditions of satisfaction referencing actual code (file paths, function names, line numbers) — not abstract behavioral descriptions.
 3. If dispatch/enumeration contracts exist: `quality/mechanical/verify.sh` exists and has been executed.
@@ -1927,6 +1997,7 @@ Or say "keep going" to continue automatically.
 **v1.5.6 instrumentation:** Append `phase_start phase=3` to `quality/run_state.jsonl` now. At phase end, cross-validate (`quality/RUN_CODE_REVIEW.md` exists; one writeup per identified bug) then append `phase_end phase=3`.
 
 > **Required references for this phase:**
+>
 > - `quality/REQUIREMENTS.md` — target list for the code review
 > - `references/review_protocols.md` — three-pass protocol and regression test conventions
 
@@ -1958,6 +2029,7 @@ Or say "keep going" to continue automatically.
 **v1.5.6 instrumentation:** Append `phase_start phase=4` now. For each pass A/B/C/D, append `pass_started phase=4 pass=X` and `pass_ended phase=4 pass=X`. At phase end, cross-validate (`quality/REQUIREMENTS.md` non-empty AND `quality/COVERAGE_MATRIX.md` exists) then append `phase_end phase=4`.
 
 > **Required references for this phase:**
+>
 > - `references/spec_audit.md` — Council of Three protocol, triage process, verification probes
 
 Run the spec audit protocol as described in File 5. The triage report **must** include a `## Pre-audit docs validation` section (see `references/spec_audit.md` for the full template). This section is required even if `reference_docs/` is empty — in that case, note what baseline the auditors used instead. Every verification probe in the triage must produce executable evidence (test assertions with line-number citations) per the "Verification probes must produce executable evidence" rule above. After triage, categorize each confirmed finding.
@@ -2023,9 +2095,10 @@ Or say "keep going" to continue automatically.
 
 **v1.5.6 instrumentation:** Append `phase_start phase=5` now. For each gate check, append `gate_check gate_name=X verdict=pass|fail|warn|skip`. At phase end, cross-validate (`quality/results/quality-gate.log` non-empty) then append `phase_end phase=5`.
 
-**Source-edit guardrail (mandatory).** Phase 5 produces *proposed* fixes as patch artifacts at `quality/patches/<BUG-NNN>-fix.patch` and `quality/patches/<BUG-NNN>-regression-test.patch`. Phase 5 must NOT apply those patches to source files outside `quality/`. A self-audit run that mutates the target's source tree is a defect, not legitimate Phase 5 output — the operator chooses when to apply patches in a separate, supervised step. At run end the playbook calls `bin.run_state_lib.validate_no_source_edits(target_dir)`; if that helper reports any non-`quality/` paths dirty, append an `error recoverable:false` event citing the violations and end the run with `run_end status=aborted`. This rule was reaffirmed in v1.5.6 after the Codex bootstrap run on 2026-05-02 went off-rails in Phase 5 and edited five source files outside `quality/` before being killed.
+**Source-edit guardrail (mandatory).** Phase 5 produces _proposed_ fixes as patch artifacts at `quality/patches/<BUG-NNN>-fix.patch` and `quality/patches/<BUG-NNN>-regression-test.patch`. Phase 5 must NOT apply those patches to source files outside `quality/`. A self-audit run that mutates the target's source tree is a defect, not legitimate Phase 5 output — the operator chooses when to apply patches in a separate, supervised step. At run end the playbook calls `bin.run_state_lib.validate_no_source_edits(target_dir)`; if that helper reports any non-`quality/` paths dirty, append an `error recoverable:false` event citing the violations and end the run with `run_end status=aborted`. This rule was reaffirmed in v1.5.6 after the Codex bootstrap run on 2026-05-02 went off-rails in Phase 5 and edited five source files outside `quality/` before being killed.
 
 > **Required references for this phase:**
+>
 > - `quality/PROGRESS.md` — cumulative BUG tracker (authoritative finding list)
 > - `references/challenge_gate.md` — two-round challenge protocol for false-positive detection
 > - `references/requirements_pipeline.md` — post-review reconciliation process
@@ -2068,16 +2141,18 @@ Re-read `quality/PROGRESS.md` — specifically the cumulative BUG tracker. This 
 **Mechanical directory conformance check.** If `quality/mechanical/` exists, it must contain at minimum a `verify.sh` file. An empty `quality/mechanical/` directory is non-conformant — it implies the step was attempted but abandoned. If no dispatch-function contracts exist in this project's scope, do not create a `mechanical/` directory at all. Instead, record in PROGRESS.md: `Mechanical verification: NOT APPLICABLE — no dispatch/registry/enumeration contracts in scope.` If dispatch contracts do exist, `verify.sh` must include one verification block per saved extraction file under `quality/mechanical/` (not just one). A verify.sh that checks only one artifact when multiple exist is incomplete.
 
 **Verification receipt gate (mandatory before terminal gate).** If `quality/mechanical/` exists, the following receipt files must also exist before the terminal gate may run:
+
 - `quality/results/mechanical-verify.log` — full stdout/stderr from `bash quality/mechanical/verify.sh`
 - `quality/results/mechanical-verify.exit` — a single line containing the exit code (e.g., `0`)
 
 If either file is missing, run `bash quality/mechanical/verify.sh > quality/results/mechanical-verify.log 2>&1; echo $? > quality/results/mechanical-verify.exit` now. If the exit code is not `0`, the terminal gate fails — do not proceed until the mechanical mismatch is resolved (by fixing the extraction, not by editing verify.sh or the receipt). PROGRESS.md may not claim "Mechanical verification: passed" unless `mechanical-verify.exit` contains `0`. This gate exists because v1.3.23 PROGRESS.md claimed all verification passed when verify.sh actually returned exit 1 — the receipt file makes this claim auditable.
 
 **TDD Log Closure Gate (mandatory before terminal gate).** Before proceeding to the terminal gate, enumerate all confirmed bug IDs from `quality/BUGS.md` and verify:
+
 1. `quality/results/BUG-NNN.red.log` exists for every confirmed bug.
 2. If `quality/patches/BUG-NNN-fix.patch` exists for that bug, `quality/results/BUG-NNN.green.log` also exists.
 3. The first line of each log file is one of: `RED`, `GREEN`, `NOT_RUN`, `ERROR`.
-If any check fails, stop and generate the missing logs now using the language-aware test execution commands from the TDD execution enforcement section. Do not proceed to the terminal gate with missing TDD logs — a bug with a "TDD verified" verdict in tdd-results.json but no corresponding red-phase log is a contradiction.
+   If any check fails, stop and generate the missing logs now using the language-aware test execution commands from the TDD execution enforcement section. Do not proceed to the terminal gate with missing TDD logs — a bug with a "TDD verified" verdict in tdd-results.json but no corresponding red-phase log is a contradiction.
 
 **Terminal gate (mandatory before marking Phase 5 complete):**
 
@@ -2172,6 +2247,7 @@ Or say "keep going" to continue automatically.
 **v1.5.6 instrumentation:** Append `phase_start phase=6` now. At phase end, cross-validate (`quality/BUGS.md` non-empty with `^## BUG-` sections AND `quality/INDEX.md` updated with `gate_verdict` field) then append `phase_end phase=6`. After Phase 6 closes, append `run_end status=success` (or `aborted` / `failed` if applicable).
 
 > **Required references for this phase:**
+>
 > - `references/verification.md` — 45 self-check benchmarks
 
 **Why a verification phase?** AI-generated output can look polished and be subtly wrong. Tests that reference undefined fixtures report 0 failures but 16 errors — and "0 failures" sounds like success. Integration protocols can list field names that don't exist in the actual schemas. The verification phase catches these problems before the user discovers them, which is important because trust in a generated quality playbook is fragile — one wrong field name undermines confidence in everything else.
@@ -2192,6 +2268,7 @@ Execute this command in the shell. Do not substitute a Python script, do not rea
 Record the exit code. If non-zero, **Phase 6 fails immediately.** Do not proceed to further steps. Go back to the extraction step: delete the mismatched `*_cases.txt`, re-run the extraction command with a fresh shell redirect, re-verify, and update all downstream artifacts that cited the old extraction.
 
 Record in PROGRESS.md under `## Phase 6 Mechanical Closure` and append to `quality/results/phase6-verification.log`:
+
 ```
 [Step 6.1] Mechanical verification: PASS (exit 0)
 ```
@@ -2210,6 +2287,7 @@ echo $? >> quality/results/phase6-verification.log
 Read `quality/results/quality-gate.log`. If it reports any FAIL results, fix each failing check before proceeding. The most common FAILs are: (1) missing `quality/patches/BUG-NNN-regression-test.patch` files, (2) non-canonical JSON field names like `bug_id` instead of `id`, (3) missing `confirmed_open` in the TDD summary, (4) writeups without inline fix diffs, (5) missing TDD red/green log files. Do not proceed until `quality_gate.py` exits 0.
 
 Append to `quality/results/phase6-verification.log`:
+
 ```
 [Step 6.2] quality_gate.py: PASS (exit 0) — N checks passed, 0 FAIL, 0 WARN
 ```
@@ -2232,6 +2310,7 @@ Run the functional test suite. Read only `quality/test_functional.*` to determin
 Check for both failures AND errors. Errors from missing fixtures, failed imports, or unresolved dependencies count as broken tests. Expected-failure (xfail) regression tests do not count against this check.
 
 Append to `quality/results/phase6-verification.log`:
+
 ```
 [Step 6.3] Functional tests: PASS — N tests, 0 failures, 0 errors
 ```
@@ -2255,6 +2334,7 @@ Process the remaining verification benchmarks from `references/verification.md` 
 **Batch F — Continuation mode (benchmarks 32-33):** Only if `quality/SEED_CHECKS.md` exists. Read it, verify mechanical execution, verify convergence section in PROGRESS.md.
 
 Append each batch result to `quality/results/phase6-verification.log`:
+
 ```
 [Step 6.4A] QUALITY.md scenarios: PASS — 8 scenarios, all reference real code
 [Step 6.4B] Functional test quality: PASS — 30% cross-variant, assertion depth OK
@@ -2269,6 +2349,7 @@ If any batch fails, fix the issue immediately before proceeding to the next batc
 ### Step 6.5: Metadata Consistency Check
 
 Read `quality/PROGRESS.md` (just the metadata and artifact inventory sections). Then spot-check:
+
 - The requirement count is consistent across REQUIREMENTS.md header, PROGRESS.md artifact inventory, and COVERAGE_MATRIX.md header. All three must state the same number.
 - The `With docs` field accurately reflects whether `reference_docs/` exists
 - The Terminal Gate Verification section is present and filled in
@@ -2276,6 +2357,7 @@ Read `quality/PROGRESS.md` (just the metadata and artifact inventory sections). 
 Then read `quality/COMPLETENESS_REPORT.md` (just the verdict section). Verify no stale pre-reconciliation text remains — if both a `## Verdict` and an `## Updated verdict` (or `## Post-Review Reconciliation`) section exist, **delete the original `## Verdict` section entirely**. The final document must have exactly one `## Verdict` heading.
 
 Append to `quality/results/phase6-verification.log`:
+
 ```
 [Step 6.5] Metadata consistency: PASS — requirement counts match, version stamps consistent
 ```
@@ -2285,12 +2367,14 @@ If any metadata is stale, fix it now.
 ### Checkpoint: Finalize PROGRESS.md
 
 Re-read `quality/PROGRESS.md`. Update:
+
 - Mark Phase 6 (Verification benchmarks) complete with timestamp
 - Verify the BUG tracker has closure for every entry
 - Add a final summary line: "Run complete. N BUGs found (N from code review, N from spec audit). N regression tests written. N exemptions granted."
 - **Print the suggested next prompt to the user (mandatory, all runs).** This applies to EVERY run, including baseline — it is not iteration-specific. Print the following block so the user can copy-paste it to start the next iteration:
 
   For a baseline run (no iteration strategy):
+
   ```
   ────────────────────────────────────────────────────────
   Next iteration suggestion:
@@ -2329,6 +2413,7 @@ Net-new bugs this run: K
 Convergence: [CONVERGED | NOT CONVERGED]
 
 Net-new bugs:
+
 - BUG-NNN: [summary] (file:line) — not in any prior run
 ```
 
@@ -2426,6 +2511,7 @@ Recheck mode is a lightweight verification pass that checks whether bugs from a 
 **Step 1: Read the bug inventory.**
 
 Read `quality/BUGS.md` and parse every `### BUG-NNN` entry. For each bug, extract:
+
 - Bug ID (e.g., BUG-001)
 - File path and line number from the `**File:**` field
 - Description summary (first sentence of `**Description:**`)
@@ -2445,7 +2531,7 @@ For each bug, perform these checks in order:
    - Apply it: `git apply quality/patches/BUG-NNN-regression-test.patch`
    - Run the test (using the project's test runner). If the test PASSES, the bug is fixed. If it FAILS, the bug is still present.
    - Reverse the patch: `git apply -R quality/patches/BUG-NNN-regression-test.patch`
-   
+
    If the regression test patch doesn't apply cleanly (because the source has changed), note this and fall back to source inspection alone.
 
 4. **Verdict.** Assign one of these statuses:
@@ -2500,21 +2586,21 @@ Also write a human-readable summary to `quality/results/recheck-summary.md`:
 
 ## Summary
 
-| Status | Count |
-|--------|-------|
-| Fixed | N |
-| Partially fixed | N |
-| Still open | N |
-| Inconclusive | N |
-| **Total** | **N** |
+| Status          | Count |
+| --------------- | ----- |
+| Fixed           | N     |
+| Partially fixed | N     |
+| Still open      | N     |
+| Inconclusive    | N     |
+| **Total**       | **N** |
 
 ## Per-Bug Results
 
-| Bug | Severity | Status | Evidence |
-|-----|----------|--------|----------|
-| BUG-001 | HIGH | FIXED | Reverse-apply succeeded, regression test passes |
-| BUG-002 | MEDIUM | STILL_OPEN | Original code unchanged at quality_gate.py:125 |
-| ... | ... | ... | ... |
+| Bug     | Severity | Status     | Evidence                                        |
+| ------- | -------- | ---------- | ----------------------------------------------- |
+| BUG-001 | HIGH     | FIXED      | Reverse-apply succeeded, regression test passes |
+| BUG-002 | MEDIUM   | STILL_OPEN | Original code unchanged at quality_gate.py:125  |
+| ...     | ...      | ...        | ...                                             |
 
 ## Still Open — Details
 
@@ -2581,6 +2667,7 @@ Here's what I generated:
 Adapt the table to what you actually generated — the file names, metrics, and confidence levels will vary by project. The confidence column is the most important: it tells the user where to focus their attention.
 
 **Confidence levels:**
+
 - **High** — Derived directly from code, specs, or schemas. Unlikely to need revision.
 - **Medium** — Reasonable inference, but could be wrong. Benefits from user input.
 - **Low** — Best guess. Definitely needs user input to be useful.
@@ -2637,13 +2724,14 @@ After the user has seen the summary (and optionally drilled into details), prese
 > **4. Guided Q&A** — I'll ask you 3-5 targeted questions about things I couldn't infer from the code: incident history, expected distributions, cost tolerance, model preferences. Good for: filling knowledge gaps that make scenarios more authoritative.
 >
 > **5. Feed in additional documentation** — The requirements pipeline works better with more intent sources. Point me to any of these and I'll use them to refine the requirements and quality constitution:
->   - Exported AI chat history (Claude, Gemini, ChatGPT exports, Claude Code transcripts)
->   - Slack or Teams channels where the project was discussed
->   - Email threads, Jira/Linear tickets, or GitHub issues about the project
->   - Design documents, architecture decision records, or meeting notes
->   - Newsgroup posts, forum discussions, or mailing list archives
 >
->   You can use tools like Claude Cowork, GitHub Copilot, or OpenClaw to connect to these sources and gather them into a folder, then point me at the folder. Good for: grounding scenarios and requirements in real project history instead of inference.
+> - Exported AI chat history (Claude, Gemini, ChatGPT exports, Claude Code transcripts)
+> - Slack or Teams channels where the project was discussed
+> - Email threads, Jira/Linear tickets, or GitHub issues about the project
+> - Design documents, architecture decision records, or meeting notes
+> - Newsgroup posts, forum discussions, or mailing list archives
+>
+> You can use tools like Claude Cowork, GitHub Copilot, or OpenClaw to connect to these sources and gather them into a folder, then point me at the folder. Good for: grounding scenarios and requirements in real project history instead of inference.
 >
 > "You can do any combination of these, in any order. Which would you like to start with?"
 
@@ -2724,15 +2812,15 @@ Examine existing test files to understand how they set up test data. Whatever pa
 
 Read these as you work through each phase:
 
-| File | When to Read | Contains |
-|------|-------------|----------|
-| `references/exploration_patterns.md` | Phase 1 (explore) | Pattern applicability matrix, deep-dive templates, domain-knowledge questions |
-| `references/defensive_patterns.md` | Step 5 (finding skeletons) | Grep patterns, how to convert findings to scenarios |
-| `references/schema_mapping.md` | Step 5b (schema types) | Field mapping format, mutation validity rules |
-| `references/requirements_pipeline.md` | Phase 2 (requirements) | Five-phase pipeline, versioning protocol, carry-forward rules |
-| `references/constitution.md` | File 1 (QUALITY.md) | Full template with section-by-section guidance |
-| `references/functional_tests.md` | File 2 (functional tests) | Test structure, anti-patterns, cross-variant strategy |
-| `references/review_protocols.md` | Files 3–4 (code review, integration) | Templates for both protocols, patch validation, skip guards |
-| `references/spec_audit.md` | File 5 (Council of Three) | Full audit protocol, triage process, fix execution |
-| `references/iteration.md` | Iterations (after Phase 6) | Four iteration strategies: gap, unfiltered, parity, adversarial |
-| `references/verification.md` | Phase 6 (verify) | Complete self-check checklist (45 benchmarks) including structured output, patch gate, skip guard validation, pre-flight discovery, version stamps, bug writeups, enumeration completeness, triage executable evidence, code-extracted enumeration lists, mechanical verification artifacts, source-inspection test execution, contradiction gate, seed check execution, convergence tracking, sidecar JSON schema validation, script-verified closure gate, canonical use case identifiers, and writeup inline fix diffs |
+| File                                  | When to Read                         | Contains                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `references/exploration_patterns.md`  | Phase 1 (explore)                    | Pattern applicability matrix, deep-dive templates, domain-knowledge questions                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `references/defensive_patterns.md`    | Step 5 (finding skeletons)           | Grep patterns, how to convert findings to scenarios                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `references/schema_mapping.md`        | Step 5b (schema types)               | Field mapping format, mutation validity rules                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `references/requirements_pipeline.md` | Phase 2 (requirements)               | Five-phase pipeline, versioning protocol, carry-forward rules                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `references/constitution.md`          | File 1 (QUALITY.md)                  | Full template with section-by-section guidance                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `references/functional_tests.md`      | File 2 (functional tests)            | Test structure, anti-patterns, cross-variant strategy                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| `references/review_protocols.md`      | Files 3–4 (code review, integration) | Templates for both protocols, patch validation, skip guards                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `references/spec_audit.md`            | File 5 (Council of Three)            | Full audit protocol, triage process, fix execution                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `references/iteration.md`             | Iterations (after Phase 6)           | Four iteration strategies: gap, unfiltered, parity, adversarial                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `references/verification.md`          | Phase 6 (verify)                     | Complete self-check checklist (45 benchmarks) including structured output, patch gate, skip guard validation, pre-flight discovery, version stamps, bug writeups, enumeration completeness, triage executable evidence, code-extracted enumeration lists, mechanical verification artifacts, source-inspection test execution, contradiction gate, seed check execution, convergence tracking, sidecar JSON schema validation, script-verified closure gate, canonical use case identifiers, and writeup inline fix diffs |

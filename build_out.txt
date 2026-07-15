@@ -1,0 +1,39 @@
+$ turbo run build
+• turbo 2.10.4
+
+   • Packages in scope: @sports/auth, @sports/db, @sports/eslint-config, @sports/tsconfig, admin-app, customer-app, customer-web
+   • Running build in 7 packages
+   • Remote caching disabled
+
+customer-web:build: cache miss, executing c2788c9028ffe10d
+customer-web:build: $ next build
+customer-web:build: ▲ Next.js 16.2.10 (Turbopack)
+customer-web:build: - Environments: .env.local
+customer-web:build: 
+customer-web:build: ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+customer-web:build:   Creating an optimized production build ...
+customer-web:build: ✓ Compiled successfully in 5.5s
+customer-web:build:   Running TypeScript ...
+customer-web:build:   Finished TypeScript in 6.4s ...
+customer-web:build:   Collecting page data using 6 workers ...
+customer-web:build:   Generating static pages using 6 workers (0/3) ...
+customer-web:build: ✓ Generating static pages using 6 workers (3/3) in 859ms
+customer-web:build:   Finalizing page optimization ...
+customer-web:build: 
+customer-web:build: Route (app)
+customer-web:build: ┌ ○ /
+customer-web:build: ├ ○ /_not-found
+customer-web:build: ├ ƒ /sign-in/[[...sign-in]]
+customer-web:build: └ ƒ /sign-up/[[...sign-up]]
+customer-web:build: 
+customer-web:build: 
+customer-web:build: ƒ Proxy (Middleware)
+customer-web:build: 
+customer-web:build: ○  (Static)   prerendered as static content
+customer-web:build: ƒ  (Dynamic)  server-rendered on demand
+customer-web:build: 
+
+ Tasks:    1 successful, 1 total
+Cached:    0 cached, 1 total
+  Time:    16.636s 
+

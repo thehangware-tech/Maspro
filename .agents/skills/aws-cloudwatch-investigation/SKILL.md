@@ -292,13 +292,13 @@ Reconstruct a precise timeline by merging data from multiple sources:
 
 1. **Collect timestamps:**
 
-| Source | Query | Yields |
-|--------|-------|--------|
-| CloudWatch Alarms | Alarm history API | State transition times |
-| CloudWatch Metrics | GetMetricData with 1-min period | First anomaly point |
-| CloudWatch Logs | Logs Insights with `earliest(@timestamp)` | First error occurrence |
-| CloudTrail | LookupEvents filtered by time | Deployment/change events |
-| AWS Health | DescribeEvents | AWS-side incidents |
+| Source             | Query                                     | Yields                   |
+| ------------------ | ----------------------------------------- | ------------------------ |
+| CloudWatch Alarms  | Alarm history API                         | State transition times   |
+| CloudWatch Metrics | GetMetricData with 1-min period           | First anomaly point      |
+| CloudWatch Logs    | Logs Insights with `earliest(@timestamp)` | First error occurrence   |
+| CloudTrail         | LookupEvents filtered by time             | Deployment/change events |
+| AWS Health         | DescribeEvents                            | AWS-side incidents       |
 
 2. **Build the timeline:**
 

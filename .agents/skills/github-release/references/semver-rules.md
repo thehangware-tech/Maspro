@@ -26,6 +26,7 @@ experience a compile error, runtime error, or behavior change **without changing
 own code**.
 
 Examples:
+
 - Removing a public function, class, method, or constant
 - Renaming a public function, class, method, or constant
 - Changing a function signature (adding required parameters, removing parameters,
@@ -83,10 +84,10 @@ Default to `1.0.0` regardless of what's in the diff. Inform the user.
 
 ## Edge cases
 
-| Situation | Recommendation |
-|---|---|
-| Only internal/private symbols changed | PATCH |
-| Type annotation added to previously untyped function | PATCH (non-breaking) |
-| Changing default value of optional parameter | Treat as MAJOR if callers might rely on old default |
+| Situation                                                | Recommendation                                         |
+| -------------------------------------------------------- | ------------------------------------------------------ |
+| Only internal/private symbols changed                    | PATCH                                                  |
+| Type annotation added to previously untyped function     | PATCH (non-breaking)                                   |
+| Changing default value of optional parameter             | Treat as MAJOR if callers might rely on old default    |
 | Adding a new required config option to an optional block | MINOR if the block itself is optional, otherwise MAJOR |
-| Reverting a previous commit entirely | Follow what the net diff shows, not the revert message |
+| Reverting a previous commit entirely                     | Follow what the net diff shows, not the revert message |

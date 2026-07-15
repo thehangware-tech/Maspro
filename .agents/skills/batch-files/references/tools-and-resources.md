@@ -14,7 +14,7 @@
 
 - [Windows versions](https://ss64.com/nt/ver.html)
 - [RSAT](https://ss64.com/links/ps.html#kits)
-- [Domain Services Tools](https://docs.microsoft.com/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/cc771131(v=ws.11))
+- [Domain Services Tools](<https://docs.microsoft.com/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/cc771131(v=ws.11)>)
 - [RSAT Download](https://www.microsoft.com/download/details.aspx?id=45520)
 - [RSAT KBase](https://docs.microsoft.com/troubleshoot/windows-server/system-management-components/remote-server-administration-tools)
 - [DISM /Add-Capability](https://ss64.com/nt/dism.html)

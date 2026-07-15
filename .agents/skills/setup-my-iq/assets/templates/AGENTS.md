@@ -34,15 +34,15 @@ Once they exist, update each `@<path>` pointer below to reference the real locat
 
 ## Routing Questions to Files
 
-| Question is about | Read this topic |
-|-------------------|-----------------|
-| Name, role, org, manager, what you do | `identityProfile` |
-| Responsibilities, cadences, weekly rhythm, deliverables | `roleAndResponsibilities` |
-| Team rosters, someone's email, who leads what | `teamMetadata` |
-| ADO config, area paths, pillars, epic mappings, scorecard, reporting paths, Obsidian vault, meeting tags | `teamSystemsConfig` |
-| Tone, voice, formatting rules | `communicationStyle` |
-| Working preferences, hard rules | `preferencesAndConstraints` |
-| "Tell me about myself" / broad review | All six |
+| Question is about                                                                                        | Read this topic             |
+| -------------------------------------------------------------------------------------------------------- | --------------------------- |
+| Name, role, org, manager, what you do                                                                    | `identityProfile`           |
+| Responsibilities, cadences, weekly rhythm, deliverables                                                  | `roleAndResponsibilities`   |
+| Team rosters, someone's email, who leads what                                                            | `teamMetadata`              |
+| ADO config, area paths, pillars, epic mappings, scorecard, reporting paths, Obsidian vault, meeting tags | `teamSystemsConfig`         |
+| Tone, voice, formatting rules                                                                            | `communicationStyle`        |
+| Working preferences, hard rules                                                                          | `preferencesAndConstraints` |
+| "Tell me about myself" / broad review                                                                    | All six                     |
 
 Cross-cutting questions (e.g., "what do I do for team X?") may require multiple topics.
 Combine `identityProfile` with `roleAndResponsibilities` for those.

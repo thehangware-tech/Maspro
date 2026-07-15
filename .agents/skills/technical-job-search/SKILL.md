@@ -1,6 +1,6 @@
 ---
 name: technical-job-search
-description: 'Use this skill when a software engineer asks for help with job search tasks: parsing or analyzing a job description, tailoring a CV/resume, writing a cover letter, evaluating a job offer, or drafting a post-interview follow-up email. Do not activate for general career advice unrelated to an active job search action.'
+description: "Use this skill when a software engineer asks for help with job search tasks: parsing or analyzing a job description, tailoring a CV/resume, writing a cover letter, evaluating a job offer, or drafting a post-interview follow-up email. Do not activate for general career advice unrelated to an active job search action."
 license: MIT
 argument-hint: 'Optional: the specific task — e.g. "analyze this JD", "tailor my CV", "write cover letter", "evaluate this offer"'
 ---
@@ -16,15 +16,19 @@ Helps software engineers with discrete job search tasks: job description analysi
 When given a job description, extract and structure:
 
 **Must-haves** (explicitly required or repeated multiple times):
+
 - Technical skills, years of experience, specific domain knowledge
 
 **Nice-to-haves** (preferred, a bonus, or mentioned once):
+
 - List these separately. Candidates often disqualify themselves over requirements that are actually optional.
 
 **What the role actually solves** (inferred from the description):
+
 - Summarize in 2-3 sentences what business problem this hire addresses
 
 **Red flags to surface**:
+
 - "Wear many hats" with no clarity on scope — risk of undefined ownership
 - 10+ must-have technologies for a single role — unrealistic bar or poor team planning
 - No mention of team size, tech stack, or what the role ships — may indicate disorganization
@@ -56,6 +60,7 @@ A cover letter should answer three questions in under 300 words:
 Format: three short paragraphs. No preamble ("I am writing to apply for..."). No summary of your CV.
 
 Avoid:
+
 - Restating your CV in prose form
 - "I am passionate about..."
 - Generic company praise ("a leader in the industry", "innovative company")
@@ -68,22 +73,26 @@ Avoid:
 When evaluating a job offer, compare across these dimensions:
 
 **Compensation**
+
 - Base salary: check against market rate for role, level, and location (levels.fyi, Glassdoor, Blind, Comprehensive.io)
 - Equity: current valuation, vesting schedule (4-year with 1-year cliff is standard), dilution risk for early-stage companies
 - Bonus: target percentage vs actual historical payout
 - Total comp = base + expected bonus + annualized equity value
 
 **Role clarity**
+
 - Scope: what does "owning" this role actually mean vs what is already decided?
 - Team: size, structure, who you report to, tenure of the team
 - Growth: what does the next level look like and how long do people typically take to get there?
 
 **Company health**
+
 - Stage: runway, revenue, growth rate — ask directly if not public
 - Engineering culture signals: PR review process, incident postmortem culture, on-call burden
 - Remote or hybrid reality: written policy vs actual practice
 
 **Red flags in an offer**
+
 - Pressure to decide in under 48 hours — a reasonable window is one to two weeks
 - Equity with no clear liquidity path for a company that has been private for 10+ years
 - A role described as greenfield that turns out to have 6 months of existing unmaintained code
@@ -95,6 +104,7 @@ Get everything in writing before accepting.
 ## Follow-up Emails
 
 After an interview, send a follow-up within 24 hours:
+
 - One sentence thanking them for the time
 - One sentence referencing something specific from the conversation (a problem discussed, a question they asked)
 - One sentence reaffirming interest, if genuine

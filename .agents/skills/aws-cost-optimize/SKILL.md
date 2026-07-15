@@ -1,6 +1,6 @@
 ---
 name: aws-cost-optimize
-description: 'Analyze AWS resources used in the app (IaC files and/or resources in a target account/region) and optimize costs - creating GitHub issues for identified optimizations.'
+description: "Analyze AWS resources used in the app (IaC files and/or resources in a target account/region) and optimize costs - creating GitHub issues for identified optimizations."
 ---
 
 # AWS Cost Optimize
@@ -8,6 +8,7 @@ description: 'Analyze AWS resources used in the app (IaC files and/or resources 
 This workflow analyzes Infrastructure-as-Code (IaC) files and AWS resources to generate cost optimization recommendations. It creates individual GitHub issues for each optimization opportunity plus one EPIC issue to coordinate implementation, enabling efficient tracking and execution of cost savings initiatives.
 
 ## Prerequisites
+
 - AWS CLI configured and authenticated (`aws sts get-caller-identity` succeeds)
 - GitHub MCP server configured and authenticated
 - Target GitHub repository identified
@@ -16,18 +17,22 @@ This workflow analyzes Infrastructure-as-Code (IaC) files and AWS resources to g
 ## Workflow Steps
 
 ### Step 1: Get AWS Cost Optimization Best Practices
+
 **Action**: Retrieve cost optimization best practices before analysis
 **Tools**: `fetch` to retrieve AWS documentation
 **Process**:
+
 1. **Load Best Practices**:
    - Fetch `https://docs.aws.amazon.com/cost-management/latest/userguide/cost-optimization-best-practices.html`
    - Fetch the AWS Well-Architected Cost Optimization pillar summary
    - Use these practices to inform subsequent analysis and recommendations
 
 ### Step 2: Discover AWS Infrastructure
+
 **Action**: Dynamically discover and analyze AWS resources and configurations
 **Tools**: AWS CLI + Local file system access
 **Process**:
+
 1. **Account & Region Discovery**:
    - Execute `aws sts get-caller-identity` to confirm account
    - Execute `aws configure get region` to determine default region
@@ -49,10 +54,13 @@ This workflow analyzes Infrastructure-as-Code (IaC) files and AWS resources to g
    - If no IaC files found: STOP and report to user
 
 ### Step 3: Collect Usage Metrics & Validate Current Costs
+
 **Action**: Gather utilization data and verify actual resource costs
 **Tools**: AWS CLI (CloudWatch, Cost Explorer)
 **Process**:
+
 1. **CloudWatch Metrics** (last 7 days):
+
    ```bash
    # EC2 CPU utilization
    aws cloudwatch get-metric-statistics \
@@ -72,6 +80,7 @@ This workflow analyzes Infrastructure-as-Code (IaC) files and AWS resources to g
    ```
 
 2. **AWS Cost Explorer**:
+
    ```bash
    aws ce get-cost-and-usage \
      --time-period Start=$(date -u -d '30 days ago' +%Y-%m-%d),End=$(date -u +%Y-%m-%d) \
@@ -82,8 +91,10 @@ This workflow analyzes Infrastructure-as-Code (IaC) files and AWS resources to g
 3. **Calculate Baseline Metrics**: CPU/Memory averages, Lambda invocation rates, data transfer patterns, and a realistic current monthly total.
 
 ### Step 4: Generate Cost Optimization Recommendations
+
 **Action**: Analyze resources to identify optimization opportunities
 **Process**:
+
 1. **Apply Optimization Patterns**:
 
    **Compute**:
@@ -111,6 +122,7 @@ This workflow analyzes Infrastructure-as-Code (IaC) files and AWS resources to g
    ```
 
 ### Step 5: User Confirmation
+
 **Action**: Present summary and get approval before creating GitHub issues
 
 ```
@@ -135,17 +147,20 @@ This workflow analyzes Infrastructure-as-Code (IaC) files and AWS resources to g
 Wait for user confirmation before proceeding.
 
 ### Step 6: Create Individual Optimization Issues
+
 **Action**: Create separate GitHub issues for each optimization. Label with "cost-optimization" (green) and "aws" (orange).
 
 **Title**: `[COST-OPT] [Resource Type] - [Brief Description] - $X/month savings`
 
 **Body**:
-```markdown
+
+````markdown
 ## 💰 Cost Optimization: [Brief Title]
 
 **Monthly Savings**: $X | **Risk Level**: [Low/Medium/High] | **Effort**: X days
 
 ### 📋 Description
+
 [Clear explanation of the optimization and why it's needed]
 
 ### 🔧 Implementation
@@ -155,21 +170,26 @@ Wait for user confirmation before proceeding.
 ```bash
 # IaC modification (preferred) or AWS CLI fallback
 ```
+````
 
 ### 📊 Evidence
+
 - Current Configuration: [details]
 - Usage Pattern: [evidence from CloudWatch]
 - Cost Impact: $X/month → $Y/month
 
 ### ✅ Validation Steps
+
 - [ ] Test in non-production environment
 - [ ] Verify no performance degradation via CloudWatch
 - [ ] Confirm cost reduction in AWS Cost Explorer
 
 ### ⚠️ Risks & Considerations
+
 - [Risk and mitigation]
 
 **Priority Score**: X | **Value**: X/10 | **Risk**: X/10
+
 ```
 
 ### Step 7: Create EPIC Coordinating Issue
@@ -192,3 +212,4 @@ Wait for user confirmation before proceeding.
 - ✅ EPIC issue provides comprehensive coordination and tracking
 - ✅ All recommendations include specific AWS CLI or IaC commands
 - ✅ User confirmation obtained before creating issues
+```

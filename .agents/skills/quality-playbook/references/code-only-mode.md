@@ -1,6 +1,6 @@
 # Code-only mode
 
-*Last updated: 2026-05-03 (v1.5.6 Phase 3 — initial publication).*
+_Last updated: 2026-05-03 (v1.5.6 Phase 3 — initial publication)._
 
 When the Quality Playbook runs against a target repo whose `reference_docs/` directory is absent or empty, it operates in **code-only mode**. This document explains what that means, why it matters, and how to upgrade a code-only run into a full-documentation run for the next pass.
 
@@ -18,7 +18,7 @@ Code-only mode is the run state where no documentation evidence is available. Th
 In our benchmark runs, code-only passes consistently produce:
 
 - **Fewer requirements derived overall.** Without spec-language to anchor, Phase 1 has no Tier 1/2 evidence to cite, so the requirements set falls back to Tier 3 (code-as-spec) entirely.
-- **Possibly fewer bugs found.** Code review (Phase 3) is most effective when the reviewer knows what the code is *supposed* to do — bugs that violate documented intent are easier to surface than bugs that hide behind ambiguous code-as-spec. With no documentation, the reviewer has to infer intent from the code itself, which leaves a class of intent-violation defects undetected.
+- **Possibly fewer bugs found.** Code review (Phase 3) is most effective when the reviewer knows what the code is _supposed_ to do — bugs that violate documented intent are easier to surface than bugs that hide behind ambiguous code-as-spec. With no documentation, the reviewer has to infer intent from the code itself, which leaves a class of intent-violation defects undetected.
 - **Higher reliance on code-internal signals.** Defensive patterns (error checks, validation), test names, and comment-style annotations carry more weight in the absence of external docs.
 
 The bug counts in code-only mode are still useful — they reflect what's discoverable from the code alone — but they are a lower bound on what a fully-documented run would produce.

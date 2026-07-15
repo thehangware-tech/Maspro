@@ -64,7 +64,10 @@ app.get("/events", (c) => {
     },
   });
   return new Response(stream, {
-    headers: { "Content-Type": "text/event-stream", "Cache-Control": "no-cache, no-transform" },
+    headers: {
+      "Content-Type": "text/event-stream",
+      "Cache-Control": "no-cache, no-transform",
+    },
   });
 });
 
@@ -85,7 +88,9 @@ const CHANNEL = "events";
 
 // One dedicated DIRECT connection per isolate to receive events (LISTEN needs a
 // real session — use DATABASE_URL_UNPOOLED, not the pooled URL).
-const listener = new Client({ connectionString: process.env.DATABASE_URL_UNPOOLED });
+const listener = new Client({
+  connectionString: process.env.DATABASE_URL_UNPOOLED,
+});
 listener.connect().then(() => listener.query(`LISTEN ${CHANNEL}`));
 listener.on("notification", (msg) => {
   if (!msg.payload) return;
@@ -101,7 +106,10 @@ listener.on("notification", (msg) => {
 
 // Anywhere you mutate state, NOTIFY so every isolate pushes to its own streams.
 function publish(payload: unknown) {
-  return pool.query("SELECT pg_notify($1, $2)", [CHANNEL, JSON.stringify(payload)]);
+  return pool.query("SELECT pg_notify($1, $2)", [
+    CHANNEL,
+    JSON.stringify(payload),
+  ]);
 }
 ```
 
@@ -125,8 +133,10 @@ Send `data:` with no `event:` field to deliver the default `message` event, whic
 
 ```typescript
 const source = new EventSource(`${FUNCTION_URL}/events`); // GET only
-source.onmessage = (e) => console.log("update", e.data);  // default "message" events
-source.onerror = () => {/* EventSource auto-reconnects; nothing to do */};
+source.onmessage = (e) => console.log("update", e.data); // default "message" events
+source.onerror = () => {
+  /* EventSource auto-reconnects; nothing to do */
+};
 // source.close() to stop.
 ```
 

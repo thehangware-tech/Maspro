@@ -20,6 +20,7 @@ Example (language-neutral):
 When the fix is in a tested area, add a one-line test confirmation:
 
 > Replaced the platform UUID dependency with a PID + monotonic-clock
-> + atomic counter so the test target no longer pulls in the
-> platform UUID library. All 42 tests in the affected suite still
-> pass. Fixed in abc1234.
+>
+> - atomic counter so the test target no longer pulls in the
+>   platform UUID library. All 42 tests in the affected suite still
+>   pass. Fixed in abc1234.

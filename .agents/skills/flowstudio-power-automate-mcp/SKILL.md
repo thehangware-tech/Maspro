@@ -24,6 +24,7 @@ skills that all build on this one.
 
 > **Requires:** A [FlowStudio](https://mcp.flowstudio.app) MCP subscription (or
 > compatible Power Automate MCP server). You will need:
+>
 > - MCP endpoint: `https://mcp.flowstudio.app/mcp` (same for all subscribers)
 > - API key / JWT token (`x-api-key` header — NOT Bearer)
 > - Power Platform environment name (e.g. `Default-<tenant-guid>`)
@@ -36,19 +37,19 @@ Skills are organized by **use-case intent**, not by which tools they call.
 Multiple skills reuse the same underlying tools — pick by what the user is
 trying to accomplish.
 
-| The user wants to… | Load this skill |
-|---|---|
-| Make or change a flow (build new, modify existing, fix a bug, deploy) | **`flowstudio-power-automate-build`** |
-| Diagnose why a flow failed (root cause analysis on a failing run) | **`flowstudio-power-automate-debug`** |
-| See tenant-wide flow health, failure rates, asset inventory | **`flowstudio-power-automate-monitoring`** *(Pro+)* |
-| Tag, audit, classify, score, or offboard flows | **`flowstudio-power-automate-governance`** *(Pro+)* |
-| Just connect, set up auth, write the helper, parse responses | this skill (foundation) |
+| The user wants to…                                                    | Load this skill                                     |
+| --------------------------------------------------------------------- | --------------------------------------------------- |
+| Make or change a flow (build new, modify existing, fix a bug, deploy) | **`flowstudio-power-automate-build`**               |
+| Diagnose why a flow failed (root cause analysis on a failing run)     | **`flowstudio-power-automate-debug`**               |
+| See tenant-wide flow health, failure rates, asset inventory           | **`flowstudio-power-automate-monitoring`** _(Pro+)_ |
+| Tag, audit, classify, score, or offboard flows                        | **`flowstudio-power-automate-governance`** _(Pro+)_ |
+| Just connect, set up auth, write the helper, parse responses          | this skill (foundation)                             |
 
 **Same tools, different lenses.** `flowstudio-power-automate-build` and `flowstudio-power-automate-debug`
 both call `update_live_flow`, `get_live_flow`, and the run-error tools — they
-differ in *direction* (forward vs backward) and *intent* (compose vs diagnose).
+differ in _direction_ (forward vs backward) and _intent_ (compose vs diagnose).
 `flowstudio-power-automate-monitoring` and `flowstudio-power-automate-governance` both call the Store
-tools — they differ in *audience* (ops vs compliance) and *outcome* (read
+tools — they differ in _audience_ (ops vs compliance) and _outcome_ (read
 health vs write metadata). Don't try to memorize "which tools belong to which
 skill"; pick the skill by what the user is doing.
 
@@ -56,11 +57,11 @@ skill"; pick the skill by what the user is doing.
 
 ## Source of Truth
 
-| Priority | Source | Covers |
-|----------|--------|--------|
-| 1 | **Real API response** | Always trust what the server actually returns |
-| 2 | **`tool_search` / `list_skills`** | Authoritative tool schemas, parameter names, types, required flags |
-| 3 | **SKILL docs & reference files** | Workflow narrative, response shapes, non-obvious behaviors |
+| Priority | Source                            | Covers                                                             |
+| -------- | --------------------------------- | ------------------------------------------------------------------ |
+| 1        | **Real API response**             | Always trust what the server actually returns                      |
+| 2        | **`tool_search` / `list_skills`** | Authoritative tool schemas, parameter names, types, required flags |
+| 3        | **SKILL docs & reference files**  | Workflow narrative, response shapes, non-obvious behaviors         |
 
 If documentation disagrees with a real API response, the API wins. Tool schemas
 in this skill (or any other) may lag the server — call `tool_search` to confirm
@@ -75,12 +76,12 @@ let an agent load only the tools relevant to the current task. Use these in
 preference to `tools/list` (which loads all 30+ schemas at once) or guessing
 tool names.
 
-| Meta-tool | When to call |
-|---|---|
-| `list_skills` | Cold start — see the available bundles (`build-flow`, `create-flow`, `debug-flow`, `monitor-flow`, `discover`, `governance`) and pick one |
-| `tool_search` with `query: "skill:<name>"` | Load the full schema set for one bundle (e.g. `skill:debug-flow`) |
-| `tool_search` with `query: "select:tool1,tool2"` | Load specific tools by name (e.g. when chaining across bundles) |
-| `tool_search` with `query: "<keywords>"` | Free-text search when the user request is ambiguous (e.g. `"cancel run"`) |
+| Meta-tool                                        | When to call                                                                                                                              |
+| ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `list_skills`                                    | Cold start — see the available bundles (`build-flow`, `create-flow`, `debug-flow`, `monitor-flow`, `discover`, `governance`) and pick one |
+| `tool_search` with `query: "skill:<name>"`       | Load the full schema set for one bundle (e.g. `skill:debug-flow`)                                                                         |
+| `tool_search` with `query: "select:tool1,tool2"` | Load specific tools by name (e.g. when chaining across bundles)                                                                           |
+| `tool_search` with `query: "<keywords>"`         | Free-text search when the user request is ambiguous (e.g. `"cancel run"`)                                                                 |
 
 The server's `tool_search` bundles are intentionally **narrower than this
 skill family** — they're starter packs of the most-likely-needed tools per
@@ -99,14 +100,14 @@ debug_tools = mcp("tool_search", {"query": "skill:debug-flow"})
 
 Current common bundles:
 
-| Bundle | Use when |
-|---|---|
-| `create-flow` | Creating a brand-new flow; includes environment/connection discovery, connector description, dynamic options, and `update_live_flow` |
-| `build-flow` | Reading or modifying an existing flow definition |
-| `debug-flow` | Investigating failed runs and action-level inputs/outputs |
-| `monitor-flow` | Starting/stopping, triggering, cancelling, or resubmitting runs |
-| `discover` | Enumerating environments, flows, and connections |
-| `governance` | Pro+ cached-store tagging, maker audit, and metadata updates |
+| Bundle         | Use when                                                                                                                             |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `create-flow`  | Creating a brand-new flow; includes environment/connection discovery, connector description, dynamic options, and `update_live_flow` |
+| `build-flow`   | Reading or modifying an existing flow definition                                                                                     |
+| `debug-flow`   | Investigating failed runs and action-level inputs/outputs                                                                            |
+| `monitor-flow` | Starting/stopping, triggering, cancelling, or resubmitting runs                                                                      |
+| `discover`     | Enumerating environments, flows, and connections                                                                                     |
+| `governance`   | Pro+ cached-store tagging, maker audit, and metadata updates                                                                         |
 
 ---
 
@@ -118,12 +119,12 @@ All examples in this skill family use **Python with `urllib.request`**
 maps cleanly onto the request-response pattern of MCP tool calls — making it
 a natural fit for teams already working in a JavaScript/TypeScript stack.
 
-| Language | Verdict | Notes |
-|---|---|---|
-| **Python** | Recommended | Clean JSON handling, no escaping issues, all skill examples use it |
-| **Node.js (≥ 18)** | Recommended | Native `fetch` + `JSON.stringify`/`JSON.parse`; no extra packages |
-| PowerShell | Avoid for flow operations | `ConvertTo-Json -Depth` silently truncates nested definitions; quoting and escaping break complex payloads. Acceptable for a quick connectivity smoke-test but not for building or updating flows. |
-| cURL / Bash | Possible but fragile | Shell-escaping nested JSON is error-prone; no native JSON parser |
+| Language           | Verdict                   | Notes                                                                                                                                                                                              |
+| ------------------ | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Python**         | Recommended               | Clean JSON handling, no escaping issues, all skill examples use it                                                                                                                                 |
+| **Node.js (≥ 18)** | Recommended               | Native `fetch` + `JSON.stringify`/`JSON.parse`; no extra packages                                                                                                                                  |
+| PowerShell         | Avoid for flow operations | `ConvertTo-Json -Depth` silently truncates nested definitions; quoting and escaping break complex payloads. Acceptable for a quick connectivity smoke-test but not for building or updating flows. |
+| cURL / Bash        | Possible but fragile      | Shell-escaping nested JSON is error-prone; no native JSON parser                                                                                                                                   |
 
 > **TL;DR — use the Core MCP Helper (Python or Node.js) below.** Both handle
 > JSON-RPC framing, auth, and response parsing in a single reusable function.
@@ -159,6 +160,7 @@ def mcp(tool, args, cid=1):
 ```
 
 > **Common auth errors:**
+>
 > - HTTP 401/403 → token is missing, expired, or malformed. Get a fresh JWT from [mcp.flowstudio.app](https://mcp.flowstudio.app).
 > - HTTP 400 → malformed JSON-RPC payload. Check `Content-Type: application/json` and body structure.
 > - `MCP error: {"code": -32602, ...}` → wrong or missing tool arguments. Call `tool_search` with `select:<toolname>` to confirm the schema.
@@ -171,7 +173,7 @@ Equivalent helper for Node.js 18+ (built-in `fetch` — no packages required):
 
 ```js
 const TOKEN = "<YOUR_JWT_TOKEN>";
-const MCP   = "https://mcp.flowstudio.app/mcp";
+const MCP = "https://mcp.flowstudio.app/mcp";
 
 async function mcp(tool, args, cid = 1) {
   const payload = {
@@ -229,13 +231,13 @@ off to the workflow skill matching the user's intent.
 
 Some MCP tool responses are large enough to overflow the agent's context window:
 
-| Tool | Typical size | Cause |
-|---|---|---|
-| `describe_live_connector` | 100-600 KB | Full Swagger spec for a connector |
-| `get_live_dynamic_properties` | 50-500 KB | Dynamic connector field schemas such as SharePoint list columns |
+| Tool                                                 | Typical size       | Cause                                                                                   |
+| ---------------------------------------------------- | ------------------ | --------------------------------------------------------------------------------------- |
+| `describe_live_connector`                            | 100-600 KB         | Full Swagger spec for a connector                                                       |
+| `get_live_dynamic_properties`                        | 50-500 KB          | Dynamic connector field schemas such as SharePoint list columns                         |
 | `get_live_flow_run_action_outputs` (no `actionName`) | 50 KB – several MB | Top-level action outputs; with an action in a foreach, every repetition can be returned |
-| `get_live_flow` (large flows) | 50-500 KB | Deeply nested branches |
-| `list_live_flows` (large tenants) | 50-200 KB | Hundreds of flow records |
+| `get_live_flow` (large flows)                        | 50-500 KB          | Deeply nested branches                                                                  |
+| `list_live_flows` (large tenants)                    | 50-200 KB          | Hundreds of flow records                                                                |
 
 ### When the harness spills to a file
 
@@ -283,11 +285,11 @@ print(json.dumps(conn, indent=2))   # don't do this
 
 ## Auth & Connection Notes
 
-| Field | Value |
-|---|---|
-| Auth header | `x-api-key: <JWT>` — **not** `Authorization: Bearer` |
-| Token format | Plain JWT — do not strip, alter, or prefix it |
-| Timeout | Use ≥ 120 s for `get_live_flow_run_action_outputs` (large outputs) |
+| Field            | Value                                                                                        |
+| ---------------- | -------------------------------------------------------------------------------------------- |
+| Auth header      | `x-api-key: <JWT>` — **not** `Authorization: Bearer`                                         |
+| Token format     | Plain JWT — do not strip, alter, or prefix it                                                |
+| Timeout          | Use ≥ 120 s for `get_live_flow_run_action_outputs` (large outputs)                           |
 | Environment name | `Default-<tenant-guid>` (find it via `list_live_environments` or `list_live_flows` response) |
 
 ---

@@ -10,7 +10,7 @@ Runs AFTER step 7 (commit + push) so every reply can cite the
 ## Inputs
 
 - The full triage table from step 4 — `{ thread_id, action,
-  rationale }` per open thread (including `escalate-to-user`).
+rationale }` per open thread (including `escalate-to-user`).
 - The pushed `HeadOid` from step 7.
 - The per-thread fix `summary` and `files_touched` from step 5 (for
   `fix` rows).
@@ -54,7 +54,7 @@ Procedure).
 - **Reply to every open thread; resolve only when the loop owns the
   disposition** (`fix` or `decline`). Resolving without a reply
   leaves no record of why the issue was considered addressed.
-- **Escalated threads stay open *with our reply* explaining the
+- **Escalated threads stay open _with our reply_ explaining the
   disposition.** They're explicit hand-offs to the human merge
   owner, not loop failures — that's why convergence in step 9 can
   succeed with `OpenThreadCount > 0`.
@@ -71,12 +71,12 @@ Procedure).
 
 Pick by triage action:
 
-| Triage action | Template |
-|---------------|----------|
-| `fix` | [reply-fix.md](../templates/reply-fix.md) |
-| `decline` | [reply-decline.md](../templates/reply-decline.md) |
-| PR-description / comment drift acknowledgement | [reply-drift.md](../templates/reply-drift.md) |
-| Partial fix with deferred follow-up | [reply-partial.md](../templates/reply-partial.md) |
+| Triage action                                  | Template                                          |
+| ---------------------------------------------- | ------------------------------------------------- |
+| `fix`                                          | [reply-fix.md](../templates/reply-fix.md)         |
+| `decline`                                      | [reply-decline.md](../templates/reply-decline.md) |
+| PR-description / comment drift acknowledgement | [reply-drift.md](../templates/reply-drift.md)     |
+| Partial fix with deferred follow-up            | [reply-partial.md](../templates/reply-partial.md) |
 
 For `escalate-to-user`, there is no template — write a bespoke reply
 explaining the disposition and the open question, then post with

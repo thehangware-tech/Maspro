@@ -24,23 +24,28 @@
 ## Types
 
 ### Scalars
+
 - Integer: `int8_t`, `int16_t`, `int`, `int64_t`, `uint8_t`, `uint16_t`, `uint`, `uint64_t`
 - Float: `half` (16-bit), `float` (32-bit), `double` (64-bit)
 - Other: `bool`, `void`
 
 ### Vectors and Matrices
+
 - `vector<T,N>` (N = 2–4), convenience: `float3`, `uint2`, etc.
 - `matrix<T,R,C>` (R,C = 2–4), convenience: `float3x4`, etc.
 
 ### Arrays
+
 ```hlsl
 int a[3];            // fixed size
 int a[] = {1,2,3};  // inferred size
 void f(int b[]) {}  // unsized parameter
 ```
+
 Arrays have `.getCount()`.
 
 ### Structures
+
 ```hlsl
 struct MyData { int a; float b; }
 // Custom constructor:
@@ -48,6 +53,7 @@ __init(int a_, float b_) { a = a_; b = b_; }
 ```
 
 ### Parameter Blocks
+
 ```hlsl
 struct MaterialParams { float3 albedo; float metallic; float roughness; };
 ParameterBlock<MaterialParams> gMaterial;
@@ -55,10 +61,12 @@ ParameterBlock<MaterialParams> gMaterial;
 ```
 
 ### Import
+
 ```hlsl
 import foo;                  // imports foo.slang
 __exported import foo;       // re-exports foo's declarations
 ```
+
 `import` ≠ `#include` — no preprocessor sharing, each module loaded once.
 
 ---
@@ -66,6 +74,7 @@ __exported import foo;       // re-exports foo's declarations
 ## Interfaces and Generics
 
 ### Interface Definition and Implementation
+
 ```hlsl
 interface ILight
 {
@@ -87,11 +96,13 @@ struct PointLight : ILight
 ```
 
 ### Multiple Conformance
+
 ```hlsl
 struct MyType : IFoo, IBar { ... }
 ```
 
 ### Default Implementations
+
 ```hlsl
 interface IFoo
 {
@@ -104,6 +115,7 @@ struct MyType2 : IFoo
 ```
 
 ### Generic Methods and Constraints
+
 ```hlsl
 // Basic
 float4 computeDiffuse<L : ILight>(float4 albedo, float3 P, float3 N, L light) { ... }
@@ -128,6 +140,7 @@ int myMethod<T>(T arg) where optional T: IFoo
 ```
 
 ### Associated Types
+
 ```hlsl
 interface IMaterial
 {
@@ -143,6 +156,7 @@ struct MyCoolMaterial : IMaterial
 ```
 
 ### Global-Scope Generic Parameters
+
 ```hlsl
 type_param M : IMaterial;
 M gMaterial;
@@ -153,12 +167,14 @@ M gMaterial;
 ## Automatic Differentiation
 
 ### Marking Functions Differentiable
+
 ```hlsl
 [Differentiable]
 float2 foo(float a, float b) { return float2(a * b * b, a * a); }
 ```
 
 ### Forward Mode
+
 ```hlsl
 DifferentialPair<float> dp_a = diffPair(1.0, 1.0); // (value, derivative)
 DifferentialPair<float> dp_b = diffPair(2.4, 0.0);
@@ -168,6 +184,7 @@ float2 derivative = out.d;
 ```
 
 ### Backward Mode
+
 ```hlsl
 DifferentialPair<float> dp_a = diffPair(1.0);
 DifferentialPair<float> dp_b = diffPair(2.4);
@@ -178,12 +195,15 @@ float dL_db = dp_b.d;
 ```
 
 ### Differentiable Types
+
 Built-in: `float`, `double`, `half`, vectors/matrices thereof, arrays of differentiable types.
+
 ```hlsl
 struct MyType : IDifferentiable { float x; float y; }
 ```
 
 ### Custom Derivatives
+
 ```hlsl
 [Differentiable]
 [ForwardDerivative(myForwardDeriv)]
@@ -196,6 +216,7 @@ float myFunc(float x) { ... }
 ## Modules and Access Control
 
 ### Defining a Module
+
 ```hlsl
 // scene.slang
 module scene;
@@ -207,19 +228,22 @@ implementing scene;
 ```
 
 ### Module Include Syntax
+
 ```hlsl
 __include dir.sub_file;           // → "dir/sub-file.slang"
 __include "dir/sub-file.slang";
 ```
 
 ### Access Modifiers
-| Modifier   | Visibility                              |
-|------------|-----------------------------------------|
-| `public`   | Everywhere (other files, modules)       |
-| `internal` | Same module only (default for most)     |
-| `private`  | Same type and nested types only         |
+
+| Modifier   | Visibility                          |
+| ---------- | ----------------------------------- |
+| `public`   | Everywhere (other files, modules)   |
+| `internal` | Same module only (default for most) |
+| `private`  | Same type and nested types only     |
 
 Rules:
+
 - Interface members inherit the interface's visibility.
 - Legacy modules (no `module` declaration) treat all symbols as `public`.
 - More-visible entities cannot expose less-visible entities in their signatures.
@@ -229,6 +253,7 @@ Rules:
 ## Capabilities System
 
 ### Declaring Requirements
+
 ```hlsl
 [require(spvShaderClockKHR)]
 [require(glsl, GL_EXT_shader_realtime_clock)]
@@ -238,6 +263,7 @@ uint2 getClock() { ... }
 ```
 
 ### Target Switch
+
 ```hlsl
 void myFunc()
 {
@@ -250,6 +276,7 @@ void myFunc()
 ```
 
 ### Capability Aliases
+
 ```hlsl
 // Use a named alias instead of spelling out the full disjunction:
 [require(sm_6_6)]
@@ -257,6 +284,7 @@ void myFunc() { ... }
 ```
 
 ### Common Capability Atoms
+
 - Stages: `vertex`, `fragment`, `compute`, `hull`, `domain`, `geometry`
 - APIs: `hlsl`, `glsl`, `spirv`, `cuda`, `cpp`
 - Features: `_sm_6_7`, `SPV_KHR_ray_tracing`, `spvShaderClockKHR`, `hlsl_nvapi`
@@ -298,6 +326,7 @@ linkedProgram->getEntryPointCode(0, 0, kernelCode.writeRef());
 ```
 
 ### CMake integration
+
 ```cmake
 find_package(slang REQUIRED PATHS ${CMAKE_INSTALL_PREFIX} NO_DEFAULT_PATH)
 target_link_libraries(yourLib PUBLIC slang::slang)
@@ -332,15 +361,19 @@ Type reflection kind values: `Scalar`, `Vector`, `Matrix`, `Array`, `Struct`, `R
 ## Compilation Targets
 
 ### D3D11 (DXBC)
+
 Stages: `vertex`, `hull`, `domain`, `geometry`, `fragment`  
 Registers: `b` (cbuffers), `t` (SRVs), `u` (UAVs), `s` (samplers)
 
 ### D3D12 (DXIL)
+
 Adds: ray tracing (`raygeneration`, `closesthit`, `miss`, `anyhit`, `intersection`, `callable`)  
 Root signatures: root constants, descriptor tables, root descriptors.
 
 ### Vulkan (SPIR-V)
-Descriptor sets instead of tables. Push constants instead of root constants.  
+
+Descriptor sets instead of tables. Push constants instead of root constants.
+
 ```hlsl
 [[vk::binding(0, 1)]] Texture2D myTexture;
 [[vk::push_constant]]  cbuffer PC { float4 color; };
@@ -348,14 +381,17 @@ Descriptor sets instead of tables. Push constants instead of root constants.
 ```
 
 ### CUDA
+
 - Native pointer support, cooperative groups, tensor ops.
 - No graphics pipeline stages, limited texture ops.
 
 ### Metal
+
 - Argument buffers, tile-based optimizations, unified memory.
 - No double type.
 
 ### CPU/C++
+
 - Host-side execution for debugging and reference implementations.
 - No GPU-specific features.
 
@@ -363,23 +399,24 @@ Descriptor sets instead of tables. Push constants instead of root constants.
 
 ## Target Compatibility Matrix
 
-| Feature                | D3D11 | D3D12 | Vulkan | CUDA | Metal | CPU |
-|------------------------|:-----:|:-----:|:------:|:----:|:-----:|:---:|
-| `half` type            | ✗     | ✓     | ✓      | ✓    | ✓     | ✗   |
-| `double` type          | ✓     | ✓     | ✓      | ✓    | ✗     | ✓   |
-| `u/int8_t`             | ✗     | ✗     | ✓      | ✓    | ✓     | ✓   |
-| `u/int16_t`            | ✗     | ✓     | ✓      | ✓    | ✓     | ✓   |
-| `u/int64_t`            | ✗     | ✓     | ✓      | ✓    | ✓     | ✓   |
-| Wave intrinsics (SM6)  | ✗     | ✓     | Partial| ✓    | ✗     | ✗   |
-| Ray tracing            | ✗     | ✓     | ✓      | ✗    | ✗     | ✗   |
-| Mesh shaders           | ✗     | ✓     | ✓      | ✗    | ✓     | ✗   |
-| Tessellation           | ✓     | ✓     | ✗      | ✗    | ✗     | ✗   |
-| Graphics pipeline      | ✓     | ✓     | ✓      | ✗    | ✓     | ✗   |
-| Native bindless        | ✗     | ✗     | ✗      | ✓    | ✗     | ✓   |
-| Atomics                | ✓     | ✓     | ✓      | ✓    | ✓     | ✓   |
-| Pointers               | ✗     | ✗     | ✓      | ✓    | ✗     | ✓   |
+| Feature               | D3D11 | D3D12 | Vulkan  | CUDA | Metal | CPU |
+| --------------------- | :---: | :---: | :-----: | :--: | :---: | :-: |
+| `half` type           |   ✗   |   ✓   |    ✓    |  ✓   |   ✓   |  ✗  |
+| `double` type         |   ✓   |   ✓   |    ✓    |  ✓   |   ✗   |  ✓  |
+| `u/int8_t`            |   ✗   |   ✗   |    ✓    |  ✓   |   ✓   |  ✓  |
+| `u/int16_t`           |   ✗   |   ✓   |    ✓    |  ✓   |   ✓   |  ✓  |
+| `u/int64_t`           |   ✗   |   ✓   |    ✓    |  ✓   |   ✓   |  ✓  |
+| Wave intrinsics (SM6) |   ✗   |   ✓   | Partial |  ✓   |   ✗   |  ✗  |
+| Ray tracing           |   ✗   |   ✓   |    ✓    |  ✗   |   ✗   |  ✗  |
+| Mesh shaders          |   ✗   |   ✓   |    ✓    |  ✗   |   ✓   |  ✗  |
+| Tessellation          |   ✓   |   ✓   |    ✗    |  ✗   |   ✗   |  ✗  |
+| Graphics pipeline     |   ✓   |   ✓   |    ✓    |  ✗   |   ✓   |  ✗  |
+| Native bindless       |   ✗   |   ✗   |    ✗    |  ✓   |   ✗   |  ✓  |
+| Atomics               |   ✓   |   ✓   |    ✓    |  ✓   |   ✓   |  ✓  |
+| Pointers              |   ✗   |   ✗   |    ✓    |  ✓   |   ✗   |  ✓  |
 
 **Platform notes:**
+
 - Tessellation: Not available on Vulkan (use tessellation via mesh shaders instead).
 - Half in D3D12: Problems with `StructuredBuffer<half>` — avoid.
 - Wave intrinsics on CUDA: Preliminary, uses synthesized WaveMask.
@@ -437,13 +474,15 @@ slangc shader.slang -emit-ir -o shader.slang-module
 ```
 
 ### Optimization Levels
-| Flag | Effect                              |
-|------|-------------------------------------|
-| `-O0`| No optimization (debugging)         |
-| `-O1`| Basic optimization                  |
-| `-O2`| Standard optimization (default)     |
-| `-O3`| Aggressive (may increase compile time)|
+
+| Flag  | Effect                                 |
+| ----- | -------------------------------------- |
+| `-O0` | No optimization (debugging)            |
+| `-O1` | Basic optimization                     |
+| `-O2` | Standard optimization (default)        |
+| `-O3` | Aggressive (may increase compile time) |
 
 ### Stage Names for `-stage`
+
 `vertex` · `fragment` · `compute` · `hull` · `domain` · `geometry`
 `raygeneration` · `closesthit` · `miss` · `anyhit` · `intersection` · `callable`

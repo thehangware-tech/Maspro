@@ -53,6 +53,7 @@ public class SummaryTools
 ```
 
 Why this is nice:
+
 - Same `IChatClient` API the rest of the .NET AI ecosystem uses.
 - Works with `Microsoft.Extensions.AI` middleware (rate limiting, retries, telemetry, function calling).
 - You can swap to a direct provider in tests by injecting a different `IChatClient`.
@@ -87,7 +88,7 @@ string answer = result.Content
     .FirstOrDefault()?.Text ?? string.Empty;
 ```
 
-`ModelPreferences` lets you hint at model selection (cost vs. speed vs. intelligence priority); the *client* decides the actual model.
+`ModelPreferences` lets you hint at model selection (cost vs. speed vs. intelligence priority); the _client_ decides the actual model.
 
 ```csharp
 ModelPreferences = new ModelPreferences
@@ -124,17 +125,17 @@ if (server.ClientCapabilities?.Sampling is null)
 ## Performance notes
 
 - Sampling calls are network round-trips (client → its provider → back). Expect 100ms–multiple seconds. Don't loop tightly.
-- Token costs are paid by the *user* (their API key/quota). Be conservative with `MaxTokens`.
+- Token costs are paid by the _user_ (their API key/quota). Be conservative with `MaxTokens`.
 - Cancellation propagates: if the user kills the tool call, the sampling request is cancelled too.
 
 ## Sampling vs. doing it server-side
 
-| Sampling (via client) | Direct LLM call (server-side) |
-|---|---|
-| Uses the user's model + key | Uses your service's key |
-| Respects user's policy/quota | Your responsibility to bill/track |
+| Sampling (via client)          | Direct LLM call (server-side)     |
+| ------------------------------ | --------------------------------- |
+| Uses the user's model + key    | Uses your service's key           |
+| Respects user's policy/quota   | Your responsibility to bill/track |
 | Works in any host the user has | Locked to the model you ship with |
-| Higher latency (extra hop) | Lower latency, direct |
-| No secrets to manage | You manage the API key |
+| Higher latency (extra hop)     | Lower latency, direct             |
+| No secrets to manage           | You manage the API key            |
 
 For "smart" servers shipped to many users, prefer sampling. For internal corporate servers where you want consistent behaviour and you're already paying for the model, direct is fine.

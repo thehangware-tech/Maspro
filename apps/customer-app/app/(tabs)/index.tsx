@@ -1,217 +1,605 @@
-import React from 'react';
-import { View as TwView, Text as TwText, Pressable as TwPressable, TextInput as TwTextInput, SafeAreaView as TwSafeAreaView, ScrollView as TwScrollView, Image as TwImage } from '../../src/tw';
-import { Svg, Path, Circle, Polyline, Rect, Line } from 'react-native-svg';
-import { StatusBar } from 'expo-status-bar';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+  TextInput,
+  StatusBar,
+  Dimensions,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { LinearGradient } from "expo-linear-gradient";
+import { router } from "expo-router";
+import Svg, { Path, Circle, Line } from "react-native-svg";
+import { useQuery } from "@tanstack/react-query";
+import { CategoryService } from "../../src/services/CategoryService";
+import { ProductService } from "../../src/services/ProductService";
+import { useFilterStore } from "../../src/store/filterStore";
+import { useWishlistStore } from "../../src/store/wishlistStore";
+import { useCartStore } from "../../src/store/cartStore";
+import { Product } from "../../src/types";
+import { BANNERS } from "../../src/data/mockData";
 
-// Icons
-const MenuIcon = () => (
-  <Svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <Line x1="3" y1="12" x2="21" y2="12" />
-    <Line x1="3" y1="6" x2="21" y2="6" />
-    <Line x1="3" y1="18" x2="21" y2="18" />
-  </Svg>
-);
-
-const BellIcon = () => (
-  <Svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <Path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-    <Path d="M13.73 21a2 2 0 0 1-3.46 0" />
-  </Svg>
-);
-
-const CartIcon = () => (
-  <Svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <Circle cx="9" cy="21" r="1" />
-    <Circle cx="20" cy="21" r="1" />
-    <Path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-  </Svg>
-);
+const { width } = Dimensions.get("window");
+const CARD_W = (width - 48) / 2;
 
 const SearchIcon = () => (
-  <Svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <Circle cx="11" cy="11" r="8" />
-    <Line x1="21" y1="21" x2="16.65" y2="16.65" />
+  <Svg width={18} height={18} viewBox="0 0 24 24" fill="none">
+    <Circle cx="11" cy="11" r="8" stroke="#9CA3AF" strokeWidth="2" />
+    <Line
+      x1="21"
+      y1="21"
+      x2="16.65"
+      y2="16.65"
+      stroke="#9CA3AF"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+  </Svg>
+);
+const BellIcon = () => (
+  <Svg width={22} height={22} viewBox="0 0 24 24" fill="none">
+    <Path
+      d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"
+      stroke="#374151"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+    <Path
+      d="M13.73 21a2 2 0 0 1-3.46 0"
+      stroke="#374151"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+  </Svg>
+);
+const CartIcon2 = () => (
+  <Svg width={22} height={22} viewBox="0 0 24 24" fill="none">
+    <Circle cx="9" cy="21" r="1" stroke="#374151" strokeWidth="2" />
+    <Circle cx="20" cy="21" r="1" stroke="#374151" strokeWidth="2" />
+    <Path
+      d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+      stroke="#374151"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+  </Svg>
+);
+const StarIcon = () => (
+  <Svg width={12} height={12} viewBox="0 0 24 24" fill="#F59E0B">
+    <Path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+  </Svg>
+);
+const HeartIcon = () => (
+  <Svg width={16} height={16} viewBox="0 0 24 24" fill="none">
+    <Path
+      d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+      stroke="#D1D5DB"
+      strokeWidth="2"
+    />
   </Svg>
 );
 
-const FilterIcon = () => (
-  <Svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <Line x1="4" y1="21" x2="4" y2="14" />
-    <Line x1="4" y1="10" x2="4" y2="3" />
-    <Line x1="12" y1="21" x2="12" y2="12" />
-    <Line x1="12" y1="8" x2="12" y2="3" />
-    <Line x1="20" y1="21" x2="20" y2="16" />
-    <Line x1="20" y1="12" x2="20" y2="3" />
-    <Line x1="1" y1="14" x2="7" y2="14" />
-    <Line x1="9" y1="8" x2="15" y2="8" />
-    <Line x1="17" y1="16" x2="23" y2="16" />
-  </Svg>
-);
+const ProductCard = ({ item }: { item: Product }) => {
+  const toggleWishlist = useWishlistStore((s) => s.toggleWishlist);
+  const isInWishlist = useWishlistStore((s) => s.isInWishlist(item.id));
 
-export default function Dashboard() {
   return (
-    <TwSafeAreaView className="flex-1 bg-[#0B0D14]">
-      <StatusBar style="light" />
-      
-      {/* Header */}
-      <TwView className="flex-row justify-between items-center px-6 pt-4 pb-2">
-        <TwPressable>
-          <MenuIcon />
-        </TwPressable>
-        
-        {/* Logo */}
-        <TwView className="flex-row items-center">
-          <TwView className="relative w-6 h-6 justify-center items-center mr-1">
-            <TwText className="text-[#FF6B00] font-bold text-2xl italic">M</TwText>
-            <TwView className="absolute top-0 left-0 w-1 h-1 bg-[#FF6B00] rounded-full" />
-          </TwView>
-          <TwView className="flex-col justify-center">
-            <TwText className="text-white font-bold text-sm tracking-wide leading-none">MASPRO</TwText>
-            <TwText className="text-[#FF6B00] font-bold text-[6px] tracking-widest leading-none mt-0.5">SPORTS INDIA</TwText>
-          </TwView>
-        </TwView>
+    <Pressable
+      style={styles.productCard}
+      onPress={() =>
+        router.push({ pathname: "/product/[id]", params: { id: item.id } })
+      }
+    >
+      <View style={[styles.productImgBox, { backgroundColor: item.bg }]}>
+        <Text style={{ fontSize: 60 }}>{item.emoji}</Text>
+        <View style={styles.discBadge}>
+          <Text style={styles.discBadgeText}>{item.discount}% OFF</Text>
+        </View>
+        <Pressable
+          style={styles.wishBtn}
+          onPress={(e) => {
+            e.stopPropagation();
+            toggleWishlist(item.id);
+          }}
+        >
+          {isInWishlist ? (
+            <Svg width={16} height={16} viewBox="0 0 24 24" fill="#EF4444">
+              <Path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                stroke="#EF4444"
+                strokeWidth="2"
+              />
+            </Svg>
+          ) : (
+            <HeartIcon />
+          )}
+        </Pressable>
+      </View>
+      <View style={{ padding: 10 }}>
+        <Text style={styles.prodBrand}>{item.brand}</Text>
+        <Text style={styles.prodName} numberOfLines={2}>
+          {item.name}
+        </Text>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 3,
+            marginBottom: 6,
+          }}
+        >
+          <StarIcon />
+          <Text style={styles.rating}>{item.rating}</Text>
+        </View>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+          <Text style={styles.price}>₹{item.price.toLocaleString()}</Text>
+          <Text style={styles.origPrice}>
+            ₹{item.original.toLocaleString()}
+          </Text>
+        </View>
+      </View>
+    </Pressable>
+  );
+};
 
-        <TwView className="flex-row items-center space-x-4 gap-x-4">
-          <TwPressable className="relative">
+export default function Home() {
+  const [bannerIdx, setBannerIdx] = useState(0);
+  const setSearchQuery = useFilterStore((s) => s.setSearchQuery);
+  const setCategory = useFilterStore((s) => s.setCategory);
+  const cartItemsCount = useCartStore((s) => s.getTotalItems());
+
+  const [localSearch, setLocalSearch] = useState("");
+
+  const { data: categories = [] } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () => CategoryService.getCategories(),
+  });
+
+  const { data: popularProducts = [] } = useQuery({
+    queryKey: ["products", "popular"],
+    queryFn: () => ProductService.getProducts({ sort: "Popular" }),
+  });
+
+  const handleSearch = () => {
+    if (localSearch.trim()) {
+      setSearchQuery(localSearch);
+      router.push("/product-list");
+    }
+  };
+
+  const handleCategoryPress = (catId: string, catName: string) => {
+    setCategory(catId);
+    router.push({ pathname: "/product-list", params: { name: catName } });
+  };
+
+  return (
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: "#F8FAFC" }}
+      edges={["top"]}
+    >
+      <StatusBar barStyle="dark-content" />
+
+      {/* Top Bar */}
+      <View style={styles.topBar}>
+        <View>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
+            <Svg width={12} height={12} viewBox="0 0 24 24" fill="none">
+              <Path
+                d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+                stroke="#0EA5E9"
+                strokeWidth="2"
+              />
+              <Circle cx="12" cy="10" r="3" stroke="#0EA5E9" strokeWidth="2" />
+            </Svg>
+            <Text style={{ fontSize: 11, color: "#374151", fontWeight: "600" }}>
+              Bangalore, Karnataka ▾
+            </Text>
+          </View>
+        </View>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
+          <Text
+            style={{
+              color: "#0EA5E9",
+              fontSize: 18,
+              fontWeight: "900",
+              fontStyle: "italic",
+            }}
+          >
+            M
+          </Text>
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: "900",
+              color: "#0284C7",
+              letterSpacing: 2,
+            }}
+          >
+            MASPRO
+          </Text>
+        </View>
+        <View style={{ flexDirection: "row", gap: 12 }}>
+          <Pressable style={styles.iconBtn}>
             <BellIcon />
-            <TwView className="absolute -top-1 -right-1 bg-[#FF6B00] w-3.5 h-3.5 rounded-full items-center justify-center border border-[#0B0D14]">
-              <TwText className="text-white text-[8px] font-bold">1</TwText>
-            </TwView>
-          </TwPressable>
-          <TwPressable className="relative">
-            <CartIcon />
-            <TwView className="absolute -top-1 -right-1 bg-[#FF6B00] w-3.5 h-3.5 rounded-full items-center justify-center border border-[#0B0D14]">
-              <TwText className="text-white text-[8px] font-bold">1</TwText>
-            </TwView>
-          </TwPressable>
-        </TwView>
-      </TwView>
+          </Pressable>
+          <Pressable
+            style={styles.iconBtn}
+            onPress={() => router.push("/(tabs)/cart")}
+          >
+            <CartIcon2 />
+            {cartItemsCount > 0 && (
+              <View
+                style={{
+                  position: "absolute",
+                  top: -2,
+                  right: -2,
+                  backgroundColor: "#EF4444",
+                  width: 14,
+                  height: 14,
+                  borderRadius: 7,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Text style={{ color: "#fff", fontSize: 9, fontWeight: "800" }}>
+                  {cartItemsCount}
+                </Text>
+              </View>
+            )}
+          </Pressable>
+        </View>
+      </View>
 
-      <TwScrollView className="flex-1" contentContainerClassName="pb-6">
-        
-        {/* Greeting */}
-        <TwView className="px-6 mt-4">
-          <TwText className="text-white text-2xl font-bold">Hello, Adarsh 👋</TwText>
-          <TwText className="text-gray-400 text-sm mt-1">Find the best gear for your game.</TwText>
-        </TwView>
-
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 20 }}
+      >
         {/* Search */}
-        <TwView className="px-6 mt-6">
-          <TwView className="flex-row items-center bg-[#13161F] h-12 rounded-xl px-4">
+        <View style={{ padding: 16 }}>
+          <View style={styles.searchBox}>
             <SearchIcon />
-            <TwTextInput 
-              className="flex-1 text-white mx-3 h-full"
+            <TextInput
+              style={{ flex: 1, fontSize: 14, color: "#111827" }}
               placeholder="Search for products, brands..."
               placeholderTextColor="#9CA3AF"
+              value={localSearch}
+              onChangeText={setLocalSearch}
+              onSubmitEditing={handleSearch}
+              returnKeyType="search"
             />
-            <FilterIcon />
-          </TwView>
-        </TwView>
+          </View>
+        </View>
 
-        {/* Promo Banner */}
-        <TwView className="px-6 mt-6">
-          <TwView className="w-full h-40 rounded-2xl bg-[#CC5500] overflow-hidden relative justify-center px-6">
-            <TwView className="absolute inset-0 bg-black/20" />
-            
-            <TwView className="z-10 w-3/5">
-              <TwText className="text-white text-xl font-bold">New Arrivals</TwText>
-              <TwText className="text-[#FFD580] text-lg font-bold mt-1 mb-3">Up to 30% Off</TwText>
-              <TwPressable className="bg-[#FF6B00] py-2 px-4 rounded-lg self-start">
-                <TwText className="text-white text-xs font-bold">Shop Now</TwText>
-              </TwPressable>
-            </TwView>
-            
-            <TwView className="absolute right-0 bottom-0 top-0 w-1/2 items-center justify-center">
-              <TwText className="text-7xl">⚽</TwText>
-            </TwView>
-          </TwView>
-        </TwView>
+        {/* Banner */}
+        <ScrollView
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onMomentumScrollEnd={(e) =>
+            setBannerIdx(
+              Math.round(e.nativeEvent.contentOffset.x / (width - 32)),
+            )
+          }
+          style={{ marginHorizontal: 16, borderRadius: 20, overflow: "hidden" }}
+        >
+          {BANNERS.map((b) => (
+            <LinearGradient key={b.id} colors={b.colors} style={styles.banner}>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.bannerTitle}>{b.title}</Text>
+                <Text style={styles.bannerSub}>{b.sub}</Text>
+                <Pressable
+                  style={styles.bannerBtn}
+                  onPress={() =>
+                    handleCategoryPress(b.linkParams.cat, "Category")
+                  }
+                >
+                  <Text style={styles.bannerBtnText}>{b.cta}</Text>
+                </Pressable>
+              </View>
+              <Text style={{ fontSize: 72 }}>{b.emoji}</Text>
+            </LinearGradient>
+          ))}
+        </ScrollView>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            gap: 6,
+            marginTop: 10,
+          }}
+        >
+          {BANNERS.map((_, i) => (
+            <View
+              key={i}
+              style={[styles.dot, i === bannerIdx && styles.dotActive]}
+            />
+          ))}
+        </View>
 
-        {/* Top Categories */}
-        <TwView className="px-6 mt-8">
-          <TwView className="flex-row justify-between items-end mb-4">
-            <TwText className="text-white text-lg font-bold">Top Categories</TwText>
-            <TwPressable>
-              <TwText className="text-[#FF6B00] text-xs font-bold">View All</TwText>
-            </TwPressable>
-          </TwView>
+        {/* Quick Links */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{ marginTop: 14 }}
+          contentContainerStyle={{ paddingHorizontal: 16, gap: 8 }}
+        >
+          {["Best Sellers", "New Arrivals", "Offers", "Premium"].map((q) => (
+            <Pressable key={q} style={styles.quickChip}>
+              <Text
+                style={{ fontSize: 12, fontWeight: "600", color: "#374151" }}
+              >
+                {q}
+              </Text>
+            </Pressable>
+          ))}
+        </ScrollView>
 
-          <TwView className="flex-row justify-between">
-            <TwPressable className="items-center w-[22%]">
-              <TwView className="w-full aspect-square bg-[#13161F] rounded-xl items-center justify-center mb-2">
-                <TwText className="text-3xl">🏏</TwText>
-              </TwView>
-              <TwText className="text-white text-xs">Cricket</TwText>
-            </TwPressable>
-            
-            <TwPressable className="items-center w-[22%]">
-              <TwView className="w-full aspect-square bg-[#13161F] rounded-xl items-center justify-center mb-2">
-                <TwText className="text-3xl">⚽</TwText>
-              </TwView>
-              <TwText className="text-white text-xs">Football</TwText>
-            </TwPressable>
-            
-            <TwPressable className="items-center w-[22%]">
-              <TwView className="w-full aspect-square bg-[#13161F] rounded-xl items-center justify-center mb-2">
-                <TwText className="text-3xl">🏃</TwText>
-              </TwView>
-              <TwText className="text-white text-xs">Running</TwText>
-            </TwPressable>
-            
-            <TwPressable className="items-center w-[22%]">
-              <TwView className="w-full aspect-square bg-[#13161F] rounded-xl items-center justify-center mb-2">
-                <TwText className="text-3xl">🏋️</TwText>
-              </TwView>
-              <TwText className="text-white text-xs">Fitness</TwText>
-            </TwPressable>
-          </TwView>
-        </TwView>
+        {/* Categories */}
+        <View style={{ marginTop: 24 }}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Popular Categories</Text>
+            <Pressable onPress={() => router.push("/(tabs)/categories")}>
+              <Text style={styles.viewAll}>View All</Text>
+            </Pressable>
+          </View>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingHorizontal: 16, gap: 12 }}
+          >
+            {categories.map((c) => (
+              <Pressable
+                key={c.id}
+                style={styles.catCard}
+                onPress={() => handleCategoryPress(c.id, c.name)}
+              >
+                <View style={styles.catIconBox}>
+                  <Text style={{ fontSize: 28 }}>{c.icon}</Text>
+                </View>
+                <Text style={styles.catName}>{c.name}</Text>
+              </Pressable>
+            ))}
+          </ScrollView>
+        </View>
 
-        {/* Dashboard Widgets */}
-        <TwView className="px-6 mt-8">
-          <TwView className="flex-row justify-between mb-4">
-            <TwView className="w-[48%] bg-[#13161F] p-4 rounded-xl">
-              <TwText className="text-gray-300 text-xs mb-3">Total Orders</TwText>
-              <TwText className="text-white text-3xl font-bold mb-2">24</TwText>
-              <TwText className="text-green-500 text-xs font-bold">↗ 12%</TwText>
-            </TwView>
-            
-            <TwView className="w-[48%] bg-[#13161F] p-4 rounded-xl">
-              <TwText className="text-gray-300 text-xs mb-3">Wishlist</TwText>
-              <TwText className="text-white text-3xl font-bold mb-2">16</TwText>
-              <TwText className="text-gray-400 text-xs font-bold">Items</TwText>
-            </TwView>
-          </TwView>
+        {/* Popular Products */}
+        <View style={{ marginTop: 24 }}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Popular Products</Text>
+            <Pressable
+              onPress={() =>
+                router.push({
+                  pathname: "/product-list",
+                  params: { sort: "Popular" },
+                })
+              }
+            >
+              <Text style={styles.viewAll}>View All</Text>
+            </Pressable>
+          </View>
+          <View style={styles.grid}>
+            {popularProducts.slice(0, 4).map((p) => (
+              <ProductCard key={p.id} item={p} />
+            ))}
+          </View>
+        </View>
 
-          <TwView className="flex-row justify-between">
-            <TwView className="w-[48%] bg-[#1D172E] p-4 rounded-xl">
-              <TwText className="text-purple-300 text-xs mb-3">Offers</TwText>
-              <TwText className="text-white text-3xl font-bold mb-2">8</TwText>
-              <TwText className="text-green-400 text-xs font-bold">Active</TwText>
-            </TwView>
-            
-            <TwView className="w-[48%] bg-[#10201C] p-4 rounded-xl">
-              <TwText className="text-teal-300 text-xs mb-3">Reward Points</TwText>
-              <TwText className="text-white text-3xl font-bold mb-2">350</TwText>
-              <TwText className="text-teal-500 text-xs font-bold">Points</TwText>
-            </TwView>
-          </TwView>
-        </TwView>
-
-        {/* Best Sellers */}
-        <TwView className="px-6 mt-8">
-          <TwView className="flex-row justify-between items-end mb-4">
-            <TwText className="text-white text-lg font-bold">Best Sellers</TwText>
-            <TwPressable>
-              <TwText className="text-[#FF6B00] text-xs font-bold">View All</TwText>
-            </TwPressable>
-          </TwView>
-          <TwView className="h-40 bg-[#13161F] rounded-xl items-center justify-center">
-             <TwText className="text-gray-500">Products list placeholder</TwText>
-          </TwView>
-        </TwView>
-
-      </TwScrollView>
-    </TwSafeAreaView>
+        {/* Flash Sale */}
+        <View style={{ marginTop: 24, marginHorizontal: 16 }}>
+          <LinearGradient
+            colors={["#7C3AED", "#9333EA"]}
+            style={styles.flashBanner}
+          >
+            <View style={{ flex: 1 }}>
+              <Text style={{ color: "#fff", fontSize: 18, fontWeight: "800" }}>
+                ⚡ FLASH SALE
+              </Text>
+              <Text
+                style={{
+                  color: "rgba(255,255,255,0.8)",
+                  fontSize: 12,
+                  marginTop: 4,
+                }}
+              >
+                Ends in 02:34:15
+              </Text>
+            </View>
+            <Pressable
+              style={styles.flashBtn}
+              onPress={() =>
+                router.push({
+                  pathname: "/product-list",
+                  params: { sort: "Price: Low → High" },
+                })
+              }
+            >
+              <Text
+                style={{ color: "#7C3AED", fontSize: 12, fontWeight: "700" }}
+              >
+                Shop Now
+              </Text>
+            </Pressable>
+          </LinearGradient>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  topBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    borderBottomColor: "#F3F4F6",
+  },
+  iconBtn: { padding: 4 },
+  searchBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 14,
+    paddingHorizontal: 16,
+    height: 48,
+    borderWidth: 1.5,
+    borderColor: "#FFFFFF",
+  },
+  banner: {
+    width: width - 32,
+    height: 155,
+    borderRadius: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 24,
+    paddingVertical: 20,
+    overflow: "hidden",
+  },
+  bannerTitle: {
+    color: "#fff",
+    fontSize: 17,
+    fontWeight: "800",
+    lineHeight: 22,
+    marginBottom: 5,
+  },
+  bannerSub: { color: "rgba(255,255,255,0.8)", fontSize: 11, marginBottom: 12 },
+  bannerBtn: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 7,
+    alignSelf: "flex-start",
+  },
+  bannerBtnText: { color: "#0EA5E9", fontSize: 12, fontWeight: "700" },
+  dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: "#D1D5DB" },
+  dotActive: { width: 18, backgroundColor: "#0EA5E9" },
+  quickChip: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 20,
+    paddingHorizontal: 14,
+    paddingVertical: 7,
+    borderWidth: 1,
+    borderColor: "#FFFFFF",
+  },
+  sectionHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    marginBottom: 12,
+  },
+  sectionTitle: { fontSize: 16, fontWeight: "700", color: "#111827" },
+  viewAll: { fontSize: 13, fontWeight: "600", color: "#0EA5E9" },
+  catCard: {
+    width: 86,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 14,
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    alignItems: "center",
+    shadowColor: "#FFFFFF",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    elevation: 3,
+  },
+  catIconBox: {
+    width: 44,
+    height: 44,
+    backgroundColor: "#E0F2FE",
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 6,
+  },
+  catName: {
+    fontSize: 10,
+    fontWeight: "700",
+    color: "#111827",
+    textAlign: "center",
+  },
+  grid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    paddingHorizontal: 16,
+    gap: 12,
+  },
+  productCard: {
+    width: CARD_W,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    overflow: "hidden",
+    shadowColor: "#FFFFFF",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.07,
+    shadowRadius: 10,
+    elevation: 4,
+  },
+  productImgBox: {
+    height: 135,
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+  },
+  discBadge: {
+    position: "absolute",
+    top: 8,
+    left: 8,
+    backgroundColor: "#22C55E",
+    borderRadius: 6,
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+  },
+  discBadgeText: { color: "#fff", fontSize: 9, fontWeight: "800" },
+  wishBtn: {
+    position: "absolute",
+    top: 8,
+    right: 8,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 14,
+    width: 26,
+    height: 26,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  prodBrand: {
+    fontSize: 10,
+    fontWeight: "700",
+    color: "#0EA5E9",
+    textTransform: "uppercase",
+    marginBottom: 2,
+  },
+  prodName: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: "#111827",
+    lineHeight: 16,
+    marginBottom: 4,
+  },
+  rating: { fontSize: 11, fontWeight: "700", color: "#374151" },
+  price: { fontSize: 14, fontWeight: "800", color: "#111827" },
+  origPrice: {
+    fontSize: 11,
+    color: "#6B7280",
+    textDecorationLine: "line-through",
+  },
+  flashBanner: {
+    borderRadius: 18,
+    padding: 18,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  flashBtn: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 7,
+  },
+});

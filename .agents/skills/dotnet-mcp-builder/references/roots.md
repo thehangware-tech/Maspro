@@ -89,7 +89,7 @@ Register as singleton (per-session in stateful HTTP, naturally singleton in STDI
 
 ## Validating paths against roots
 
-Defence in depth: even if a tool argument *looks* like a path under a root, validate.
+Defence in depth: even if a tool argument _looks_ like a path under a root, validate.
 
 ```csharp
 public static bool IsUnderAnyRoot(string absolutePath, IReadOnlyList<Root> roots)

@@ -11,7 +11,8 @@ metadata:
   author: terminal-skills
   version: "1.0.0"
   category: development
-  tags: ["bun", "javascript-runtime", "package-manager", "bundler", "typescript"]
+  tags:
+    ["bun", "javascript-runtime", "package-manager", "bundler", "typescript"]
 ---
 
 # Bun
@@ -37,6 +38,7 @@ Bun is an all-in-one JavaScript/TypeScript runtime that replaces Node.js, npm, w
 **User request:** "Create a REST API using Bun's built-in HTTP server"
 
 **Actions:**
+
 1. Create server with `Bun.serve()` and route handler
 2. Parse JSON bodies with `request.json()` and return `Response` objects
 3. Add WebSocket upgrade for real-time features
@@ -49,6 +51,7 @@ Bun is an all-in-one JavaScript/TypeScript runtime that replaces Node.js, npm, w
 **User request:** "Switch my Express project from Node.js to Bun"
 
 **Actions:**
+
 1. Replace `npm install` with `bun install` in CI and local setup
 2. Update `package.json` scripts to use `bun run` instead of `node`
 3. Replace `dotenv` with Bun's built-in `.env` loading

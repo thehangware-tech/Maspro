@@ -1,6 +1,6 @@
 ---
 name: aws-well-architected-review
-description: 'Perform an AWS Well-Architected Framework review of the current workload IaC and architecture, generating findings and GitHub issues for improvements.'
+description: "Perform an AWS Well-Architected Framework review of the current workload IaC and architecture, generating findings and GitHub issues for improvements."
 ---
 
 # AWS Well-Architected Review
@@ -8,6 +8,7 @@ description: 'Perform an AWS Well-Architected Framework review of the current wo
 This workflow performs a structured AWS Well-Architected Framework (WAF) review against your workload's IaC files and deployed infrastructure. It identifies risks across all 6 WAF pillars and creates GitHub issues to track remediation.
 
 ## Prerequisites
+
 - AWS CLI configured and authenticated
 - IaC files present in the repository (Terraform, CloudFormation, CDK, or SAM)
 - GitHub MCP server configured and authenticated
@@ -15,12 +16,16 @@ This workflow performs a structured AWS Well-Architected Framework (WAF) review 
 ## Workflow Steps
 
 ### Step 1: Load Well-Architected Framework Reference
+
 Fetch current AWS WAF best practices:
+
 - `https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html`
 - Pillar-specific lenses relevant to the workload type (Serverless, SaaS, etc.)
 
 ### Step 2: Discover IaC & Architecture
+
 Scan the repository for IaC files:
+
 - Terraform: `**/*.tf`
 - CloudFormation/SAM: `**/*.yaml`, `**/*.json` (CFn templates)
 - CDK: `lib/**/*.ts`, `bin/**/*.ts`, `cdk.json`
@@ -30,6 +35,7 @@ Identify key AWS services in use (compute, data, networking, security, observabi
 ### Step 3: Pillar-by-Pillar Review
 
 #### Pillar 1: Operational Excellence
+
 - [ ] All infrastructure defined as IaC (no manual console changes)
 - [ ] Consistent tagging strategy applied across all resources
 - [ ] CloudWatch alarms defined for key metrics
@@ -38,6 +44,7 @@ Identify key AWS services in use (compute, data, networking, security, observabi
 - [ ] Runbooks or operational documentation present
 
 #### Pillar 2: Security
+
 - [ ] IAM roles use least-privilege policies (no `*` actions without justification)
 - [ ] No hardcoded credentials in IaC or code
 - [ ] Secrets managed via Secrets Manager or SSM Parameter Store
@@ -51,6 +58,7 @@ Identify key AWS services in use (compute, data, networking, security, observabi
 - [ ] MFA delete enabled on critical S3 buckets
 
 #### Pillar 3: Reliability
+
 - [ ] Multi-AZ deployments for production databases (RDS Multi-AZ, DynamoDB Global Tables)
 - [ ] Auto Scaling configured with appropriate policies for EC2/ECS
 - [ ] S3 versioning and lifecycle policies configured
@@ -61,6 +69,7 @@ Identify key AWS services in use (compute, data, networking, security, observabi
 - [ ] Lambda reserved concurrency set to prevent noisy-neighbor throttling
 
 #### Pillar 4: Performance Efficiency
+
 - [ ] Right-sized instance types (Lambda memory, EC2 type, RDS class)
 - [ ] Graviton/ARM instances used where available (Lambda `arm64`, EC2 Graviton)
 - [ ] Caching implemented (ElastiCache, DAX, CloudFront, API Gateway caching)
@@ -69,6 +78,7 @@ Identify key AWS services in use (compute, data, networking, security, observabi
 - [ ] Lambda Provisioned Concurrency for latency-critical synchronous paths
 
 #### Pillar 5: Cost Optimization
+
 - [ ] EC2 Reserved Instances or Savings Plans for steady-state workloads
 - [ ] S3 lifecycle policies moving data to cheaper storage tiers
 - [ ] Lambda `arm64` architecture adopted (20% cost reduction)
@@ -79,6 +89,7 @@ Identify key AWS services in use (compute, data, networking, security, observabi
 - [ ] Unattached EBS volumes and idle EC2 instances identified
 
 #### Pillar 6: Sustainability
+
 - [ ] Graviton/ARM instances selected where available
 - [ ] Serverless/managed services preferred over always-on EC2
 - [ ] S3 lifecycle policies reduce unnecessary long-term data storage
@@ -86,7 +97,9 @@ Identify key AWS services in use (compute, data, networking, security, observabi
 - [ ] Region selection considers AWS renewable energy commitments
 
 ### Step 4: Risk Classification
+
 For each finding, classify:
+
 - **High Risk**: Security vulnerability, single point of failure, no backup/recovery
 - **Medium Risk**: Suboptimal reliability, cost inefficiency, performance concern
 - **Low Risk**: Best practice deviation, minor optimization opportunity
@@ -114,22 +127,26 @@ For each finding, classify:
 ```
 
 ### Step 6: Create Individual Finding Issues
+
 Label with "well-architected" and the pillar name (e.g., "security", "reliability").
 
 **Title**: `[WAF-<PILLAR>] [Brief Finding] — [Risk Level]`
 
 **Body**:
-```markdown
+
+````markdown
 ## 🏗️ Well-Architected Finding: [Brief Title]
 
 **Pillar**: [Name] | **Risk Level**: [High/Medium/Low] | **Effort**: [Low/Medium/High]
 
 ### 📋 Description
+
 [Clear explanation of the finding and why it matters]
 
 ### 🔧 Remediation
 
 **IaC Fix** (preferred):
+
 ```hcl
 # Terraform example
 resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
@@ -141,23 +158,28 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
   }
 }
 ```
+````
 
 **AWS CLI fallback**:
+
 ```bash
 aws s3api put-bucket-encryption --bucket <name> \
   --server-side-encryption-configuration '{"Rules":[{"ApplyServerSideEncryptionByDefault":{"SSEAlgorithm":"aws:kms"}}]}'
 ```
 
 ### 📚 AWS Reference
+
 - [WAF Best Practice Link]
 - [AWS Documentation Link]
 
 ### ✅ Validation
+
 - [ ] Change implemented in IaC and deployed
 - [ ] AWS Config rule passes (if applicable)
 - [ ] Security Hub finding resolved (if applicable)
 
 **Well-Architected Question**: [WAF question this maps to]
+
 ```
 
 ### Step 7: Create EPIC Tracking Issue
@@ -182,3 +204,4 @@ Label with "well-architected" and "epic".
 - ✅ GitHub issues created for team tracking
 - ✅ Architecture diagram generated for EPIC context
 - ✅ AWS documentation references included
+```

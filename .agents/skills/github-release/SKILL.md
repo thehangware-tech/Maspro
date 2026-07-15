@@ -41,9 +41,9 @@ If any check fails, stop and tell the user what to fix before continuing.
 
 Then ask the user one question:
 
-> *"Which directory contains your library's public-facing source code?
+> _"Which directory contains your library's public-facing source code?
 > (e.g. `src/`, `lib/`, `pkg/` - used to focus the diff on what consumers
-> actually see. Press Enter to scan the whole repo.)"*
+> actually see. Press Enter to scan the whole repo.)"_
 
 Store the answer as `PUBLIC_PATH`. If empty, `PUBLIC_PATH` is `.` (repo root).
 Exclude these paths from all diffs regardless: `tests/`, `test/`, `spec/`,
@@ -184,6 +184,7 @@ git log "$PREV_SHA"..HEAD --oneline --no-merges
 ```
 
 Use this to:
+
 - Understand the **intent** behind code changes that aren't self-explanatory from
   the diff alone (e.g. a one-line security fix labelled as such).
 - Catch changes that may be in paths outside `PUBLIC_PATH` but are still user-visible
@@ -198,6 +199,7 @@ See `references/commit-classification.md` for mapping message patterns to change
 When signals agree ? use that classification with confidence.
 
 When signals conflict ? **prefer the code diff**. Examples:
+
 - Commit says `fix: typo` but the diff shows a removed public method ? treat as MAJOR.
 - Commit says `feat: new API` but the diff only touches private internals ? treat as PATCH.
 - Commit says `chore: refactor` but the diff adds new exported symbols ? treat as MINOR.
@@ -211,16 +213,17 @@ in Step 6.
 
 Apply these rules to your analysis from Step 3 (full rules in `references/semver-rules.md`):
 
-| Condition | Bump |
-|---|---|
+| Condition                                                                       | Bump  |
+| ------------------------------------------------------------------------------- | ----- |
 | Any breaking change to public API (removal, signature change, behaviour change) | MAJOR |
-| New exported symbol or feature, no breaking changes | MINOR |
-| Bug fix, perf improvement, security fix, docs, chore only | PATCH |
+| New exported symbol or feature, no breaking changes                             | MINOR |
+| Bug fix, perf improvement, security fix, docs, chore only                       | PATCH |
 
 When a release contains a mix, the **highest precedence wins**:
 `MAJOR > MINOR > PATCH`.
 
 Compute `NEXT_VERSION`:
+
 - Split `PREV_TAG` into `MAJOR.MINOR.PATCH` integers.
 - Apply the appropriate bump.
 - Format as `vMAJOR.MINOR.PATCH`.
@@ -228,11 +231,11 @@ Compute `NEXT_VERSION`:
 **Present the proposed version to the user** with a brief rationale that cites
 specific code findings, not just commit messages. Example:
 
-> *"I'm proposing v2.1.0. The diff shows two new exported functions (`NewClient` and
+> _"I'm proposing v2.1.0. The diff shows two new exported functions (`NewClient` and
 > `WithTimeout`) in `src/client.go`, and no existing public symbols were removed or
-> changed. Commit messages corroborate this as feature additions."*
+> changed. Commit messages corroborate this as feature additions."_
 
-Ask: *"Does this version look right, or would you like to adjust it?"*
+Ask: _"Does this version look right, or would you like to adjust it?"_
 Wait for confirmation before proceeding.
 
 ---
@@ -259,31 +262,38 @@ Read the existing `CHANGELOG.md` (or create it if absent). Follow the
 ## [X.Y.Z] - YYYY-MM-DD
 
 ### Added
+
 - ...
 
 ### Changed
+
 - ...
 
 ### Deprecated
+
 - ...
 
 ### Removed
+
 - ...
 
 ### Fixed
+
 - ...
 
 ### Security
+
 - ...
 ```
 
 Rules:
+
 - Use today's date in `YYYY-MM-DD` format.
 - Omit sections that have no entries - don't leave empty headings.
 - Write entries in **plain English from a user's perspective**, derived primarily
   from what the code diff shows, supplemented by commit message context.
-  Good: *"Added `WithTimeout` option to HTTP client constructor."*
-  Bad: *"feat: add timeout cfg param"*
+  Good: _"Added `WithTimeout` option to HTTP client constructor."_
+  Bad: _"feat: add timeout cfg param"_
 - Map findings to sections:
   - New exported symbol ? Added
   - Breaking removal ? Removed
@@ -301,7 +311,7 @@ Rules:
 
 **Show the user the proposed changelog section before writing it to disk.**
 If any signal conflicts were found in Step 3c, flag them here so the user can verify.
-Ask: *"Does this changelog look accurate? Any entries to add, remove, or reword?"*
+Ask: _"Does this changelog look accurate? Any entries to add, remove, or reword?"_
 Incorporate feedback, then write to disk.
 
 ---
@@ -367,10 +377,12 @@ This PR prepares the **vX.Y.Z** release.
 - [ ] CI passing
 
 After merging, create the tag on the merge commit:
-``````
+```
+
 git tag vX.Y.Z <merge-commit-sha>
 git push origin vX.Y.Z
-``````
+
+````
 "@
 
 # Write to file and use --body-file (do NOT use inline --body with escape sequences)
@@ -439,3 +451,4 @@ Tell the user:
 
 - `references/semver-rules.md` - Extended SemVer decision rules and edge cases
 - `references/commit-classification.md` - Heuristics for classifying commit messages into change types
+````

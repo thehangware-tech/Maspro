@@ -49,9 +49,9 @@ installed and authenticated (see Prerequisites).
 
 The full multi-round autopilot (steps 1 → 9 → 1) needs **Triage or Write** permission on the target repo, because GitHub's only public API for adding the Copilot bot as a reviewer (`requestReviewsByLogin`) is gated on that permission. Verified against the public REST + GraphQL surface in this PR's commit history — there is no public-API path for bot reviewers without write permission.
 
-| You are… | What works |
-|---|---|
-| **Repo collaborator with Triage / Write** | Full loop: `01` triggers Copilot, `02` waits, `04`–`08` triage / fix / reply, loop back to `01`. Hands-off. |
+| You are…                                     | What works                                                                                                                                                                                                                                                                                |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Repo collaborator with Triage / Write**    | Full loop: `01` triggers Copilot, `02` waits, `04`–`08` triage / fix / reply, loop back to `01`. Hands-off.                                                                                                                                                                               |
 | **External PR author (no write permission)** | `01` will throw a clear actionable error. Use `-SingleIteration` mode: address all current findings in one pass, then either click the UI 🔄 next to Copilot, **or** push a substantive commit (the `synchronize` event auto-triggers Copilot on most repos). Then re-run `02` to verify. |
 
 In single-iteration mode the loop's convergence boolean is `Converged: true` iff `OpenThreadsAwaitingReply == 0` (the agent's side is done). The maintainer-side re-trigger then drives any additional rounds.
@@ -98,15 +98,15 @@ The bundled scripts enforce the hard correctness invariants (trigger landing via
 
 ## Troubleshooting
 
-| Issue | Solution |
-|-------|----------|
-| Script throws `prerequisite missing — gh CLI is not on PATH` | Install `gh` (`winget install GitHub.cli` on Windows; `brew install gh` on macOS; package manager on Linux; or download from https://cli.github.com). Then `gh auth login`. Surface the message to the user and STOP the loop — do not retry. |
-| Script throws `prerequisite missing — gh CLI is not authenticated` | Run `gh auth login`. STOP the loop until the user completes auth. |
-| Trigger fails or no `copilot_work_started` event lands | Push a substantive (non-whitespace) commit — auto-assign on `synchronize` is the most reliable trigger. Persistent failure indicates Copilot Code Review may not be enabled on the repo / account (check repo Settings → Code & automation → Copilot, or account-level Copilot Pro/Pro+). |
-| No new review after waiting ~10 min | Quiet-period after recent dismissal or trivial-diff suppression. Push a substantive commit and retry. Do not blindly re-run `01-request-review.ps1` — it reports `InFlight` while Copilot is still a requested reviewer. |
-| Outdated-but-unresolved threads in the open list | Expected: unresolved state is the source of truth. Reply + resolve them like any other open thread. `10-cleanup-outdated.ps1` is only a final safety net. |
-| Unsure whether to fix or decline a finding | See [references/04-triage.md](references/04-triage.md). |
-| Need a reply phrasing for "fixed", "declined", or "drift" | See the templates under [templates/](templates/) — [reply-fix.md](templates/reply-fix.md), [reply-decline.md](templates/reply-decline.md), [reply-drift.md](templates/reply-drift.md), [reply-partial.md](templates/reply-partial.md). |
+| Issue                                                              | Solution                                                                                                                                                                                                                                                                                  |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Script throws `prerequisite missing — gh CLI is not on PATH`       | Install `gh` (`winget install GitHub.cli` on Windows; `brew install gh` on macOS; package manager on Linux; or download from https://cli.github.com). Then `gh auth login`. Surface the message to the user and STOP the loop — do not retry.                                             |
+| Script throws `prerequisite missing — gh CLI is not authenticated` | Run `gh auth login`. STOP the loop until the user completes auth.                                                                                                                                                                                                                         |
+| Trigger fails or no `copilot_work_started` event lands             | Push a substantive (non-whitespace) commit — auto-assign on `synchronize` is the most reliable trigger. Persistent failure indicates Copilot Code Review may not be enabled on the repo / account (check repo Settings → Code & automation → Copilot, or account-level Copilot Pro/Pro+). |
+| No new review after waiting ~10 min                                | Quiet-period after recent dismissal or trivial-diff suppression. Push a substantive commit and retry. Do not blindly re-run `01-request-review.ps1` — it reports `InFlight` while Copilot is still a requested reviewer.                                                                  |
+| Outdated-but-unresolved threads in the open list                   | Expected: unresolved state is the source of truth. Reply + resolve them like any other open thread. `10-cleanup-outdated.ps1` is only a final safety net.                                                                                                                                 |
+| Unsure whether to fix or decline a finding                         | See [references/04-triage.md](references/04-triage.md).                                                                                                                                                                                                                                   |
+| Need a reply phrasing for "fixed", "declined", or "drift"          | See the templates under [templates/](templates/) — [reply-fix.md](templates/reply-fix.md), [reply-decline.md](templates/reply-decline.md), [reply-drift.md](templates/reply-drift.md), [reply-partial.md](templates/reply-partial.md).                                                    |
 
 ## References
 

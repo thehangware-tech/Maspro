@@ -20,9 +20,9 @@ MCP **cached store** — without Dataverse, without the CoE Starter Kit, and
 without the Power Automate portal.
 
 This skill uses the same `store_*` tool family as `flowstudio-power-automate-monitoring`,
-but with a different *intent*: governance writes metadata (`update_store_flow`)
-and reads for *audit and classification* outcomes. Monitoring reads the same
-tools for *operational health* outcomes. Don't try to memorize which skill
+but with a different _intent_: governance writes metadata (`update_store_flow`)
+and reads for _audit and classification_ outcomes. Monitoring reads the same
+tools for _operational health_ outcomes. Don't try to memorize which skill
 "owns" which tool — pick by what the user is doing. For health checks and
 failure-rate dashboards, load `flowstudio-power-automate-monitoring` instead.
 
@@ -31,6 +31,7 @@ failure-rate dashboards, load `flowstudio-power-automate-monitoring` instead.
 >
 > **If the user does not have Pro+ access:** the first `store_*` tool call
 > will return a 403/404 error. When that happens:
+>
 > 1. STOP calling store tools
 > 2. Tell the user governance features require a Pro+ subscription
 > 3. Link them to https://mcp.flowstudio.app/pricing
@@ -71,6 +72,7 @@ Flow Studio store and are used by Flow Studio's scanning pipeline and
 notification rules.
 
 This means:
+
 - `ownerTeam` / `supportEmail` — sets who Flow Studio considers the
   governance contact. Does NOT change the actual PA flow owner.
 - `rule_notify_email` — sets who receives Flow Studio failure/missing-run
@@ -85,24 +87,24 @@ Required parameters: `environmentName`, `flowName`. All other fields optional.
 
 ### Settable Fields
 
-| Field | Type | Purpose |
-|---|---|---|
-| `monitor` | bool | Enable run-level scanning (standard plan: 20 flows included) |
-| `rule_notify_onfail` | bool | Send email notification on any failed run |
-| `rule_notify_onmissingdays` | number | Send notification when flow hasn't run in N days (0 = disabled) |
-| `rule_notify_email` | string | Comma-separated notification recipients |
-| `description` | string | What the flow does |
-| `tags` | string | Classification tags (also auto-extracted from description `#hashtags`) |
-| `businessImpact` | string | Low / Medium / High / Critical |
-| `businessJustification` | string | Why the flow exists, what process it automates |
-| `businessValue` | string | Business value statement |
-| `ownerTeam` | string | Accountable team |
-| `ownerBusinessUnit` | string | Business unit |
-| `supportGroup` | string | Support escalation group |
-| `supportEmail` | string | Support contact email |
-| `critical` | bool | Designate as business-critical |
-| `tier` | string | Standard or Premium |
-| `security` | string | Security classification or notes |
+| Field                       | Type   | Purpose                                                                |
+| --------------------------- | ------ | ---------------------------------------------------------------------- |
+| `monitor`                   | bool   | Enable run-level scanning (standard plan: 20 flows included)           |
+| `rule_notify_onfail`        | bool   | Send email notification on any failed run                              |
+| `rule_notify_onmissingdays` | number | Send notification when flow hasn't run in N days (0 = disabled)        |
+| `rule_notify_email`         | string | Comma-separated notification recipients                                |
+| `description`               | string | What the flow does                                                     |
+| `tags`                      | string | Classification tags (also auto-extracted from description `#hashtags`) |
+| `businessImpact`            | string | Low / Medium / High / Critical                                         |
+| `businessJustification`     | string | Why the flow exists, what process it automates                         |
+| `businessValue`             | string | Business value statement                                               |
+| `ownerTeam`                 | string | Accountable team                                                       |
+| `ownerBusinessUnit`         | string | Business unit                                                          |
+| `supportGroup`              | string | Support escalation group                                               |
+| `supportEmail`              | string | Support contact email                                                  |
+| `critical`                  | bool   | Designate as business-critical                                         |
+| `tier`                      | string | Standard or Premium                                                    |
+| `security`                  | string | Security classification or notes                                       |
 
 > **Caution with `security`:** The `security` field on `get_store_flow`
 > contains structured JSON (e.g. `{"triggerRequestAuthenticationType":"All"}`).
@@ -292,35 +294,35 @@ Detailed metrics (require get_store_flow per flow — expensive for large tenant
 All fields below are confirmed present on the `get_store_flow` response.
 Fields marked with `*` are also available on `list_store_flows` (cheaper).
 
-| Field | Type | Governance use |
-|---|---|---|
-| `displayName` * | string | Archive score (test/demo name detection) |
-| `state` * | string | Archive score, lifecycle management |
-| `tier` | string | License audit (Standard vs Premium) |
-| `monitor` * | bool | Is this flow being actively monitored? |
-| `critical` | bool | Business-critical designation (settable via update_store_flow) |
-| `businessImpact` | string | Compliance classification |
-| `businessJustification` | string | Compliance attestation |
-| `ownerTeam` | string | Ownership accountability |
-| `supportEmail` | string | Escalation contact |
-| `rule_notify_onfail` | bool | Failure alerting configured? |
-| `rule_notify_onmissingdays` | number | SLA monitoring configured? |
-| `rule_notify_email` | string | Alert recipients |
-| `description` | string | Documentation completeness |
-| `tags` | string | Classification — `list_store_flows` shows description-extracted hashtags only; store tags written by `update_store_flow` require `get_store_flow` to read back |
-| `runPeriodTotal` * | number | Activity level |
-| `runPeriodFailRate` * | number | Health status |
-| `runLast` | ISO string | Last run timestamp |
-| `scanned` | ISO string | Data freshness |
-| `deleted` | bool | Lifecycle tracking |
-| `createdTime` * | ISO string | Archive score (age) |
-| `lastModifiedTime` * | ISO string | Archive score (staleness) |
-| `owners` | JSON string | Orphan detection, ownership audit — parse with json.loads() |
-| `connections` | JSON string | Connector audit, tier — parse with json.loads() |
-| `complexity` | JSON string | Archive score (simplicity) — parse with json.loads() |
-| `security` | JSON string | Auth type audit — parse with json.loads(), contains `triggerRequestAuthenticationType` |
-| `sharingType` | string | Oversharing detection (top-level, NOT inside security) |
-| `referencedResources` | JSON string | URL audit — parse with json.loads() |
+| Field                       | Type        | Governance use                                                                                                                                                 |
+| --------------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `displayName` *             | string      | Archive score (test/demo name detection)                                                                                                                       |
+| `state` *                   | string      | Archive score, lifecycle management                                                                                                                            |
+| `tier`                      | string      | License audit (Standard vs Premium)                                                                                                                            |
+| `monitor` *                 | bool        | Is this flow being actively monitored?                                                                                                                         |
+| `critical`                  | bool        | Business-critical designation (settable via update_store_flow)                                                                                                 |
+| `businessImpact`            | string      | Compliance classification                                                                                                                                      |
+| `businessJustification`     | string      | Compliance attestation                                                                                                                                         |
+| `ownerTeam`                 | string      | Ownership accountability                                                                                                                                       |
+| `supportEmail`              | string      | Escalation contact                                                                                                                                             |
+| `rule_notify_onfail`        | bool        | Failure alerting configured?                                                                                                                                   |
+| `rule_notify_onmissingdays` | number      | SLA monitoring configured?                                                                                                                                     |
+| `rule_notify_email`         | string      | Alert recipients                                                                                                                                               |
+| `description`               | string      | Documentation completeness                                                                                                                                     |
+| `tags`                      | string      | Classification — `list_store_flows` shows description-extracted hashtags only; store tags written by `update_store_flow` require `get_store_flow` to read back |
+| `runPeriodTotal` *          | number      | Activity level                                                                                                                                                 |
+| `runPeriodFailRate` *       | number      | Health status                                                                                                                                                  |
+| `runLast`                   | ISO string  | Last run timestamp                                                                                                                                             |
+| `scanned`                   | ISO string  | Data freshness                                                                                                                                                 |
+| `deleted`                   | bool        | Lifecycle tracking                                                                                                                                             |
+| `createdTime` *             | ISO string  | Archive score (age)                                                                                                                                            |
+| `lastModifiedTime` *        | ISO string  | Archive score (staleness)                                                                                                                                      |
+| `owners`                    | JSON string | Orphan detection, ownership audit — parse with json.loads()                                                                                                    |
+| `connections`               | JSON string | Connector audit, tier — parse with json.loads()                                                                                                                |
+| `complexity`                | JSON string | Archive score (simplicity) — parse with json.loads()                                                                                                           |
+| `security`                  | JSON string | Auth type audit — parse with json.loads(), contains `triggerRequestAuthenticationType`                                                                         |
+| `sharingType`               | string      | Oversharing detection (top-level, NOT inside security)                                                                                                         |
+| `referencedResources`       | JSON string | URL audit — parse with json.loads()                                                                                                                            |
 
 ---
 

@@ -1,8 +1,8 @@
 # Building an MCP client in .NET
 
-A short reference for *consuming* an MCP server from .NET — useful for testing your server, building agent harnesses, or wiring MCP into a Semantic Kernel / Microsoft.Extensions.AI pipeline.
+A short reference for _consuming_ an MCP server from .NET — useful for testing your server, building agent harnesses, or wiring MCP into a Semantic Kernel / Microsoft.Extensions.AI pipeline.
 
-For just *running* a server, ignore this file.
+For just _running_ a server, ignore this file.
 
 ## Packages
 

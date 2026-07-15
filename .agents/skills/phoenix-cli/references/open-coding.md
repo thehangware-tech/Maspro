@@ -12,13 +12,13 @@ The unit is about **where the failure modes you're investigating actually live**
 
 - **Trace** — one input → one call graph → one output. Right for classifiers, single-shot summarizers, stateless tool-using agents, single-query RAG. Failure modes that live here: wrong answer, malformed output, missed retrieval, bad tool selection within one request.
 - **Span** — one operation inside a trace. Right for in-isolation mechanical failures (an exception fired, a tool returned an error response, an output is malformed) or when you can attribute on sight to a specific component. Reach for span when the trace as a whole is fine but one piece inside it is the unit of interest.
-- **Session** — a sequence of traces sharing a `session.id`. Right for multi-turn conversational agents, agents with episodic memory, anything where the failure mode is a *trajectory*: context loss across turns, drift from the user's stated goal, the agent forgetting a stated preference, repeated user clarifications. These failures don't exist on any single trace; they only exist *across* traces.
+- **Session** — a sequence of traces sharing a `session.id`. Right for multi-turn conversational agents, agents with episodic memory, anything where the failure mode is a _trajectory_: context loss across turns, drift from the user's stated goal, the agent forgetting a stated preference, repeated user clarifications. These failures don't exist on any single trace; they only exist _across_ traces.
 
 ### Diagnostic — three signals to read
 
-1. **User framing.** *Tilts session*: "conversation", "agent forgot", "drift", "memory", "across turns", "user had to repeat themselves". *Tilts trace*: "this trace", "this call", "the response was wrong", "wrong output". *Tilts span*: "exception", "error response", "malformed", "the retrieval failed".
+1. **User framing.** _Tilts session_: "conversation", "agent forgot", "drift", "memory", "across turns", "user had to repeat themselves". _Tilts trace_: "this trace", "this call", "the response was wrong", "wrong output". _Tilts span_: "exception", "error response", "malformed", "the retrieval failed".
 
-2. **Data shape.** Probe before the loop. The session id lives at `rootSpan.attributes["session.id"]` (it is *not* a top-level field on the trace JSON), and is `""` for traces that aren't session-wired — filter both:
+2. **Data shape.** Probe before the loop. The session id lives at `rootSpan.attributes["session.id"]` (it is _not_ a top-level field on the trace JSON), and is `""` for traces that aren't session-wired — filter both:
 
    ```bash
    px trace list --limit 200 --format raw --no-progress \
@@ -33,7 +33,7 @@ The unit is about **where the failure modes you're investigating actually live**
 
    `with_session: 0` → sessions not wired; trace is the grain. `median_traces_per_session: 1` → single-trace sessions; still trace. `median_traces_per_session: 5+` → sessions are meaningful; session is plausibly right.
 
-3. **System type.** Open one recent trace and inspect the root span's input. A single user message → one turn or one shot. A message *array* (`[{role: user}, {role: assistant}, ...]`) → that's a turn within a longer dialogue; the dialogue lives at the session level.
+3. **System type.** Open one recent trace and inspect the root span's input. A single user message → one turn or one shot. A message _array_ (`[{role: user}, {role: assistant}, ...]`) → that's a turn within a longer dialogue; the dialogue lives at the session level.
 
    ```bash
    px trace get <trace-id> --format raw \
@@ -94,7 +94,7 @@ Use `px` to read context at the unit committed in [Choosing the unit](#choosing-
 
 - **Trace unit** — read one trace's input → tool calls → retrieved context → output as one story.
 - **Span unit** — read one operation's input/output and surrounding spans for context.
-- **Session unit** — read the sequence of traces in order; the trajectory (turns, retrievals, tool-call patterns *across* traces) is the data, not any single trace's inputs and outputs.
+- **Session unit** — read the sequence of traces in order; the trajectory (turns, retrievals, tool-call patterns _across_ traces) is the data, not any single trace's inputs and outputs.
 
 > **Don't filter the sample by `--status-code ERROR`.** OTel's `status_code` only flips to `ERROR` when an instrumentor catches a raised Python exception (network failure, 5xx, parse error). Hallucinations, wrong tone, retrieval misses, and bad tool selection all complete cleanly and arrive as `OK` or `UNSET`. Sampling for open coding by `--status-code ERROR` excludes the population this workflow exists to surface.
 
@@ -133,6 +133,7 @@ Always pipe through `jq` with `--format raw --no-progress` when scripting.
 Use the `add-note` command matching the unit committed in [Choosing the unit](#choosing-the-unit-of-analysis): `px trace add-note`, `px span add-note`, or `px session add-note`. Every call carries an explicit `--identifier "$CODING_ANNOTATION_IDENTIFIER"` and `--format raw --no-progress`.
 
 Passing `--identifier "$CODING_ANNOTATION_IDENTIFIER"` does two things:
+
 - Tags the note row with the coding annotation identifier on the server, so the cleanup `px <entity>-annotations delete --identifier "$CODING_ANNOTATION_IDENTIFIER" --all` sweep removes every artifact this run produced.
 - Makes the call **upsert** on `(entity_id, name='note', identifier)` — re-running open coding on the same entity within the same coding annotation identifier overwrites the prior note instead of appending a second row. (Without `--identifier`, the server stamps a unique `px-{kind}-note:<uuid>` and each call appends.)
 
@@ -141,10 +142,17 @@ After every successful `add-note`, record one JSONL line in `$SIDECAR`. The side
 **Sidecar JSONL line shape (one per `add-note`):**
 
 ```json
-{"entity_kind":"trace","entity_id":"<trace-id>","note":"<text>","identifier":"<original identifier value, unsanitized>","ts":"<ISO-8601 UTC>"}
+{
+  "entity_kind": "trace",
+  "entity_id": "<trace-id>",
+  "note": "<text>",
+  "identifier": "<original identifier value, unsanitized>",
+  "ts": "<ISO-8601 UTC>"
+}
 ```
 
 Fields:
+
 - `entity_kind` — `"trace"`, `"span"`, or `"session"` (matches the `add-note` subcommand used)
 - `entity_id` — the entity argument passed to `add-note` (trace id, span id, or session id)
 - `note` — the `--text` value, verbatim
@@ -192,13 +200,13 @@ The annotation's `--identifier` matches `$CODING_ANNOTATION_IDENTIFIER`, so the 
 
 ## What Makes a Good Note
 
-| Weak note            | Why it's weak             | Good note                                                                  | Why it's strong                             |
-| -------------------- | ------------------------- | -------------------------------------------------------------------------- | ------------------------------------------- |
-| "Wrong answer"       | No observable detail      | "Said the store closes at 6pm but policy is 9pm"                           | Quotes observed vs. correct value           |
-| "Bad tone"           | Vague judgment            | "Used first-name greeting for an enterprise support ticket"                | Specifies the context mismatch              |
-| "Hallucination"      | Labels before observing   | "Cited a product feature ('auto-renew') that does not exist in the schema" | Describes what was fabricated               |
-| "Retrieval issue"    | Category, not observation | "Retrieved docs about shipping when the question was about returns"        | States what was retrieved vs. needed        |
-| "Model confused"     | Opaque                    | "Answered in Spanish when the user wrote in English"                       | Observable and reproducible                 |
+| Weak note         | Why it's weak             | Good note                                                                  | Why it's strong                      |
+| ----------------- | ------------------------- | -------------------------------------------------------------------------- | ------------------------------------ |
+| "Wrong answer"    | No observable detail      | "Said the store closes at 6pm but policy is 9pm"                           | Quotes observed vs. correct value    |
+| "Bad tone"        | Vague judgment            | "Used first-name greeting for an enterprise support ticket"                | Specifies the context mismatch       |
+| "Hallucination"   | Labels before observing   | "Cited a product feature ('auto-renew') that does not exist in the schema" | Describes what was fabricated        |
+| "Retrieval issue" | Category, not observation | "Retrieved docs about shipping when the question was about returns"        | States what was retrieved vs. needed |
+| "Model confused"  | Opaque                    | "Answered in Spanish when the user wrote in English"                       | Observable and reproducible          |
 
 Write what you saw, not the category you think it belongs to — categorization happens in [axial coding](axial-coding.md). Short prefixes like `TONE:` or `FACTUAL:` are a personal shorthand, not a repo convention.
 

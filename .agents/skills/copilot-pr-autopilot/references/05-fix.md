@@ -7,6 +7,7 @@ more than 5 `fix` rows, the parent runs step 5 in waves of ≤5.
 ## Inputs
 
 Per sub-agent (one finding per invocation):
+
 - `thread_id`, `file`, `line` from step 3.
 - The finding `summary` and Copilot's suggested fix (if any).
 - The triage `rationale` from step 4 — the agent already decided this
